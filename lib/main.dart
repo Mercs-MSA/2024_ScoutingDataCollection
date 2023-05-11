@@ -50,6 +50,7 @@ class _FormAppPageState extends State<FormAppPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Form Elements'),
+        backgroundColor: Theme.of(context).colorScheme.onSecondary,
       ),
       body: Center(
         child: Padding(
@@ -127,9 +128,9 @@ class RatingInput extends StatelessWidget {
     return ListTile(
       title: Text(title),
       trailing: RatingBar.builder(
-        itemBuilder: (context, _) => const Icon(
+        itemBuilder: (context, _) => Icon(
           Icons.star,
-          color: Colors.amber,
+          color: Theme.of(context).colorScheme.primary,
         ),
         onRatingUpdate: onRatingUpdate,
         glow: false,
