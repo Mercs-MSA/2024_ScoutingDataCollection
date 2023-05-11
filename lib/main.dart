@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
@@ -48,6 +50,7 @@ class _FormAppPageState extends State<FormAppPage> {
   int currentPageIndex = 0;
 
   String textFieldData = '';
+  int? teamNumberData;
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +105,13 @@ class _FormAppPageState extends State<FormAppPage> {
                     FilteringTextInputFormatter.digitsOnly,
                     LengthLimitingTextInputFormatter(4),
                   ],
+                  onChanged: (value) {
+                    teamNumberData = int.tryParse(value);
+                  },
+                  controller: TextEditingController(
+                      text: teamNumberData == null
+                          ? ''
+                          : teamNumberData.toString()),
                 ),
                 const SizedBox(height: 8.0),
                 CheckboxListTile(
@@ -138,11 +148,44 @@ class _FormAppPageState extends State<FormAppPage> {
         ),
         Center(
           child: Column(children: [
-            Icon(
+            const Icon(
               Icons.poll_outlined,
               size: 192,
             ),
-            Text('Text Field: ${textFieldData == "" ? "None" : textFieldData}'),
+            DataTable(columns: const <DataColumn>[
+              DataColumn(
+                label: Expanded(
+                    child: Text(
+                  'Field',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                )),
+              ),
+              DataColumn(
+                label: Expanded(
+                    child: Text(
+                  'Data',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                )),
+              ),
+              DataColumn(
+                label: Expanded(
+                    child: Text(
+                  'Type',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                )),
+              ),
+            ], rows: <DataRow>[
+              DataRow(cells: <DataCell>[
+                const DataCell(Text('Text Field')),
+                DataCell(Text(textFieldData == '' ? 'Empty' : textFieldData)),
+                const DataCell(Text('String')),
+              ]),
+              DataRow(cells: <DataCell>[
+                const DataCell(Text('Team Number')),
+                DataCell(Text(teamNumberData.toString())),
+                const DataCell(Text('Int?')),
+              ]),
+            ])
           ]),
         ),
       ][currentPageIndex],
