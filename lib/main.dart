@@ -47,6 +47,8 @@ class _FormAppPageState extends State<FormAppPage> {
 
   int currentPageIndex = 0;
 
+  String textFieldData = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,11 +81,15 @@ class _FormAppPageState extends State<FormAppPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const TextField(
-                  decoration: InputDecoration(
+                TextField(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Text Field',
                   ),
+                  onChanged: (value) {
+                    textFieldData = value;
+                  },
+                  controller: TextEditingController(text: textFieldData),
                 ),
                 const SizedBox(height: 8.0),
                 TextField(
@@ -131,7 +137,13 @@ class _FormAppPageState extends State<FormAppPage> {
           ),
         ),
         Center(
-          child: Placeholder(),
+          child: Column(children: [
+            Icon(
+              Icons.poll_outlined,
+              size: 192,
+            ),
+            Text('Text Field: ${textFieldData == "" ? "None" : textFieldData}'),
+          ]),
         ),
       ][currentPageIndex],
     );
