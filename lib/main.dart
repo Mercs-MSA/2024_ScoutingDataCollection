@@ -93,6 +93,7 @@ class _FormAppPageState extends State<FormAppPage> {
                       switchIsToggled = newValue!;
                     });
                   }),
+              const SizedBox(height: 8.0),
               const ColorInput(
                 title: 'Color Select',
               ),
