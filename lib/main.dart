@@ -45,6 +45,8 @@ class _FormAppPageState extends State<FormAppPage> {
   bool checkBoxIsChecked = false;
   bool switchIsToggled = false;
 
+  int currentPageIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,63 +54,86 @@ class _FormAppPageState extends State<FormAppPage> {
         title: const Text('Form Elements'),
         backgroundColor: Theme.of(context).colorScheme.onSecondary,
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Text Field',
+      bottomNavigationBar: NavigationBar(
+        destinations: const <NavigationDestination>[
+          NavigationDestination(
+            icon: Icon(Icons.list_alt),
+            label: 'Form',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.outbox),
+            label: 'Output',
+          )
+        ],
+        selectedIndex: currentPageIndex,
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+      ),
+      body: [
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Text Field',
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8.0),
-              TextField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Team Number',
+                const SizedBox(height: 8.0),
+                TextField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Team Number',
+                  ),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(4),
+                  ],
                 ),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly,
-                  LengthLimitingTextInputFormatter(4),
-                ],
-              ),
-              const SizedBox(height: 8.0),
-              CheckboxListTile(
-                title: const Text('Checkbox'),
-                value: checkBoxIsChecked,
-                onChanged: (bool? newValue) {
-                  setState(() {
-                    checkBoxIsChecked = newValue!;
-                  });
-                },
-              ),
-              const SizedBox(height: 8.0),
-              SwitchListTile(
-                  title: const Text('Switch'),
-                  value: switchIsToggled,
+                const SizedBox(height: 8.0),
+                CheckboxListTile(
+                  title: const Text('Checkbox'),
+                  value: checkBoxIsChecked,
                   onChanged: (bool? newValue) {
                     setState(() {
-                      switchIsToggled = newValue!;
+                      checkBoxIsChecked = newValue!;
                     });
-                  }),
-              const SizedBox(height: 8.0),
-              const ColorInput(
-                title: 'Color Select',
-              ),
-              RatingInput(
-                title: 'Rating',
-                onRatingUpdate: (rating) {
-                  print(rating.toInt());
-                },
-              )
-            ],
+                  },
+                ),
+                const SizedBox(height: 8.0),
+                SwitchListTile(
+                    title: const Text('Switch'),
+                    value: switchIsToggled,
+                    onChanged: (bool? newValue) {
+                      setState(() {
+                        switchIsToggled = newValue!;
+                      });
+                    }),
+                const SizedBox(height: 8.0),
+                const ColorInput(
+                  title: 'Color Select',
+                ),
+                RatingInput(
+                  title: 'Rating',
+                  onRatingUpdate: (rating) {
+                    print(rating.toInt());
+                  },
+                )
+              ],
+            ),
           ),
         ),
-      ),
+        Center(
+          child: Placeholder(),
+        ),
+      ][currentPageIndex],
     );
   }
 }
