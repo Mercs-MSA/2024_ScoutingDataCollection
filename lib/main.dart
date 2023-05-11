@@ -71,7 +71,8 @@ class _FormAppPageState extends State<FormAppPage> {
                 ),
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(4),
                 ],
               ),
               const SizedBox(height: 8.0),
