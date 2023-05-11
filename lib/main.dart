@@ -155,6 +155,14 @@ class _ColorInputState extends State<ColorInput> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () async {
+        beforeColor = currentColor;
+        if (!(await colorPickerDialog())) {
+          setState(() {
+            currentColor = beforeColor;
+          });
+        }
+      },
       title: Text(widget.title),
       trailing: ColorIndicator(
         onSelect: () async {
