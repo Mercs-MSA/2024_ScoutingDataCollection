@@ -54,6 +54,7 @@ class _FormAppPageState extends State<FormAppPage> {
   String textFieldData = '';
   int? teamNumberData;
   Color colorSelectData = Colors.red;
+  int ratingData = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -147,8 +148,9 @@ class _FormAppPageState extends State<FormAppPage> {
                     RatingInput(
                       title: 'Rating',
                       onRatingUpdate: (rating) {
-                        print(rating.toInt());
+                        ratingData = rating.toInt();
                       },
+                      initialRating: ratingData.toDouble(),
                     )
                   ],
                 ),
@@ -209,6 +211,11 @@ class _FormAppPageState extends State<FormAppPage> {
                     DataCell(Text(colorSelectData.hex.toString())),
                     const DataCell(Text('Color')),
                   ]),
+                  DataRow(cells: <DataCell>[
+                    const DataCell(Text('Rating')),
+                    DataCell(Text(ratingData.toString())),
+                    const DataCell(Text('Double')),
+                  ]),
                 ]),
                 const Spacer(),
                 Row(
@@ -224,6 +231,7 @@ class _FormAppPageState extends State<FormAppPage> {
                             ['checkbox', checkBoxIsChecked],
                             ['switch', switchIsToggled],
                             ['color', colorSelectData.hex.toString()],
+                            ['rating', ratingData.toString()],
                           ]);
                           if (Platform.isAndroid) {
                             saveFile(Uint8List.fromList(fileData.codeUnits));
@@ -242,9 +250,8 @@ class _FormAppPageState extends State<FormAppPage> {
   }
 
   Future<void> saveFile(dynamic data) async {
-    String? result;
     final params = SaveFileDialogParams(data: data, fileName: "output.csv");
-    result = await FlutterFileDialog.saveFile(params: params);
+    await FlutterFileDialog.saveFile(params: params);
   }
 }
 
@@ -253,16 +260,19 @@ class RatingInput extends StatelessWidget {
     super.key,
     required this.title,
     required this.onRatingUpdate,
+    required this.initialRating,
   });
 
   final String title;
   final Function(double) onRatingUpdate;
+  final double initialRating;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(title),
       trailing: RatingBar.builder(
+        initialRating: initialRating,
         itemBuilder: (context, _) => Icon(
           Icons.star,
           color: Theme.of(context).colorScheme.primary,
