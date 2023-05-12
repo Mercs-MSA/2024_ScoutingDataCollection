@@ -57,6 +57,8 @@ class _FormAppPageState extends State<FormAppPage> {
   Color colorSelectData = Colors.red;
   int ratingData = 0;
 
+  bool saveDialogOpen = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -225,25 +227,7 @@ class _FormAppPageState extends State<FormAppPage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton.icon(
-                        onPressed: () {
-                          final fileData = const ListToCsvConverter().convert([
-                            ['item', 'value'],
-                            ['team', teamNumberData],
-                            ['checkbox', checkBoxIsChecked],
-                            ['switch', switchIsToggled],
-                            ['color', colorSelectData.hex.toString()],
-                            ['rating', ratingData.toString()],
-                          ]);
-                          if (Platform.isAndroid | Platform.isIOS) {
-                            saveFileMobile(
-                                Uint8List.fromList(fileData.codeUnits));
-                          } else if (Platform.isLinux |
-                              Platform.isMacOS |
-                              Platform.isWindows) {
-                            saveFileDesktop(
-                                Uint8List.fromList(fileData.codeUnits));
-                          }
-                        },
+                        onPressed: saveDialogOpen == false ? onSave : null,
                         label: const Text("Save"),
                         icon: const Icon(Icons.save),
                       ),
@@ -256,9 +240,33 @@ class _FormAppPageState extends State<FormAppPage> {
         ));
   }
 
+  void onSave() {
+    final fileData = const ListToCsvConverter().convert([
+      ['item', 'value'],
+      ['team', teamNumberData],
+      ['checkbox', checkBoxIsChecked],
+      ['switch', switchIsToggled],
+      ['color', colorSelectData.hex.toString()],
+      ['rating', ratingData.toString()],
+    ]);
+
+    setState(() {
+      saveDialogOpen = true;
+    });
+
+    if (Platform.isAndroid | Platform.isIOS) {
+      saveFileMobile(Uint8List.fromList(fileData.codeUnits));
+    } else if (Platform.isLinux | Platform.isMacOS | Platform.isWindows) {
+      saveFileDesktop(Uint8List.fromList(fileData.codeUnits));
+    }
+  }
+
   Future<void> saveFileMobile(Uint8List data) async {
     final params = SaveFileDialogParams(data: data, fileName: "output.csv");
     await FlutterFileDialog.saveFile(params: params);
+    setState(() {
+      saveDialogOpen = false;
+    });
   }
 
   Future<void> saveFileDesktop(Uint8List data) async {
@@ -271,6 +279,9 @@ class _FormAppPageState extends State<FormAppPage> {
       File file = File(outputFile);
       file.writeAsBytes(data);
     }
+    setState(() {
+      saveDialogOpen = false;
+    });
   }
 }
 
