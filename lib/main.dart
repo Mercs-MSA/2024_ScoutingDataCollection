@@ -51,145 +51,167 @@ class _FormAppPageState extends State<FormAppPage> {
 
   String textFieldData = '';
   int? teamNumberData;
+  Color colorSelectData = Colors.red;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Form Elements'),
-        backgroundColor: Theme.of(context).colorScheme.onSecondary,
-      ),
-      bottomNavigationBar: NavigationBar(
-        destinations: const <NavigationDestination>[
-          NavigationDestination(
-            icon: Icon(Icons.list_alt),
-            label: 'Form',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.outbox),
-            label: 'Output',
-          )
-        ],
-        selectedIndex: currentPageIndex,
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-      ),
-      body: [
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                TextField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Text Field',
-                  ),
-                  onChanged: (value) {
-                    textFieldData = value;
-                  },
-                  controller: TextEditingController(text: textFieldData),
-                ),
-                const SizedBox(height: 8.0),
-                TextField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Team Number',
-                  ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly,
-                    LengthLimitingTextInputFormatter(4),
+        appBar: AppBar(
+          title: const Text('Form Elements'),
+          backgroundColor: Theme.of(context).colorScheme.onSecondary,
+        ),
+        bottomNavigationBar: NavigationBar(
+          destinations: const <NavigationDestination>[
+            NavigationDestination(
+              icon: Icon(Icons.list_alt),
+              label: 'Form',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.outbox),
+              label: 'Output',
+            )
+          ],
+          selectedIndex: currentPageIndex,
+          onDestinationSelected: (int index) {
+            setState(() {
+              currentPageIndex = index;
+            });
+          },
+        ),
+        body: IndexedStack(
+          children: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    TextField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Text Field',
+                      ),
+                      onChanged: (value) {
+                        textFieldData = value;
+                      },
+                      controller: TextEditingController(text: textFieldData),
+                    ),
+                    const SizedBox(height: 8.0),
+                    TextField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Team Number',
+                      ),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(4),
+                      ],
+                      onChanged: (value) {
+                        teamNumberData = int.tryParse(value);
+                      },
+                      controller: TextEditingController(
+                          text: teamNumberData == null
+                              ? ''
+                              : teamNumberData.toString()),
+                    ),
+                    const SizedBox(height: 8.0),
+                    CheckboxListTile(
+                      title: const Text('Checkbox'),
+                      value: checkBoxIsChecked,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          checkBoxIsChecked = newValue!;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 8.0),
+                    SwitchListTile(
+                        title: const Text('Switch'),
+                        value: switchIsToggled,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            switchIsToggled = newValue!;
+                          });
+                        }),
+                    const SizedBox(height: 8.0),
+                    ColorInput(
+                      title: 'Color Select',
+                      onColorChanged: (Color color) {
+                        colorSelectData = color;
+                      },
+                    ),
+                    RatingInput(
+                      title: 'Rating',
+                      onRatingUpdate: (rating) {
+                        print(rating.toInt());
+                      },
+                    )
                   ],
-                  onChanged: (value) {
-                    teamNumberData = int.tryParse(value);
-                  },
-                  controller: TextEditingController(
-                      text: teamNumberData == null
-                          ? ''
-                          : teamNumberData.toString()),
                 ),
-                const SizedBox(height: 8.0),
-                CheckboxListTile(
-                  title: const Text('Checkbox'),
-                  value: checkBoxIsChecked,
-                  onChanged: (bool? newValue) {
-                    setState(() {
-                      checkBoxIsChecked = newValue!;
-                    });
-                  },
-                ),
-                const SizedBox(height: 8.0),
-                SwitchListTile(
-                    title: const Text('Switch'),
-                    value: switchIsToggled,
-                    onChanged: (bool? newValue) {
-                      setState(() {
-                        switchIsToggled = newValue!;
-                      });
-                    }),
-                const SizedBox(height: 8.0),
-                const ColorInput(
-                  title: 'Color Select',
-                ),
-                RatingInput(
-                  title: 'Rating',
-                  onRatingUpdate: (rating) {
-                    print(rating.toInt());
-                  },
-                )
-              ],
+              ),
             ),
-          ),
-        ),
-        Center(
-          child: Column(children: [
-            const Icon(
-              Icons.poll_outlined,
-              size: 192,
+            Center(
+              child: Column(children: [
+                const Icon(
+                  Icons.poll_outlined,
+                  size: 192,
+                ),
+                DataTable(columns: const <DataColumn>[
+                  DataColumn(
+                    label: Expanded(
+                        child: Text(
+                      'Field',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    )),
+                  ),
+                  DataColumn(
+                    label: Expanded(
+                        child: Text(
+                      'Data',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    )),
+                  ),
+                  DataColumn(
+                    label: Expanded(
+                        child: Text(
+                      'Type',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    )),
+                  ),
+                ], rows: <DataRow>[
+                  DataRow(cells: <DataCell>[
+                    const DataCell(Text('Text Field')),
+                    DataCell(
+                        Text(textFieldData == '' ? 'Empty' : textFieldData)),
+                    const DataCell(Text('String')),
+                  ]),
+                  DataRow(cells: <DataCell>[
+                    const DataCell(Text('Team Number')),
+                    DataCell(Text(teamNumberData.toString())),
+                    const DataCell(Text('Int?')),
+                  ]),
+                  DataRow(cells: <DataCell>[
+                    const DataCell(Text('Checkbox')),
+                    DataCell(Text(checkBoxIsChecked.toString())),
+                    const DataCell(Text('Bool')),
+                  ]),
+                  DataRow(cells: <DataCell>[
+                    const DataCell(Text('Switch')),
+                    DataCell(Text(switchIsToggled.toString())),
+                    const DataCell(Text('Bool')),
+                  ]),
+                  DataRow(cells: <DataCell>[
+                    const DataCell(Text('Color')),
+                    DataCell(Text(colorSelectData.hex.toString())),
+                    const DataCell(Text('Color')),
+                  ]),
+                ])
+              ]),
             ),
-            DataTable(columns: const <DataColumn>[
-              DataColumn(
-                label: Expanded(
-                    child: Text(
-                  'Field',
-                  style: TextStyle(fontStyle: FontStyle.italic),
-                )),
-              ),
-              DataColumn(
-                label: Expanded(
-                    child: Text(
-                  'Data',
-                  style: TextStyle(fontStyle: FontStyle.italic),
-                )),
-              ),
-              DataColumn(
-                label: Expanded(
-                    child: Text(
-                  'Type',
-                  style: TextStyle(fontStyle: FontStyle.italic),
-                )),
-              ),
-            ], rows: <DataRow>[
-              DataRow(cells: <DataCell>[
-                const DataCell(Text('Text Field')),
-                DataCell(Text(textFieldData == '' ? 'Empty' : textFieldData)),
-                const DataCell(Text('String')),
-              ]),
-              DataRow(cells: <DataCell>[
-                const DataCell(Text('Team Number')),
-                DataCell(Text(teamNumberData.toString())),
-                const DataCell(Text('Int?')),
-              ]),
-            ])
-          ]),
-        ),
-      ][currentPageIndex],
-    );
+          ],
+          index: currentPageIndex,
+        ));
   }
 }
 
@@ -223,9 +245,11 @@ class ColorInput extends StatefulWidget {
   const ColorInput({
     super.key,
     required this.title,
+    required this.onColorChanged,
   });
 
   final String title;
+  final Function(Color) onColorChanged;
 
   @override
   State<ColorInput> createState() => _ColorInputState();
@@ -243,6 +267,7 @@ class _ColorInputState extends State<ColorInput> {
         if (!(await colorPickerDialog())) {
           setState(() {
             currentColor = beforeColor;
+            widget.onColorChanged(currentColor);
           });
         }
       },
@@ -253,6 +278,7 @@ class _ColorInputState extends State<ColorInput> {
           if (!(await colorPickerDialog())) {
             setState(() {
               currentColor = beforeColor;
+              widget.onColorChanged(currentColor);
             });
           }
         },
@@ -266,7 +292,12 @@ class _ColorInputState extends State<ColorInput> {
   Future<bool> colorPickerDialog() async {
     return ColorPicker(
       color: currentColor,
-      onColorChanged: (Color color) => setState(() => currentColor = color),
+      onColorChanged: (Color color) {
+        setState(() {
+          currentColor = color;
+          widget.onColorChanged(currentColor);
+        });
+      },
       heading: Text(
         'Select color',
         style: Theme.of(context).textTheme.titleSmall,
