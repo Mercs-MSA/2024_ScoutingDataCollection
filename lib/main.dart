@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+import 'package:csv/csv.dart';
 
 void main() {
   runApp(const FormElementsApp());
@@ -205,11 +209,42 @@ class _FormAppPageState extends State<FormAppPage> {
                     DataCell(Text(colorSelectData.hex.toString())),
                     const DataCell(Text('Color')),
                   ]),
-                ])
+                ]),
+                const Spacer(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          final fileData = const ListToCsvConverter().convert([
+                            ['item', 'value'],
+                            ['team', teamNumberData],
+                            ['checkbox', checkBoxIsChecked],
+                            ['switch', switchIsToggled],
+                            ['color', colorSelectData.hex.toString()],
+                          ]);
+                          if (Platform.isAndroid) {
+                            saveFile(Uint8List.fromList(fileData.codeUnits));
+                          }
+                        },
+                        label: const Text("Save"),
+                        icon: const Icon(Icons.save),
+                      ),
+                    )
+                  ],
+                ),
               ]),
             ),
           ],
         ));
+  }
+
+  Future<void> saveFile(dynamic data) async {
+    String? result;
+    final params = SaveFileDialogParams(data: data, fileName: "output.csv");
+    result = await FlutterFileDialog.saveFile(params: params);
   }
 }
 
