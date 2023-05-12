@@ -57,7 +57,7 @@ class _FormAppPageState extends State<FormAppPage> {
   Color colorSelectData = Colors.red;
   int ratingData = 0;
 
-  bool saveDialogOpen = false;
+  bool saveDisabled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -227,7 +227,7 @@ class _FormAppPageState extends State<FormAppPage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton.icon(
-                        onPressed: saveDialogOpen == false ? onSave : null,
+                        onPressed: saveDisabled == false ? onSave : null,
                         label: const Text("Save"),
                         icon: const Icon(Icons.save),
                       ),
@@ -251,9 +251,8 @@ class _FormAppPageState extends State<FormAppPage> {
     ]);
 
     setState(() {
-      saveDialogOpen = true;
+      saveDisabled = true;
     });
-
     if (Platform.isAndroid | Platform.isIOS) {
       saveFileMobile(Uint8List.fromList(fileData.codeUnits));
     } else if (Platform.isLinux | Platform.isMacOS | Platform.isWindows) {
@@ -265,7 +264,7 @@ class _FormAppPageState extends State<FormAppPage> {
     final params = SaveFileDialogParams(data: data, fileName: "output.csv");
     await FlutterFileDialog.saveFile(params: params);
     setState(() {
-      saveDialogOpen = false;
+      saveDisabled = false;
     });
   }
 
@@ -280,7 +279,7 @@ class _FormAppPageState extends State<FormAppPage> {
       file.writeAsBytes(data);
     }
     setState(() {
-      saveDialogOpen = false;
+      saveDisabled = false;
     });
   }
 }
