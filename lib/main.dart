@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:csv/csv.dart';
 
 void main() {
@@ -233,8 +234,14 @@ class _FormAppPageState extends State<FormAppPage> {
                             ['color', colorSelectData.hex.toString()],
                             ['rating', ratingData.toString()],
                           ]);
-                          if (Platform.isAndroid) {
-                            saveFile(Uint8List.fromList(fileData.codeUnits));
+                          if (Platform.isAndroid | Platform.isIOS) {
+                            saveFileMobile(
+                                Uint8List.fromList(fileData.codeUnits));
+                          } else if (Platform.isLinux |
+                              Platform.isMacOS |
+                              Platform.isWindows) {
+                            saveFileDesktop(
+                                Uint8List.fromList(fileData.codeUnits));
                           }
                         },
                         label: const Text("Save"),
@@ -249,9 +256,21 @@ class _FormAppPageState extends State<FormAppPage> {
         ));
   }
 
-  Future<void> saveFile(dynamic data) async {
+  Future<void> saveFileMobile(Uint8List data) async {
     final params = SaveFileDialogParams(data: data, fileName: "output.csv");
     await FlutterFileDialog.saveFile(params: params);
+  }
+
+  Future<void> saveFileDesktop(Uint8List data) async {
+    String? outputFile = await FilePicker.platform.saveFile(
+      dialogTitle: 'Export data',
+      fileName: 'output.csv',
+    );
+
+    if (outputFile != null) {
+      File file = File(outputFile);
+      file.writeAsBytes(data);
+    }
   }
 }
 
