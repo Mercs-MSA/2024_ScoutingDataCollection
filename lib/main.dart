@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
@@ -79,6 +77,7 @@ class _FormAppPageState extends State<FormAppPage> {
           },
         ),
         body: IndexedStack(
+          index: currentPageIndex,
           children: [
             Center(
               child: Padding(
@@ -210,7 +209,6 @@ class _FormAppPageState extends State<FormAppPage> {
               ]),
             ),
           ],
-          index: currentPageIndex,
         ));
   }
 }
