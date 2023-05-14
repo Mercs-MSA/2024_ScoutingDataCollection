@@ -159,68 +159,34 @@ class _FormAppPageState extends State<FormAppPage> {
                 ),
               ),
             ),
-            Center(
-              child: Column(children: [
+            Column(
+              children: [
                 const Icon(
                   Icons.poll_outlined,
-                  size: 192,
+                  size: 180,
                 ),
-                DataTable(columns: const <DataColumn>[
-                  DataColumn(
-                    label: Expanded(
-                        child: Text(
-                      'Field',
-                      style: TextStyle(fontStyle: FontStyle.italic),
-                    )),
+                Expanded(
+                  child: ListView(
+                    children: [
+                      DataCard(
+                          item: "Text Field",
+                          data: textFieldData == "" ? "Empty" : textFieldData),
+                      DataCard(
+                          item: "Team Number",
+                          data: teamNumberData == null
+                              ? "Empty"
+                              : teamNumberData.toString()),
+                      DataCard(
+                          item: "Checkbox", data: checkBoxIsChecked.toString()),
+                      DataCard(
+                          item: "Switch", data: switchIsToggled.toString()),
+                      DataCard(
+                          item: "Color Select",
+                          data: colorSelectData.hex.toString()),
+                      DataCard(item: "Rating", data: ratingData.toString())
+                    ],
                   ),
-                  DataColumn(
-                    label: Expanded(
-                        child: Text(
-                      'Data',
-                      style: TextStyle(fontStyle: FontStyle.italic),
-                    )),
-                  ),
-                  DataColumn(
-                    label: Expanded(
-                        child: Text(
-                      'Type',
-                      style: TextStyle(fontStyle: FontStyle.italic),
-                    )),
-                  ),
-                ], rows: <DataRow>[
-                  DataRow(cells: <DataCell>[
-                    const DataCell(Text('Text Field')),
-                    DataCell(
-                        Text(textFieldData == '' ? 'Empty' : textFieldData)),
-                    const DataCell(Text('String')),
-                  ]),
-                  DataRow(cells: <DataCell>[
-                    const DataCell(Text('Team Number')),
-                    DataCell(Text(teamNumberData.toString())),
-                    const DataCell(Text('Int?')),
-                  ]),
-                  DataRow(cells: <DataCell>[
-                    const DataCell(Text('Checkbox')),
-                    DataCell(Text(checkBoxIsChecked.toString())),
-                    const DataCell(Text('Bool')),
-                  ]),
-                  DataRow(cells: <DataCell>[
-                    const DataCell(Text('Switch')),
-                    DataCell(Text(switchIsToggled.toString())),
-                    const DataCell(Text('Bool')),
-                  ]),
-                  DataRow(cells: <DataCell>[
-                    const DataCell(Text('Color')),
-                    DataCell(Text(colorSelectData.hex.toString())),
-                    const DataCell(Text('Color')),
-                  ]),
-                  DataRow(cells: <DataCell>[
-                    const DataCell(Text('Rating')),
-                    DataCell(Text(ratingData.toString())),
-                    const DataCell(Text('Double')),
-                  ]),
-                ]),
-                const Spacer(),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -234,7 +200,7 @@ class _FormAppPageState extends State<FormAppPage> {
                     )
                   ],
                 ),
-              ]),
+              ],
             ),
           ],
         ));
@@ -281,6 +247,37 @@ class _FormAppPageState extends State<FormAppPage> {
     setState(() {
       saveDisabled = false;
     });
+  }
+}
+
+class DataCard extends StatelessWidget {
+  const DataCard({
+    super.key,
+    required this.item,
+    required this.data,
+  });
+
+  final String item;
+  final String data;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(item),
+              Spacer(),
+              Text(data),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
