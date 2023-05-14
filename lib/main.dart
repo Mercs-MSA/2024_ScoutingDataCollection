@@ -332,19 +332,26 @@ class _ColorInputState extends State<ColorInput> {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(widget.title),
-      trailing: ColorIndicator(
-        onSelect: () async {
-          beforeColor = currentColor;
-          if (!(await colorPickerDialog())) {
-            setState(() {
-              currentColor = beforeColor;
-              widget.onColorChanged(currentColor);
-            });
-          }
-        },
-        color: currentColor,
-        width: 36,
-        height: 36,
+      trailing: Theme(
+        data: Theme.of(context).copyWith(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          hoverColor: Colors.transparent,
+        ),
+        child: ColorIndicator(
+          onSelect: () async {
+            beforeColor = currentColor;
+            if (!(await colorPickerDialog())) {
+              setState(() {
+                currentColor = beforeColor;
+                widget.onColorChanged(currentColor);
+              });
+            }
+          },
+          color: currentColor,
+          width: 36,
+          height: 36,
+        ),
       ),
     );
   }
