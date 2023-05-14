@@ -196,7 +196,8 @@ class _FormAppPageState extends State<FormAppPage> {
                       DataCard(
                           item: "Color Select",
                           data: colorSelectData.hex.toString()),
-                      DataCard(item: "Rating", data: ratingData.toString())
+                      DataCard(item: "Rating", data: ratingData.toString()),
+                      DataCard(item: "Dropdown", data: dropdownChoice),
                     ],
                   ),
                 ),
@@ -227,6 +228,7 @@ class _FormAppPageState extends State<FormAppPage> {
       ['switch', switchIsToggled],
       ['color', colorSelectData.hex.toString()],
       ['rating', ratingData.toString()],
+      ['dropdown', dropdownChoice],
     ]);
 
     setState(() {
