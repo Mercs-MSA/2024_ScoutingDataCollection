@@ -219,7 +219,7 @@ class _FormAppPageState extends State<FormAppPage> {
         ));
   }
 
-  void onSave() {
+  void onSave() async {
     final fileData = const ListToCsvConverter().convert([
       ['item', 'value'],
       ['team', teamNumberData],
@@ -233,10 +233,13 @@ class _FormAppPageState extends State<FormAppPage> {
     setState(() {
       saveDisabled = true;
     });
+
     if (Platform.isAndroid | Platform.isIOS) {
-      saveFileMobile(Uint8List.fromList(fileData.codeUnits));
+      await saveFileMobile(Uint8List.fromList(fileData.codeUnits));
     } else if (Platform.isLinux | Platform.isMacOS | Platform.isWindows) {
-      saveFileDesktop(Uint8List.fromList(fileData.codeUnits));
+      await saveFileDesktop(Uint8List.fromList(fileData.codeUnits));
+    } else {
+      return;
     }
   }
 
