@@ -67,7 +67,6 @@ class _FormAppPageState extends State<FormAppPage> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Form Elements'),
-          backgroundColor: Theme.of(context).colorScheme.onSecondary,
         ),
         bottomNavigationBar: NavigationBar(
           destinations: const <NavigationDestination>[
