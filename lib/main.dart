@@ -92,8 +92,7 @@ class _FormAppPageState extends State<FormAppPage> {
             Center(
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: ListView(
                   children: <Widget>[
                     TextField(
                       decoration: const InputDecoration(
