@@ -124,6 +124,17 @@ class _FormAppPageState extends State<FormAppPage> {
                               : teamNumberData.toString()),
                     ),
                     const SizedBox(height: 8.0),
+                    ChoiceInput(
+                      title: "Dropdown",
+                      onChoiceUpdate: (value) {
+                        setState(() {
+                          dropdownChoice = value!;
+                        });
+                      },
+                      choice: dropdownChoice,
+                      options: const ["Option A", "Option B", "Option C"],
+                    ),
+                    const SizedBox(height: 8.0),
                     CheckboxListTile(
                       title: const Text('Checkbox'),
                       value: checkBoxIsChecked,
@@ -155,16 +166,6 @@ class _FormAppPageState extends State<FormAppPage> {
                         ratingData = rating.toInt();
                       },
                       initialRating: ratingData.toDouble(),
-                    ),
-                    ChoiceInput(
-                      title: "Dropdown",
-                      onChoiceUpdate: (value) {
-                        setState(() {
-                          dropdownChoice = value!;
-                        });
-                      },
-                      choice: dropdownChoice,
-                      options: const ["Option A", "Option B", "Option C"],
                     )
                   ],
                 ),
