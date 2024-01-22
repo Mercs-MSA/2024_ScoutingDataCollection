@@ -89,6 +89,7 @@ class _ColorInputState extends State<ColorInput> {
           hoverColor: Colors.transparent,
         ),
         child: ColorIndicator(
+          onSelectFocus: false,
           onSelect: () async {
             beforeColor = currentColor;
             if (!(await colorPickerDialog())) {
@@ -153,19 +154,16 @@ class ChoiceInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(title),
-      trailing: DropdownButton(
-        borderRadius: BorderRadius.circular(4),
-        items: options.map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-        value: choice,
-        onChanged: onChoiceUpdate,
-      ),
+    return DropdownButtonFormField(
+      decoration: const InputDecoration(border: OutlineInputBorder()),
+      items: options.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+      value: choice,
+      onChanged: onChoiceUpdate,
     );
   }
 }
