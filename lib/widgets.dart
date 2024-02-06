@@ -54,7 +54,8 @@ class RatingInput extends StatelessWidget {
           color: Theme.of(context).colorScheme.primary,
         ),
         onRatingUpdate: onRatingUpdate,
-        glow: false,
+        glow: true,
+        allowHalfRating: true,
       ),
     );
   }

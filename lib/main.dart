@@ -49,16 +49,34 @@ class FormAppPage extends StatefulWidget {
 }
 
 class _FormAppPageState extends State<FormAppPage> {
-  bool checkBoxIsChecked = false;
   bool switchIsToggled = false;
 
   int currentPageIndex = 0;
 
-  String textFieldData = '';
+  String asigneeData = '';
   int? teamNumberData;
   Color colorSelectData = Colors.red;
-  int ratingData = 0;
-  String dropdownChoice = "Option A";
+  double repairabilityScore = 0;
+  String drivebaseType = "Swerve";
+
+  int? widthData;
+  int? lengthData;
+  bool canPassStage = false;
+
+  bool intakeInBumper = false;
+  String climberType = "Tube-in-Tube";
+
+  bool autonExists = false;
+
+  bool doesSpeaker = true;
+  bool doesAmp = true;
+  bool doesTrap = false;
+
+  bool doesGroundPickup = false;
+  bool doesSourcePickup = false;
+
+  bool doesTurretShoot = false;
+  bool doesExtendShoot = true;
 
   bool saveDisabled = false;
 
@@ -66,13 +84,21 @@ class _FormAppPageState extends State<FormAppPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Form Elements'),
+          title: const Text('Scouting Data Collection'),
         ),
         bottomNavigationBar: NavigationBar(
           destinations: const <NavigationDestination>[
             NavigationDestination(
               icon: Icon(Icons.list_alt),
-              label: 'Form',
+              label: 'General',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.list_alt),
+              label: 'Auton',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.gamepad),
+              label: 'Teleop',
             ),
             NavigationDestination(
               icon: Icon(Icons.outbox),
@@ -97,17 +123,6 @@ class _FormAppPageState extends State<FormAppPage> {
                     TextField(
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Text Field',
-                      ),
-                      onChanged: (value) {
-                        textFieldData = value;
-                      },
-                      controller: TextEditingController(text: textFieldData),
-                    ),
-                    const SizedBox(height: 8.0),
-                    TextField(
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
                         labelText: 'Team Number',
                       ),
                       keyboardType: TextInputType.number,
@@ -124,49 +139,232 @@ class _FormAppPageState extends State<FormAppPage> {
                               : teamNumberData.toString()),
                     ),
                     const SizedBox(height: 8.0),
+                    TextField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Asignee',
+                      ),
+                      onChanged: (value) {
+                        asigneeData = value;
+                      },
+                      controller: TextEditingController(text: asigneeData),
+                    ),
+                    const SizedBox(height: 8.0),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Bot Width',
+                            ),
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(2),
+                            ],
+                            onChanged: (value) {
+                              widthData = int.tryParse(value);
+                            },
+                            controller: TextEditingController(
+                                text: widthData == null
+                                    ? ''
+                                    : widthData.toString()),
+                          ),
+                        ),
+                        const SizedBox(width: 8.0),
+                        Expanded(
+                          child: TextField(
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Bot Length',
+                            ),
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(2),
+                            ],
+                            onChanged: (value) {
+                              lengthData = int.tryParse(value);
+                            },
+                            controller: TextEditingController(
+                                text: lengthData == null
+                                    ? ''
+                                    : lengthData.toString()),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8.0),
                     ChoiceInput(
-                      title: "Dropdown",
+                      title: "Drivebase",
                       onChoiceUpdate: (value) {
                         setState(() {
-                          dropdownChoice = value!;
+                          drivebaseType = value!;
                         });
                       },
-                      choice: dropdownChoice,
-                      options: const ["Option A", "Option B", "Option C"],
+                      choice: drivebaseType,
+                      options: const ["Swerve", "Tank", "Other"],
+                    ),
+                    const SizedBox(height: 8.0),
+                    ChoiceInput(
+                      title: "Climber Type",
+                      onChoiceUpdate: (value) {
+                        setState(() {
+                          climberType = value!;
+                        });
+                      },
+                      choice: climberType,
+                      options: const ["Tube-in-Tube", "Lead Screw", "Hook and Winch", "Elevator"],
                     ),
                     const SizedBox(height: 8.0),
                     CheckboxListTile(
-                      title: const Text('Checkbox'),
-                      value: checkBoxIsChecked,
+                      title: const Text('Can go under stage'),
+                      value: canPassStage,
                       onChanged: (bool? newValue) {
                         setState(() {
-                          checkBoxIsChecked = newValue!;
+                          canPassStage = newValue!;
                         });
                       },
                     ),
-                    const SizedBox(height: 8.0),
-                    SwitchListTile(
-                        title: const Text('Switch'),
-                        value: switchIsToggled,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            switchIsToggled = newValue!;
-                          });
-                        }),
-                    const SizedBox(height: 8.0),
-                    ColorInput(
-                      title: 'Color Select',
-                      onColorChanged: (Color color) {
-                        colorSelectData = color;
+                    const Divider(),
+                    CheckboxListTile(
+                      title: const Text('Inside Bumper Intake?'),
+                      value: intakeInBumper,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          intakeInBumper = newValue!;
+                        });
                       },
                     ),
+                    const Divider(),
+                    Expanded(
+                        child:
+                        Row(
+                        children: [
+                          Expanded(
+                            child: CheckboxListTile(
+                              title: const Text('Speaker'),
+                              value: doesSpeaker,
+                              onChanged: (bool? newValue) {
+                                setState(() {
+                                  doesSpeaker = newValue!;
+                                });
+                              },
+                            ),
+                          ),
+                          Expanded(
+                            child: CheckboxListTile(
+                              title: const Text('Amp'),
+                              value: doesAmp,
+                              onChanged: (bool? newValue) {
+                                setState(() {
+                                  doesAmp = newValue!;
+                                });
+                              },
+                            ),
+                          ),
+                          Expanded(
+                            child: CheckboxListTile(
+                              title: const Text('Trap'),
+                              value: doesTrap,
+                              onChanged: (bool? newValue) {
+                                setState(() {
+                                  doesTrap = newValue!;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Divider(),
+                    Expanded(
+                        child:
+                        Row(
+                        children: [
+                          Expanded(
+                            child: CheckboxListTile(
+                              title: const Text('Ground'),
+                              value: doesGroundPickup,
+                              onChanged: (bool? newValue) {
+                                setState(() {
+                                  doesGroundPickup = newValue!;
+                                });
+                              },
+                            ),
+                          ),
+                          Expanded(
+                            child: CheckboxListTile(
+                              title: const Text('Source'),
+                              value: doesSourcePickup,
+                              onChanged: (bool? newValue) {
+                                setState(() {
+                                  doesSourcePickup = newValue!;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Divider(),
+                    Expanded(
+                        child:
+                        Row(
+                        children: [
+                          Expanded(
+                            child: CheckboxListTile(
+                              title: const Text('Turet'),
+                              value: doesTurretShoot,
+                              onChanged: (bool? newValue) {
+                                setState(() {
+                                  doesTurretShoot = newValue!;
+                                });
+                              },
+                            ),
+                          ),
+                          Expanded(
+                            child: CheckboxListTile(
+                              title: const Text('Extend'),
+                              value: doesExtendShoot,
+                              onChanged: (bool? newValue) {
+                                setState(() {
+                                  doesExtendShoot = newValue!;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Divider(),
                     RatingInput(
-                      title: 'Rating',
+                      title: 'Repairablity',
                       onRatingUpdate: (rating) {
-                        ratingData = rating.toInt();
+                        repairabilityScore = rating.toDouble();
                       },
-                      initialRating: ratingData.toDouble(),
+                      initialRating: repairabilityScore.toDouble(),
                     )
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Center(
+                child: ListView(
+                  children: <Widget>[
+                      CheckboxListTile(
+                        title: const Text('Has Auton'),
+                        value: autonExists,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            autonExists = newValue!;
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 8.0),
                   ],
                 ),
               ),
@@ -182,21 +380,21 @@ class _FormAppPageState extends State<FormAppPage> {
                     children: [
                       DataCard(
                           item: "Text Field",
-                          data: textFieldData == "" ? "Empty" : textFieldData),
+                          data: asigneeData == "" ? "Empty" : asigneeData),
                       DataCard(
                           item: "Team Number",
                           data: teamNumberData == null
                               ? "Empty"
                               : teamNumberData.toString()),
                       DataCard(
-                          item: "Checkbox", data: checkBoxIsChecked.toString()),
+                          item: "Checkbox", data: autonExists.toString()),
                       DataCard(
                           item: "Switch", data: switchIsToggled.toString()),
                       DataCard(
                           item: "Color Select",
                           data: colorSelectData.hex.toString()),
-                      DataCard(item: "Rating", data: ratingData.toString()),
-                      DataCard(item: "Dropdown", data: dropdownChoice),
+                      DataCard(item: "Rating", data: repairabilityScore.toString()),
+                      DataCard(item: "Dropdown", data: drivebaseType),
                     ],
                   ),
                 ),
@@ -221,13 +419,23 @@ class _FormAppPageState extends State<FormAppPage> {
 
   void onSave() async {
     final fileData = const ListToCsvConverter().convert([
-      ['item', 'value'],
-      ['team', teamNumberData],
-      ['checkbox', checkBoxIsChecked],
-      ['switch', switchIsToggled],
-      ['color', colorSelectData.hex.toString()],
-      ['rating', ratingData.toString()],
-      ['dropdown', dropdownChoice],
+      ['item', 'value', 'group'],
+      ['team', teamNumberData, 'general'],
+      ['asignee', asigneeData, 'general'],
+      ['bot_width', widthData, 'general'],
+      ['bot_length', lengthData, 'general'],
+      ['drivebase', drivebaseType, 'general'],
+      ['climber', climberType, 'general'],
+      ['under_stage', canPassStage, 'general'],
+      ['intake_in_bumper', intakeInBumper, 'general'],
+      ['speaker_score', doesSpeaker, 'general'],
+      ['amp_score', doesAmp, 'general'],
+      ['trap_score', doesTrap, 'general'],
+      ['ground_pickup', doesGroundPickup, 'general'],
+      ['source_pickup', doesSourcePickup, 'general'],
+      ['turret_shoot', doesTurretShoot, 'general'],
+      ['extend_shoot', doesExtendShoot, 'general'],
+      ['repairability', repairabilityScore, 'general']
     ]);
 
     setState(() {
