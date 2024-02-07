@@ -157,6 +157,7 @@ class _FormAppPageState extends State<FormAppPage> {
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Bot Width',
+                              suffixText: "in"
                             ),
                             keyboardType: TextInputType.number,
                             inputFormatters: <TextInputFormatter>[
@@ -178,6 +179,7 @@ class _FormAppPageState extends State<FormAppPage> {
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Bot Length',
+                              suffixText: 'in'
                             ),
                             keyboardType: TextInputType.number,
                             inputFormatters: <TextInputFormatter>[
