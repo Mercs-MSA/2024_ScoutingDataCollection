@@ -11,15 +11,15 @@ import 'package:csv/csv.dart';
 import 'widgets.dart';
 
 void main() {
-  runApp(const FormElementsApp());
+  runApp(const ScoutingApp());
 }
 
-class FormElementsApp extends StatelessWidget {
-  const FormElementsApp({super.key});
+class ScoutingApp extends StatelessWidget {
+  const ScoutingApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Scouting App',
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
