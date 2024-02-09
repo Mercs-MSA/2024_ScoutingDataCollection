@@ -143,26 +143,8 @@ class _FormAppPageState extends State<FormAppPage> {
               onDoesExtendShootChanged: (value){ doesExtendShoot = value; },
               onDoesTurretShootChanged: (value){ doesTurretShoot = value; },
             ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Center(
-                  child: ListView(
-                    children: <Widget>[
-                        CheckboxListTile(
-                          title: const Text('Has Auton'),
-                          value: autonExists,
-                          onChanged: (bool? newValue) {
-                            setState(() {
-                              autonExists = newValue!;
-                            });
-                          },
-                        ),
-                        const SizedBox(height: 8.0),
-                    ],
-                  ),
-                ),
-              ),
+            AutonForm(
+              onAutonExistsChanged: (value){ autonExists = value; },
             ),
             Column(
               children: [

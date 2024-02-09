@@ -4,7 +4,7 @@ import 'package:flutter_form_elements/widgets.dart';
 
 class RobotForm extends StatefulWidget {
   const RobotForm({
-    Key? key,
+    super.key,
     required this.onTeamNumberUpdated,
     required this.onRepairabilityChanged,
     required this.onDrivebaseChanged,
@@ -20,7 +20,7 @@ class RobotForm extends StatefulWidget {
     required this.onDoesGroundPickupChnaged,
     required this.onDoesExtendShootChanged,
     required this.onDoesTurretShootChanged,
-  }) : super(key: key);
+  });
 
   final Function(int?) onTeamNumberUpdated;
   final Function(double) onRepairabilityChanged;
@@ -303,6 +303,47 @@ class _RobotFormState extends State<RobotForm> {
               initialRating: repairabilityScore,
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class AutonForm extends StatefulWidget {
+
+  final Function(bool) onAutonExistsChanged;
+
+  const AutonForm({
+    super.key,
+    required this.onAutonExistsChanged
+  });
+
+  @override
+  State<AutonForm> createState() => _AutonFormState();
+}
+
+class _AutonFormState extends State<AutonForm> {
+  bool autonExists = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Center(
+          child: ListView(
+            children: <Widget>[
+                CheckboxListTile(
+                  title: const Text('Has Auton'),
+                  value: autonExists,
+                  onChanged: (bool? newValue) {
+                    autonExists = newValue!;
+                    widget.onAutonExistsChanged(autonExists);
+                  },
+                ),
+                const SizedBox(height: 8.0),
+            ],
+          ),
         ),
       ),
     );
