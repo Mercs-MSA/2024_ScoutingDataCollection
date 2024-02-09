@@ -157,6 +157,7 @@ class ChoiceInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
       decoration: const InputDecoration(border: OutlineInputBorder()),
+      focusNode: FocusNode(canRequestFocus: false),
       items: options.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
