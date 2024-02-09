@@ -7,6 +7,7 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:csv/csv.dart';
+import 'package:flutter_form_elements/forms.dart';
 
 import 'widgets.dart';
 
@@ -85,6 +86,16 @@ class _FormAppPageState extends State<FormAppPage> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Scouting Data Collection'),
+          actions: [
+            IconButton(
+                onPressed: (){
+                  setState(() {
+                    currentPageIndex = 1;
+                  });
+                },
+                icon: const Icon(Icons.start)
+            )
+          ],
         ),
         bottomNavigationBar: NavigationBar(
           destinations: const <NavigationDestination>[
@@ -115,259 +126,41 @@ class _FormAppPageState extends State<FormAppPage> {
         body: IndexedStack(
           index: currentPageIndex,
           children: [
+            RobotForm(
+              onTeamNumberUpdated: (value){ teamNumberData = value; },
+              onRepairabilityChanged: (value){ repairabilityScore = value; },
+              onDrivebaseChanged: (value){ drivebaseType = value; },
+              onLengthChanged: (value){ lengthData = value ;},
+              onWidthChanged: (value){ widthData = value; },
+              onStagePassChanged: (value){ canPassStage = value; },
+              onIntakeInBumperChanged: (value){ intakeInBumper = value; },
+              onClimberTypeChanged: (value){ climberType = value; },
+              onDoesSpeakerChanged: (value){ doesSpeaker = value; },
+              onDoesAmpChanged: (value){ doesAmp = value; },
+              onDoesTrapChanged: (value){ doesTrap = value; },
+              onDoesGroundPickupChnaged: (value){ doesGroundPickup = value; },
+              onDoesSourcePickupChanged: (value){ doesSourcePickup = value; },
+              onDoesExtendShootChanged: (value){ doesExtendShoot = value; },
+              onDoesTurretShootChanged: (value){ doesTurretShoot = value; },
+            ),
             Center(
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: ListView(
-                  children: <Widget>[
-                    TextField(
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Team Number',
-                      ),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly,
-                        LengthLimitingTextInputFormatter(4),
-                      ],
-                      onChanged: (value) {
-                        teamNumberData = int.tryParse(value);
-                      },
-                      controller: TextEditingController(
-                          text: teamNumberData == null
-                              ? ''
-                              : teamNumberData.toString()),
-                    ),
-                    const SizedBox(height: 8.0),
-                    TextField(
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Asignee',
-                      ),
-                      onChanged: (value) {
-                        asigneeData = value;
-                      },
-                      controller: TextEditingController(text: asigneeData),
-                    ),
-                    const SizedBox(height: 8.0),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Bot Width',
-                              suffixText: "in"
-                            ),
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly,
-                              LengthLimitingTextInputFormatter(2),
-                            ],
-                            onChanged: (value) {
-                              widthData = int.tryParse(value);
-                            },
-                            controller: TextEditingController(
-                                text: widthData == null
-                                    ? ''
-                                    : widthData.toString()),
-                          ),
+                child: Center(
+                  child: ListView(
+                    children: <Widget>[
+                        CheckboxListTile(
+                          title: const Text('Has Auton'),
+                          value: autonExists,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              autonExists = newValue!;
+                            });
+                          },
                         ),
-                        const SizedBox(width: 8.0),
-                        Expanded(
-                          child: TextField(
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Bot Length',
-                              suffixText: 'in'
-                            ),
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly,
-                              LengthLimitingTextInputFormatter(2),
-                            ],
-                            onChanged: (value) {
-                              lengthData = int.tryParse(value);
-                            },
-                            controller: TextEditingController(
-                                text: lengthData == null
-                                    ? ''
-                                    : lengthData.toString()),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8.0),
-                    ChoiceInput(
-                      title: "Drivebase",
-                      onChoiceUpdate: (value) {
-                        setState(() {
-                          drivebaseType = value!;
-                        });
-                      },
-                      choice: drivebaseType,
-                      options: const ["Swerve", "Tank", "Other"],
-                    ),
-                    const SizedBox(height: 8.0),
-                    ChoiceInput(
-                      title: "Climber Type",
-                      onChoiceUpdate: (value) {
-                        setState(() {
-                          climberType = value!;
-                        });
-                      },
-                      choice: climberType,
-                      options: const ["Tube-in-Tube", "Lead Screw", "Hook and Winch", "Elevator"],
-                    ),
-                    const SizedBox(height: 8.0),
-                    CheckboxListTile(
-                      title: const Text('Can go under stage'),
-                      value: canPassStage,
-                      onChanged: (bool? newValue) {
-                        setState(() {
-                          canPassStage = newValue!;
-                        });
-                      },
-                    ),
-                    const Divider(),
-                    CheckboxListTile(
-                      title: const Text('Inside Bumper Intake?'),
-                      value: intakeInBumper,
-                      onChanged: (bool? newValue) {
-                        setState(() {
-                          intakeInBumper = newValue!;
-                        });
-                      },
-                    ),
-                    const Divider(),
-                    Expanded(
-                        child:
-                        Row(
-                        children: [
-                          Expanded(
-                            child: CheckboxListTile(
-                              title: const Text('Speaker'),
-                              value: doesSpeaker,
-                              onChanged: (bool? newValue) {
-                                setState(() {
-                                  doesSpeaker = newValue!;
-                                });
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: CheckboxListTile(
-                              title: const Text('Amp'),
-                              value: doesAmp,
-                              onChanged: (bool? newValue) {
-                                setState(() {
-                                  doesAmp = newValue!;
-                                });
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: CheckboxListTile(
-                              title: const Text('Trap'),
-                              value: doesTrap,
-                              onChanged: (bool? newValue) {
-                                setState(() {
-                                  doesTrap = newValue!;
-                                });
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Divider(),
-                    Expanded(
-                        child:
-                        Row(
-                        children: [
-                          Expanded(
-                            child: CheckboxListTile(
-                              title: const Text('Ground'),
-                              value: doesGroundPickup,
-                              onChanged: (bool? newValue) {
-                                setState(() {
-                                  doesGroundPickup = newValue!;
-                                });
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: CheckboxListTile(
-                              title: const Text('Source'),
-                              value: doesSourcePickup,
-                              onChanged: (bool? newValue) {
-                                setState(() {
-                                  doesSourcePickup = newValue!;
-                                });
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Divider(),
-                    Expanded(
-                        child:
-                        Row(
-                        children: [
-                          Expanded(
-                            child: CheckboxListTile(
-                              title: const Text('Turet'),
-                              value: doesTurretShoot,
-                              onChanged: (bool? newValue) {
-                                setState(() {
-                                  doesTurretShoot = newValue!;
-                                });
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: CheckboxListTile(
-                              title: const Text('Extend'),
-                              value: doesExtendShoot,
-                              onChanged: (bool? newValue) {
-                                setState(() {
-                                  doesExtendShoot = newValue!;
-                                });
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Divider(),
-                    RatingInput(
-                      title: 'Repairablity',
-                      onRatingUpdate: (rating) {
-                        repairabilityScore = rating.toDouble();
-                      },
-                      initialRating: repairabilityScore.toDouble(),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Center(
-                child: ListView(
-                  children: <Widget>[
-                      CheckboxListTile(
-                        title: const Text('Has Auton'),
-                        value: autonExists,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            autonExists = newValue!;
-                          });
-                        },
-                      ),
-                      const SizedBox(height: 8.0),
-                  ],
+                        const SizedBox(height: 8.0),
+                    ],
+                  ),
                 ),
               ),
             ),
