@@ -89,45 +89,81 @@ class _FormAppPageState extends State<FormAppPage> {
       children: [
         Scaffold(
           appBar: AppBar(title: Text("Welcome!")),
-          body: Column(
-            children: [
-              ElevatedButton(
-                  onPressed: (){ setState(() {
-                    appMode = 1;
-                  }); },
-                  style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all(const Size.fromHeight(200))
-                  ),
-                  child: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Pit Scouting", style: TextStyle(fontSize: 24),),
-                        Text("Enter pit scouting mode.")
-                      ]
-                  )
-              ),
-              const SizedBox(height: 8.0),
-              ElevatedButton(
-                  onPressed: (){ setState(() {
-                    appMode = 2;
-                  }); },
-                  style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all(const Size.fromHeight(200))
-                  ),
-                  child: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Field Scouting", style: TextStyle(fontSize: 24)),
-                        Text("Enter field scouting mode.")
-                      ]
-                  )
-              )
-            ],
+          body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                FilledButton(
+                    onPressed: (){ setState(() {
+                      appMode = 1;
+                    }); },
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(const Size.fromHeight(200)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                        )
+                      )
+                    ),
+                    child: const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Pit Scouting", style: TextStyle(fontSize: 24),),
+                          Text("Enter pit scouting mode.")
+                        ]
+                    )
+                ),
+                const SizedBox(height: 8.0),
+                FilledButton(
+                    onPressed: (){ setState(() {
+                      appMode = 2;
+                    }); },
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(const Size.fromHeight(200)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                        )
+                      )
+                    ),
+                    child: const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Field Scouting", style: TextStyle(fontSize: 24)),
+                          Text("Enter field scouting mode.")
+                        ]
+                    )
+                ),
+                const Spacer(),
+                FlutterLogo(size: 256),
+                const Spacer(),
+                ElevatedButton(
+                    onPressed: (){ setState(() {
+                      appMode = 3;
+                    }); },
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(const Size.fromHeight(200)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                        )
+                      )
+                    ),
+                    child: const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("App Setup", style: TextStyle(fontSize: 24)),
+                          Text("Configure app and team lists")
+                        ]
+                    )
+                )
+              ],
+            ),
           ),
         ),
         Scaffold(
           appBar: AppBar(
-            title: const Text('Scouting Data Collection'),
+            title: const Text('Pit Data Collection'),
             actions: [
               IconButton(
                   onPressed: (){
@@ -144,14 +180,6 @@ class _FormAppPageState extends State<FormAppPage> {
               NavigationDestination(
                 icon: Icon(Icons.list_alt),
                 label: 'General',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.list_alt),
-                label: 'Auton',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.gamepad),
-                label: 'Teleop',
               ),
               NavigationDestination(
                 icon: Icon(Icons.outbox),
@@ -184,9 +212,6 @@ class _FormAppPageState extends State<FormAppPage> {
                 onDoesSourcePickupChanged: (value){ doesSourcePickup = value; },
                 onDoesExtendShootChanged: (value){ doesExtendShoot = value; },
                 onDoesTurretShootChanged: (value){ doesTurretShoot = value; },
-                onAutonExistsChanged: (value){ autonExists = value; },
-              ),
-              AutonForm(
                 onAutonExistsChanged: (value){ autonExists = value; },
               ),
               Column(
@@ -234,7 +259,38 @@ class _FormAppPageState extends State<FormAppPage> {
                 ],
               ),
             ],
-          ))],
+          )),
+        Scaffold(
+          appBar: AppBar(
+            title: const Text('Field Data Collection'),
+            actions: [
+              IconButton(
+                  onPressed: (){
+                    setState(() {
+                      appMode = 0;
+                    });
+                  },
+                  icon: const Icon(Icons.start)
+              )
+            ],
+          ),
+        ),
+        Scaffold(
+          appBar: AppBar(
+            title: const Text('Application Setup'),
+            actions: [
+              IconButton(
+                  onPressed: (){
+                    setState(() {
+                      appMode = 0;
+                    });
+                  },
+                  icon: const Icon(Icons.start)
+              )
+            ],
+          ),
+        )
+      ],
     );
   }
 
