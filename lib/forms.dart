@@ -145,7 +145,6 @@ class _RobotFormState extends State<RobotForm> {
             ),
             const SizedBox(height: 8.0),
 
-            
             ChoiceInput(
               title: "Drivebase",
               onChoiceUpdate: (value) {
@@ -157,6 +156,7 @@ class _RobotFormState extends State<RobotForm> {
               choice: drivebaseType,
               options: const ["Swerve", "Tank", "Other"],
             ),
+            const SizedBox(height: 8.0),
             Visibility(
               visible: drivebaseType == 'Other',
                 child: TextField(
