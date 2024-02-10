@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:csv/csv.dart';
@@ -56,30 +55,30 @@ class _FormAppPageState extends State<FormAppPage> {
   int fieldPageIndex = 0;
   int appMode = 0;
 
-  String asigneeData = '';
-  int? teamNumberData;
-  Color colorSelectData = Colors.red;
-  double repairabilityScore = 0;
-  String drivebaseType = "Swerve";
+  int? pitTeamNumberData;
+  double pitRepairabilityScore = 0;
+  String pitDrivebaseType = "Swerve";
 
-  int? widthData;
-  int? lengthData;
-  bool canPassStage = false;
+  int? pitWidthData;
+  int? pitLengthData;
+  bool pitCanPassStage = false;
 
-  bool intakeInBumper = false;
-  String climberType = "Tube-in-Tube";
+  bool pitIntakeInBumper = false;
+  String pitClimberType = "Tube-in-Tube";
 
-  bool autonExists = false;
+  bool pitAutonExists = false;
 
-  bool doesSpeaker = true;
-  bool doesAmp = true;
-  bool doesTrap = false;
+  bool pitDoesSpeaker = true;
+  bool pitDoesAmp = true;
+  bool pitDoesTrap = false;
 
-  bool doesGroundPickup = false;
-  bool doesSourcePickup = false;
+  bool pitDoesGroundPickup = false;
+  bool pitDoesSourcePickup = false;
 
-  bool doesTurretShoot = false;
-  bool doesExtendShoot = true;
+  bool pitDoesTurretShoot = false;
+  bool pitDoesExtendShoot = true;
+
+  int? fieldTeamNumber;
 
   bool saveDisabled = false;
 
@@ -223,24 +222,24 @@ class _FormAppPageState extends State<FormAppPage> {
             index: pitPageIndex,
             children: [
               RobotForm(
-                onTeamNumberUpdated: (value){ teamNumberData = value; },
-                onRepairabilityChanged: (value){ repairabilityScore = value; },
-                onDrivebaseChanged: (value){ drivebaseType = value; },
-                onLengthChanged: (value){ lengthData = value; },
-                onWidthChanged: (value){ widthData = value; },
+                onTeamNumberUpdated: (value){ pitTeamNumberData = value; },
+                onRepairabilityChanged: (value){ pitRepairabilityScore = value; },
+                onDrivebaseChanged: (value){ pitDrivebaseType = value; },
+                onLengthChanged: (value){ pitLengthData = value; },
+                onWidthChanged: (value){ pitWidthData = value; },
                 onStagePassChanged: (value){ setState(() {
-                  canPassStage = value;
+                  pitCanPassStage = value;
                 }); },
-                onIntakeInBumperChanged: (value){ intakeInBumper = value; },
-                onClimberTypeChanged: (value){ climberType = value; },
-                onDoesSpeakerChanged: (value){ doesSpeaker = value; },
-                onDoesAmpChanged: (value){ doesAmp = value; },
-                onDoesTrapChanged: (value){ doesTrap = value; },
-                onDoesGroundPickupChnaged: (value){ doesGroundPickup = value; },
-                onDoesSourcePickupChanged: (value){ doesSourcePickup = value; },
-                onDoesExtendShootChanged: (value){ doesExtendShoot = value; },
-                onDoesTurretShootChanged: (value){ doesTurretShoot = value; },
-                onAutonExistsChanged: (value){ autonExists = value; },
+                onIntakeInBumperChanged: (value){ pitIntakeInBumper = value; },
+                onClimberTypeChanged: (value){ pitClimberType = value; },
+                onDoesSpeakerChanged: (value){ pitDoesSpeaker = value; },
+                onDoesAmpChanged: (value){ pitDoesAmp = value; },
+                onDoesTrapChanged: (value){ pitDoesTrap = value; },
+                onDoesGroundPickupChnaged: (value){ pitDoesGroundPickup = value; },
+                onDoesSourcePickupChanged: (value){ pitDoesSourcePickup = value; },
+                onDoesExtendShootChanged: (value){ pitDoesExtendShoot = value; },
+                onDoesTurretShootChanged: (value){ pitDoesTurretShoot = value; },
+                onAutonExistsChanged: (value){ pitAutonExists = value; },
               ),
               Column(
                 children: [
@@ -252,22 +251,16 @@ class _FormAppPageState extends State<FormAppPage> {
                     child: ListView(
                       children: [
                         DataCard(
-                            item: "Text Field",
-                            data: asigneeData == "" ? "Empty" : asigneeData),
-                        DataCard(
                             item: "Team Number",
-                            data: teamNumberData == null
+                            data: pitTeamNumberData == null
                                 ? "Empty"
-                                : teamNumberData.toString()),
+                                : pitTeamNumberData.toString()),
                         DataCard(
-                            item: "Checkbox", data: autonExists.toString()),
+                            item: "Checkbox", data: pitAutonExists.toString()),
                         DataCard(
                             item: "Switch", data: switchIsToggled.toString()),
-                        DataCard(
-                            item: "Color Select",
-                            data: colorSelectData.hex.toString()),
-                        DataCard(item: "Rating", data: repairabilityScore.toString()),
-                        DataCard(item: "Dropdown", data: drivebaseType),
+                        DataCard(item: "Rating", data: pitRepairabilityScore.toString()),
+                        DataCard(item: "Dropdown", data: pitDrivebaseType),
                       ],
                     ),
                   ),
@@ -302,6 +295,54 @@ class _FormAppPageState extends State<FormAppPage> {
               )
             ],
           ),
+          body: IndexedStack(
+            index: fieldPageIndex,
+            children: [
+              Column(
+                children: [
+                  // TODO: Use real data from data import
+                  const ExpansionTile(
+                  title: Text("To Be Scouted"),
+                  initiallyExpanded: true,
+                  children: [
+                    ScoutSelection(team: 9999, match: 17, alliance: Alliances.red),
+                    ScoutSelection(team: 9998, match: 8, alliance: Alliances.blue),
+                  ],
+                ),
+                  const ExpansionTile(
+                  title: Text("Scouted"),
+
+                  initiallyExpanded: false,
+                ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        TextField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Team Number',
+                          ),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(4),
+                          ],
+                          onChanged: (value) {
+                            fieldTeamNumber = int.tryParse(value);
+                          },
+                          controller: TextEditingController(
+                            text: fieldTeamNumber == null ? '' : fieldTeamNumber.toString(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ]
+              ),
+              AutonForm(onAutonExistsChanged: (value){ pitAutonExists = value; })
+            ],
+          ),
           bottomNavigationBar: NavigationBar(
             selectedIndex: fieldPageIndex,
             onDestinationSelected: (index) {
@@ -310,6 +351,10 @@ class _FormAppPageState extends State<FormAppPage> {
               });
             },
             destinations: const [
+              NavigationDestination(
+                label: "Start",
+                icon: Icon(Icons.flag),
+              ),
               NavigationDestination(
                 label: "Auton",
                 icon: Icon(Icons.smart_toy),
@@ -343,22 +388,21 @@ class _FormAppPageState extends State<FormAppPage> {
   void onSave() async {
     final fileData = const ListToCsvConverter().convert([
       ['item', 'value', 'group'],
-      ['team', teamNumberData, 'general'],
-      ['asignee', asigneeData, 'general'],
-      ['bot_width', widthData, 'general'],
-      ['bot_length', lengthData, 'general'],
-      ['drivebase', drivebaseType, 'general'],
-      ['climber', climberType, 'general'],
-      ['under_stage', canPassStage, 'general'],
-      ['intake_in_bumper', intakeInBumper, 'general'],
-      ['speaker_score', doesSpeaker, 'general'],
-      ['amp_score', doesAmp, 'general'],
-      ['trap_score', doesTrap, 'general'],
-      ['ground_pickup', doesGroundPickup, 'general'],
-      ['source_pickup', doesSourcePickup, 'general'],
-      ['turret_shoot', doesTurretShoot, 'general'],
-      ['extend_shoot', doesExtendShoot, 'general'],
-      ['repairability', repairabilityScore, 'general']
+      ['team', pitTeamNumberData, 'general'],
+      ['bot_width', pitWidthData, 'general'],
+      ['bot_length', pitLengthData, 'general'],
+      ['drivebase', pitDrivebaseType, 'general'],
+      ['climber', pitClimberType, 'general'],
+      ['under_stage', pitCanPassStage, 'general'],
+      ['intake_in_bumper', pitIntakeInBumper, 'general'],
+      ['speaker_score', pitDoesSpeaker, 'general'],
+      ['amp_score', pitDoesAmp, 'general'],
+      ['trap_score', pitDoesTrap, 'general'],
+      ['ground_pickup', pitDoesGroundPickup, 'general'],
+      ['source_pickup', pitDoesSourcePickup, 'general'],
+      ['turret_shoot', pitDoesTurretShoot, 'general'],
+      ['extend_shoot', pitDoesExtendShoot, 'general'],
+      ['repairability', pitRepairabilityScore, 'general']
     ]);
 
     setState(() {

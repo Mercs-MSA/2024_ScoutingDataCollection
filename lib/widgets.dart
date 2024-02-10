@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+enum Alliances {
+  red,
+  blue
+}
+
 class DataCard extends StatelessWidget {
   const DataCard({
     super.key,
@@ -25,6 +30,51 @@ class DataCard extends StatelessWidget {
             const Spacer(),
             Text(data),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class ScoutSelection extends StatelessWidget {
+  const ScoutSelection({
+    super.key,
+    required this.team,
+    required this.match,
+    required this.alliance,
+  });
+
+  final int team;
+  final int match;
+  final Alliances alliance;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        onPressed: (){},
+        style: ButtonStyle(
+          minimumSize: MaterialStateProperty.all(const Size.fromHeight(120)),
+          maximumSize: MaterialStateProperty.all(const Size.fromHeight(130)),
+
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+              side: BorderSide(width: 4, color: alliance == Alliances.red ? Colors.redAccent : Colors.blueAccent),
+            )
+          )
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Team $team", style: const TextStyle(fontSize: 22)),
+              Text("Match $match", style: const TextStyle(fontSize: 18)),
+              Text("${alliance.name.capitalize} Alliance", style: const TextStyle(fontSize: 16)),
+            ],
+          ),
         ),
       ),
     );

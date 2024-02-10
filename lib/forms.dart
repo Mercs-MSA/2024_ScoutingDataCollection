@@ -358,7 +358,7 @@ class AutonForm extends StatefulWidget {
 }
 
 class _AutonFormState extends State<AutonForm> {
-  bool autonExists = false;
+  bool autonExists = true;
 
   int speakerNotes = 0;
   int ampNotes = 0;
