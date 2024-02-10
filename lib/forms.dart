@@ -167,6 +167,7 @@ class _RobotFormState extends State<RobotForm> {
                       ),
                       inputFormatters: <TextInputFormatter>[
                         LengthLimitingTextInputFormatter(100),
+                        FilteringTextInputFormatter(RegExp(r'[a-zA-Z]|-| '), allow: true)
                       ],
                       controller: TextEditingController(
                         text: altDriveType == null ? '' : altDriveType.toString(),
