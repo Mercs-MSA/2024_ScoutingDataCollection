@@ -135,7 +135,7 @@ class _FormAppPageState extends State<FormAppPage> {
                     )
                 ),
                 const Spacer(),
-                FlutterLogo(size: 256),
+                const FlutterLogo(size: 256),
                 const Spacer(),
                 ElevatedButton(
                     onPressed: (){ setState(() {
@@ -200,9 +200,11 @@ class _FormAppPageState extends State<FormAppPage> {
                 onTeamNumberUpdated: (value){ teamNumberData = value; },
                 onRepairabilityChanged: (value){ repairabilityScore = value; },
                 onDrivebaseChanged: (value){ drivebaseType = value; },
-                onLengthChanged: (value){ lengthData = value ;},
+                onLengthChanged: (value){ lengthData = value; },
                 onWidthChanged: (value){ widthData = value; },
-                onStagePassChanged: (value){ canPassStage = value; },
+                onStagePassChanged: (value){ setState(() {
+                  canPassStage = value;
+                }); },
                 onIntakeInBumperChanged: (value){ intakeInBumper = value; },
                 onClimberTypeChanged: (value){ climberType = value; },
                 onDoesSpeakerChanged: (value){ doesSpeaker = value; },
