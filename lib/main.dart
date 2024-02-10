@@ -53,6 +53,7 @@ class _FormAppPageState extends State<FormAppPage> {
   bool switchIsToggled = false;
 
   int currentPageIndex = 0;
+  int appMode = 0;
 
   String asigneeData = '';
   int? teamNumberData;
@@ -83,115 +84,157 @@ class _FormAppPageState extends State<FormAppPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Scouting Data Collection'),
-          actions: [
-            IconButton(
-                onPressed: (){
-                  setState(() {
-                    currentPageIndex = 1;
-                  });
-                },
-                icon: const Icon(Icons.start)
-            )
-          ],
+    return IndexedStack(
+      index: appMode,
+      children: [
+        Scaffold(
+          appBar: AppBar(title: Text("Welcome!")),
+          body: Column(
+            children: [
+              ElevatedButton(
+                  onPressed: (){ setState(() {
+                    appMode = 1;
+                  }); },
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all(const Size.fromHeight(200))
+                  ),
+                  child: const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Pit Scouting", style: TextStyle(fontSize: 24),),
+                        Text("Enter pit scouting mode.")
+                      ]
+                  )
+              ),
+              const SizedBox(height: 8.0),
+              ElevatedButton(
+                  onPressed: (){ setState(() {
+                    appMode = 2;
+                  }); },
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all(const Size.fromHeight(200))
+                  ),
+                  child: const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Field Scouting", style: TextStyle(fontSize: 24)),
+                        Text("Enter field scouting mode.")
+                      ]
+                  )
+              )
+            ],
+          ),
         ),
-        bottomNavigationBar: NavigationBar(
-          destinations: const <NavigationDestination>[
-            NavigationDestination(
-              icon: Icon(Icons.list_alt),
-              label: 'General',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.list_alt),
-              label: 'Auton',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.gamepad),
-              label: 'Teleop',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.outbox),
-              label: 'Output',
-            )
-          ],
-          selectedIndex: currentPageIndex,
-          onDestinationSelected: (int index) {
-            setState(() {
-              currentPageIndex = index;
-            });
-          },
-        ),
-        body: IndexedStack(
-          index: currentPageIndex,
-          children: [
-            RobotForm(
-              onTeamNumberUpdated: (value){ teamNumberData = value; },
-              onRepairabilityChanged: (value){ repairabilityScore = value; },
-              onDrivebaseChanged: (value){ drivebaseType = value; },
-              onLengthChanged: (value){ lengthData = value ;},
-              onWidthChanged: (value){ widthData = value; },
-              onStagePassChanged: (value){ canPassStage = value; },
-              onIntakeInBumperChanged: (value){ intakeInBumper = value; },
-              onClimberTypeChanged: (value){ climberType = value; },
-              onDoesSpeakerChanged: (value){ doesSpeaker = value; },
-              onDoesAmpChanged: (value){ doesAmp = value; },
-              onDoesTrapChanged: (value){ doesTrap = value; },
-              onDoesGroundPickupChnaged: (value){ doesGroundPickup = value; },
-              onDoesSourcePickupChanged: (value){ doesSourcePickup = value; },
-              onDoesExtendShootChanged: (value){ doesExtendShoot = value; },
-              onDoesTurretShootChanged: (value){ doesTurretShoot = value; },
-            ),
-            AutonForm(
-              onAutonExistsChanged: (value){ autonExists = value; },
-            ),
-            Column(
-              children: [
-                const Icon(
-                  Icons.poll_outlined,
-                  size: 180,
-                ),
-                Expanded(
-                  child: ListView(
+        Scaffold(
+          appBar: AppBar(
+            title: const Text('Scouting Data Collection'),
+            actions: [
+              IconButton(
+                  onPressed: (){
+                    setState(() {
+                      appMode = 0;
+                    });
+                  },
+                  icon: const Icon(Icons.start)
+              )
+            ],
+          ),
+          bottomNavigationBar: NavigationBar(
+            destinations: const <NavigationDestination>[
+              NavigationDestination(
+                icon: Icon(Icons.list_alt),
+                label: 'General',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.list_alt),
+                label: 'Auton',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.gamepad),
+                label: 'Teleop',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.outbox),
+                label: 'Output',
+              )
+            ],
+            selectedIndex: currentPageIndex,
+            onDestinationSelected: (int index) {
+              setState(() {
+                currentPageIndex = index;
+              });
+            },
+          ),
+          body: IndexedStack(
+            index: currentPageIndex,
+            children: [
+              RobotForm(
+                onTeamNumberUpdated: (value){ teamNumberData = value; },
+                onRepairabilityChanged: (value){ repairabilityScore = value; },
+                onDrivebaseChanged: (value){ drivebaseType = value; },
+                onLengthChanged: (value){ lengthData = value ;},
+                onWidthChanged: (value){ widthData = value; },
+                onStagePassChanged: (value){ canPassStage = value; },
+                onIntakeInBumperChanged: (value){ intakeInBumper = value; },
+                onClimberTypeChanged: (value){ climberType = value; },
+                onDoesSpeakerChanged: (value){ doesSpeaker = value; },
+                onDoesAmpChanged: (value){ doesAmp = value; },
+                onDoesTrapChanged: (value){ doesTrap = value; },
+                onDoesGroundPickupChnaged: (value){ doesGroundPickup = value; },
+                onDoesSourcePickupChanged: (value){ doesSourcePickup = value; },
+                onDoesExtendShootChanged: (value){ doesExtendShoot = value; },
+                onDoesTurretShootChanged: (value){ doesTurretShoot = value; },
+              ),
+              AutonForm(
+                onAutonExistsChanged: (value){ autonExists = value; },
+              ),
+              Column(
+                children: [
+                  const Icon(
+                    Icons.poll_outlined,
+                    size: 180,
+                  ),
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        DataCard(
+                            item: "Text Field",
+                            data: asigneeData == "" ? "Empty" : asigneeData),
+                        DataCard(
+                            item: "Team Number",
+                            data: teamNumberData == null
+                                ? "Empty"
+                                : teamNumberData.toString()),
+                        DataCard(
+                            item: "Checkbox", data: autonExists.toString()),
+                        DataCard(
+                            item: "Switch", data: switchIsToggled.toString()),
+                        DataCard(
+                            item: "Color Select",
+                            data: colorSelectData.hex.toString()),
+                        DataCard(item: "Rating", data: repairabilityScore.toString()),
+                        DataCard(item: "Dropdown", data: drivebaseType),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      DataCard(
-                          item: "Text Field",
-                          data: asigneeData == "" ? "Empty" : asigneeData),
-                      DataCard(
-                          item: "Team Number",
-                          data: teamNumberData == null
-                              ? "Empty"
-                              : teamNumberData.toString()),
-                      DataCard(
-                          item: "Checkbox", data: autonExists.toString()),
-                      DataCard(
-                          item: "Switch", data: switchIsToggled.toString()),
-                      DataCard(
-                          item: "Color Select",
-                          data: colorSelectData.hex.toString()),
-                      DataCard(item: "Rating", data: repairabilityScore.toString()),
-                      DataCard(item: "Dropdown", data: drivebaseType),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton.icon(
+                          onPressed: saveDisabled == false ? onSave : null,
+                          label: const Text("Export CSV"),
+                          icon: const Icon(Icons.save),
+                        ),
+                      )
                     ],
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton.icon(
-                        onPressed: saveDisabled == false ? onSave : null,
-                        label: const Text("Export CSV"),
-                        icon: const Icon(Icons.save),
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ));
+                ],
+              ),
+            ],
+          ))],
+    );
   }
 
   void onSave() async {

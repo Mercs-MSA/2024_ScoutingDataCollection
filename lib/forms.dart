@@ -144,7 +144,6 @@ class _RobotFormState extends State<RobotForm> {
               ],
             ),
             const SizedBox(height: 8.0),
-
             ChoiceInput(
               title: "Drivebase",
               onChoiceUpdate: (value) {
@@ -366,34 +365,41 @@ class _AutonFormState extends State<AutonForm> {
                     });
                   },
                 ),
-                NumberInput(
-                  title: "Speaker Notes",
-                  value: speakerNotes,
-                  onValueAdd: (){ setState(() {
-                    if (speakerNotes < 10) {
-                      speakerNotes += 1;
-                    }
-                  }); },
-                  onValueSubtract: (){ setState(() {
-                    if (speakerNotes > 0) {
-                      speakerNotes -= 1;
-                    }
-                  }); },
+                const SizedBox(height: 8.0),
+                Visibility(
+                  visible: autonExists,
+                  child: NumberInput(
+                    title: "Speaker Notes",
+                    value: speakerNotes,
+                    onValueAdd: (){ setState(() {
+                      if (speakerNotes < 10) {
+                        speakerNotes += 1;
+                      }
+                    }); },
+                    onValueSubtract: (){ setState(() {
+                      if (speakerNotes > 0) {
+                        speakerNotes -= 1;
+                      }
+                    }); },
+                  ),
                 ),
                 const SizedBox(height: 8.0),
-                NumberInput(
-                  title: "Amp Notes",
-                  value: ampNotes,
-                  onValueAdd: (){ setState(() {
-                    if (ampNotes < 10) {
-                      ampNotes += 1;
-                    }
-                  }); },
-                  onValueSubtract: (){ setState(() {
-                    if (ampNotes > 0) {
-                      ampNotes -= 1;
-                    }
-                  }); },
+                Visibility(
+                  visible: autonExists,
+                  child: NumberInput(
+                    title: "Amp Notes",
+                    value: ampNotes,
+                    onValueAdd: (){ setState(() {
+                      if (ampNotes < 10) {
+                        ampNotes += 1;
+                      }
+                    }); },
+                    onValueSubtract: (){ setState(() {
+                      if (ampNotes > 0) {
+                        ampNotes -= 1;
+                      }
+                    }); },
+                  ),
                 ),
                 const SizedBox(height: 8.0),
             ],
