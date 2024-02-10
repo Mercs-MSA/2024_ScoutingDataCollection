@@ -345,6 +345,9 @@ class AutonForm extends StatefulWidget {
 class _AutonFormState extends State<AutonForm> {
   bool autonExists = false;
 
+  int speakerNotes = 0;
+  int ampNotes = 0;
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -362,6 +365,35 @@ class _AutonFormState extends State<AutonForm> {
                       widget.onAutonExistsChanged(autonExists);
                     });
                   },
+                ),
+                NumberInput(
+                  title: "Speaker Notes",
+                  value: speakerNotes,
+                  onValueAdd: (){ setState(() {
+                    if (speakerNotes < 10) {
+                      speakerNotes += 1;
+                    }
+                  }); },
+                  onValueSubtract: (){ setState(() {
+                    if (speakerNotes > 0) {
+                      speakerNotes -= 1;
+                    }
+                  }); },
+                ),
+                const SizedBox(height: 8.0),
+                NumberInput(
+                  title: "Amp Notes",
+                  value: ampNotes,
+                  onValueAdd: (){ setState(() {
+                    if (ampNotes < 10) {
+                      ampNotes += 1;
+                    }
+                  }); },
+                  onValueSubtract: (){ setState(() {
+                    if (ampNotes > 0) {
+                      ampNotes -= 1;
+                    }
+                  }); },
                 ),
                 const SizedBox(height: 8.0),
             ],

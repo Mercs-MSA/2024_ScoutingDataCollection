@@ -169,3 +169,76 @@ class ChoiceInput extends StatelessWidget {
     );
   }
 }
+
+
+class NumberInput extends StatelessWidget {
+  final String title;
+
+  final int value;
+  final void Function() onValueAdd;
+  final void Function() onValueSubtract;
+
+  const NumberInput({
+    super.key,
+    required this.title,
+    required this.value,
+    required this.onValueAdd,
+    required this.onValueSubtract
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.all(4.0),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Theme.of(context).dividerColor,
+            width: 1,
+          ),
+          borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+        ),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+              ),
+            ),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                value.toString(),
+                style: const TextStyle(
+                  fontSize: 36,
+                  fontWeight: FontWeight.w600
+                ),
+              ),
+            ),
+            FilledButton(
+              onPressed: onValueAdd,
+              style: ButtonStyle(
+                  fixedSize: MaterialStateProperty.all(const Size.square(56)),
+                  padding: MaterialStateProperty.all(EdgeInsets.zero)
+              ),
+              child: const Icon(Icons.add),
+            ),
+            const SizedBox(width: 8.0),
+            FilledButton(
+                onPressed: onValueSubtract,
+                style: ButtonStyle(
+                  fixedSize: MaterialStateProperty.all(const Size.square(56)),
+                  padding: MaterialStateProperty.all(EdgeInsets.zero)
+              ),
+                child: const Icon(Icons.remove)),
+          ],
+        ),
+      )
+    );
+  }
+}
