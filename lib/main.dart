@@ -184,6 +184,7 @@ class _FormAppPageState extends State<FormAppPage> {
                 onDoesSourcePickupChanged: (value){ doesSourcePickup = value; },
                 onDoesExtendShootChanged: (value){ doesExtendShoot = value; },
                 onDoesTurretShootChanged: (value){ doesTurretShoot = value; },
+                onAutonExistsChanged: (value){ autonExists = value; },
               ),
               AutonForm(
                 onAutonExistsChanged: (value){ autonExists = value; },

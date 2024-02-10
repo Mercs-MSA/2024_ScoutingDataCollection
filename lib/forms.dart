@@ -20,6 +20,7 @@ class RobotForm extends StatefulWidget {
     required this.onDoesGroundPickupChnaged,
     required this.onDoesExtendShootChanged,
     required this.onDoesTurretShootChanged,
+    required this.onAutonExistsChanged
   });
 
   final Function(int?) onTeamNumberUpdated;
@@ -37,6 +38,7 @@ class RobotForm extends StatefulWidget {
   final Function(bool) onDoesGroundPickupChnaged;
   final Function(bool) onDoesExtendShootChanged;
   final Function(bool) onDoesTurretShootChanged;
+  final Function(bool) onAutonExistsChanged;
 
   @override
   State<RobotForm> createState() => _RobotFormState();
@@ -67,8 +69,6 @@ class _RobotFormState extends State<RobotForm> {
 
   bool doesTurretShoot = false;
   bool doesExtendShoot = true;
-
-  bool saveDisabled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -184,6 +184,17 @@ class _RobotFormState extends State<RobotForm> {
               options: const ["Tube-in-Tube", "Lead Screw", "Hook and Winch", "Elevator", "Other"],
             ),
             const SizedBox(height: 8.0),
+            CheckboxListTile(
+                  title: const Text('Has Auton'),
+                  value: autonExists,
+                  onChanged: (bool? newValue) {
+                    setState(() {
+                      autonExists = newValue!;
+                      widget.onAutonExistsChanged(autonExists);
+                    });
+                  },
+            ),
+            const Divider(),
             CheckboxListTile(
               title: const Text('Can go under stage'),
               value: canPassStage,
@@ -355,17 +366,6 @@ class _AutonFormState extends State<AutonForm> {
         child: Center(
           child: ListView(
             children: <Widget>[
-                CheckboxListTile(
-                  title: const Text('Has Auton'),
-                  value: autonExists,
-                  onChanged: (bool? newValue) {
-                    setState(() {
-                      autonExists = newValue!;
-                      widget.onAutonExistsChanged(autonExists);
-                    });
-                  },
-                ),
-                const SizedBox(height: 8.0),
                 Visibility(
                   visible: autonExists,
                   child: NumberInput(
