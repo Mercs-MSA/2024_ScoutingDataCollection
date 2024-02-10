@@ -158,20 +158,24 @@ class _RobotFormState extends State<RobotForm> {
             const SizedBox(height: 8.0),
             Visibility(
               visible: drivebaseType == 'Other',
-                child: TextField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Alternate Drivebase Type',
-                  ),
-                  inputFormatters: <TextInputFormatter>[
-                    LengthLimitingTextInputFormatter(100),
+                child: Column(
+                  children: [
+                    TextField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Alternate Drivebase Type',
+                      ),
+                      inputFormatters: <TextInputFormatter>[
+                        LengthLimitingTextInputFormatter(100),
+                      ],
+                      controller: TextEditingController(
+                        text: altDriveType == null ? '' : altDriveType.toString(),
+                      ),
+                    ),
+                    const SizedBox(height: 8.0),
                   ],
-                  controller: TextEditingController(
-                    text: altDriveType == null ? '' : altDriveType.toString(),
-                  ),
                 ),
             ),
-            const SizedBox(height: 8.0),
             ChoiceInput(
               title: "Climber Type",
               onChoiceUpdate: (value) {
