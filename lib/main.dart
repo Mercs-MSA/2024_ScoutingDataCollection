@@ -52,7 +52,8 @@ class FormAppPage extends StatefulWidget {
 class _FormAppPageState extends State<FormAppPage> {
   bool switchIsToggled = false;
 
-  int currentPageIndex = 0;
+  int pitPageIndex = 0;
+  int fieldPageIndex = 0;
   int appMode = 0;
 
   String asigneeData = '';
@@ -211,15 +212,15 @@ class _FormAppPageState extends State<FormAppPage> {
                 label: 'Output',
               )
             ],
-            selectedIndex: currentPageIndex,
+            selectedIndex: pitPageIndex,
             onDestinationSelected: (int index) {
               setState(() {
-                currentPageIndex = index;
+                pitPageIndex = index;
               });
             },
           ),
           body: IndexedStack(
-            index: currentPageIndex,
+            index: pitPageIndex,
             children: [
               RobotForm(
                 onTeamNumberUpdated: (value){ teamNumberData = value; },
@@ -301,6 +302,24 @@ class _FormAppPageState extends State<FormAppPage> {
               )
             ],
           ),
+          bottomNavigationBar: NavigationBar(
+            selectedIndex: fieldPageIndex,
+            onDestinationSelected: (index) {
+              setState(() {
+                fieldPageIndex = index;
+              });
+            },
+            destinations: const [
+              NavigationDestination(
+                label: "Auton",
+                icon: Icon(Icons.smart_toy),
+              ),
+              NavigationDestination(
+                label: "Teleop",
+                icon: Icon(Icons.sports_esports),
+              )
+            ],
+          ),
         ),
         Scaffold(
           appBar: AppBar(
@@ -315,7 +334,7 @@ class _FormAppPageState extends State<FormAppPage> {
                   icon: const Icon(Icons.start)
               )
             ],
-          ),
+          )
         )
       ],
     );
