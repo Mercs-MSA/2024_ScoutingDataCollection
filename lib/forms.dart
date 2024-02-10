@@ -337,8 +337,10 @@ class _AutonFormState extends State<AutonForm> {
                   title: const Text('Has Auton'),
                   value: autonExists,
                   onChanged: (bool? newValue) {
-                    autonExists = newValue!;
-                    widget.onAutonExistsChanged(autonExists);
+                    setState(() {
+                      autonExists = newValue!;
+                      widget.onAutonExistsChanged(autonExists);
+                    });
                   },
                 ),
                 const SizedBox(height: 8.0),
