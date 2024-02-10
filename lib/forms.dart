@@ -47,6 +47,7 @@ class _RobotFormState extends State<RobotForm> {
   int? teamNumber;
   double repairabilityScore = 0;
   String drivebaseType = "Swerve";
+  String? altDriveType;
 
   int? widthData;
   int? lengthData;
@@ -143,14 +144,33 @@ class _RobotFormState extends State<RobotForm> {
               ],
             ),
             const SizedBox(height: 8.0),
+
+            
             ChoiceInput(
               title: "Drivebase",
               onChoiceUpdate: (value) {
-                drivebaseType = value!;
-                widget.onDrivebaseChanged(drivebaseType);
+                setState((){
+                  drivebaseType = value!;
+                  widget.onDrivebaseChanged(drivebaseType);
+                });
               },
               choice: drivebaseType,
               options: const ["Swerve", "Tank", "Other"],
+            ),
+            Visibility(
+              visible: drivebaseType == 'Other',
+                child: TextField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Alternate Drivebase Type',
+                  ),
+                  inputFormatters: <TextInputFormatter>[
+                    LengthLimitingTextInputFormatter(100),
+                  ],
+                  controller: TextEditingController(
+                    text: altDriveType == null ? '' : altDriveType.toString(),
+                  ),
+                ),
             ),
             const SizedBox(height: 8.0),
             ChoiceInput(
@@ -162,7 +182,7 @@ class _RobotFormState extends State<RobotForm> {
                 });
               },
               choice: climberType,
-              options: const ["Tube-in-Tube", "Lead Screw", "Hook and Winch", "Elevator"],
+              options: const ["Tube-in-Tube", "Lead Screw", "Hook and Winch", "Elevator", "Other"],
             ),
             const SizedBox(height: 8.0),
             CheckboxListTile(
