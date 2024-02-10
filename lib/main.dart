@@ -88,75 +88,100 @@ class _FormAppPageState extends State<FormAppPage> {
       index: appMode,
       children: [
         Scaffold(
-          appBar: AppBar(title: Text("Welcome!")),
+          appBar: AppBar(title: const Text("Welcome!")),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                FilledButton(
-                    onPressed: (){ setState(() {
-                      appMode = 1;
-                    }); },
-                    style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.all(const Size.fromHeight(200)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.0),
+                Flexible(
+                  fit: FlexFit.tight,
+                  flex: 2,
+                  child: FilledButton(
+                      onPressed: (){ setState(() {
+                        appMode = 1;
+                      }); },
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all(const Size.fromHeight(150)),
+                        maximumSize: MaterialStateProperty.all(const Size.fromHeight(200)),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                          )
                         )
+                      ),
+                      child: const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Pit Scouting", style: TextStyle(fontSize: 24),),
+                            Text("Enter pit scouting mode.")
+                          ]
                       )
-                    ),
-                    child: const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Pit Scouting", style: TextStyle(fontSize: 24),),
-                          Text("Enter pit scouting mode.")
-                        ]
-                    )
+                  ),
                 ),
                 const SizedBox(height: 8.0),
-                FilledButton(
-                    onPressed: (){ setState(() {
-                      appMode = 2;
-                    }); },
-                    style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.all(const Size.fromHeight(200)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.0),
+                Flexible(
+                  fit: FlexFit.tight,
+                  flex: 2,
+                  child: FilledButton(
+                      onPressed: (){ setState(() {
+                        appMode = 2;
+                      }); },
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all(const Size.fromHeight(150)),
+                        maximumSize: MaterialStateProperty.all(const Size.fromHeight(200)),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                          )
                         )
+                      ),
+                      child: const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Field Scouting", style: TextStyle(fontSize: 24)),
+                            Text("Enter field scouting mode.")
+                          ]
                       )
-                    ),
-                    child: const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Field Scouting", style: TextStyle(fontSize: 24)),
-                          Text("Enter field scouting mode.")
-                        ]
-                    )
+                  ),
                 ),
                 const Spacer(),
-                const FlutterLogo(size: 256),
+                const Image(
+                    image: AssetImage('images/mercs.png'),
+                    fit: BoxFit.scaleDown,
+                    width: 256,
+                    isAntiAlias: true,
+                ),
                 const Spacer(),
-                ElevatedButton(
-                    onPressed: (){ setState(() {
-                      appMode = 3;
-                    }); },
-                    style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.all(const Size.fromHeight(200)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.0),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    flex: 2,
+                    child: ElevatedButton(
+                        onPressed: (){ setState(() {
+                          appMode = 3;
+                        }); },
+                        style: ButtonStyle(
+                          minimumSize: MaterialStateProperty.all(const Size.fromHeight(100)),
+                          maximumSize: MaterialStateProperty.all(const Size.fromHeight(200)),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16.0),
+                            )
+                          )
+                        ),
+                        child: const FittedBox(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("App Setup", style: TextStyle(fontSize: 24)),
+                                Text("Configure app and team lists")
+                              ]
+                          ),
                         )
-                      )
                     ),
-                    child: const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("App Setup", style: TextStyle(fontSize: 24)),
-                          Text("Configure app and team lists")
-                        ]
-                    )
-                )
+                  )
               ],
             ),
           ),
