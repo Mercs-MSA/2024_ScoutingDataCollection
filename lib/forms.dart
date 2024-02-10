@@ -50,6 +50,7 @@ class _RobotFormState extends State<RobotForm> {
   double repairabilityScore = 0;
   String drivebaseType = "Swerve";
   String? altDriveType;
+  String? altClimbType;
 
   int? widthData;
   int? lengthData;
@@ -187,6 +188,28 @@ class _RobotFormState extends State<RobotForm> {
               },
               choice: climberType,
               options: const ["Tube-in-Tube", "Lead Screw", "Hook and Winch", "Elevator", "Other"],
+            ),
+            const SizedBox(height: 8.0),
+            Visibility(
+              visible: climberType == 'Other',
+              child: Column(
+                children: [
+                  TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Alternate Climber Type',
+                    ),
+                    inputFormatters: <TextInputFormatter>[
+                      LengthLimitingTextInputFormatter(100),
+                      FilteringTextInputFormatter(RegExp(r'[a-zA-Z]|-| '), allow: true)
+                    ],
+                    controller: TextEditingController(
+                      text: altClimbType == null ? '' : altClimbType.toString(),
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                ],
+              ),
             ),
             const SizedBox(height: 8.0),
             CheckboxListTile(
