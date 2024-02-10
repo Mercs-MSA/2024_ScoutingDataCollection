@@ -204,12 +204,12 @@ class NumberInput extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                   ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
