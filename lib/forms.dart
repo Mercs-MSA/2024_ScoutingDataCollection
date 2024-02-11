@@ -247,109 +247,103 @@ class _RobotFormState extends State<RobotForm> {
                   },
                 ),
                 const Divider(),
-                Expanded(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: CheckboxListTile(
-                          title: const Text('Speaker'),
-                          value: doesSpeaker,
-                          onChanged: (bool? newValue) {
-                            setState(() {
-                              doesSpeaker = newValue!;
-                              widget.onDoesSpeakerChanged(doesSpeaker);
-                            });
-                          },
-                        ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: const Text('Speaker'),
+                        value: doesSpeaker,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            doesSpeaker = newValue!;
+                            widget.onDoesSpeakerChanged(doesSpeaker);
+                          });
+                        },
                       ),
-                      Expanded(
-                        child: CheckboxListTile(
-                          title: const Text('Amp'),
-                          value: doesAmp,
-                          onChanged: (bool? newValue) {
-                            setState(() {
-                              doesAmp = newValue!;
-                              widget.onDoesAmpChanged(doesAmp);
-                            });
-                          },
-                        ),
+                    ),
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: const Text('Amp'),
+                        value: doesAmp,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            doesAmp = newValue!;
+                            widget.onDoesAmpChanged(doesAmp);
+                          });
+                        },
                       ),
-                      Expanded(
-                        child: CheckboxListTile(
-                          title: const Text('Trap'),
-                          value: doesTrap,
-                          onChanged: (bool? newValue) {
-                            setState(() {
-                              doesTrap = newValue!;
-                              widget.onDoesTrapChanged(doesTrap);
-                            });
-                          },
-                        ),
+                    ),
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: const Text('Trap'),
+                        value: doesTrap,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            doesTrap = newValue!;
+                            widget.onDoesTrapChanged(doesTrap);
+                          });
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
                 const Divider(),
-                Expanded(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: CheckboxListTile(
-                          title: const Text('Ground'),
-                          value: doesGroundPickup,
-                          onChanged: (bool? newValue) {
-                            setState(() {
-                              doesGroundPickup = newValue!;
-                              widget.onDoesGroundPickupChnaged(doesGroundPickup);
-                            });
-                          },
-                        ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: const Text('Ground'),
+                        value: doesGroundPickup,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            doesGroundPickup = newValue!;
+                            widget.onDoesGroundPickupChnaged(doesGroundPickup);
+                          });
+                        },
                       ),
-                      Expanded(
-                        child: CheckboxListTile(
-                          title: const Text('Source'),
-                          value: doesSourcePickup,
-                          onChanged: (bool? newValue) {
-                            setState(() {
-                              doesSourcePickup = newValue!;
-                              widget.onDoesSourcePickupChanged(doesSourcePickup);
-                            });
-                          },
-                        ),
+                    ),
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: const Text('Source'),
+                        value: doesSourcePickup,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            doesSourcePickup = newValue!;
+                            widget.onDoesSourcePickupChanged(doesSourcePickup);
+                          });
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
                 const Divider(),
-                Expanded(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: CheckboxListTile(
-                          title: const Text('Turret'),
-                          value: doesTurretShoot,
-                          onChanged: (bool? newValue) {
-                            setState(() {
-                              doesTurretShoot = newValue!;
-                              widget.onDoesTurretShootChanged(doesTurretShoot);
-                            });
-                          },
-                        ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: const Text('Turret'),
+                        value: doesTurretShoot,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            doesTurretShoot = newValue!;
+                            widget.onDoesTurretShootChanged(doesTurretShoot);
+                          });
+                        },
                       ),
-                      Expanded(
-                        child: CheckboxListTile(
-                          title: const Text('Extend'),
-                          value: doesExtendShoot,
-                          onChanged: (bool? newValue) {
-                            setState(() {
-                              doesExtendShoot = newValue!;
-                              widget.onDoesExtendShootChanged(doesExtendShoot);
-                            });
-                          },
-                        ),
+                    ),
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: const Text('Extend'),
+                        value: doesExtendShoot,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            doesExtendShoot = newValue!;
+                            widget.onDoesExtendShootChanged(doesExtendShoot);
+                          });
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
                 const Divider(),
                 RatingInput(

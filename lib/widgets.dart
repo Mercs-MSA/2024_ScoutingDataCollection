@@ -281,57 +281,55 @@ class NumberInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(4.0),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Theme.of(context).dividerColor,
-            width: 1,
-          ),
-          borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+    return Container(
+      padding: const EdgeInsets.all(4.0),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Theme.of(context).dividerColor,
+          width: 1,
         ),
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
-              ),
-            ),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                value.toString(),
+        borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+      ),
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+                title,
                 style: const TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.w600
+                  fontSize: 16,
                 ),
+            ),
+          ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              value.toString(),
+              style: const TextStyle(
+                fontSize: 36,
+                fontWeight: FontWeight.w600
               ),
             ),
-            FilledButton(
-              onPressed: onValueAdd,
+          ),
+          FilledButton(
+            onPressed: onValueAdd,
+            style: ButtonStyle(
+                fixedSize: MaterialStateProperty.all(const Size.square(56)),
+                padding: MaterialStateProperty.all(EdgeInsets.zero)
+            ),
+            child: const Icon(Icons.add),
+          ),
+          const SizedBox(width: 8.0),
+          FilledButton(
+              onPressed: onValueSubtract,
               style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all(const Size.square(56)),
-                  padding: MaterialStateProperty.all(EdgeInsets.zero)
-              ),
-              child: const Icon(Icons.add),
+                fixedSize: MaterialStateProperty.all(const Size.square(56)),
+                padding: MaterialStateProperty.all(EdgeInsets.zero)
             ),
-            const SizedBox(width: 8.0),
-            FilledButton(
-                onPressed: onValueSubtract,
-                style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all(const Size.square(56)),
-                  padding: MaterialStateProperty.all(EdgeInsets.zero)
-              ),
-                child: const Icon(Icons.remove)),
-          ],
-        ),
-      )
+              child: const Icon(Icons.remove)),
+        ],
+      ),
     );
   }
 }
