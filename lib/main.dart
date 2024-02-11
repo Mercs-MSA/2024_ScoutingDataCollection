@@ -87,10 +87,16 @@ class _FormAppPageState extends State<FormAppPage> {
   bool saveDisabled = false;
 
   //TODO: Make this data real with json import
-  List<MatchData> incompleteFieldScoutingEntries = [
-    MatchData(team: 9999, match: 18, alliance: Alliances.blue),
-    MatchData(team: 9998, match: 19, alliance: Alliances.red),
-    MatchData(team: 9997, match: 20, alliance: Alliances.blue),
+  List<ScoutingTask> incompleteFieldScoutingTasks = [
+    ScoutingTask(team: 9999, match: 18, alliance: Alliances.blue),
+    ScoutingTask(team: 9998, match: 19, alliance: Alliances.red),
+    ScoutingTask(team: 9997, match: 20, alliance: Alliances.blue),
+  ];
+
+  List<PitScoutingTask> incompletePitScoutingTasks = [
+    PitScoutingTask(team: 9999),
+    PitScoutingTask(team: 9998),
+    PitScoutingTask(team: 9997)
   ];
 
   @override
@@ -243,12 +249,13 @@ class _FormAppPageState extends State<FormAppPage> {
                   title: const Text("To Be Scouted"),
                   initiallyExpanded: true,
                   children: [
-                    PitScoutSelection(team: 9999, onSelected: (){ setState(() {
-                      pitTeamNumber = 9999;
-                    }); }),
-                    PitScoutSelection(team: 9998, onSelected: (){ setState(() {
-                      pitTeamNumber = 9998;
-                    }); })
+                    for (final entry in incompletePitScoutingTasks)
+                          PitScoutSelection(
+                            team: entry.team,
+                            onSelected: (){ setState(() {
+                            pitTeamNumber = entry.team;
+                          }); },
+                          )
                   ],
                 ),
                   const ExpansionTile(
@@ -366,13 +373,7 @@ class _FormAppPageState extends State<FormAppPage> {
                       title: const Text("To Be Scouted"),
                       initiallyExpanded: true,
                       children: [
-                        // ScoutSelection(team: 9999, match: 17, alliance: Alliances.red, onSelected: (){ setState(() {
-                        //   fieldTeamNumber = 9999;
-                        // }); },),
-                        // ScoutSelection(team: 9998, match: 8, alliance: Alliances.blue, onSelected: (){ setState(() {
-                        //   fieldTeamNumber = 9998;
-                        // }); }),
-                        for (final entry in incompleteFieldScoutingEntries)
+                        for (final entry in incompleteFieldScoutingTasks)
                           ScoutSelection(team: entry.team, match: entry.match, alliance: entry.alliance, onSelected: (){ setState(() {
                             fieldTeamNumber = entry.team;
                           }); },)
