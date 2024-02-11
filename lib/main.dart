@@ -394,7 +394,9 @@ class _FormAppPageState extends State<FormAppPage> {
               ),
               AutonForm(
                   autonExists: pitAutonExists,
-                  onAutonExistsChanged: (value){ pitAutonExists = value; }
+                  onAutonExistsChanged: (value){ setState(() {
+                    pitAutonExists = value!;
+                  }); }
               )
             ],
           ),

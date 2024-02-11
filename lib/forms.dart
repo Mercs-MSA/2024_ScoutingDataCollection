@@ -373,7 +373,7 @@ class _RobotFormState extends State<RobotForm> {
 
 class AutonForm extends StatefulWidget {
 
-  final Function(bool) onAutonExistsChanged;
+  final Function(bool?) onAutonExistsChanged;
   final bool autonExists;
 
   const AutonForm({
@@ -387,8 +387,6 @@ class AutonForm extends StatefulWidget {
 }
 
 class _AutonFormState extends State<AutonForm> {
-  bool autonExists = true;
-
   int speakerNotes = 0;
   int ampNotes = 0;
 
@@ -400,8 +398,14 @@ class _AutonFormState extends State<AutonForm> {
         child: Center(
           child: ListView(
             children: <Widget>[
+                CheckboxListTile(
+                  title: const Text("Has Auton"),
+                  value: widget.autonExists,
+                  onChanged: widget.onAutonExistsChanged
+                ),
+                const Divider(),
                 Visibility(
-                  visible: autonExists,
+                  visible: widget.autonExists,
                   child: NumberInput(
                     title: "Speaker Notes",
                     value: speakerNotes,
@@ -419,7 +423,7 @@ class _AutonFormState extends State<AutonForm> {
                 ),
                 const SizedBox(height: 8.0),
                 Visibility(
-                  visible: autonExists,
+                  visible: widget.autonExists,
                   child: NumberInput(
                     title: "Amp Notes",
                     value: ampNotes,
