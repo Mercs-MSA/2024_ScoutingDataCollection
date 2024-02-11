@@ -5,35 +5,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'datatypes.dart';
 
 
-class DataCard extends StatelessWidget {
-  const DataCard({
-    super.key,
-    required this.item,
-    required this.data,
-  });
-
-  final String item;
-  final String data;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(item),
-            const Spacer(),
-            Text(data),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class ScoutSelection extends StatelessWidget {
   const ScoutSelection({
     super.key,
@@ -121,6 +92,30 @@ class PitScoutSelection extends StatelessWidget {
     );
   }
 }
+
+class TeamNumberError extends StatelessWidget {
+  const TeamNumberError({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          Icons.error,
+          size: 180,
+        ),
+        Text(
+          "Team number not set",
+          style: TextStyle(
+            fontSize: 28
+          ),
+        )
+      ],
+    );
+  }
+}
+
 
 class RatingInput extends StatelessWidget {
   const RatingInput({
@@ -261,7 +256,6 @@ class ChoiceInput extends StatelessWidget {
   }
 }
 
-
 class NumberInput extends StatelessWidget {
   final String title;
 
@@ -327,6 +321,35 @@ class NumberInput extends StatelessWidget {
             ),
               child: const Icon(Icons.remove)),
         ],
+      ),
+    );
+  }
+}
+
+class DataCard extends StatelessWidget {
+  const DataCard({
+    super.key,
+    required this.item,
+    required this.data,
+  });
+
+  final String item;
+  final String data;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(item),
+            const Spacer(),
+            Text(data),
+          ],
+        ),
       ),
     );
   }

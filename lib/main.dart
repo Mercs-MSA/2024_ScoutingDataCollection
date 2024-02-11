@@ -414,6 +414,7 @@ class _FormAppPageState extends State<FormAppPage> {
                 ]
               ),
               AutonForm(
+                teamNumberPresent: fieldTeamNumber == null ? false : true,
                 autonExists: fieldAutonExists,
                 onAutonExistsChanged: (value){ setState(() {
                   fieldAutonExists = value!;

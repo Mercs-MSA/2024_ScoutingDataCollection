@@ -75,24 +75,7 @@ class _RobotFormState extends State<RobotForm> {
     return IndexedStack(
       index: widget.teamNumberPresent == true ? 1 : 0,
       children: [
-        const Center(
-          child:
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.error,
-                  size: 180,
-                ),
-                Text(
-                  "Team number not set",
-                  style: TextStyle(
-                    fontSize: 28
-                  ),
-                )
-              ],
-            ),
-        ),
+        const Center(child: TeamNumberError()),
         Center(
           child: Padding(
             padding: const EdgeInsets.all(12.0),
@@ -367,6 +350,8 @@ class _RobotFormState extends State<RobotForm> {
 
 class AutonForm extends StatefulWidget {
 
+  final bool teamNumberPresent;
+
   final Function(bool?) onAutonExistsChanged;
   final bool autonExists;
 
@@ -378,6 +363,7 @@ class AutonForm extends StatefulWidget {
 
   const AutonForm({
     super.key,
+    required this.teamNumberPresent,
     required this.onAutonExistsChanged,
     required this.autonExists,
     required this.onSpeakerNotesChanged,
@@ -396,62 +382,68 @@ class _AutonFormState extends State<AutonForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Center(
-          child: ListView(
-            children: <Widget>[
-                CheckboxListTile(
-                  title: const Text("Has Auton"),
-                  value: widget.autonExists,
-                  onChanged: widget.onAutonExistsChanged
-                ),
-                const Divider(),
-                Visibility(
-                  visible: widget.autonExists,
-                  child: NumberInput(
-                    title: "Speaker Notes",
-                    value: widget.speakerNotes,
-                    onValueAdd: (){ setState(() {
-                      if (widget.speakerNotes < 10) {
-                        speakerNotes = widget.speakerNotes + 1;
-                      }
-                      widget.onSpeakerNotesChanged(speakerNotes);
-                    }); },
-                    onValueSubtract: (){ setState(() {
-                      if (widget.speakerNotes > 0) {
-                        speakerNotes = widget.speakerNotes - 1;
-                      }
-                      widget.onSpeakerNotesChanged(speakerNotes);
-                    }); },
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-                Visibility(
-                  visible: widget.autonExists,
-                  child: NumberInput(
-                    title: "Amp Notes",
-                    value: widget.ampNotes,
-                    onValueAdd: (){ setState(() {
-                      if (widget.ampNotes < 10) {
-                        ampNotes = widget.ampNotes + 1;
-                      }
-                      widget.onAmpNotesChanged(ampNotes);
-                    }); },
-                    onValueSubtract: (){ setState(() {
-                      if (widget.ampNotes > 0) {
-                        ampNotes = widget.ampNotes - 1;
-                      }
-                      widget.onAmpNotesChanged(ampNotes);
-                    }); },
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-            ],
+    return IndexedStack(
+      index: widget.teamNumberPresent ? 1 : 0,
+      children: [
+        const Center(child: TeamNumberError()),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Center(
+              child: ListView(
+                children: <Widget>[
+                    CheckboxListTile(
+                      title: const Text("Has Auton"),
+                      value: widget.autonExists,
+                      onChanged: widget.onAutonExistsChanged
+                    ),
+                    const Divider(),
+                    Visibility(
+                      visible: widget.autonExists,
+                      child: NumberInput(
+                        title: "Speaker Notes",
+                        value: widget.speakerNotes,
+                        onValueAdd: (){ setState(() {
+                          if (widget.speakerNotes < 10) {
+                            speakerNotes = widget.speakerNotes + 1;
+                          }
+                          widget.onSpeakerNotesChanged(speakerNotes);
+                        }); },
+                        onValueSubtract: (){ setState(() {
+                          if (widget.speakerNotes > 0) {
+                            speakerNotes = widget.speakerNotes - 1;
+                          }
+                          widget.onSpeakerNotesChanged(speakerNotes);
+                        }); },
+                      ),
+                    ),
+                    const SizedBox(height: 8.0),
+                    Visibility(
+                      visible: widget.autonExists,
+                      child: NumberInput(
+                        title: "Amp Notes",
+                        value: widget.ampNotes,
+                        onValueAdd: (){ setState(() {
+                          if (widget.ampNotes < 10) {
+                            ampNotes = widget.ampNotes + 1;
+                          }
+                          widget.onAmpNotesChanged(ampNotes);
+                        }); },
+                        onValueSubtract: (){ setState(() {
+                          if (widget.ampNotes > 0) {
+                            ampNotes = widget.ampNotes - 1;
+                          }
+                          widget.onAmpNotesChanged(ampNotes);
+                        }); },
+                      ),
+                    ),
+                    const SizedBox(height: 8.0),
+                ],
+              ),
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }
