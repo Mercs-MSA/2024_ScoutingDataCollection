@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_elements/widgets.dart';
 
-class RobotForm extends StatefulWidget {
-  const RobotForm({
+class PitForm extends StatefulWidget {
+  const PitForm({
     super.key,
     required this.teamNumberPresent,
     required this.onRepairabilityChanged,
@@ -73,10 +73,10 @@ class RobotForm extends StatefulWidget {
   final bool autonExists;
 
   @override
-  State<RobotForm> createState() => _RobotFormState();
+  State<PitForm> createState() => _PitFormState();
 }
 
-class _RobotFormState extends State<RobotForm> {
+class _PitFormState extends State<PitForm> {
   double repairabilityScore = 0;
   String drivebaseType = "Swerve";
   String? altDriveType;
@@ -394,7 +394,7 @@ class _RobotFormState extends State<RobotForm> {
   }
 }
 
-class AutonForm extends StatefulWidget {
+class FieldAutonForm extends StatefulWidget {
   final bool teamNumberPresent;
 
   final Function(bool?) onAutonExistsChanged;
@@ -403,26 +403,39 @@ class AutonForm extends StatefulWidget {
   final Function(int) onSpeakerNotesChanged;
   final int speakerNotes;
 
+  final Function(int) onSpeakerNotesMissedChanged;
+  final int speakerNotesMissed;
+
   final Function(int) onAmpNotesChanged;
   final int ampNotes;
 
-  const AutonForm(
+  final Function(int) onAmpNotesMissedChanged;
+  final int ampNotesMissed;
+
+  const FieldAutonForm(
       {super.key,
       required this.teamNumberPresent,
       required this.onAutonExistsChanged,
       required this.autonExists,
       required this.onSpeakerNotesChanged,
       required this.speakerNotes,
+      required this.onSpeakerNotesMissedChanged,
+      required this.speakerNotesMissed,
       required this.onAmpNotesChanged,
-      required this.ampNotes});
+      required this.ampNotes,
+      required this.onAmpNotesMissedChanged,
+      required this.ampNotesMissed});
 
   @override
-  State<AutonForm> createState() => _AutonFormState();
+  State<FieldAutonForm> createState() => _FieldAutonFormState();
 }
 
-class _AutonFormState extends State<AutonForm> {
+class _FieldAutonFormState extends State<FieldAutonForm> {
   int speakerNotes = 0;
   int ampNotes = 0;
+
+  int speakerNotesMissed = 0;
+  int ampNotesMissed = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -468,6 +481,32 @@ class _AutonFormState extends State<AutonForm> {
                   Visibility(
                     visible: widget.autonExists,
                     child: NumberInput(
+                      title: "Speaker Notes Missed",
+                      value: widget.speakerNotesMissed,
+                      onValueAdd: () {
+                        setState(() {
+                          if (widget.speakerNotesMissed < 10) {
+                            speakerNotesMissed = widget.speakerNotesMissed + 1;
+                          }
+                          widget
+                              .onSpeakerNotesMissedChanged(speakerNotesMissed);
+                        });
+                      },
+                      onValueSubtract: () {
+                        setState(() {
+                          if (widget.speakerNotesMissed > 0) {
+                            speakerNotesMissed = widget.speakerNotesMissed - 1;
+                          }
+                          widget
+                              .onSpeakerNotesMissedChanged(speakerNotesMissed);
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  Visibility(
+                    visible: widget.autonExists,
+                    child: NumberInput(
                       title: "Amp Notes",
                       value: widget.ampNotes,
                       onValueAdd: () {
@@ -489,6 +528,30 @@ class _AutonFormState extends State<AutonForm> {
                     ),
                   ),
                   const SizedBox(height: 8.0),
+                  Visibility(
+                    visible: widget.autonExists,
+                    child: NumberInput(
+                      title: "Amp Notes Missed",
+                      value: widget.ampNotesMissed,
+                      onValueAdd: () {
+                        setState(() {
+                          if (widget.ampNotesMissed < 10) {
+                            ampNotesMissed = widget.ampNotesMissed + 1;
+                          }
+                          widget.onAmpNotesMissedChanged(ampNotesMissed);
+                        });
+                      },
+                      onValueSubtract: () {
+                        setState(() {
+                          if (widget.ampNotesMissed > 0) {
+                            ampNotesMissed = widget.ampNotesMissed - 1;
+                          }
+                          widget.onAmpNotesMissedChanged(ampNotesMissed);
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
                 ],
               ),
             ),
@@ -496,5 +559,14 @@ class _AutonFormState extends State<AutonForm> {
         ),
       ],
     );
+  }
+
+  List<List> getKVFormattedData(BuildContext context) {
+    return [
+      ["hasAuton", widget.autonExists],
+      ["speakerNotesScored", widget.autonExists ? widget.speakerNotes : "null"],
+      ["speakerNotesMissed", widget.autonExists ? widget.speakerNotes : "null"],
+      []
+    ];
   }
 }

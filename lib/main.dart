@@ -85,6 +85,9 @@ class _FormAppPageState extends State<FormAppPage> {
   int fieldAutonSpeakerNotes = 0;
   int fieldAutonAmpNotes = 0;
 
+  int fieldAutonSpeakerNotesMissed = 0;
+  int fieldAutonAmpNotesMissed = 0;
+
   bool saveDisabled = false;
 
   //TODO: Make this data real with json import
@@ -298,7 +301,7 @@ class _FormAppPageState extends State<FormAppPage> {
                     ),
                   ),
                 ]),
-                RobotForm(
+                PitForm(
                   teamNumberPresent: pitTeamNumber == null ? false : true,
                   onLengthChanged: (value) {
                     pitLengthData = value;
@@ -495,7 +498,7 @@ class _FormAppPageState extends State<FormAppPage> {
                   ),
                 ]),
               ]),
-              AutonForm(
+              FieldAutonForm(
                 teamNumberPresent: fieldTeamNumber == null ? false : true,
                 autonExists: fieldAutonExists,
                 onAutonExistsChanged: (value) {
@@ -509,10 +512,22 @@ class _FormAppPageState extends State<FormAppPage> {
                     fieldAutonSpeakerNotes = value;
                   });
                 },
+                speakerNotesMissed: fieldAutonSpeakerNotesMissed,
+                onSpeakerNotesMissedChanged: (value) {
+                  setState(() {
+                    fieldAutonSpeakerNotesMissed = value;
+                  });
+                },
                 ampNotes: fieldAutonAmpNotes,
                 onAmpNotesChanged: (value) {
                   setState(() {
                     fieldAutonAmpNotes = value;
+                  });
+                },
+                ampNotesMissed: fieldAutonAmpNotesMissed,
+                onAmpNotesMissedChanged: (value) {
+                  setState(() {
+                    fieldAutonAmpNotesMissed = value;
                   });
                 },
               )
