@@ -374,10 +374,12 @@ class _RobotFormState extends State<RobotForm> {
 class AutonForm extends StatefulWidget {
 
   final Function(bool) onAutonExistsChanged;
+  final bool autonExists;
 
   const AutonForm({
     super.key,
-    required this.onAutonExistsChanged
+    required this.onAutonExistsChanged,
+    required this.autonExists,
   });
 
   @override

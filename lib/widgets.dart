@@ -42,18 +42,20 @@ class ScoutSelection extends StatelessWidget {
     required this.team,
     required this.match,
     required this.alliance,
+    required this.onSelected
   });
 
   final int team;
   final int match;
   final Alliances alliance;
+  final Function() onSelected;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
-        onPressed: (){},
+        onPressed: onSelected,
         style: ButtonStyle(
           minimumSize: MaterialStateProperty.all(const Size.fromHeight(120)),
           maximumSize: MaterialStateProperty.all(const Size.fromHeight(130)),

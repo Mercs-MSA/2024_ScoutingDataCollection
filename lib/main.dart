@@ -350,14 +350,18 @@ class _FormAppPageState extends State<FormAppPage> {
               Column(
                 children: [
                   // TODO: Use real data from data import
-                  const ExpansionTile(
-                  title: Text("To Be Scouted"),
-                  initiallyExpanded: true,
-                  children: [
-                    ScoutSelection(team: 9999, match: 17, alliance: Alliances.red),
-                    ScoutSelection(team: 9998, match: 8, alliance: Alliances.blue),
-                  ],
-                ),
+                  ExpansionTile(
+                    title: const Text("To Be Scouted"),
+                    initiallyExpanded: true,
+                    children: [
+                      ScoutSelection(team: 9999, match: 17, alliance: Alliances.red, onSelected: (){ setState(() {
+                        fieldTeamNumber = 9999;
+                      }); },),
+                      ScoutSelection(team: 9998, match: 8, alliance: Alliances.blue, onSelected: (){ setState(() {
+                        fieldTeamNumber = 9998;
+                      }); }),
+                    ],
+                  ),
                   const ExpansionTile(
                   title: Text("Scouted"),
                   initiallyExpanded: false,
@@ -388,7 +392,10 @@ class _FormAppPageState extends State<FormAppPage> {
                   ),
                 ]
               ),
-              AutonForm(onAutonExistsChanged: (value){ pitAutonExists = value; })
+              AutonForm(
+                  autonExists: pitAutonExists,
+                  onAutonExistsChanged: (value){ pitAutonExists = value; }
+              )
             ],
           ),
           bottomNavigationBar: NavigationBar(
