@@ -376,10 +376,20 @@ class AutonForm extends StatefulWidget {
   final Function(bool?) onAutonExistsChanged;
   final bool autonExists;
 
+  final Function(int) onSpeakerNotesChanged;
+  final int speakerNotes;
+
+  final Function(int) onAmpNotesChanged;
+  final int ampNotes;
+
   const AutonForm({
     super.key,
     required this.onAutonExistsChanged,
     required this.autonExists,
+    required this.onSpeakerNotesChanged,
+    required this.speakerNotes,
+    required this.onAmpNotesChanged,
+    required this.ampNotes
   });
 
   @override
@@ -408,16 +418,18 @@ class _AutonFormState extends State<AutonForm> {
                   visible: widget.autonExists,
                   child: NumberInput(
                     title: "Speaker Notes",
-                    value: speakerNotes,
+                    value: widget.speakerNotes,
                     onValueAdd: (){ setState(() {
-                      if (speakerNotes < 10) {
-                        speakerNotes += 1;
+                      if (widget.speakerNotes < 10) {
+                        speakerNotes = widget.speakerNotes + 1;
                       }
+                      widget.onSpeakerNotesChanged(speakerNotes);
                     }); },
                     onValueSubtract: (){ setState(() {
-                      if (speakerNotes > 0) {
-                        speakerNotes -= 1;
+                      if (widget.speakerNotes > 0) {
+                        speakerNotes = widget.speakerNotes - 1;
                       }
+                      widget.onSpeakerNotesChanged(speakerNotes);
                     }); },
                   ),
                 ),
@@ -426,16 +438,18 @@ class _AutonFormState extends State<AutonForm> {
                   visible: widget.autonExists,
                   child: NumberInput(
                     title: "Amp Notes",
-                    value: ampNotes,
+                    value: widget.ampNotes,
                     onValueAdd: (){ setState(() {
-                      if (ampNotes < 10) {
-                        ampNotes += 1;
+                      if (widget.ampNotes < 10) {
+                        ampNotes = widget.ampNotes + 1;
                       }
+                      widget.onAmpNotesChanged(ampNotes);
                     }); },
                     onValueSubtract: (){ setState(() {
-                      if (ampNotes > 0) {
-                        ampNotes -= 1;
+                      if (widget.ampNotes > 0) {
+                        ampNotes = widget.ampNotes - 1;
                       }
+                      widget.onAmpNotesChanged(ampNotes);
                     }); },
                   ),
                 ),

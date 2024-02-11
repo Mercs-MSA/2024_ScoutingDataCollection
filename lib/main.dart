@@ -55,6 +55,9 @@ class _FormAppPageState extends State<FormAppPage> {
   int fieldPageIndex = 0;
   int appMode = 0;
 
+  int? fieldTeamNumber;
+  int? pitTeamNumber;
+
   double pitRepairabilityScore = 0;
   String pitDrivebaseType = "Swerve";
 
@@ -65,7 +68,7 @@ class _FormAppPageState extends State<FormAppPage> {
   bool pitIntakeInBumper = false;
   String pitClimberType = "Tube-in-Tube";
 
-  bool pitAutonExists = false;
+  bool fieldAutonExists = false;
 
   bool pitDoesSpeaker = true;
   bool pitDoesAmp = true;
@@ -77,8 +80,8 @@ class _FormAppPageState extends State<FormAppPage> {
   bool pitDoesTurretShoot = false;
   bool pitDoesExtendShoot = true;
 
-  int? fieldTeamNumber;
-  int? pitTeamNumber;
+  int fieldAutonSpeakerNotes = 0;
+  int fieldAutonAmpNotes = 0;
 
   bool saveDisabled = false;
 
@@ -288,7 +291,7 @@ class _FormAppPageState extends State<FormAppPage> {
                 onDoesSourcePickupChanged: (value){ pitDoesSourcePickup = value; },
                 onDoesExtendShootChanged: (value){ pitDoesExtendShoot = value; },
                 onDoesTurretShootChanged: (value){ pitDoesTurretShoot = value; },
-                onAutonExistsChanged: (value){ pitAutonExists = value; },
+                onAutonExistsChanged: (value){ fieldAutonExists = value; },
               ),
               Column(
                 children: [
@@ -305,7 +308,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                 ? "Empty"
                                 : pitTeamNumber.toString()),
                         DataCard(
-                            item: "Checkbox", data: pitAutonExists.toString()),
+                            item: "Checkbox", data: fieldAutonExists.toString()),
                         DataCard(
                             item: "Switch", data: switchIsToggled.toString()),
                         DataCard(item: "Rating", data: pitRepairabilityScore.toString()),
@@ -393,10 +396,18 @@ class _FormAppPageState extends State<FormAppPage> {
                 ]
               ),
               AutonForm(
-                  autonExists: pitAutonExists,
-                  onAutonExistsChanged: (value){ setState(() {
-                    pitAutonExists = value!;
-                  }); }
+                autonExists: fieldAutonExists,
+                onAutonExistsChanged: (value){ setState(() {
+                  fieldAutonExists = value!;
+                }); },
+                speakerNotes: fieldAutonSpeakerNotes,
+                onSpeakerNotesChanged: (value){ setState(() {
+                  fieldAutonSpeakerNotes = value;
+                }); },
+                ampNotes: fieldAutonAmpNotes,
+                onAmpNotesChanged: (value){ setState(() {
+                  fieldAutonAmpNotes = value;
+                }); },
               )
             ],
           ),
