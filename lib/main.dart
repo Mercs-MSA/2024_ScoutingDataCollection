@@ -55,7 +55,6 @@ class _FormAppPageState extends State<FormAppPage> {
   int fieldPageIndex = 0;
   int appMode = 0;
 
-  int? pitTeamNumberData;
   double pitRepairabilityScore = 0;
   String pitDrivebaseType = "Swerve";
 
@@ -79,6 +78,7 @@ class _FormAppPageState extends State<FormAppPage> {
   bool pitDoesExtendShoot = true;
 
   int? fieldTeamNumber;
+  int? pitTeamNumber;
 
   bool saveDisabled = false;
 
@@ -203,6 +203,10 @@ class _FormAppPageState extends State<FormAppPage> {
           bottomNavigationBar: NavigationBar(
             destinations: const <NavigationDestination>[
               NavigationDestination(
+                icon: Icon(Icons.flag),
+                label: 'Start',
+              ),
+              NavigationDestination(
                 icon: Icon(Icons.list_alt),
                 label: 'General',
               ),
@@ -221,8 +225,53 @@ class _FormAppPageState extends State<FormAppPage> {
           body: IndexedStack(
             index: pitPageIndex,
             children: [
+              Column(
+                children: [
+                  // TODO: Use real data from data import
+                  ExpansionTile(
+                  title: const Text("To Be Scouted"),
+                  initiallyExpanded: true,
+                  children: [
+                    PitScoutSelection(team: 9999, onSelected: (){ setState(() {
+                      pitTeamNumber = 9999;
+                    }); }),
+                    PitScoutSelection(team: 9998, onSelected: (){ setState(() {
+                      pitTeamNumber = 9998;
+                    }); })
+                  ],
+                ),
+                  const ExpansionTile(
+                  title: Text("Scouted"),
+                  initiallyExpanded: false,
+                ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        TextField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Team Number',
+                          ),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(4),
+                          ],
+                          onChanged: (value) {
+                            pitTeamNumber = int.tryParse(value);
+                          },
+                          controller: TextEditingController(
+                            text: pitTeamNumber == null ? '' : pitTeamNumber.toString(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ]
+              ),
               RobotForm(
-                onTeamNumberUpdated: (value){ pitTeamNumberData = value; },
+                teamNumberPresent: pitTeamNumber == null ? false : true,
                 onRepairabilityChanged: (value){ pitRepairabilityScore = value; },
                 onDrivebaseChanged: (value){ pitDrivebaseType = value; },
                 onLengthChanged: (value){ pitLengthData = value; },
@@ -252,9 +301,9 @@ class _FormAppPageState extends State<FormAppPage> {
                       children: [
                         DataCard(
                             item: "Team Number",
-                            data: pitTeamNumberData == null
+                            data: pitTeamNumber == null
                                 ? "Empty"
-                                : pitTeamNumberData.toString()),
+                                : pitTeamNumber.toString()),
                         DataCard(
                             item: "Checkbox", data: pitAutonExists.toString()),
                         DataCard(
@@ -311,7 +360,6 @@ class _FormAppPageState extends State<FormAppPage> {
                 ),
                   const ExpansionTile(
                   title: Text("Scouted"),
-
                   initiallyExpanded: false,
                 ),
                   Padding(
@@ -388,7 +436,7 @@ class _FormAppPageState extends State<FormAppPage> {
   void onSave() async {
     final fileData = const ListToCsvConverter().convert([
       ['item', 'value', 'group'],
-      ['team', pitTeamNumberData, 'general'],
+      ['team', pitTeamNumber, 'general'],
       ['bot_width', pitWidthData, 'general'],
       ['bot_length', pitLengthData, 'general'],
       ['drivebase', pitDrivebaseType, 'general'],

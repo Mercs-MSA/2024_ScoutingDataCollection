@@ -81,6 +81,47 @@ class ScoutSelection extends StatelessWidget {
   }
 }
 
+class PitScoutSelection extends StatelessWidget {
+  const PitScoutSelection({
+    super.key,
+    required this.team,
+    required this.onSelected
+  });
+
+  final int team;
+  final Function() onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        onPressed: onSelected,
+        style: ButtonStyle(
+          minimumSize: MaterialStateProperty.all(const Size.fromHeight(80)),
+          maximumSize: MaterialStateProperty.all(const Size.fromHeight(100)),
+
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+              side: const BorderSide(width: 4, color: Colors.grey),
+            )
+          )
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Team $team", style: const TextStyle(fontSize: 22)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class RatingInput extends StatelessWidget {
   const RatingInput({
     super.key,

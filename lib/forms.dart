@@ -5,7 +5,7 @@ import 'package:flutter_form_elements/widgets.dart';
 class RobotForm extends StatefulWidget {
   const RobotForm({
     super.key,
-    required this.onTeamNumberUpdated,
+    required this.teamNumberPresent,
     required this.onRepairabilityChanged,
     required this.onDrivebaseChanged,
     required this.onLengthChanged,
@@ -23,7 +23,8 @@ class RobotForm extends StatefulWidget {
     required this.onAutonExistsChanged
   });
 
-  final Function(int?) onTeamNumberUpdated;
+  final bool teamNumberPresent;
+
   final Function(double) onRepairabilityChanged;
   final Function(String) onDrivebaseChanged;
   final Function(int?) onLengthChanged;
@@ -45,8 +46,6 @@ class RobotForm extends StatefulWidget {
 }
 
 class _RobotFormState extends State<RobotForm> {
-  String asigneeData = '';
-  int? teamNumber;
   double repairabilityScore = 0;
   String drivebaseType = "Swerve";
   String? altDriveType;
@@ -73,296 +72,301 @@ class _RobotFormState extends State<RobotForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: ListView(
-          children: <Widget>[
-            TextField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Team Number',
-              ),
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly,
-                LengthLimitingTextInputFormatter(4),
-              ],
-              onChanged: (value) {
-                teamNumber = int.tryParse(value);
-                widget.onTeamNumberUpdated(teamNumber);
-              },
-              controller: TextEditingController(
-                text: teamNumber == null ? '' : teamNumber.toString(),
-              ),
-            ),
-            const SizedBox(height: 8.0),
-            Row(
+    return IndexedStack(
+      index: widget.teamNumberPresent == true ? 1 : 0,
+      children: [
+        const Center(
+          child:
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
-                  child: TextField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Bot Width',
-                      suffixText: "in",
-                    ),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly,
-                      LengthLimitingTextInputFormatter(2),
-                    ],
-                    onChanged: (value) {
-                      widthData = int.tryParse(value);
-                      widget.onWidthChanged(widthData);
-                    },
-                    controller: TextEditingController(
-                      text: widthData == null ? '' : widthData.toString(),
-                    ),
-                  ),
+                Icon(
+                  Icons.error,
+                  size: 180,
                 ),
-                const SizedBox(width: 8.0),
-                Expanded(
-                  child: TextField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Bot Length',
-                      suffixText: 'in',
-                    ),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly,
-                      LengthLimitingTextInputFormatter(2),
-                    ],
-                    onChanged: (value) {
-                      lengthData = int.tryParse(value);
-                      widget.onLengthChanged(lengthData);
-                    },
-                    controller: TextEditingController(
-                      text: lengthData == null ? '' : lengthData.toString(),
-                    ),
+                Text(
+                  "Team number not set",
+                  style: TextStyle(
+                    fontSize: 28
                   ),
-                ),
+                )
               ],
             ),
-            const SizedBox(height: 8.0),
-            ChoiceInput(
-              title: "Drivebase",
-              onChoiceUpdate: (value) {
-                setState((){
-                  drivebaseType = value!;
-                  widget.onDrivebaseChanged(drivebaseType);
-                });
-              },
-              choice: drivebaseType,
-              options: const ["Swerve", "Tank", "Other"],
-            ),
-            const SizedBox(height: 8.0),
-            Visibility(
-              visible: drivebaseType == 'Other',
-                child: Column(
+        ),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: ListView(
+              children: <Widget>[
+                const SizedBox(height: 8.0),
+                Row(
                   children: [
-                    TextField(
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Alternate Drivebase Type',
-                      ),
-                      inputFormatters: <TextInputFormatter>[
-                        LengthLimitingTextInputFormatter(100),
-                        FilteringTextInputFormatter(RegExp(r'[a-zA-Z]|-| '), allow: true)
-                      ],
-                      controller: TextEditingController(
-                        text: altDriveType == null ? '' : altDriveType.toString(),
+                    Expanded(
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Bot Width',
+                          suffixText: "in",
+                        ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(2),
+                        ],
+                        onChanged: (value) {
+                          widthData = int.tryParse(value);
+                          widget.onWidthChanged(widthData);
+                        },
+                        controller: TextEditingController(
+                          text: widthData == null ? '' : widthData.toString(),
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 8.0),
+                    const SizedBox(width: 8.0),
+                    Expanded(
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Bot Length',
+                          suffixText: 'in',
+                        ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(2),
+                        ],
+                        onChanged: (value) {
+                          lengthData = int.tryParse(value);
+                          widget.onLengthChanged(lengthData);
+                        },
+                        controller: TextEditingController(
+                          text: lengthData == null ? '' : lengthData.toString(),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-            ),
-            ChoiceInput(
-              title: "Climber Type",
-              onChoiceUpdate: (value) {
-                setState(() {
-                  climberType = value!;
-                  widget.onClimberTypeChanged(climberType);
-                });
-              },
-              choice: climberType,
-              options: const ["Tube-in-Tube", "Lead Screw", "Hook and Winch", "Elevator", "Other"],
-            ),
-            const SizedBox(height: 8.0),
-            Visibility(
-              visible: climberType == 'Other',
-              child: Column(
-                children: [
-                  TextField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Alternate Climber Type',
-                    ),
-                    inputFormatters: <TextInputFormatter>[
-                      LengthLimitingTextInputFormatter(100),
-                      FilteringTextInputFormatter(RegExp(r'[a-zA-Z]|-| '), allow: true)
-                    ],
-                    controller: TextEditingController(
-                      text: altClimbType == null ? '' : altClimbType.toString(),
-                    ),
-                  ),
-                  const SizedBox(height: 8.0),
-                ],
-              ),
-            ),
-            const SizedBox(height: 8.0),
-            CheckboxListTile(
-                  title: const Text('Has Auton'),
-                  value: autonExists,
-                  onChanged: (bool? newValue) {
-                    setState(() {
-                      autonExists = newValue!;
-                      widget.onAutonExistsChanged(autonExists);
+                const SizedBox(height: 8.0),
+                ChoiceInput(
+                  title: "Drivebase",
+                  onChoiceUpdate: (value) {
+                    setState((){
+                      drivebaseType = value!;
+                      widget.onDrivebaseChanged(drivebaseType);
                     });
                   },
+                  choice: drivebaseType,
+                  options: const ["Swerve", "Tank", "Other"],
+                ),
+                const SizedBox(height: 8.0),
+                Visibility(
+                  visible: drivebaseType == 'Other',
+                    child: Column(
+                      children: [
+                        TextField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Alternate Drivebase Type',
+                          ),
+                          inputFormatters: <TextInputFormatter>[
+                            LengthLimitingTextInputFormatter(100),
+                            FilteringTextInputFormatter(RegExp(r'[a-zA-Z]|-| '), allow: true)
+                          ],
+                          controller: TextEditingController(
+                            text: altDriveType == null ? '' : altDriveType.toString(),
+                          ),
+                        ),
+                        const SizedBox(height: 8.0),
+                      ],
+                    ),
+                ),
+                ChoiceInput(
+                  title: "Climber Type",
+                  onChoiceUpdate: (value) {
+                    setState(() {
+                      climberType = value!;
+                      widget.onClimberTypeChanged(climberType);
+                    });
+                  },
+                  choice: climberType,
+                  options: const ["Tube-in-Tube", "Lead Screw", "Hook and Winch", "Elevator", "Other"],
+                ),
+                const SizedBox(height: 8.0),
+                Visibility(
+                  visible: climberType == 'Other',
+                  child: Column(
+                    children: [
+                      TextField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Alternate Climber Type',
+                        ),
+                        inputFormatters: <TextInputFormatter>[
+                          LengthLimitingTextInputFormatter(100),
+                          FilteringTextInputFormatter(RegExp(r'[a-zA-Z]|-| '), allow: true)
+                        ],
+                        controller: TextEditingController(
+                          text: altClimbType == null ? '' : altClimbType.toString(),
+                        ),
+                      ),
+                      const SizedBox(height: 8.0),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 8.0),
+                CheckboxListTile(
+                      title: const Text('Has Auton'),
+                      value: autonExists,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          autonExists = newValue!;
+                          widget.onAutonExistsChanged(autonExists);
+                        });
+                      },
+                ),
+                const Divider(),
+                CheckboxListTile(
+                  title: const Text('Can go under stage'),
+                  value: canPassStage,
+                  onChanged: (bool? newValue) {
+                    setState(() {
+                      canPassStage = newValue!;
+                      widget.onStagePassChanged(canPassStage);
+                    });
+                  },
+                ),
+                const Divider(),
+                CheckboxListTile(
+                  title: const Text('Inside Bumper Intake?'),
+                  value: intakeInBumper,
+                  onChanged: (bool? newValue) {
+                    setState(() {
+                      intakeInBumper = newValue!;
+                      widget.onIntakeInBumperChanged(intakeInBumper);
+                    });
+                  },
+                ),
+                const Divider(),
+                Expanded(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: const Text('Speaker'),
+                          value: doesSpeaker,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              doesSpeaker = newValue!;
+                              widget.onDoesSpeakerChanged(doesSpeaker);
+                            });
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: const Text('Amp'),
+                          value: doesAmp,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              doesAmp = newValue!;
+                              widget.onDoesAmpChanged(doesAmp);
+                            });
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: const Text('Trap'),
+                          value: doesTrap,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              doesTrap = newValue!;
+                              widget.onDoesTrapChanged(doesTrap);
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(),
+                Expanded(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: const Text('Ground'),
+                          value: doesGroundPickup,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              doesGroundPickup = newValue!;
+                              widget.onDoesGroundPickupChnaged(doesGroundPickup);
+                            });
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: const Text('Source'),
+                          value: doesSourcePickup,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              doesSourcePickup = newValue!;
+                              widget.onDoesSourcePickupChanged(doesSourcePickup);
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(),
+                Expanded(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: const Text('Turret'),
+                          value: doesTurretShoot,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              doesTurretShoot = newValue!;
+                              widget.onDoesTurretShootChanged(doesTurretShoot);
+                            });
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: const Text('Extend'),
+                          value: doesExtendShoot,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              doesExtendShoot = newValue!;
+                              widget.onDoesExtendShootChanged(doesExtendShoot);
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(),
+                RatingInput(
+                  title: 'Repairability',
+                  onRatingUpdate: (rating) {
+                    setState(() {
+                      repairabilityScore = rating;
+                      widget.onRepairabilityChanged(repairabilityScore);
+                    });
+                  },
+                  initialRating: repairabilityScore,
+                )
+              ],
             ),
-            const Divider(),
-            CheckboxListTile(
-              title: const Text('Can go under stage'),
-              value: canPassStage,
-              onChanged: (bool? newValue) {
-                setState(() {
-                  canPassStage = newValue!;
-                  widget.onStagePassChanged(canPassStage);
-                });
-              },
-            ),
-            const Divider(),
-            CheckboxListTile(
-              title: const Text('Inside Bumper Intake?'),
-              value: intakeInBumper,
-              onChanged: (bool? newValue) {
-                setState(() {
-                  intakeInBumper = newValue!;
-                  widget.onIntakeInBumperChanged(intakeInBumper);
-                });
-              },
-            ),
-            const Divider(),
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CheckboxListTile(
-                      title: const Text('Speaker'),
-                      value: doesSpeaker,
-                      onChanged: (bool? newValue) {
-                        setState(() {
-                          doesSpeaker = newValue!;
-                          widget.onDoesSpeakerChanged(doesSpeaker);
-                        });
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: CheckboxListTile(
-                      title: const Text('Amp'),
-                      value: doesAmp,
-                      onChanged: (bool? newValue) {
-                        setState(() {
-                          doesAmp = newValue!;
-                          widget.onDoesAmpChanged(doesAmp);
-                        });
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: CheckboxListTile(
-                      title: const Text('Trap'),
-                      value: doesTrap,
-                      onChanged: (bool? newValue) {
-                        setState(() {
-                          doesTrap = newValue!;
-                          widget.onDoesTrapChanged(doesTrap);
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Divider(),
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CheckboxListTile(
-                      title: const Text('Ground'),
-                      value: doesGroundPickup,
-                      onChanged: (bool? newValue) {
-                        setState(() {
-                          doesGroundPickup = newValue!;
-                          widget.onDoesGroundPickupChnaged(doesGroundPickup);
-                        });
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: CheckboxListTile(
-                      title: const Text('Source'),
-                      value: doesSourcePickup,
-                      onChanged: (bool? newValue) {
-                        setState(() {
-                          doesSourcePickup = newValue!;
-                          widget.onDoesSourcePickupChanged(doesSourcePickup);
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Divider(),
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CheckboxListTile(
-                      title: const Text('Turret'),
-                      value: doesTurretShoot,
-                      onChanged: (bool? newValue) {
-                        setState(() {
-                          doesTurretShoot = newValue!;
-                          widget.onDoesTurretShootChanged(doesTurretShoot);
-                        });
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: CheckboxListTile(
-                      title: const Text('Extend'),
-                      value: doesExtendShoot,
-                      onChanged: (bool? newValue) {
-                        setState(() {
-                          doesExtendShoot = newValue!;
-                          widget.onDoesExtendShootChanged(doesExtendShoot);
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Divider(),
-            RatingInput(
-              title: 'Repairability',
-              onRatingUpdate: (rating) {
-                setState(() {
-                  repairabilityScore = rating;
-                  widget.onRepairabilityChanged(repairabilityScore);
-                });
-              },
-              initialRating: repairabilityScore,
-            )
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
