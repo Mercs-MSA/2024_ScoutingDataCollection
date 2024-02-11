@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:csv/csv.dart';
+import 'package:flutter_form_elements/datatypes.dart';
 import 'package:flutter_form_elements/forms.dart';
 
 import 'widgets.dart';
@@ -84,6 +85,13 @@ class _FormAppPageState extends State<FormAppPage> {
   int fieldAutonAmpNotes = 0;
 
   bool saveDisabled = false;
+
+  //TODO: Make this data real with json import
+  List<MatchData> totalMatchesToBeScouted = [
+    MatchData(team: 9999, match: 18, alliance: Alliances.blue),
+    MatchData(team: 9998, match: 19, alliance: Alliances.red),
+    MatchData(team: 9997, match: 20, alliance: Alliances.blue),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -357,12 +365,16 @@ class _FormAppPageState extends State<FormAppPage> {
                     title: const Text("To Be Scouted"),
                     initiallyExpanded: true,
                     children: [
-                      ScoutSelection(team: 9999, match: 17, alliance: Alliances.red, onSelected: (){ setState(() {
-                        fieldTeamNumber = 9999;
-                      }); },),
-                      ScoutSelection(team: 9998, match: 8, alliance: Alliances.blue, onSelected: (){ setState(() {
-                        fieldTeamNumber = 9998;
-                      }); }),
+                      // ScoutSelection(team: 9999, match: 17, alliance: Alliances.red, onSelected: (){ setState(() {
+                      //   fieldTeamNumber = 9999;
+                      // }); },),
+                      // ScoutSelection(team: 9998, match: 8, alliance: Alliances.blue, onSelected: (){ setState(() {
+                      //   fieldTeamNumber = 9998;
+                      // }); }),
+                      for (final fieldmatch in totalMatchesToBeScouted)
+                        ScoutSelection(team: fieldmatch.team, match: fieldmatch.match, alliance: fieldmatch.alliance, onSelected: (){ setState(() {
+                          fieldTeamNumber = fieldmatch.team;
+                        }); },)
                     ],
                   ),
                   const ExpansionTile(

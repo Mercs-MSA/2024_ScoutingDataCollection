@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-enum Alliances {
-  red,
-  blue
-}
+import 'datatypes.dart';
+
 
 class DataCard extends StatelessWidget {
   const DataCard({
