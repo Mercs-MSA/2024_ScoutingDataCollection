@@ -87,7 +87,7 @@ class _FormAppPageState extends State<FormAppPage> {
   bool saveDisabled = false;
 
   //TODO: Make this data real with json import
-  List<MatchData> totalMatchesToBeScouted = [
+  List<MatchData> incompleteFieldScoutingEntries = [
     MatchData(team: 9999, match: 18, alliance: Alliances.blue),
     MatchData(team: 9998, match: 19, alliance: Alliances.red),
     MatchData(team: 9997, match: 20, alliance: Alliances.blue),
@@ -358,53 +358,56 @@ class _FormAppPageState extends State<FormAppPage> {
           body: IndexedStack(
             index: fieldPageIndex,
             children: [
-              Column(
-                children: [
-                  // TODO: Use real data from data import
-                  ExpansionTile(
-                    title: const Text("To Be Scouted"),
-                    initiallyExpanded: true,
-                    children: [
-                      // ScoutSelection(team: 9999, match: 17, alliance: Alliances.red, onSelected: (){ setState(() {
-                      //   fieldTeamNumber = 9999;
-                      // }); },),
-                      // ScoutSelection(team: 9998, match: 8, alliance: Alliances.blue, onSelected: (){ setState(() {
-                      //   fieldTeamNumber = 9998;
-                      // }); }),
-                      for (final fieldmatch in totalMatchesToBeScouted)
-                        ScoutSelection(team: fieldmatch.team, match: fieldmatch.match, alliance: fieldmatch.alliance, onSelected: (){ setState(() {
-                          fieldTeamNumber = fieldmatch.team;
-                        }); },)
-                    ],
-                  ),
-                  const ExpansionTile(
-                  title: Text("Scouted"),
-                  initiallyExpanded: false,
-                ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
+              ListView(
+                children: [Column(
+                  children: [
+                    // TODO: Use real data from data import
+                    ExpansionTile(
+                      title: const Text("To Be Scouted"),
+                      initiallyExpanded: true,
                       children: [
-                        TextField(
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Team Number',
-                          ),
-                          keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(4),
-                          ],
-                          onChanged: (value) {
-                            fieldTeamNumber = int.tryParse(value);
-                          },
-                          controller: TextEditingController(
-                            text: fieldTeamNumber == null ? '' : fieldTeamNumber.toString(),
-                          ),
-                        ),
+                        // ScoutSelection(team: 9999, match: 17, alliance: Alliances.red, onSelected: (){ setState(() {
+                        //   fieldTeamNumber = 9999;
+                        // }); },),
+                        // ScoutSelection(team: 9998, match: 8, alliance: Alliances.blue, onSelected: (){ setState(() {
+                        //   fieldTeamNumber = 9998;
+                        // }); }),
+                        for (final entry in incompleteFieldScoutingEntries)
+                          ScoutSelection(team: entry.team, match: entry.match, alliance: entry.alliance, onSelected: (){ setState(() {
+                            fieldTeamNumber = entry.team;
+                          }); },)
                       ],
                     ),
+                    const ExpansionTile(
+                    title: Text("Scouted"),
+                    initiallyExpanded: false,
                   ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          TextField(
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Team Number',
+                            ),
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(4),
+                            ],
+                            onChanged: (value) {
+                              fieldTeamNumber = int.tryParse(value);
+                            },
+                            controller: TextEditingController(
+                              text: fieldTeamNumber == null ? '' : fieldTeamNumber.toString(),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ]
+                ),
                 ]
               ),
               AutonForm(
