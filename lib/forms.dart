@@ -17,10 +17,26 @@ class RobotForm extends StatefulWidget {
     required this.onDoesAmpChanged,
     required this.onDoesTrapChanged,
     required this.onDoesSourcePickupChanged,
-    required this.onDoesGroundPickupChnaged,
+    required this.onDoesGroundPickupChanged,
     required this.onDoesExtendShootChanged,
     required this.onDoesTurretShootChanged,
-    required this.onAutonExistsChanged
+    required this.onAutonExistsChanged,
+
+    required this.repairability,
+    required this.drivebase,
+    required this.length,
+    required this.width,
+    required this.height,
+    required this.intakeInBumper,
+    required this.climberType,
+    required this.doesSpeaker,
+    required this.doesAmp,
+    required this.doesTrap,
+    required this.doesSourcePickup,
+    required this.doesGroundPickup,
+    required this.doesExtendShoot,
+    required this.doesTurretShoot,
+    required this.autonExists,
   });
 
   final bool teamNumberPresent;
@@ -36,10 +52,26 @@ class RobotForm extends StatefulWidget {
   final Function(bool) onDoesAmpChanged;
   final Function(bool) onDoesTrapChanged;
   final Function(bool) onDoesSourcePickupChanged;
-  final Function(bool) onDoesGroundPickupChnaged;
+  final Function(bool) onDoesGroundPickupChanged;
   final Function(bool) onDoesExtendShootChanged;
   final Function(bool) onDoesTurretShootChanged;
   final Function(bool) onAutonExistsChanged;
+
+  final double repairability;
+  final String drivebase;
+  final int? length;
+  final int? width;
+  final int? height;
+  final bool intakeInBumper;
+  final String climberType;
+  final bool doesSpeaker;
+  final bool doesAmp;
+  final bool doesTrap;
+  final bool doesSourcePickup;
+  final bool doesGroundPickup;
+  final bool doesExtendShoot;
+  final bool doesTurretShoot;
+  final bool autonExists;
 
   @override
   State<RobotForm> createState() => _RobotFormState();
@@ -97,11 +129,10 @@ class _RobotFormState extends State<RobotForm> {
                           LengthLimitingTextInputFormatter(2),
                         ],
                         onChanged: (value) {
-                          widthData = int.tryParse(value);
                           widget.onWidthChanged(widthData);
                         },
                         controller: TextEditingController(
-                          text: widthData == null ? '' : widthData.toString(),
+                          text: widget.width == null ? '' : widget.width.toString(),
                         ),
                       ),
                     ),
@@ -119,11 +150,10 @@ class _RobotFormState extends State<RobotForm> {
                           LengthLimitingTextInputFormatter(2),
                         ],
                         onChanged: (value) {
-                          lengthData = int.tryParse(value);
                           widget.onLengthChanged(lengthData);
                         },
                         controller: TextEditingController(
-                          text: lengthData == null ? '' : lengthData.toString(),
+                          text: widget.length == null ? '' : widget.length.toString(),
                         ),
                       ),
                     ),
@@ -141,11 +171,10 @@ class _RobotFormState extends State<RobotForm> {
                           LengthLimitingTextInputFormatter(2),
                         ],
                         onChanged: (value) {
-                          heightData = int.tryParse(value);
                           widget.onHeightChanged(heightData);
                         },
                         controller: TextEditingController(
-                          text: heightData == null ? '' : heightData.toString(),
+                          text: widget.height == null ? '' : widget.height.toString(),
                         ),
                       ),
                     ),
@@ -156,16 +185,15 @@ class _RobotFormState extends State<RobotForm> {
                   title: "Drivebase",
                   onChoiceUpdate: (value) {
                     setState((){
-                      drivebaseType = value!;
-                      widget.onDrivebaseChanged(drivebaseType);
+                      widget.onDrivebaseChanged(value!);
                     });
                   },
-                  choice: drivebaseType,
+                  choice: widget.drivebase,
                   options: const ["Swerve", "Tank", "Other"],
                 ),
                 const SizedBox(height: 8.0),
                 Visibility(
-                  visible: drivebaseType == 'Other',
+                  visible: widget.drivebase == 'Other',
                     child: Column(
                       children: [
                         TextField(
@@ -189,16 +217,15 @@ class _RobotFormState extends State<RobotForm> {
                   title: "Climber Type",
                   onChoiceUpdate: (value) {
                     setState(() {
-                      climberType = value!;
-                      widget.onClimberTypeChanged(climberType);
+                      widget.onClimberTypeChanged(value!);
                     });
                   },
-                  choice: climberType,
+                  choice: widget.climberType,
                   options: const ["No Climber", "Tube-in-Tube", "Lead Screw", "Hook and Winch", "Elevator", "Other"],
                 ),
                 const SizedBox(height: 8.0),
                 Visibility(
-                  visible: climberType == 'Other',
+                  visible: widget.climberType == 'Other',
                   child: Column(
                     children: [
                       TextField(
@@ -221,22 +248,20 @@ class _RobotFormState extends State<RobotForm> {
                 const SizedBox(height: 8.0),
                 CheckboxListTile(
                       title: const Text('Has Auton'),
-                      value: autonExists,
+                      value: widget.autonExists,
                       onChanged: (bool? newValue) {
                         setState(() {
-                          autonExists = newValue!;
-                          widget.onAutonExistsChanged(autonExists);
+                          widget.onAutonExistsChanged(newValue!);
                         });
                       },
                 ),
                 const Divider(),
                 CheckboxListTile(
                   title: const Text('Inside Bumper Intake?'),
-                  value: intakeInBumper,
+                  value: widget.intakeInBumper,
                   onChanged: (bool? newValue) {
                     setState(() {
-                      intakeInBumper = newValue!;
-                      widget.onIntakeInBumperChanged(intakeInBumper);
+                      widget.onIntakeInBumperChanged(newValue!);
                     });
                   },
                 ),
@@ -246,11 +271,10 @@ class _RobotFormState extends State<RobotForm> {
                     Expanded(
                       child: CheckboxListTile(
                         title: const Text('Speaker'),
-                        value: doesSpeaker,
+                        value: widget.doesSpeaker,
                         onChanged: (bool? newValue) {
                           setState(() {
-                            doesSpeaker = newValue!;
-                            widget.onDoesSpeakerChanged(doesSpeaker);
+                            widget.onDoesSpeakerChanged(newValue!);
                           });
                         },
                       ),
@@ -258,11 +282,10 @@ class _RobotFormState extends State<RobotForm> {
                     Expanded(
                       child: CheckboxListTile(
                         title: const Text('Amp'),
-                        value: doesAmp,
+                        value: widget.doesAmp,
                         onChanged: (bool? newValue) {
                           setState(() {
-                            doesAmp = newValue!;
-                            widget.onDoesAmpChanged(doesAmp);
+                            widget.onDoesAmpChanged(newValue!);
                           });
                         },
                       ),
@@ -270,11 +293,10 @@ class _RobotFormState extends State<RobotForm> {
                     Expanded(
                       child: CheckboxListTile(
                         title: const Text('Trap'),
-                        value: doesTrap,
+                        value: widget.doesTrap,
                         onChanged: (bool? newValue) {
                           setState(() {
-                            doesTrap = newValue!;
-                            widget.onDoesTrapChanged(doesTrap);
+                            widget.onDoesTrapChanged(newValue!);
                           });
                         },
                       ),
@@ -287,11 +309,10 @@ class _RobotFormState extends State<RobotForm> {
                     Expanded(
                       child: CheckboxListTile(
                         title: const Text('Ground'),
-                        value: doesGroundPickup,
+                        value: widget.doesGroundPickup,
                         onChanged: (bool? newValue) {
                           setState(() {
-                            doesGroundPickup = newValue!;
-                            widget.onDoesGroundPickupChnaged(doesGroundPickup);
+                            widget.onDoesGroundPickupChanged(newValue!);
                           });
                         },
                       ),
@@ -299,11 +320,10 @@ class _RobotFormState extends State<RobotForm> {
                     Expanded(
                       child: CheckboxListTile(
                         title: const Text('Source'),
-                        value: doesSourcePickup,
+                        value: widget.doesSourcePickup,
                         onChanged: (bool? newValue) {
                           setState(() {
-                            doesSourcePickup = newValue!;
-                            widget.onDoesSourcePickupChanged(doesSourcePickup);
+                            widget.onDoesSourcePickupChanged(newValue!);
                           });
                         },
                       ),
@@ -316,11 +336,10 @@ class _RobotFormState extends State<RobotForm> {
                     Expanded(
                       child: CheckboxListTile(
                         title: const Text('Turret'),
-                        value: doesTurretShoot,
+                        value: widget.doesTurretShoot,
                         onChanged: (bool? newValue) {
                           setState(() {
-                            doesTurretShoot = newValue!;
-                            widget.onDoesTurretShootChanged(doesTurretShoot);
+                            widget.onDoesTurretShootChanged(newValue!);
                           });
                         },
                       ),
@@ -328,11 +347,10 @@ class _RobotFormState extends State<RobotForm> {
                     Expanded(
                       child: CheckboxListTile(
                         title: const Text('Extend'),
-                        value: doesExtendShoot,
+                        value: widget.doesExtendShoot,
                         onChanged: (bool? newValue) {
                           setState(() {
-                            doesExtendShoot = newValue!;
-                            widget.onDoesExtendShootChanged(doesExtendShoot);
+                            widget.onDoesExtendShootChanged(newValue!);
                           });
                         },
                       ),
@@ -344,11 +362,10 @@ class _RobotFormState extends State<RobotForm> {
                   title: 'Repairability',
                   onRatingUpdate: (rating) {
                     setState(() {
-                      repairabilityScore = rating;
-                      widget.onRepairabilityChanged(repairabilityScore);
+                      widget.onRepairabilityChanged(rating);
                     });
                   },
-                  initialRating: repairabilityScore,
+                  initialRating: widget.repairability,
                 )
               ],
             ),

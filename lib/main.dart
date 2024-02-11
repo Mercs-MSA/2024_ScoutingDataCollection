@@ -71,6 +71,7 @@ class _FormAppPageState extends State<FormAppPage> {
   String pitClimberType = "Tube-in-Tube";
 
   bool fieldAutonExists = false;
+  bool pitAutonExists = false;
 
   bool pitDoesSpeaker = true;
   bool pitDoesAmp = true;
@@ -292,21 +293,61 @@ class _FormAppPageState extends State<FormAppPage> {
               ),
               RobotForm(
                 teamNumberPresent: pitTeamNumber == null ? false : true,
-                onRepairabilityChanged: (value){ pitRepairabilityScore = value; },
-                onDrivebaseChanged: (value){ pitDrivebaseType = value; },
+
                 onLengthChanged: (value){ pitLengthData = value; },
                 onWidthChanged: (value){ pitWidthData = value; },
                 onHeightChanged: (value){ pitHeightData = value; },
-                onIntakeInBumperChanged: (value){ pitIntakeInBumper = value; },
-                onClimberTypeChanged: (value){ pitClimberType = value; },
-                onDoesSpeakerChanged: (value){ pitDoesSpeaker = value; },
-                onDoesAmpChanged: (value){ pitDoesAmp = value; },
-                onDoesTrapChanged: (value){ pitDoesTrap = value; },
-                onDoesGroundPickupChnaged: (value){ pitDoesGroundPickup = value; },
-                onDoesSourcePickupChanged: (value){ pitDoesSourcePickup = value; },
-                onDoesExtendShootChanged: (value){ pitDoesExtendShoot = value; },
-                onDoesTurretShootChanged: (value){ pitDoesTurretShoot = value; },
-                onAutonExistsChanged: (value){ fieldAutonExists = value; },
+
+                onRepairabilityChanged: (value){ pitRepairabilityScore = value; },
+                onDrivebaseChanged: (value){ setState(() {
+                  pitDrivebaseType = value;
+                }); },
+                onIntakeInBumperChanged: (value){ setState(() {
+                  pitIntakeInBumper = value;
+                }); },
+                onClimberTypeChanged: (value){ setState(() {
+                  pitClimberType = value;
+                }); },
+                onDoesSpeakerChanged: (value){ setState(() {
+                  pitDoesSpeaker = value;
+                }); },
+                onDoesAmpChanged: (value){ setState(() {
+                  pitDoesAmp = value;
+                }); },
+                onDoesTrapChanged: (value){ setState(() {
+                  pitDoesTrap = value;
+                }); },
+                onDoesGroundPickupChanged: (value){ setState(() {
+                  pitDoesGroundPickup = value;
+                }); },
+                onDoesSourcePickupChanged: (value){ setState(() {
+                  pitDoesSourcePickup = value;
+                }); },
+                onDoesExtendShootChanged: (value){ setState(() {
+                  pitDoesExtendShoot = value;
+                }); },
+                onDoesTurretShootChanged: (value){ setState(() {
+                  pitDoesTurretShoot = value;
+                }); },
+                onAutonExistsChanged: (value){ setState(() {
+                  pitAutonExists = value;
+                }); },
+
+                repairability: pitRepairabilityScore,
+                drivebase: pitDrivebaseType,
+                length: pitLengthData,
+                width: pitWidthData,
+                height: pitHeightData,
+                intakeInBumper: pitIntakeInBumper,
+                climberType: pitClimberType,
+                doesSpeaker: pitDoesSpeaker,
+                doesAmp: pitDoesAmp,
+                doesTrap: pitDoesTrap,
+                doesSourcePickup: pitDoesSourcePickup,
+                doesGroundPickup: pitDoesGroundPickup,
+                doesExtendShoot: pitDoesExtendShoot,
+                doesTurretShoot: pitDoesTurretShoot,
+                autonExists: pitAutonExists,
               ),
               Column(
                 children: [
