@@ -211,6 +211,7 @@ class _FormAppPageState extends State<FormAppPage> {
                   onPressed: (){
                     setState(() {
                       appMode = 0;
+                      pitPageIndex = 0;
                     });
                   },
                   icon: const Icon(Icons.start)
@@ -356,6 +357,7 @@ class _FormAppPageState extends State<FormAppPage> {
                   onPressed: (){
                     setState(() {
                       appMode = 0;
+                      fieldPageIndex = 0;
                     });
                   },
                   icon: const Icon(Icons.start)
