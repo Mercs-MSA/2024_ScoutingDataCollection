@@ -21,7 +21,6 @@ class RobotForm extends StatefulWidget {
     required this.onDoesExtendShootChanged,
     required this.onDoesTurretShootChanged,
     required this.onAutonExistsChanged,
-
     required this.repairability,
     required this.drivebase,
     required this.length,
@@ -132,7 +131,9 @@ class _RobotFormState extends State<RobotForm> {
                           widget.onWidthChanged(widthData);
                         },
                         controller: TextEditingController(
-                          text: widget.width == null ? '' : widget.width.toString(),
+                          text: widget.width == null
+                              ? ''
+                              : widget.width.toString(),
                         ),
                       ),
                     ),
@@ -153,7 +154,9 @@ class _RobotFormState extends State<RobotForm> {
                           widget.onLengthChanged(lengthData);
                         },
                         controller: TextEditingController(
-                          text: widget.length == null ? '' : widget.length.toString(),
+                          text: widget.length == null
+                              ? ''
+                              : widget.length.toString(),
                         ),
                       ),
                     ),
@@ -174,7 +177,9 @@ class _RobotFormState extends State<RobotForm> {
                           widget.onHeightChanged(heightData);
                         },
                         controller: TextEditingController(
-                          text: widget.height == null ? '' : widget.height.toString(),
+                          text: widget.height == null
+                              ? ''
+                              : widget.height.toString(),
                         ),
                       ),
                     ),
@@ -184,7 +189,7 @@ class _RobotFormState extends State<RobotForm> {
                 ChoiceInput(
                   title: "Drivebase",
                   onChoiceUpdate: (value) {
-                    setState((){
+                    setState(() {
                       widget.onDrivebaseChanged(value!);
                     });
                   },
@@ -194,24 +199,27 @@ class _RobotFormState extends State<RobotForm> {
                 const SizedBox(height: 8.0),
                 Visibility(
                   visible: widget.drivebase == 'Other',
-                    child: Column(
-                      children: [
-                        TextField(
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Alternate Drivebase Type',
-                          ),
-                          inputFormatters: <TextInputFormatter>[
-                            LengthLimitingTextInputFormatter(100),
-                            FilteringTextInputFormatter(RegExp(r'[a-zA-Z]|-| '), allow: true)
-                          ],
-                          controller: TextEditingController(
-                            text: altDriveType == null ? '' : altDriveType.toString(),
-                          ),
+                  child: Column(
+                    children: [
+                      TextField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Alternate Drivebase Type',
                         ),
-                        const SizedBox(height: 8.0),
-                      ],
-                    ),
+                        inputFormatters: <TextInputFormatter>[
+                          LengthLimitingTextInputFormatter(100),
+                          FilteringTextInputFormatter(RegExp(r'[a-zA-Z]|-| '),
+                              allow: true)
+                        ],
+                        controller: TextEditingController(
+                          text: altDriveType == null
+                              ? ''
+                              : altDriveType.toString(),
+                        ),
+                      ),
+                      const SizedBox(height: 8.0),
+                    ],
+                  ),
                 ),
                 ChoiceInput(
                   title: "Climber Type",
@@ -221,7 +229,14 @@ class _RobotFormState extends State<RobotForm> {
                     });
                   },
                   choice: widget.climberType,
-                  options: const ["No Climber", "Tube-in-Tube", "Lead Screw", "Hook and Winch", "Elevator", "Other"],
+                  options: const [
+                    "No Climber",
+                    "Tube-in-Tube",
+                    "Lead Screw",
+                    "Hook and Winch",
+                    "Elevator",
+                    "Other"
+                  ],
                 ),
                 const SizedBox(height: 8.0),
                 Visibility(
@@ -235,10 +250,13 @@ class _RobotFormState extends State<RobotForm> {
                         ),
                         inputFormatters: <TextInputFormatter>[
                           LengthLimitingTextInputFormatter(100),
-                          FilteringTextInputFormatter(RegExp(r'[a-zA-Z]|-| '), allow: true)
+                          FilteringTextInputFormatter(RegExp(r'[a-zA-Z]|-| '),
+                              allow: true)
                         ],
                         controller: TextEditingController(
-                          text: altClimbType == null ? '' : altClimbType.toString(),
+                          text: altClimbType == null
+                              ? ''
+                              : altClimbType.toString(),
                         ),
                       ),
                       const SizedBox(height: 8.0),
@@ -247,13 +265,13 @@ class _RobotFormState extends State<RobotForm> {
                 ),
                 const SizedBox(height: 8.0),
                 CheckboxListTile(
-                      title: const Text('Has Auton'),
-                      value: widget.autonExists,
-                      onChanged: (bool? newValue) {
-                        setState(() {
-                          widget.onAutonExistsChanged(newValue!);
-                        });
-                      },
+                  title: const Text('Has Auton'),
+                  value: widget.autonExists,
+                  onChanged: (bool? newValue) {
+                    setState(() {
+                      widget.onAutonExistsChanged(newValue!);
+                    });
+                  },
                 ),
                 const Divider(),
                 CheckboxListTile(
@@ -377,7 +395,6 @@ class _RobotFormState extends State<RobotForm> {
 }
 
 class AutonForm extends StatefulWidget {
-
   final bool teamNumberPresent;
 
   final Function(bool?) onAutonExistsChanged;
@@ -389,16 +406,15 @@ class AutonForm extends StatefulWidget {
   final Function(int) onAmpNotesChanged;
   final int ampNotes;
 
-  const AutonForm({
-    super.key,
-    required this.teamNumberPresent,
-    required this.onAutonExistsChanged,
-    required this.autonExists,
-    required this.onSpeakerNotesChanged,
-    required this.speakerNotes,
-    required this.onAmpNotesChanged,
-    required this.ampNotes
-  });
+  const AutonForm(
+      {super.key,
+      required this.teamNumberPresent,
+      required this.onAutonExistsChanged,
+      required this.autonExists,
+      required this.onSpeakerNotesChanged,
+      required this.speakerNotes,
+      required this.onAmpNotesChanged,
+      required this.ampNotes});
 
   @override
   State<AutonForm> createState() => _AutonFormState();
@@ -420,52 +436,59 @@ class _AutonFormState extends State<AutonForm> {
             child: Center(
               child: ListView(
                 children: <Widget>[
-                    CheckboxListTile(
+                  CheckboxListTile(
                       title: const Text("Has Auton"),
                       value: widget.autonExists,
-                      onChanged: widget.onAutonExistsChanged
-                    ),
-                    const Divider(),
-                    Visibility(
-                      visible: widget.autonExists,
-                      child: NumberInput(
-                        title: "Speaker Notes",
-                        value: widget.speakerNotes,
-                        onValueAdd: (){ setState(() {
+                      onChanged: widget.onAutonExistsChanged),
+                  const Divider(),
+                  Visibility(
+                    visible: widget.autonExists,
+                    child: NumberInput(
+                      title: "Speaker Notes",
+                      value: widget.speakerNotes,
+                      onValueAdd: () {
+                        setState(() {
                           if (widget.speakerNotes < 10) {
                             speakerNotes = widget.speakerNotes + 1;
                           }
                           widget.onSpeakerNotesChanged(speakerNotes);
-                        }); },
-                        onValueSubtract: (){ setState(() {
+                        });
+                      },
+                      onValueSubtract: () {
+                        setState(() {
                           if (widget.speakerNotes > 0) {
                             speakerNotes = widget.speakerNotes - 1;
                           }
                           widget.onSpeakerNotesChanged(speakerNotes);
-                        }); },
-                      ),
+                        });
+                      },
                     ),
-                    const SizedBox(height: 8.0),
-                    Visibility(
-                      visible: widget.autonExists,
-                      child: NumberInput(
-                        title: "Amp Notes",
-                        value: widget.ampNotes,
-                        onValueAdd: (){ setState(() {
+                  ),
+                  const SizedBox(height: 8.0),
+                  Visibility(
+                    visible: widget.autonExists,
+                    child: NumberInput(
+                      title: "Amp Notes",
+                      value: widget.ampNotes,
+                      onValueAdd: () {
+                        setState(() {
                           if (widget.ampNotes < 10) {
                             ampNotes = widget.ampNotes + 1;
                           }
                           widget.onAmpNotesChanged(ampNotes);
-                        }); },
-                        onValueSubtract: (){ setState(() {
+                        });
+                      },
+                      onValueSubtract: () {
+                        setState(() {
                           if (widget.ampNotes > 0) {
                             ampNotes = widget.ampNotes - 1;
                           }
                           widget.onAmpNotesChanged(ampNotes);
-                        }); },
-                      ),
+                        });
+                      },
                     ),
-                    const SizedBox(height: 8.0),
+                  ),
+                  const SizedBox(height: 8.0),
                 ],
               ),
             ),

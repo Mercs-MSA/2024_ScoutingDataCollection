@@ -1,7 +1,4 @@
-enum Alliances {
-  red,
-  blue
-}
+enum Alliances { red, blue }
 
 class ScoutingTask {
   final int team;
@@ -9,7 +6,8 @@ class ScoutingTask {
   final Alliances alliance;
 
   // Constructor
-  ScoutingTask({required this.team, required this.match, required this.alliance});
+  ScoutingTask(
+      {required this.team, required this.match, required this.alliance});
 
   // toString method for easy printing
   @override

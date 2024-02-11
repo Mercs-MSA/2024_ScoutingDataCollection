@@ -1,18 +1,16 @@
-import 'package:flutter/material.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'datatypes.dart';
 
-
 class ScoutSelection extends StatelessWidget {
-  const ScoutSelection({
-    super.key,
-    required this.team,
-    required this.match,
-    required this.alliance,
-    required this.onSelected
-  });
+  const ScoutSelection(
+      {super.key,
+      required this.team,
+      required this.match,
+      required this.alliance,
+      required this.onSelected});
 
   final int team;
   final int match;
@@ -26,16 +24,17 @@ class ScoutSelection extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onSelected,
         style: ButtonStyle(
-          minimumSize: MaterialStateProperty.all(const Size.fromHeight(120)),
-          maximumSize: MaterialStateProperty.all(const Size.fromHeight(130)),
-
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
+            minimumSize: MaterialStateProperty.all(const Size.fromHeight(120)),
+            maximumSize: MaterialStateProperty.all(const Size.fromHeight(130)),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0),
-              side: BorderSide(width: 4, color: alliance == Alliances.red ? Colors.redAccent : Colors.blueAccent),
-            )
-          )
-        ),
+              side: BorderSide(
+                  width: 4,
+                  color: alliance == Alliances.red
+                      ? Colors.redAccent
+                      : Colors.blueAccent),
+            ))),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -43,7 +42,8 @@ class ScoutSelection extends StatelessWidget {
             children: [
               Text("Team $team", style: const TextStyle(fontSize: 22)),
               Text("Match $match", style: const TextStyle(fontSize: 18)),
-              Text("${alliance.name.capitalize} Alliance", style: const TextStyle(fontSize: 16)),
+              Text("${alliance.name.capitalize} Alliance",
+                  style: const TextStyle(fontSize: 16)),
             ],
           ),
         ),
@@ -53,11 +53,8 @@ class ScoutSelection extends StatelessWidget {
 }
 
 class PitScoutSelection extends StatelessWidget {
-  const PitScoutSelection({
-    super.key,
-    required this.team,
-    required this.onSelected
-  });
+  const PitScoutSelection(
+      {super.key, required this.team, required this.onSelected});
 
   final int team;
   final Function() onSelected;
@@ -69,16 +66,13 @@ class PitScoutSelection extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onSelected,
         style: ButtonStyle(
-          minimumSize: MaterialStateProperty.all(const Size.fromHeight(80)),
-          maximumSize: MaterialStateProperty.all(const Size.fromHeight(100)),
-
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
+            minimumSize: MaterialStateProperty.all(const Size.fromHeight(80)),
+            maximumSize: MaterialStateProperty.all(const Size.fromHeight(100)),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0),
               side: const BorderSide(width: 4, color: Colors.grey),
-            )
-          )
-        ),
+            ))),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -107,15 +101,12 @@ class TeamNumberError extends StatelessWidget {
         ),
         Text(
           "Team number not set",
-          style: TextStyle(
-            fontSize: 28
-          ),
+          style: TextStyle(fontSize: 28),
         )
       ],
     );
   }
 }
-
 
 class RatingInput extends StatelessWidget {
   const RatingInput({
@@ -242,7 +233,8 @@ class ChoiceInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
-      decoration: InputDecoration(border: const OutlineInputBorder(), labelText: title),
+      decoration:
+          InputDecoration(border: const OutlineInputBorder(), labelText: title),
       focusNode: FocusNode(canRequestFocus: false),
       items: options.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
@@ -263,13 +255,12 @@ class NumberInput extends StatelessWidget {
   final void Function() onValueAdd;
   final void Function() onValueSubtract;
 
-  const NumberInput({
-    super.key,
-    required this.title,
-    required this.value,
-    required this.onValueAdd,
-    required this.onValueSubtract
-  });
+  const NumberInput(
+      {super.key,
+      required this.title,
+      required this.value,
+      required this.onValueAdd,
+      required this.onValueSubtract});
 
   @override
   Widget build(BuildContext context) {
@@ -287,10 +278,10 @@ class NumberInput extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
+              title,
+              style: const TextStyle(
+                fontSize: 16,
+              ),
             ),
           ),
           const Spacer(),
@@ -298,27 +289,22 @@ class NumberInput extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               value.toString(),
-              style: const TextStyle(
-                fontSize: 36,
-                fontWeight: FontWeight.w600
-              ),
+              style: const TextStyle(fontSize: 36, fontWeight: FontWeight.w600),
             ),
           ),
           FilledButton(
             onPressed: onValueAdd,
             style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all(const Size.square(56)),
-                padding: MaterialStateProperty.all(EdgeInsets.zero)
-            ),
+                padding: MaterialStateProperty.all(EdgeInsets.zero)),
             child: const Icon(Icons.add),
           ),
           const SizedBox(width: 8.0),
           FilledButton(
               onPressed: onValueSubtract,
               style: ButtonStyle(
-                fixedSize: MaterialStateProperty.all(const Size.square(56)),
-                padding: MaterialStateProperty.all(EdgeInsets.zero)
-            ),
+                  fixedSize: MaterialStateProperty.all(const Size.square(56)),
+                  padding: MaterialStateProperty.all(EdgeInsets.zero)),
               child: const Icon(Icons.remove)),
         ],
       ),

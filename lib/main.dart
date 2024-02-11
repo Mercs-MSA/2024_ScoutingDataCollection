@@ -1,11 +1,10 @@
 import 'dart:io';
 
+import 'package:csv/csv.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:csv/csv.dart';
 import 'package:flutter_form_elements/datatypes.dart';
 import 'package:flutter_form_elements/forms.dart';
 
@@ -116,155 +115,162 @@ class _FormAppPageState extends State<FormAppPage> {
                   fit: FlexFit.tight,
                   flex: 2,
                   child: FilledButton(
-                      onPressed: (){ setState(() {
-                        appMode = 1;
-                      }); },
+                      onPressed: () {
+                        setState(() {
+                          appMode = 1;
+                        });
+                      },
                       style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all(const Size.fromHeight(150)),
-                        maximumSize: MaterialStateProperty.all(const Size.fromHeight(200)),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
+                          minimumSize: MaterialStateProperty.all(
+                              const Size.fromHeight(150)),
+                          maximumSize: MaterialStateProperty.all(
+                              const Size.fromHeight(200)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.0),
-                          )
-                        )
-                      ),
+                          ))),
                       child: const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Pit Scouting", style: TextStyle(fontSize: 24),),
+                            Text(
+                              "Pit Scouting",
+                              style: TextStyle(fontSize: 24),
+                            ),
                             Text("Enter pit scouting mode.")
-                          ]
-                      )
-                  ),
+                          ])),
                 ),
                 const SizedBox(height: 8.0),
                 Flexible(
                   fit: FlexFit.tight,
                   flex: 2,
                   child: FilledButton(
-                      onPressed: (){ setState(() {
-                        appMode = 2;
-                      }); },
+                      onPressed: () {
+                        setState(() {
+                          appMode = 2;
+                        });
+                      },
                       style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all(const Size.fromHeight(150)),
-                        maximumSize: MaterialStateProperty.all(const Size.fromHeight(200)),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
+                          minimumSize: MaterialStateProperty.all(
+                              const Size.fromHeight(150)),
+                          maximumSize: MaterialStateProperty.all(
+                              const Size.fromHeight(200)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.0),
-                          )
-                        )
-                      ),
+                          ))),
                       child: const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Field Scouting", style: TextStyle(fontSize: 24)),
+                            Text("Field Scouting",
+                                style: TextStyle(fontSize: 24)),
                             Text("Enter field scouting mode.")
-                          ]
-                      )
-                  ),
+                          ])),
                 ),
                 const Spacer(),
                 const Image(
-                    image: AssetImage('images/mercs.png'),
-                    fit: BoxFit.scaleDown,
-                    width: 256,
-                    isAntiAlias: true,
+                  image: AssetImage('images/mercs.png'),
+                  fit: BoxFit.scaleDown,
+                  width: 256,
+                  isAntiAlias: true,
                 ),
                 const Spacer(),
-                  Flexible(
-                    fit: FlexFit.tight,
-                    flex: 2,
-                    child: ElevatedButton(
-                        onPressed: (){ setState(() {
+                Flexible(
+                  fit: FlexFit.tight,
+                  flex: 2,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
                           appMode = 3;
-                        }); },
-                        style: ButtonStyle(
-                          minimumSize: MaterialStateProperty.all(const Size.fromHeight(100)),
-                          maximumSize: MaterialStateProperty.all(const Size.fromHeight(200)),
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16.0),
-                            )
-                          )
-                        ),
-                        child: const FittedBox(
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("App Setup", style: TextStyle(fontSize: 24)),
-                                Text("Configure app and team lists")
-                              ]
-                          ),
-                        )
-                    ),
-                  )
+                        });
+                      },
+                      style: ButtonStyle(
+                          minimumSize: MaterialStateProperty.all(
+                              const Size.fromHeight(100)),
+                          maximumSize: MaterialStateProperty.all(
+                              const Size.fromHeight(200)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                          ))),
+                      child: const FittedBox(
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("App Setup", style: TextStyle(fontSize: 24)),
+                              Text("Configure app and team lists")
+                            ]),
+                      )),
+                )
               ],
             ),
           ),
         ),
         Scaffold(
-          appBar: AppBar(
-            title: const Text('Pit Data Collection'),
-            actions: [
-              IconButton(
-                  onPressed: (){
-                    setState(() {
-                      appMode = 0;
-                      pitPageIndex = 0;
-                    });
-                  },
-                  icon: const Icon(Icons.start)
-              )
-            ],
-          ),
-          bottomNavigationBar: NavigationBar(
-            destinations: const <NavigationDestination>[
-              NavigationDestination(
-                icon: Icon(Icons.flag),
-                label: 'Start',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.list_alt),
-                label: 'General',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.outbox),
-                label: 'Output',
-              )
-            ],
-            selectedIndex: pitPageIndex,
-            onDestinationSelected: (int index) {
-              setState(() {
-                pitPageIndex = index;
-              });
-            },
-          ),
-          body: IndexedStack(
-            index: pitPageIndex,
-            children: [
-              Column(
-                children: [
+            appBar: AppBar(
+              title: const Text('Pit Data Collection'),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      setState(() {
+                        appMode = 0;
+                        pitPageIndex = 0;
+                      });
+                    },
+                    icon: const Icon(Icons.start))
+              ],
+            ),
+            bottomNavigationBar: NavigationBar(
+              destinations: const <NavigationDestination>[
+                NavigationDestination(
+                  icon: Icon(Icons.flag),
+                  label: 'Start',
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.list_alt),
+                  label: 'General',
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.outbox),
+                  label: 'Output',
+                )
+              ],
+              selectedIndex: pitPageIndex,
+              onDestinationSelected: (int index) {
+                setState(() {
+                  pitPageIndex = index;
+                });
+              },
+            ),
+            body: IndexedStack(
+              index: pitPageIndex,
+              children: [
+                Column(children: [
                   // TODO: Use real data from data import
                   ExpansionTile(
-                  title: const Text("To Be Scouted"),
-                  initiallyExpanded: true,
-                  children: [
-                    for (final entry in incompletePitScoutingTasks)
-                          PitScoutSelection(
-                            team: entry.team,
-                            onSelected: (){ setState(() {
-                            pitTeamNumber = entry.team;
-                          }); },
-                          )
-                  ],
-                ),
+                    title: const Text("To Be Scouted"),
+                    initiallyExpanded: true,
+                    children: [
+                      for (final entry in incompletePitScoutingTasks)
+                        PitScoutSelection(
+                          team: entry.team,
+                          onSelected: () {
+                            setState(() {
+                              pitTeamNumber = entry.team;
+                            });
+                          },
+                        )
+                    ],
+                  ),
                   const ExpansionTile(
-                  title: Text("Scouted"),
-                  initiallyExpanded: false,
-                ),
+                    title: Text("Scouted"),
+                    initiallyExpanded: false,
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -283,190 +289,232 @@ class _FormAppPageState extends State<FormAppPage> {
                             pitTeamNumber = int.tryParse(value);
                           },
                           controller: TextEditingController(
-                            text: pitTeamNumber == null ? '' : pitTeamNumber.toString(),
+                            text: pitTeamNumber == null
+                                ? ''
+                                : pitTeamNumber.toString(),
                           ),
                         ),
                       ],
                     ),
                   ),
-                ]
-              ),
-              RobotForm(
-                teamNumberPresent: pitTeamNumber == null ? false : true,
-
-                onLengthChanged: (value){ pitLengthData = value; },
-                onWidthChanged: (value){ pitWidthData = value; },
-                onHeightChanged: (value){ pitHeightData = value; },
-
-                onRepairabilityChanged: (value){ pitRepairabilityScore = value; },
-                onDrivebaseChanged: (value){ setState(() {
-                  pitDrivebaseType = value;
-                }); },
-                onIntakeInBumperChanged: (value){ setState(() {
-                  pitIntakeInBumper = value;
-                }); },
-                onClimberTypeChanged: (value){ setState(() {
-                  pitClimberType = value;
-                }); },
-                onDoesSpeakerChanged: (value){ setState(() {
-                  pitDoesSpeaker = value;
-                }); },
-                onDoesAmpChanged: (value){ setState(() {
-                  pitDoesAmp = value;
-                }); },
-                onDoesTrapChanged: (value){ setState(() {
-                  pitDoesTrap = value;
-                }); },
-                onDoesGroundPickupChanged: (value){ setState(() {
-                  pitDoesGroundPickup = value;
-                }); },
-                onDoesSourcePickupChanged: (value){ setState(() {
-                  pitDoesSourcePickup = value;
-                }); },
-                onDoesExtendShootChanged: (value){ setState(() {
-                  pitDoesExtendShoot = value;
-                }); },
-                onDoesTurretShootChanged: (value){ setState(() {
-                  pitDoesTurretShoot = value;
-                }); },
-                onAutonExistsChanged: (value){ setState(() {
-                  pitAutonExists = value;
-                }); },
-
-                repairability: pitRepairabilityScore,
-                drivebase: pitDrivebaseType,
-                length: pitLengthData,
-                width: pitWidthData,
-                height: pitHeightData,
-                intakeInBumper: pitIntakeInBumper,
-                climberType: pitClimberType,
-                doesSpeaker: pitDoesSpeaker,
-                doesAmp: pitDoesAmp,
-                doesTrap: pitDoesTrap,
-                doesSourcePickup: pitDoesSourcePickup,
-                doesGroundPickup: pitDoesGroundPickup,
-                doesExtendShoot: pitDoesExtendShoot,
-                doesTurretShoot: pitDoesTurretShoot,
-                autonExists: pitAutonExists,
-              ),
-              Column(
-                children: [
-                  const Icon(
-                    Icons.poll_outlined,
-                    size: 180,
-                  ),
-                  Expanded(
-                    child: ListView(
+                ]),
+                RobotForm(
+                  teamNumberPresent: pitTeamNumber == null ? false : true,
+                  onLengthChanged: (value) {
+                    pitLengthData = value;
+                  },
+                  onWidthChanged: (value) {
+                    pitWidthData = value;
+                  },
+                  onHeightChanged: (value) {
+                    pitHeightData = value;
+                  },
+                  onRepairabilityChanged: (value) {
+                    pitRepairabilityScore = value;
+                  },
+                  onDrivebaseChanged: (value) {
+                    setState(() {
+                      pitDrivebaseType = value;
+                    });
+                  },
+                  onIntakeInBumperChanged: (value) {
+                    setState(() {
+                      pitIntakeInBumper = value;
+                    });
+                  },
+                  onClimberTypeChanged: (value) {
+                    setState(() {
+                      pitClimberType = value;
+                    });
+                  },
+                  onDoesSpeakerChanged: (value) {
+                    setState(() {
+                      pitDoesSpeaker = value;
+                    });
+                  },
+                  onDoesAmpChanged: (value) {
+                    setState(() {
+                      pitDoesAmp = value;
+                    });
+                  },
+                  onDoesTrapChanged: (value) {
+                    setState(() {
+                      pitDoesTrap = value;
+                    });
+                  },
+                  onDoesGroundPickupChanged: (value) {
+                    setState(() {
+                      pitDoesGroundPickup = value;
+                    });
+                  },
+                  onDoesSourcePickupChanged: (value) {
+                    setState(() {
+                      pitDoesSourcePickup = value;
+                    });
+                  },
+                  onDoesExtendShootChanged: (value) {
+                    setState(() {
+                      pitDoesExtendShoot = value;
+                    });
+                  },
+                  onDoesTurretShootChanged: (value) {
+                    setState(() {
+                      pitDoesTurretShoot = value;
+                    });
+                  },
+                  onAutonExistsChanged: (value) {
+                    setState(() {
+                      pitAutonExists = value;
+                    });
+                  },
+                  repairability: pitRepairabilityScore,
+                  drivebase: pitDrivebaseType,
+                  length: pitLengthData,
+                  width: pitWidthData,
+                  height: pitHeightData,
+                  intakeInBumper: pitIntakeInBumper,
+                  climberType: pitClimberType,
+                  doesSpeaker: pitDoesSpeaker,
+                  doesAmp: pitDoesAmp,
+                  doesTrap: pitDoesTrap,
+                  doesSourcePickup: pitDoesSourcePickup,
+                  doesGroundPickup: pitDoesGroundPickup,
+                  doesExtendShoot: pitDoesExtendShoot,
+                  doesTurretShoot: pitDoesTurretShoot,
+                  autonExists: pitAutonExists,
+                ),
+                Column(
+                  children: [
+                    const Icon(
+                      Icons.poll_outlined,
+                      size: 180,
+                    ),
+                    Expanded(
+                      child: ListView(
+                        children: [
+                          DataCard(
+                              item: "Team Number",
+                              data: pitTeamNumber == null
+                                  ? "Empty"
+                                  : pitTeamNumber.toString()),
+                          DataCard(
+                              item: "Checkbox",
+                              data: fieldAutonExists.toString()),
+                          DataCard(
+                              item: "Switch", data: switchIsToggled.toString()),
+                          DataCard(
+                              item: "Rating",
+                              data: pitRepairabilityScore.toString()),
+                          DataCard(item: "Dropdown", data: pitDrivebaseType),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        DataCard(
-                            item: "Team Number",
-                            data: pitTeamNumber == null
-                                ? "Empty"
-                                : pitTeamNumber.toString()),
-                        DataCard(
-                            item: "Checkbox", data: fieldAutonExists.toString()),
-                        DataCard(
-                            item: "Switch", data: switchIsToggled.toString()),
-                        DataCard(item: "Rating", data: pitRepairabilityScore.toString()),
-                        DataCard(item: "Dropdown", data: pitDrivebaseType),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton.icon(
+                            onPressed: saveDisabled == false ? onSave : null,
+                            label: const Text("Export CSV"),
+                            icon: const Icon(Icons.save),
+                          ),
+                        )
                       ],
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton.icon(
-                          onPressed: saveDisabled == false ? onSave : null,
-                          label: const Text("Export CSV"),
-                          icon: const Icon(Icons.save),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          )),
+                  ],
+                ),
+              ],
+            )),
         Scaffold(
           appBar: AppBar(
             title: const Text('Field Data Collection'),
             actions: [
               IconButton(
-                  onPressed: (){
+                  onPressed: () {
                     setState(() {
                       appMode = 0;
                       fieldPageIndex = 0;
                     });
                   },
-                  icon: const Icon(Icons.start)
-              )
+                  icon: const Icon(Icons.start))
             ],
           ),
           body: IndexedStack(
             index: fieldPageIndex,
             children: [
-              ListView(
-                children: [Column(
-                  children: [
-                    // TODO: Use real data from data import
-                    ExpansionTile(
-                      title: const Text("To Be Scouted"),
-                      initiallyExpanded: true,
-                      children: [
-                        for (final entry in incompleteFieldScoutingTasks)
-                          ScoutSelection(team: entry.team, match: entry.match, alliance: entry.alliance, onSelected: (){ setState(() {
-                            fieldTeamNumber = entry.team;
-                          }); },)
-                      ],
-                    ),
-                    const ExpansionTile(
+              ListView(children: [
+                Column(children: [
+                  // TODO: Use real data from data import
+                  ExpansionTile(
+                    title: const Text("To Be Scouted"),
+                    initiallyExpanded: true,
+                    children: [
+                      for (final entry in incompleteFieldScoutingTasks)
+                        ScoutSelection(
+                          team: entry.team,
+                          match: entry.match,
+                          alliance: entry.alliance,
+                          onSelected: () {
+                            setState(() {
+                              fieldTeamNumber = entry.team;
+                            });
+                          },
+                        )
+                    ],
+                  ),
+                  const ExpansionTile(
                     title: Text("Scouted"),
                     initiallyExpanded: false,
                   ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          TextField(
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Team Number',
-                            ),
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly,
-                              LengthLimitingTextInputFormatter(4),
-                            ],
-                            onChanged: (value) {
-                              fieldTeamNumber = int.tryParse(value);
-                            },
-                            controller: TextEditingController(
-                              text: fieldTeamNumber == null ? '' : fieldTeamNumber.toString(),
-                            ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        TextField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Team Number',
                           ),
-                        ],
-                      ),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(4),
+                          ],
+                          onChanged: (value) {
+                            fieldTeamNumber = int.tryParse(value);
+                          },
+                          controller: TextEditingController(
+                            text: fieldTeamNumber == null
+                                ? ''
+                                : fieldTeamNumber.toString(),
+                          ),
+                        ),
+                      ],
                     ),
-                  ]
-                ),
-                ]
-              ),
+                  ),
+                ]),
+              ]),
               AutonForm(
                 teamNumberPresent: fieldTeamNumber == null ? false : true,
                 autonExists: fieldAutonExists,
-                onAutonExistsChanged: (value){ setState(() {
-                  fieldAutonExists = value!;
-                }); },
+                onAutonExistsChanged: (value) {
+                  setState(() {
+                    fieldAutonExists = value!;
+                  });
+                },
                 speakerNotes: fieldAutonSpeakerNotes,
-                onSpeakerNotesChanged: (value){ setState(() {
-                  fieldAutonSpeakerNotes = value;
-                }); },
+                onSpeakerNotesChanged: (value) {
+                  setState(() {
+                    fieldAutonSpeakerNotes = value;
+                  });
+                },
                 ampNotes: fieldAutonAmpNotes,
-                onAmpNotesChanged: (value){ setState(() {
-                  fieldAutonAmpNotes = value;
-                }); },
+                onAmpNotesChanged: (value) {
+                  setState(() {
+                    fieldAutonAmpNotes = value;
+                  });
+                },
               )
             ],
           ),
@@ -498,20 +546,18 @@ class _FormAppPageState extends State<FormAppPage> {
           ),
         ),
         Scaffold(
-          appBar: AppBar(
-            title: const Text('Application Setup'),
-            actions: [
-              IconButton(
-                  onPressed: (){
-                    setState(() {
-                      appMode = 0;
-                    });
-                  },
-                  icon: const Icon(Icons.start)
-              )
-            ],
-          )
-        )
+            appBar: AppBar(
+          title: const Text('Application Setup'),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  setState(() {
+                    appMode = 0;
+                  });
+                },
+                icon: const Icon(Icons.start))
+          ],
+        ))
       ],
     );
   }
