@@ -64,6 +64,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
   int? pitWidthData;
   int? pitLengthData;
+  int? pitHeightData;
   bool pitCanPassStage = false;
 
   bool pitIntakeInBumper = false;
@@ -295,9 +296,7 @@ class _FormAppPageState extends State<FormAppPage> {
                 onDrivebaseChanged: (value){ pitDrivebaseType = value; },
                 onLengthChanged: (value){ pitLengthData = value; },
                 onWidthChanged: (value){ pitWidthData = value; },
-                onStagePassChanged: (value){ setState(() {
-                  pitCanPassStage = value;
-                }); },
+                onHeightChanged: (value){ pitHeightData = value; },
                 onIntakeInBumperChanged: (value){ pitIntakeInBumper = value; },
                 onClimberTypeChanged: (value){ pitClimberType = value; },
                 onDoesSpeakerChanged: (value){ pitDoesSpeaker = value; },
@@ -449,6 +448,10 @@ class _FormAppPageState extends State<FormAppPage> {
               NavigationDestination(
                 label: "Teleop",
                 icon: Icon(Icons.sports_esports),
+              ),
+              NavigationDestination(
+                label: "Post",
+                icon: Icon(Icons.sports_score),
               )
             ],
           ),

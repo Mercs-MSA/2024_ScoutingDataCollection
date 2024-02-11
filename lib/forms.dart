@@ -10,7 +10,7 @@ class RobotForm extends StatefulWidget {
     required this.onDrivebaseChanged,
     required this.onLengthChanged,
     required this.onWidthChanged,
-    required this.onStagePassChanged,
+    required this.onHeightChanged,
     required this.onIntakeInBumperChanged,
     required this.onClimberTypeChanged,
     required this.onDoesSpeakerChanged,
@@ -29,7 +29,7 @@ class RobotForm extends StatefulWidget {
   final Function(String) onDrivebaseChanged;
   final Function(int?) onLengthChanged;
   final Function(int?) onWidthChanged;
-  final Function(bool) onStagePassChanged;
+  final Function(int?) onHeightChanged;
   final Function(bool) onIntakeInBumperChanged;
   final Function(String) onClimberTypeChanged;
   final Function(bool) onDoesSpeakerChanged;
@@ -53,7 +53,7 @@ class _RobotFormState extends State<RobotForm> {
 
   int? widthData;
   int? lengthData;
-  bool canPassStage = false;
+  int? heightData;
 
   bool intakeInBumper = false;
   String climberType = "Tube-in-Tube";
@@ -88,7 +88,7 @@ class _RobotFormState extends State<RobotForm> {
                       child: TextField(
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Bot Width',
+                          labelText: 'Width',
                           suffixText: "in",
                         ),
                         keyboardType: TextInputType.number,
@@ -110,7 +110,7 @@ class _RobotFormState extends State<RobotForm> {
                       child: TextField(
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Bot Length',
+                          labelText: 'Length',
                           suffixText: 'in',
                         ),
                         keyboardType: TextInputType.number,
@@ -124,6 +124,28 @@ class _RobotFormState extends State<RobotForm> {
                         },
                         controller: TextEditingController(
                           text: lengthData == null ? '' : lengthData.toString(),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8.0),
+                    Expanded(
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Height',
+                          suffixText: 'in',
+                        ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(2),
+                        ],
+                        onChanged: (value) {
+                          heightData = int.tryParse(value);
+                          widget.onHeightChanged(heightData);
+                        },
+                        controller: TextEditingController(
+                          text: heightData == null ? '' : heightData.toString(),
                         ),
                       ),
                     ),
@@ -172,7 +194,7 @@ class _RobotFormState extends State<RobotForm> {
                     });
                   },
                   choice: climberType,
-                  options: const ["Tube-in-Tube", "Lead Screw", "Hook and Winch", "Elevator", "Other"],
+                  options: const ["No Climber", "Tube-in-Tube", "Lead Screw", "Hook and Winch", "Elevator", "Other"],
                 ),
                 const SizedBox(height: 8.0),
                 Visibility(
@@ -206,17 +228,6 @@ class _RobotFormState extends State<RobotForm> {
                           widget.onAutonExistsChanged(autonExists);
                         });
                       },
-                ),
-                const Divider(),
-                CheckboxListTile(
-                  title: const Text('Can go under stage'),
-                  value: canPassStage,
-                  onChanged: (bool? newValue) {
-                    setState(() {
-                      canPassStage = newValue!;
-                      widget.onStagePassChanged(canPassStage);
-                    });
-                  },
                 ),
                 const Divider(),
                 CheckboxListTile(
