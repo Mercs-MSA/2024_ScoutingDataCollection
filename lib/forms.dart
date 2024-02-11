@@ -560,13 +560,4 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
       ],
     );
   }
-
-  List<List> getKVFormattedData(BuildContext context) {
-    return [
-      ["hasAuton", widget.autonExists],
-      ["speakerNotesScored", widget.autonExists ? widget.speakerNotes : "null"],
-      ["speakerNotesMissed", widget.autonExists ? widget.speakerNotes : "null"],
-      []
-    ];
-  }
 }

@@ -577,6 +577,27 @@ class _FormAppPageState extends State<FormAppPage> {
     );
   }
 
+  List<List> getFieldKVFormattedData(BuildContext context) {
+    return [
+      ["key", "value"],
+      ["FORMNAME", "field"],
+      ["hasAuton", fieldAutonExists],
+      [
+        "autonSpeakerNotesScored",
+        fieldAutonExists ? fieldAutonSpeakerNotes : "null"
+      ],
+      [
+        "autonSpeakerNotesMissed",
+        fieldAutonExists ? fieldAutonSpeakerNotesMissed : "null"
+      ],
+      ["autonAmpNotesScored", fieldAutonExists ? fieldAutonAmpNotes : "null"],
+      [
+        "autonAmpNotesMissed",
+        fieldAutonExists ? fieldAutonAmpNotesMissed : "null"
+      ],
+    ];
+  }
+
   void onSave() async {
     final fileData = const ListToCsvConverter().convert([
       ['item', 'value', 'group'],
@@ -602,26 +623,28 @@ class _FormAppPageState extends State<FormAppPage> {
     });
 
     if (Platform.isAndroid | Platform.isIOS) {
-      await saveFileMobile(Uint8List.fromList(fileData.codeUnits));
+      await saveFileMobile(
+          Uint8List.fromList(fileData.codeUnits), "output.csv");
     } else if (Platform.isLinux | Platform.isMacOS | Platform.isWindows) {
-      await saveFileDesktop(Uint8List.fromList(fileData.codeUnits));
+      await saveFileDesktop(
+          Uint8List.fromList(fileData.codeUnits), "output.csv");
     } else {
       return;
     }
   }
 
-  Future<void> saveFileMobile(Uint8List data) async {
-    final params = SaveFileDialogParams(data: data, fileName: "output.csv");
+  Future<void> saveFileMobile(Uint8List data, String fileName) async {
+    final params = SaveFileDialogParams(data: data, fileName: fileName);
     await FlutterFileDialog.saveFile(params: params);
     setState(() {
       saveDisabled = false;
     });
   }
 
-  Future<void> saveFileDesktop(Uint8List data) async {
+  Future<void> saveFileDesktop(Uint8List data, String fileName) async {
     String? outputFile = await FilePicker.platform.saveFile(
       dialogTitle: 'Export data',
-      fileName: 'output.csv',
+      fileName: fileName,
     );
 
     if (outputFile != null) {
