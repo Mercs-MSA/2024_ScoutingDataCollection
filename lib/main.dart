@@ -529,7 +529,11 @@ class _FormAppPageState extends State<FormAppPage> {
                 ]),
               ]),
               FieldAutonForm(
-                teamNumberPresent: fieldTeamNumber == null ? false : true,
+                teamNumberPresent: fieldTeamNumber == null
+                    ? false
+                    : true && fieldMatchNumber == null
+                        ? false
+                        : true,
                 autonExists: fieldAutonExists,
                 onAutonExistsChanged: (value) {
                   setState(() {

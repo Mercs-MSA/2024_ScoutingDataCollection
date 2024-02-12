@@ -100,7 +100,7 @@ class TeamNumberError extends StatelessWidget {
           size: 180,
         ),
         Text(
-          "Team number not set",
+          "Team and/or match number not set",
           style: TextStyle(fontSize: 28),
         )
       ],
