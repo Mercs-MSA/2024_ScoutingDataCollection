@@ -53,11 +53,16 @@ class ScoutSelection extends StatelessWidget {
 }
 
 class PitScoutSelection extends StatelessWidget {
-  const PitScoutSelection(
-      {super.key, required this.team, required this.onSelected});
+  const PitScoutSelection({
+    super.key,
+    required this.team,
+    required this.onSelected,
+    this.completed = false,
+  });
 
   final int team;
   final Function() onSelected;
+  final bool completed;
 
   @override
   Widget build(BuildContext context) {
@@ -66,13 +71,18 @@ class PitScoutSelection extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onSelected,
         style: ButtonStyle(
-            minimumSize: MaterialStateProperty.all(const Size.fromHeight(80)),
-            maximumSize: MaterialStateProperty.all(const Size.fromHeight(100)),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
+          minimumSize: MaterialStateProperty.all(const Size.fromHeight(80)),
+          maximumSize: MaterialStateProperty.all(const Size.fromHeight(100)),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0),
-              side: const BorderSide(width: 4, color: Colors.grey),
-            ))),
+              side: BorderSide(
+                width: 4,
+                color: completed ? Colors.green : Colors.grey,
+              ),
+            ),
+          ),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(

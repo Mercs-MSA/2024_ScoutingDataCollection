@@ -108,6 +108,12 @@ class _FormAppPageState extends State<FormAppPage> {
     PitScoutingTask(team: 9997)
   ];
 
+  List<PitScoutingTask> completePitScoutingTasks = [
+    PitScoutingTask(team: 9000),
+    PitScoutingTask(team: 8999),
+    PitScoutingTask(team: 8998)
+  ];
+
   @override
   Widget build(BuildContext context) {
     return IndexedStack(
@@ -123,60 +129,65 @@ class _FormAppPageState extends State<FormAppPage> {
                   fit: FlexFit.tight,
                   flex: 2,
                   child: FilledButton(
-                      onPressed: () {
-                        setState(() {
-                          appMode = 1;
-                        });
-                      },
-                      style: ButtonStyle(
-                          minimumSize: MaterialStateProperty.all(
-                              const Size.fromHeight(150)),
-                          maximumSize: MaterialStateProperty.all(
-                              const Size.fromHeight(200)),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.0),
-                          ))),
-                      child: const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Pit Scouting",
-                              style: TextStyle(fontSize: 24),
-                            ),
-                            Text("Enter pit scouting mode.")
-                          ])),
+                    onPressed: () {
+                      setState(() {
+                        appMode = 1;
+                      });
+                    },
+                    style: ButtonStyle(
+                      minimumSize:
+                          MaterialStateProperty.all(const Size.fromHeight(150)),
+                      maximumSize:
+                          MaterialStateProperty.all(const Size.fromHeight(200)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                      ),
+                    ),
+                    child: const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Pit Scouting",
+                          style: TextStyle(fontSize: 24),
+                        ),
+                        Text("Enter pit scouting mode.")
+                      ],
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 8.0),
                 Flexible(
                   fit: FlexFit.tight,
                   flex: 2,
                   child: FilledButton(
-                      onPressed: () {
-                        setState(() {
-                          appMode = 2;
-                        });
-                      },
-                      style: ButtonStyle(
-                          minimumSize: MaterialStateProperty.all(
-                              const Size.fromHeight(150)),
-                          maximumSize: MaterialStateProperty.all(
-                              const Size.fromHeight(200)),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.0),
-                          ))),
-                      child: const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Field Scouting",
-                                style: TextStyle(fontSize: 24)),
-                            Text("Enter field scouting mode.")
-                          ])),
+                    onPressed: () {
+                      setState(() {
+                        appMode = 2;
+                      });
+                    },
+                    style: ButtonStyle(
+                      minimumSize:
+                          MaterialStateProperty.all(const Size.fromHeight(150)),
+                      maximumSize:
+                          MaterialStateProperty.all(const Size.fromHeight(200)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                      ),
+                    ),
+                    child: const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Field Scouting", style: TextStyle(fontSize: 24)),
+                        Text("Enter field scouting mode.")
+                      ],
+                    ),
+                  ),
                 ),
                 const Spacer(),
                 const Image(
@@ -190,75 +201,78 @@ class _FormAppPageState extends State<FormAppPage> {
                   fit: FlexFit.tight,
                   flex: 2,
                   child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          appMode = 3;
-                        });
-                      },
-                      style: ButtonStyle(
-                          minimumSize: MaterialStateProperty.all(
-                              const Size.fromHeight(100)),
-                          maximumSize: MaterialStateProperty.all(
-                              const Size.fromHeight(200)),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.0),
-                          ))),
-                      child: const FittedBox(
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("App Setup", style: TextStyle(fontSize: 24)),
-                              Text("Configure app and team lists")
-                            ]),
-                      )),
+                    onPressed: () {
+                      setState(() {
+                        appMode = 3;
+                      });
+                    },
+                    style: ButtonStyle(
+                      minimumSize:
+                          MaterialStateProperty.all(const Size.fromHeight(100)),
+                      maximumSize:
+                          MaterialStateProperty.all(const Size.fromHeight(200)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                      ),
+                    ),
+                    child: const FittedBox(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("App Setup", style: TextStyle(fontSize: 24)),
+                            Text("Configure app and team lists")
+                          ]),
+                    ),
+                  ),
                 )
               ],
             ),
           ),
         ),
         Scaffold(
-            appBar: AppBar(
-              title: const Text('Pit Data Collection'),
-              actions: [
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        appMode = 0;
-                        pitPageIndex = 0;
-                      });
-                    },
-                    icon: const Icon(Icons.start))
-              ],
-            ),
-            bottomNavigationBar: NavigationBar(
-              destinations: const <NavigationDestination>[
-                NavigationDestination(
-                  icon: Icon(Icons.flag),
-                  label: 'Start',
-                ),
-                NavigationDestination(
-                  icon: Icon(Icons.list_alt),
-                  label: 'General',
-                ),
-                NavigationDestination(
-                  icon: Icon(Icons.outbox),
-                  label: 'Output',
-                )
-              ],
-              selectedIndex: pitPageIndex,
-              onDestinationSelected: (int index) {
-                setState(() {
-                  pitPageIndex = index;
-                });
-              },
-            ),
-            body: IndexedStack(
-              index: pitPageIndex,
-              children: [
-                Column(children: [
+          appBar: AppBar(
+            title: const Text('Pit Data Collection'),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    setState(() {
+                      appMode = 0;
+                      pitPageIndex = 0;
+                    });
+                  },
+                  icon: const Icon(Icons.start))
+            ],
+          ),
+          bottomNavigationBar: NavigationBar(
+            destinations: const <NavigationDestination>[
+              NavigationDestination(
+                icon: Icon(Icons.flag),
+                label: 'Start',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.list_alt),
+                label: 'General',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.outbox),
+                label: 'Output',
+              )
+            ],
+            selectedIndex: pitPageIndex,
+            onDestinationSelected: (int index) {
+              setState(() {
+                pitPageIndex = index;
+              });
+            },
+          ),
+          body: IndexedStack(
+            index: pitPageIndex,
+            children: [
+              ListView(
+                children: [
                   // TODO: Use real data from data import
                   ExpansionTile(
                     title: const Text("To Be Scouted"),
@@ -275,9 +289,21 @@ class _FormAppPageState extends State<FormAppPage> {
                         )
                     ],
                   ),
-                  const ExpansionTile(
-                    title: Text("Scouted"),
+                  ExpansionTile(
+                    title: const Text("Scouted"),
                     initiallyExpanded: false,
+                    children: [
+                      for (final entry in completePitScoutingTasks)
+                        PitScoutSelection(
+                          team: entry.team,
+                          onSelected: () {
+                            setState(() {
+                              pitTeamNumber = entry.team;
+                            });
+                          },
+                          completed: true,
+                        )
+                    ],
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -305,139 +331,141 @@ class _FormAppPageState extends State<FormAppPage> {
                       ],
                     ),
                   ),
-                ]),
-                PitForm(
-                  teamNumberPresent: pitTeamNumber == null ? false : true,
-                  onLengthChanged: (value) {
-                    pitLengthData = value;
-                  },
-                  onWidthChanged: (value) {
-                    pitWidthData = value;
-                  },
-                  onHeightChanged: (value) {
-                    pitHeightData = value;
-                  },
-                  onRepairabilityChanged: (value) {
-                    pitRepairabilityScore = value;
-                  },
-                  onDrivebaseChanged: (value) {
-                    setState(() {
-                      pitDrivebaseType = value;
-                    });
-                  },
-                  onAltDrivebaseChanged: (value) {
-                    setState(() {
-                      pitAltDrivebaseType = value;
-                    });
-                  },
-                  onIntakeInBumperChanged: (value) {
-                    setState(() {
-                      pitIntakeInBumper = value;
-                    });
-                  },
-                  onClimberTypeChanged: (value) {
-                    setState(() {
-                      pitClimberType = value;
-                    });
-                  },
-                  onAltClimberTypeChanged: (value) {
-                    setState(() {
-                      pitAltClimberType = value;
-                    });
-                  },
-                  onDoesSpeakerChanged: (value) {
-                    setState(() {
-                      pitDoesSpeaker = value;
-                    });
-                  },
-                  onDoesAmpChanged: (value) {
-                    setState(() {
-                      pitDoesAmp = value;
-                    });
-                  },
-                  onDoesTrapChanged: (value) {
-                    setState(() {
-                      pitDoesTrap = value;
-                    });
-                  },
-                  onDoesGroundPickupChanged: (value) {
-                    setState(() {
-                      pitDoesGroundPickup = value;
-                    });
-                  },
-                  onDoesSourcePickupChanged: (value) {
-                    setState(() {
-                      pitDoesSourcePickup = value;
-                    });
-                  },
-                  onDoesExtendShootChanged: (value) {
-                    setState(() {
-                      pitDoesExtendShoot = value;
-                    });
-                  },
-                  onDoesTurretShootChanged: (value) {
-                    setState(() {
-                      pitDoesTurretShoot = value;
-                    });
-                  },
-                  onAutonExistsChanged: (value) {
-                    setState(() {
-                      pitAutonExists = value;
-                    });
-                  },
-                  repairability: pitRepairabilityScore,
-                  drivebase: pitDrivebaseType,
-                  altDrivebase: pitAltDrivebaseType,
-                  length: pitLengthData,
-                  width: pitWidthData,
-                  height: pitHeightData,
-                  intakeInBumper: pitIntakeInBumper,
-                  climberType: pitClimberType,
-                  altClimberType: pitAltClimberType,
-                  doesSpeaker: pitDoesSpeaker,
-                  doesAmp: pitDoesAmp,
-                  doesTrap: pitDoesTrap,
-                  doesSourcePickup: pitDoesSourcePickup,
-                  doesGroundPickup: pitDoesGroundPickup,
-                  doesExtendShoot: pitDoesExtendShoot,
-                  doesTurretShoot: pitDoesTurretShoot,
-                  autonExists: pitAutonExists,
-                ),
-                Column(
-                  children: [
-                    const Icon(
-                      Icons.output_rounded,
-                      size: 180,
-                    ),
-                    Expanded(
-                      child: ListView(
-                        children: [
-                          for (final item in getPitKVFormattedData())
-                            DataCard(
-                              item: item[0],
-                              data: item[1].toString(),
-                              type: item[1].runtimeType.toString(),
-                            ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                ],
+              ),
+              PitForm(
+                teamNumberPresent: pitTeamNumber == null ? false : true,
+                onLengthChanged: (value) {
+                  pitLengthData = value;
+                },
+                onWidthChanged: (value) {
+                  pitWidthData = value;
+                },
+                onHeightChanged: (value) {
+                  pitHeightData = value;
+                },
+                onRepairabilityChanged: (value) {
+                  pitRepairabilityScore = value;
+                },
+                onDrivebaseChanged: (value) {
+                  setState(() {
+                    pitDrivebaseType = value;
+                  });
+                },
+                onAltDrivebaseChanged: (value) {
+                  setState(() {
+                    pitAltDrivebaseType = value;
+                  });
+                },
+                onIntakeInBumperChanged: (value) {
+                  setState(() {
+                    pitIntakeInBumper = value;
+                  });
+                },
+                onClimberTypeChanged: (value) {
+                  setState(() {
+                    pitClimberType = value;
+                  });
+                },
+                onAltClimberTypeChanged: (value) {
+                  setState(() {
+                    pitAltClimberType = value;
+                  });
+                },
+                onDoesSpeakerChanged: (value) {
+                  setState(() {
+                    pitDoesSpeaker = value;
+                  });
+                },
+                onDoesAmpChanged: (value) {
+                  setState(() {
+                    pitDoesAmp = value;
+                  });
+                },
+                onDoesTrapChanged: (value) {
+                  setState(() {
+                    pitDoesTrap = value;
+                  });
+                },
+                onDoesGroundPickupChanged: (value) {
+                  setState(() {
+                    pitDoesGroundPickup = value;
+                  });
+                },
+                onDoesSourcePickupChanged: (value) {
+                  setState(() {
+                    pitDoesSourcePickup = value;
+                  });
+                },
+                onDoesExtendShootChanged: (value) {
+                  setState(() {
+                    pitDoesExtendShoot = value;
+                  });
+                },
+                onDoesTurretShootChanged: (value) {
+                  setState(() {
+                    pitDoesTurretShoot = value;
+                  });
+                },
+                onAutonExistsChanged: (value) {
+                  setState(() {
+                    pitAutonExists = value;
+                  });
+                },
+                repairability: pitRepairabilityScore,
+                drivebase: pitDrivebaseType,
+                altDrivebase: pitAltDrivebaseType,
+                length: pitLengthData,
+                width: pitWidthData,
+                height: pitHeightData,
+                intakeInBumper: pitIntakeInBumper,
+                climberType: pitClimberType,
+                altClimberType: pitAltClimberType,
+                doesSpeaker: pitDoesSpeaker,
+                doesAmp: pitDoesAmp,
+                doesTrap: pitDoesTrap,
+                doesSourcePickup: pitDoesSourcePickup,
+                doesGroundPickup: pitDoesGroundPickup,
+                doesExtendShoot: pitDoesExtendShoot,
+                doesTurretShoot: pitDoesTurretShoot,
+                autonExists: pitAutonExists,
+              ),
+              Column(
+                children: [
+                  const Icon(
+                    Icons.output_rounded,
+                    size: 180,
+                  ),
+                  Expanded(
+                    child: ListView(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ElevatedButton.icon(
-                            onPressed: saveDisabled == false ? onSave : null,
-                            label: const Text("Export CSV"),
-                            icon: const Icon(Icons.save),
+                        for (final item in getPitKVFormattedData())
+                          DataCard(
+                            item: item[0],
+                            data: item[1].toString(),
+                            type: item[1].runtimeType.toString(),
                           ),
-                        )
                       ],
                     ),
-                  ],
-                ),
-              ],
-            )),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton.icon(
+                          onPressed: saveDisabled == false ? onSave : null,
+                          label: const Text("Export CSV"),
+                          icon: const Icon(Icons.save),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
         Scaffold(
           appBar: AppBar(
             title: const Text('Field Data Collection'),
@@ -596,18 +624,20 @@ class _FormAppPageState extends State<FormAppPage> {
           ),
         ),
         Scaffold(
-            appBar: AppBar(
-          title: const Text('Application Setup'),
-          actions: [
-            IconButton(
+          appBar: AppBar(
+            title: const Text('Application Setup'),
+            actions: [
+              IconButton(
                 onPressed: () {
                   setState(() {
                     appMode = 0;
                   });
                 },
-                icon: const Icon(Icons.start))
-          ],
-        ))
+                icon: const Icon(Icons.start),
+              )
+            ],
+          ),
+        )
       ],
     );
   }
