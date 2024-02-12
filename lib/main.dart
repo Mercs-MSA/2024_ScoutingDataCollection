@@ -58,6 +58,8 @@ class _FormAppPageState extends State<FormAppPage> {
   int? fieldTeamNumber;
   int? pitTeamNumber;
 
+  int? fieldMatchNumber;
+
   double pitRepairabilityScore = 0;
   String pitDrivebaseType = "Swerve";
 
@@ -461,6 +463,7 @@ class _FormAppPageState extends State<FormAppPage> {
                           onSelected: () {
                             setState(() {
                               fieldTeamNumber = entry.team;
+                              fieldMatchNumber = entry.match;
                             });
                           },
                         )
@@ -491,6 +494,26 @@ class _FormAppPageState extends State<FormAppPage> {
                             text: fieldTeamNumber == null
                                 ? ''
                                 : fieldTeamNumber.toString(),
+                          ),
+                        ),
+                        const SizedBox(height: 8.0),
+                        TextField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Match Number',
+                          ),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(2),
+                          ],
+                          onChanged: (value) {
+                            fieldMatchNumber = int.tryParse(value);
+                          },
+                          controller: TextEditingController(
+                            text: fieldMatchNumber == null
+                                ? ''
+                                : fieldMatchNumber.toString(),
                           ),
                         ),
                       ],
@@ -581,6 +604,8 @@ class _FormAppPageState extends State<FormAppPage> {
     return [
       ["key", "value"],
       ["FORMNAME", "field"],
+      ["teamNumber", fieldTeamNumber],
+      ["matchNumber", fieldMatchNumber],
       ["hasAuton", fieldAutonExists],
       [
         "autonSpeakerNotesScored",
