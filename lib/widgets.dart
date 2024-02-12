@@ -295,8 +295,17 @@ class NumberInput extends StatelessWidget {
           FilledButton(
             onPressed: onValueAdd,
             style: ButtonStyle(
-                fixedSize: MaterialStateProperty.all(const Size.square(56)),
-                padding: MaterialStateProperty.all(EdgeInsets.zero)),
+              fixedSize: MaterialStateProperty.all(const Size.square(56)),
+              padding: MaterialStateProperty.all(EdgeInsets.zero),
+              backgroundColor: MaterialStateProperty.all(ColorScheme.fromSeed(
+                seedColor: Colors.green,
+                brightness: Brightness.dark,
+              ).primary),
+              foregroundColor: MaterialStateProperty.all(ColorScheme.fromSeed(
+                seedColor: Colors.green,
+                brightness: Brightness.dark,
+              ).onPrimary),
+            ),
             child: const Icon(Icons.add),
           ),
           const SizedBox(width: 8.0),
