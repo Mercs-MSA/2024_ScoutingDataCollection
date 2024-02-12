@@ -391,26 +391,17 @@ class _FormAppPageState extends State<FormAppPage> {
                 Column(
                   children: [
                     const Icon(
-                      Icons.poll_outlined,
+                      Icons.output_rounded,
                       size: 180,
                     ),
                     Expanded(
                       child: ListView(
                         children: [
-                          DataCard(
-                              item: "Team Number",
-                              data: pitTeamNumber == null
-                                  ? "Empty"
-                                  : pitTeamNumber.toString()),
-                          DataCard(
-                              item: "Checkbox",
-                              data: fieldAutonExists.toString()),
-                          DataCard(
-                              item: "Switch", data: switchIsToggled.toString()),
-                          DataCard(
-                              item: "Rating",
-                              data: pitRepairabilityScore.toString()),
-                          DataCard(item: "Dropdown", data: pitDrivebaseType),
+                          for (final item in getFieldKVFormattedData())
+                            DataCard(
+                              item: item[0],
+                              data: item[1].toString(),
+                            ),
                         ],
                       ),
                     ),
@@ -436,13 +427,14 @@ class _FormAppPageState extends State<FormAppPage> {
             title: const Text('Field Data Collection'),
             actions: [
               IconButton(
-                  onPressed: () {
-                    setState(() {
-                      appMode = 0;
-                      fieldPageIndex = 0;
-                    });
-                  },
-                  icon: const Icon(Icons.start))
+                onPressed: () {
+                  setState(() {
+                    appMode = 0;
+                    fieldPageIndex = 0;
+                  });
+                },
+                icon: const Icon(Icons.start),
+              )
             ],
           ),
           body: IndexedStack(
@@ -600,7 +592,7 @@ class _FormAppPageState extends State<FormAppPage> {
     );
   }
 
-  List<List> getFieldKVFormattedData(BuildContext context) {
+  List<List> getFieldKVFormattedData() {
     return [
       ["key", "value"],
       ["FORMNAME", "field"],
