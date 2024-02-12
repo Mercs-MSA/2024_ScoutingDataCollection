@@ -254,7 +254,7 @@ class _FormAppPageState extends State<FormAppPage> {
               ),
               NavigationDestination(
                 icon: Icon(Icons.list_alt),
-                label: 'General',
+                label: 'Data',
               ),
               NavigationDestination(
                 icon: Icon(Icons.outbox),
@@ -263,6 +263,47 @@ class _FormAppPageState extends State<FormAppPage> {
             ],
             selectedIndex: pitPageIndex,
             onDestinationSelected: (int index) {
+              print(incompletePitScoutingTasks
+                  .any((entry) => entry.team == pitTeamNumber));
+              if ((pitTeamNumber != null) &&
+                  (pitPageIndex == 0) &&
+                  (index == 1) &&
+                  !(incompletePitScoutingTasks
+                      .any((entry) => entry.team == pitTeamNumber))) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text("Warning"),
+                      icon: const Icon(
+                        Icons.warning_rounded,
+                        size: 72,
+                      ),
+                      content: const Text(
+                          "You are selecting a team that you are not assigned to scout. Are you sure you want to continue?"),
+                      actionsOverflowButtonSpacing: 20,
+                      actions: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            setState(() {
+                              pitPageIndex = 0;
+                              pitTeamNumber = null;
+                            });
+                          },
+                          child: const Text("Go Back"),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Yes, I'm Sure"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
               setState(() {
                 pitPageIndex = index;
               });
@@ -297,6 +338,38 @@ class _FormAppPageState extends State<FormAppPage> {
                         PitScoutSelection(
                           team: entry.team,
                           onSelected: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text("Warning"),
+                                  icon: const Icon(
+                                    Icons.warning_rounded,
+                                    size: 72,
+                                  ),
+                                  content: const Text(
+                                      "You are selecting a team that has already been scouted. Do you want to re-scout this team?"),
+                                  actionsOverflowButtonSpacing: 20,
+                                  actions: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        setState(() {
+                                          pitTeamNumber = null;
+                                        });
+                                      },
+                                      child: const Text("Go Back"),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text("Yes, I'm Sure"),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                             setState(() {
                               pitTeamNumber = entry.team;
                             });
@@ -454,7 +527,8 @@ class _FormAppPageState extends State<FormAppPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ElevatedButton.icon(
-                          onPressed: saveDisabled == false ? onSave : null,
+                          onPressed:
+                              saveDisabled == false ? onPitScoutSave : null,
                           label: const Text("Export CSV"),
                           icon: const Icon(Icons.save),
                         ),
@@ -689,25 +763,9 @@ class _FormAppPageState extends State<FormAppPage> {
     ];
   }
 
-  void onSave() async {
-    final fileData = const ListToCsvConverter().convert([
-      ['item', 'value', 'group'],
-      ['team', pitTeamNumber, 'general'],
-      ['bot_width', pitWidthData, 'general'],
-      ['bot_length', pitLengthData, 'general'],
-      ['drivebase', pitDrivebaseType, 'general'],
-      ['climber', pitClimberType, 'general'],
-      ['under_stage', pitCanPassStage, 'general'],
-      ['intake_in_bumper', pitIntakeInBumper, 'general'],
-      ['speaker_score', pitDoesSpeaker, 'general'],
-      ['amp_score', pitDoesAmp, 'general'],
-      ['trap_score', pitDoesTrap, 'general'],
-      ['ground_pickup', pitDoesGroundPickup, 'general'],
-      ['source_pickup', pitDoesSourcePickup, 'general'],
-      ['turret_shoot', pitDoesTurretShoot, 'general'],
-      ['extend_shoot', pitDoesExtendShoot, 'general'],
-      ['repairability', pitRepairabilityScore, 'general']
-    ]);
+  void onPitScoutSave() async {
+    final fileData =
+        const ListToCsvConverter().convert(getPitKVFormattedData());
 
     setState(() {
       saveDisabled = true;
