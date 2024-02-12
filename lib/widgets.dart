@@ -326,16 +326,18 @@ class DataCard extends StatelessWidget {
     super.key,
     required this.item,
     required this.data,
+    this.type,
   });
 
   final String item;
   final String data;
+  final String? type;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(16.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -343,6 +345,8 @@ class DataCard extends StatelessWidget {
             Text(item),
             const Spacer(),
             Text(data),
+            const Spacer(),
+            Text(type == null ? "Unknown" : type!),
           ],
         ),
       ),

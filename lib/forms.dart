@@ -8,11 +8,13 @@ class PitForm extends StatefulWidget {
     required this.teamNumberPresent,
     required this.onRepairabilityChanged,
     required this.onDrivebaseChanged,
+    required this.onAltDrivebaseChanged,
     required this.onLengthChanged,
     required this.onWidthChanged,
     required this.onHeightChanged,
     required this.onIntakeInBumperChanged,
     required this.onClimberTypeChanged,
+    required this.onAltClimberTypeChanged,
     required this.onDoesSpeakerChanged,
     required this.onDoesAmpChanged,
     required this.onDoesTrapChanged,
@@ -23,11 +25,13 @@ class PitForm extends StatefulWidget {
     required this.onAutonExistsChanged,
     required this.repairability,
     required this.drivebase,
+    required this.altDrivebase,
     required this.length,
     required this.width,
     required this.height,
     required this.intakeInBumper,
     required this.climberType,
+    required this.altClimberType,
     required this.doesSpeaker,
     required this.doesAmp,
     required this.doesTrap,
@@ -42,11 +46,13 @@ class PitForm extends StatefulWidget {
 
   final Function(double) onRepairabilityChanged;
   final Function(String) onDrivebaseChanged;
+  final Function(String) onAltDrivebaseChanged;
   final Function(int?) onLengthChanged;
   final Function(int?) onWidthChanged;
   final Function(int?) onHeightChanged;
   final Function(bool) onIntakeInBumperChanged;
   final Function(String) onClimberTypeChanged;
+  final Function(String) onAltClimberTypeChanged;
   final Function(bool) onDoesSpeakerChanged;
   final Function(bool) onDoesAmpChanged;
   final Function(bool) onDoesTrapChanged;
@@ -58,11 +64,13 @@ class PitForm extends StatefulWidget {
 
   final double repairability;
   final String drivebase;
+  final String? altDrivebase;
   final int? length;
   final int? width;
   final int? height;
   final bool intakeInBumper;
   final String climberType;
+  final String? altClimberType;
   final bool doesSpeaker;
   final bool doesAmp;
   final bool doesTrap;
@@ -77,30 +85,6 @@ class PitForm extends StatefulWidget {
 }
 
 class _PitFormState extends State<PitForm> {
-  double repairabilityScore = 0;
-  String drivebaseType = "Swerve";
-  String? altDriveType;
-  String? altClimbType;
-
-  int? widthData;
-  int? lengthData;
-  int? heightData;
-
-  bool intakeInBumper = false;
-  String climberType = "Tube-in-Tube";
-
-  bool autonExists = false;
-
-  bool doesSpeaker = true;
-  bool doesAmp = true;
-  bool doesTrap = false;
-
-  bool doesGroundPickup = false;
-  bool doesSourcePickup = false;
-
-  bool doesTurretShoot = false;
-  bool doesExtendShoot = true;
-
   @override
   Widget build(BuildContext context) {
     return IndexedStack(
@@ -128,7 +112,7 @@ class _PitFormState extends State<PitForm> {
                           LengthLimitingTextInputFormatter(2),
                         ],
                         onChanged: (value) {
-                          widget.onWidthChanged(widthData);
+                          widget.onWidthChanged(int.tryParse(value));
                         },
                         controller: TextEditingController(
                           text: widget.width == null
@@ -151,7 +135,7 @@ class _PitFormState extends State<PitForm> {
                           LengthLimitingTextInputFormatter(2),
                         ],
                         onChanged: (value) {
-                          widget.onLengthChanged(lengthData);
+                          widget.onLengthChanged(int.tryParse(value));
                         },
                         controller: TextEditingController(
                           text: widget.length == null
@@ -174,7 +158,7 @@ class _PitFormState extends State<PitForm> {
                           LengthLimitingTextInputFormatter(2),
                         ],
                         onChanged: (value) {
-                          widget.onHeightChanged(heightData);
+                          widget.onHeightChanged(int.tryParse(value));
                         },
                         controller: TextEditingController(
                           text: widget.height == null
@@ -212,9 +196,9 @@ class _PitFormState extends State<PitForm> {
                               allow: true)
                         ],
                         controller: TextEditingController(
-                          text: altDriveType == null
+                          text: widget.altDrivebase == null
                               ? ''
-                              : altDriveType.toString(),
+                              : widget.altDrivebase.toString(),
                         ),
                       ),
                       const SizedBox(height: 8.0),
@@ -254,9 +238,9 @@ class _PitFormState extends State<PitForm> {
                               allow: true)
                         ],
                         controller: TextEditingController(
-                          text: altClimbType == null
+                          text: widget.altClimberType == null
                               ? ''
-                              : altClimbType.toString(),
+                              : widget.altClimberType.toString(),
                         ),
                       ),
                       const SizedBox(height: 8.0),

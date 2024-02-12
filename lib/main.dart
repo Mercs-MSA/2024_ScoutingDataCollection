@@ -62,6 +62,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
   double pitRepairabilityScore = 0;
   String pitDrivebaseType = "Swerve";
+  String? pitAltDrivebaseType;
 
   int? pitWidthData;
   int? pitLengthData;
@@ -70,6 +71,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
   bool pitIntakeInBumper = false;
   String pitClimberType = "Tube-in-Tube";
+  String? pitAltClimberType;
 
   bool fieldAutonExists = false;
   bool pitAutonExists = false;
@@ -322,6 +324,11 @@ class _FormAppPageState extends State<FormAppPage> {
                       pitDrivebaseType = value;
                     });
                   },
+                  onAltDrivebaseChanged: (value) {
+                    setState(() {
+                      pitAltDrivebaseType = value;
+                    });
+                  },
                   onIntakeInBumperChanged: (value) {
                     setState(() {
                       pitIntakeInBumper = value;
@@ -330,6 +337,11 @@ class _FormAppPageState extends State<FormAppPage> {
                   onClimberTypeChanged: (value) {
                     setState(() {
                       pitClimberType = value;
+                    });
+                  },
+                  onAltClimberTypeChanged: (value) {
+                    setState(() {
+                      pitAltClimberType = value;
                     });
                   },
                   onDoesSpeakerChanged: (value) {
@@ -374,11 +386,13 @@ class _FormAppPageState extends State<FormAppPage> {
                   },
                   repairability: pitRepairabilityScore,
                   drivebase: pitDrivebaseType,
+                  altDrivebase: pitAltDrivebaseType,
                   length: pitLengthData,
                   width: pitWidthData,
                   height: pitHeightData,
                   intakeInBumper: pitIntakeInBumper,
                   climberType: pitClimberType,
+                  altClimberType: pitAltClimberType,
                   doesSpeaker: pitDoesSpeaker,
                   doesAmp: pitDoesAmp,
                   doesTrap: pitDoesTrap,
@@ -397,10 +411,11 @@ class _FormAppPageState extends State<FormAppPage> {
                     Expanded(
                       child: ListView(
                         children: [
-                          for (final item in getFieldKVFormattedData())
+                          for (final item in getPitKVFormattedData())
                             DataCard(
                               item: item[0],
                               data: item[1].toString(),
+                              type: item[1].runtimeType.toString(),
                             ),
                         ],
                       ),
@@ -612,6 +627,30 @@ class _FormAppPageState extends State<FormAppPage> {
         "autonAmpNotesMissed",
         fieldAutonExists ? fieldAutonAmpNotesMissed : "null"
       ],
+    ];
+  }
+
+  List<List> getPitKVFormattedData() {
+    return [
+      ["key", "value"],
+      ["FORMNAME", "pit"],
+      ["teamNumber", pitTeamNumber],
+      ['botLength', pitLengthData],
+      ['botWidth', pitWidthData],
+      ['botHeight', pitLengthData],
+      ['drivebase', pitDrivebaseType],
+      ['drivebaseAlt', pitAltDrivebaseType],
+      ['climber', pitClimberType],
+      ['climberAlt', pitAltClimberType],
+      ['intakeInBumper', pitIntakeInBumper],
+      ['speakerScore', pitDoesSpeaker],
+      ['ampScore', pitDoesAmp],
+      ['trapScore', pitDoesTrap],
+      ['groundPickup', pitDoesGroundPickup],
+      ['sourcePickup', pitDoesSourcePickup],
+      ['turretShoot', pitDoesTurretShoot],
+      ['extendShoot', pitDoesExtendShoot],
+      ['repairability', pitRepairabilityScore],
     ];
   }
 
