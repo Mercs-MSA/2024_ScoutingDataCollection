@@ -667,6 +667,15 @@ class _FormAppPageState extends State<FormAppPage> {
                     fieldAutonAmpNotesMissed = value;
                   });
                 },
+              ),
+              const Placeholder(),
+              const Placeholder(),
+              Center(
+                child: ElevatedButton.icon(
+                  onPressed: saveDisabled == false ? onFieldScoutSave : null,
+                  label: const Text("Export CSV"),
+                  icon: const Icon(Icons.save),
+                ),
               )
             ],
           ),
@@ -781,6 +790,24 @@ class _FormAppPageState extends State<FormAppPage> {
     } else if (Platform.isLinux | Platform.isMacOS | Platform.isWindows) {
       await saveFileDesktop(
           Uint8List.fromList(fileData.codeUnits), "output.csv");
+    } else {
+      return;
+    }
+  }
+
+  void onFieldScoutSave() async {
+    final fileData =
+        const ListToCsvConverter().convert(getFieldKVFormattedData());
+
+    setState(() {
+      saveDisabled = true;
+    });
+
+    if (Platform.isAndroid | Platform.isIOS) {
+      await saveFileMobile(Uint8List.fromList(fileData.codeUnits), "field.csv");
+    } else if (Platform.isLinux | Platform.isMacOS | Platform.isWindows) {
+      await saveFileDesktop(
+          Uint8List.fromList(fileData.codeUnits), "field.csv");
     } else {
       return;
     }
