@@ -693,6 +693,10 @@ class _FormAppPageState extends State<FormAppPage> {
               NavigationDestination(
                 label: "Post",
                 icon: Icon(Icons.sports_score),
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.outbox),
+                label: 'Output',
               )
             ],
           ),
