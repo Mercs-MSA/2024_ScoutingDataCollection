@@ -8,6 +8,7 @@ import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:flutter_form_elements/datatypes.dart';
 import 'package:flutter_form_elements/field_forms.dart';
 import 'package:flutter_form_elements/pit_form.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'widgets.dart';
 
@@ -115,6 +116,26 @@ class _FormAppPageState extends State<FormAppPage> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    loadPrefs();
+  }
+
+  Future<void> loadPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      appMode = prefs.getInt('appMode') ?? 0;
+    });
+  }
+
+  Future<void> setAppModePref(mode) async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      prefs.setInt('appMode', mode);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return IndexedStack(
       index: appMode,
@@ -132,6 +153,7 @@ class _FormAppPageState extends State<FormAppPage> {
                     onPressed: () {
                       setState(() {
                         appMode = 1;
+                        setAppModePref(appMode);
                       });
                     },
                     style: ButtonStyle(
@@ -166,6 +188,7 @@ class _FormAppPageState extends State<FormAppPage> {
                     onPressed: () {
                       setState(() {
                         appMode = 2;
+                        setAppModePref(appMode);
                       });
                     },
                     style: ButtonStyle(
@@ -204,6 +227,7 @@ class _FormAppPageState extends State<FormAppPage> {
                     onPressed: () {
                       setState(() {
                         appMode = 3;
+                        setAppModePref(appMode);
                       });
                     },
                     style: ButtonStyle(
@@ -269,6 +293,7 @@ class _FormAppPageState extends State<FormAppPage> {
                     setState(() {
                       appMode = 0;
                       pitPageIndex = 0;
+                      setAppModePref(appMode);
                     });
                   },
                   icon: const Icon(Icons.start))
@@ -291,8 +316,6 @@ class _FormAppPageState extends State<FormAppPage> {
             ],
             selectedIndex: pitPageIndex,
             onDestinationSelected: (int index) {
-              print(incompletePitScoutingTasks
-                  .any((entry) => entry.team == pitTeamNumber));
               if ((pitTeamNumber != null) &&
                   (pitPageIndex == 0) &&
                   (index == 1) &&
@@ -577,6 +600,7 @@ class _FormAppPageState extends State<FormAppPage> {
                   setState(() {
                     appMode = 0;
                     fieldPageIndex = 0;
+                    setAppModePref(appMode);
                   });
                 },
                 icon: const Icon(Icons.start),
@@ -746,6 +770,7 @@ class _FormAppPageState extends State<FormAppPage> {
                 onPressed: () {
                   setState(() {
                     appMode = 0;
+                    setAppModePref(appMode);
                   });
                 },
                 icon: const Icon(Icons.start),

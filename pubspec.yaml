@@ -40,6 +40,7 @@ dependencies:
   flutter_file_dialog: ^3.0.0
   csv: ^5.0.2
   file_picker: ^6.1.1
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
