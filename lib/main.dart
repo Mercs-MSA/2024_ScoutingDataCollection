@@ -96,6 +96,7 @@ class _FormAppPageState extends State<FormAppPage> {
   int fieldAutonAmpNotesMissed = 0;
 
   bool saveDisabled = false;
+  bool importerSaveCompletes = false;
 
   //TODO: Make this data real with json import
   List<ScoutingTask> incompleteFieldScoutingTasks = [
@@ -265,33 +266,58 @@ class _FormAppPageState extends State<FormAppPage> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Import"),
-          icon: const Icon(
-            Icons.download,
-            size: 72,
-          ),
-          content: const Text(
-              "Do you want to import and REMOVE ALL old pit and field scouting data"),
-          actionsOverflowButtonSpacing: 20,
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("No"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  incompletePitScoutingTasks = newIncompletePitScoutingTasks;
-                  completePitScoutingTasks = [];
-                });
-                Navigator.of(context).pop();
-              },
-              child: const Text("Yes, I'm Sure"),
-            ),
-          ],
+        String contentText = "Content of Dialog";
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: const Text("Import"),
+              icon: const Icon(
+                Icons.download,
+                size: 72,
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                      "Do you want to import and REMOVE ALL old pit and field scouting data"),
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: CheckboxListTile(
+                      value: importerSaveCompletes,
+                      onChanged: (value) {
+                        setState(() {
+                          importerSaveCompletes = value!;
+                        });
+                      },
+                      title: const Text("Save Completed Data"),
+                    ),
+                  ),
+                ],
+              ),
+              actionsOverflowButtonSpacing: 20,
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("No"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      incompletePitScoutingTasks =
+                          newIncompletePitScoutingTasks;
+                      if (!importerSaveCompletes) {
+                        completePitScoutingTasks = [];
+                      }
+                    });
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("Yes, I'm Sure"),
+                ),
+              ],
+            );
+          },
         );
       },
     );
