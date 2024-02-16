@@ -228,6 +228,34 @@ class _FormAppPageState extends State<FormAppPage> {
                     ),
                   ),
                 )
+                // Flexible(
+                //   fit: FlexFit.tight,
+                //   flex: 2,
+                //   child: ElevatedButton(
+                //     onPressed: () {
+                //       pitDoesGroundPickup = false;
+                //     },
+                //     style: ButtonStyle(
+                //       minimumSize:
+                //         MaterialStateProperty.all(const Size.fromHeight(100)),
+                //       maximumSize:
+                //         MaterialStateProperty.all(const Size.fromHeight(200)),
+                //       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                //         RoundedRectangleBorder(
+                //           borderRadius: BorderRadius.circular(16),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                //   child: const FittedBox(
+                //     child: Column(
+                //         crossAxisAlignment: CrossAxisAlignment.start,
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         child: [
+                //           Text("Reset App", style: TextStyle(fontSize: 24)),
+                //         ]),
+                //   )
+                // ),
               ],
             ),
           ),
