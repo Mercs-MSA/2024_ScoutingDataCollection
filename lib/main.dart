@@ -170,7 +170,35 @@ class _FormAppPageState extends State<FormAppPage> {
             jsonData["pit"] is List &&
             jsonData["field"] is List) {
           for (Map pitTeam in jsonData["pit"]) {
-            print(pitTeam.toString());
+            if (pitTeam is Map && pitTeam.containsKey("teamNumber")) {
+              incompletePitScoutingTasks
+                  .add(PitScoutingTask(team: pitTeam["teamNumber"]));
+            } else {
+              if (!context.mounted) return;
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text("JSON Formatting Error"),
+                    icon: const Icon(
+                      Icons.error_rounded,
+                      size: 72,
+                    ),
+                    content: const Text(
+                        "Imported json file is not correctly formatted"),
+                    actionsOverflowButtonSpacing: 20,
+                    actions: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text("OK"),
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
           }
         } else {
           if (!context.mounted) return;
