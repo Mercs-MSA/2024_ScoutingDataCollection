@@ -266,7 +266,6 @@ class _FormAppPageState extends State<FormAppPage> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        String contentText = "Content of Dialog";
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
@@ -329,7 +328,9 @@ class _FormAppPageState extends State<FormAppPage> {
       index: appMode,
       children: [
         Scaffold(
-          appBar: AppBar(title: const Text("Welcome!")),
+          appBar: AppBar(
+            title: const Text("Welcome!"),
+          ),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -431,12 +432,13 @@ class _FormAppPageState extends State<FormAppPage> {
                     ),
                     child: const FittedBox(
                       child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("App Setup", style: TextStyle(fontSize: 24)),
-                            Text("Configure app and team lists")
-                          ]),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("App Setup", style: TextStyle(fontSize: 24)),
+                          Text("Configure app and team lists")
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -444,87 +446,88 @@ class _FormAppPageState extends State<FormAppPage> {
                   height: 8.0,
                 ),
                 Flexible(
-                    fit: FlexFit.tight,
-                    flex: 1,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text("Are you sure?"),
-                              content: const Text(
-                                  "Do you want to reset all information on the app?"),
-                              actions: [
-                                TextButton(
-                                  child: const Text('Reset'),
-                                  onPressed: () {
-                                    setState(() {
-                                      pitPageIndex = 0;
-                                      fieldPageIndex = 0;
-                                      appMode = 0;
-                                      fieldTeamNumber = null;
-                                      pitTeamNumber = null;
-                                      fieldMatchNumber = null;
-                                      pitRepairabilityScore = 0;
-                                      pitDrivebaseType = "Swerve";
-                                      pitAltDrivebaseType = null;
-                                      pitWidthData = null;
-                                      pitLengthData = null;
-                                      pitHeightData = null;
-                                      pitCanPassStage = false;
-                                      pitIntakeInBumper = false;
-                                      pitClimberType = "Tube-in-Tube";
-                                      pitAltClimberType = null;
-                                      fieldAutonExists = false;
-                                      pitAutonExists = false;
-                                      pitDoesSpeaker = true;
-                                      pitDoesAmp = true;
-                                      pitDoesTrap = false;
-                                      pitDoesGroundPickup = false;
-                                      pitDoesSourcePickup = false;
-                                      pitDoesTurretShoot = false;
-                                      pitDoesExtendShoot = true;
-                                      fieldAutonSpeakerNotes = 0;
-                                      fieldAutonAmpNotes = 0;
-                                      fieldAutonSpeakerNotesMissed = 0;
-                                      fieldAutonAmpNotesMissed = 0;
-                                    });
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                                TextButton(
-                                  child: const Text('Cancel'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                      style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all(
-                            const Size.fromHeight(100)),
-                        maximumSize: MaterialStateProperty.all(
-                            const Size.fromHeight(200)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
+                  fit: FlexFit.tight,
+                  flex: 1,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text("Are you sure?"),
+                            content: const Text(
+                                "Do you want to reset all information on the app?"),
+                            actions: [
+                              TextButton(
+                                child: const Text('Reset'),
+                                onPressed: () {
+                                  setState(() {
+                                    pitPageIndex = 0;
+                                    fieldPageIndex = 0;
+                                    appMode = 0;
+                                    fieldTeamNumber = null;
+                                    pitTeamNumber = null;
+                                    fieldMatchNumber = null;
+                                    pitRepairabilityScore = 0;
+                                    pitDrivebaseType = "Swerve";
+                                    pitAltDrivebaseType = null;
+                                    pitWidthData = null;
+                                    pitLengthData = null;
+                                    pitHeightData = null;
+                                    pitCanPassStage = false;
+                                    pitIntakeInBumper = false;
+                                    pitClimberType = "Tube-in-Tube";
+                                    pitAltClimberType = null;
+                                    fieldAutonExists = false;
+                                    pitAutonExists = false;
+                                    pitDoesSpeaker = true;
+                                    pitDoesAmp = true;
+                                    pitDoesTrap = false;
+                                    pitDoesGroundPickup = false;
+                                    pitDoesSourcePickup = false;
+                                    pitDoesTurretShoot = false;
+                                    pitDoesExtendShoot = true;
+                                    fieldAutonSpeakerNotes = 0;
+                                    fieldAutonAmpNotes = 0;
+                                    fieldAutonSpeakerNotesMissed = 0;
+                                    fieldAutonAmpNotesMissed = 0;
+                                  });
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              TextButton(
+                                child: const Text('Cancel'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    style: ButtonStyle(
+                      minimumSize:
+                          MaterialStateProperty.all(const Size.fromHeight(100)),
+                      maximumSize:
+                          MaterialStateProperty.all(const Size.fromHeight(200)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
                         ),
                       ),
-                      child: const FittedBox(
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Reset App", style: TextStyle(fontSize: 24)),
-                            ]),
+                    ),
+                    child: const FittedBox(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Reset App", style: TextStyle(fontSize: 24)),
+                        ],
                       ),
-                    )),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -855,79 +858,83 @@ class _FormAppPageState extends State<FormAppPage> {
           body: IndexedStack(
             index: fieldPageIndex,
             children: [
-              ListView(children: [
-                Column(children: [
-                  // TODO: Use real data from data import
-                  ExpansionTile(
-                    title: const Text("To Be Scouted"),
-                    initiallyExpanded: true,
+              ListView(
+                children: [
+                  Column(
                     children: [
-                      for (final entry in incompleteFieldScoutingTasks)
-                        ScoutSelection(
-                          team: entry.team,
-                          match: entry.match,
-                          alliance: entry.alliance,
-                          onSelected: () {
-                            setState(() {
-                              fieldTeamNumber = entry.team;
-                              fieldMatchNumber = entry.match;
-                            });
-                          },
-                        )
+                      // TODO: Use real data from data import
+                      ExpansionTile(
+                        title: const Text("To Be Scouted"),
+                        initiallyExpanded: true,
+                        children: [
+                          for (final entry in incompleteFieldScoutingTasks)
+                            ScoutSelection(
+                              team: entry.team,
+                              match: entry.match,
+                              alliance: entry.alliance,
+                              onSelected: () {
+                                setState(() {
+                                  fieldTeamNumber = entry.team;
+                                  fieldMatchNumber = entry.match;
+                                });
+                              },
+                            )
+                        ],
+                      ),
+                      const ExpansionTile(
+                        title: Text("Scouted"),
+                        initiallyExpanded: false,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            TextField(
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Team Number',
+                              ),
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                                LengthLimitingTextInputFormatter(4),
+                              ],
+                              onChanged: (value) {
+                                fieldTeamNumber = int.tryParse(value);
+                              },
+                              controller: TextEditingController(
+                                text: fieldTeamNumber == null
+                                    ? ''
+                                    : fieldTeamNumber.toString(),
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            TextField(
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Match Number',
+                              ),
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                                LengthLimitingTextInputFormatter(2),
+                              ],
+                              onChanged: (value) {
+                                fieldMatchNumber = int.tryParse(value);
+                              },
+                              controller: TextEditingController(
+                                text: fieldMatchNumber == null
+                                    ? ''
+                                    : fieldMatchNumber.toString(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
-                  const ExpansionTile(
-                    title: Text("Scouted"),
-                    initiallyExpanded: false,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        TextField(
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Team Number',
-                          ),
-                          keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(4),
-                          ],
-                          onChanged: (value) {
-                            fieldTeamNumber = int.tryParse(value);
-                          },
-                          controller: TextEditingController(
-                            text: fieldTeamNumber == null
-                                ? ''
-                                : fieldTeamNumber.toString(),
-                          ),
-                        ),
-                        const SizedBox(height: 8.0),
-                        TextField(
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Match Number',
-                          ),
-                          keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(2),
-                          ],
-                          onChanged: (value) {
-                            fieldMatchNumber = int.tryParse(value);
-                          },
-                          controller: TextEditingController(
-                            text: fieldMatchNumber == null
-                                ? ''
-                                : fieldMatchNumber.toString(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ]),
-              ]),
+                ],
+              ),
               FieldAutonForm(
                 teamNumberPresent: fieldTeamNumber == null
                     ? false
