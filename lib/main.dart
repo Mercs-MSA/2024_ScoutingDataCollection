@@ -261,8 +261,8 @@ class _FormAppPageState extends State<FormAppPage> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text("Are you sure?"),
-                                content: Text("Do you want to reset all information on the app?"),
+                                title: const Text("Are you sure?"),
+                                content: const Text("Do you want to reset all information on the app?"),
                                 actions: [
                                   TextButton(
                                     child: const Text('Reset'),

@@ -1,4 +1,4 @@
-package com.example.flutter_form_elements
+package com.mercs.scouting
 
 import io.flutter.embedding.android.FlutterActivity
 
