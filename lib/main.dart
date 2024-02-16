@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:csv/csv.dart';
@@ -133,6 +134,99 @@ class _FormAppPageState extends State<FormAppPage> {
     setState(() {
       prefs.setInt('appMode', mode);
     });
+  }
+
+  Future<File?> fileImport(allowedExtensions) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: allowedExtensions,
+    );
+    if (result != null) {
+      return File(result.files.single.path!);
+    }
+    return null;
+  }
+
+  Future<void> importTeamList() async {
+    try {
+      // Specify the file path (adjust it based on your actual file location)
+      var file = await fileImport(["json"]);
+      if (file == null) {
+        return;
+      }
+
+      // Check if the file exists
+      if (await file.exists()) {
+        // Read the contents of the file as a string
+        var contents = await file.readAsString();
+
+        // Parse the JSON data using jsonDecode from dart:convert
+        var jsonData = jsonDecode(contents);
+
+        // Now you can work with the jsonData as needed
+        if (jsonData is Map &&
+            jsonData.containsKey("pit") &&
+            jsonData.containsKey("field") &&
+            jsonData["pit"] is List &&
+            jsonData["field"] is List) {
+          for (Map pitTeam in jsonData["pit"]) {
+            print(pitTeam.toString());
+          }
+        } else {
+          if (!context.mounted) return;
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text("JSON Formatting Error"),
+                icon: const Icon(
+                  Icons.error_rounded,
+                  size: 72,
+                ),
+                content:
+                    const Text("Imported json file is not correctly formatted"),
+                actionsOverflowButtonSpacing: 20,
+                actions: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("OK"),
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      }
+    } catch (e) {
+      if (!context.mounted) return;
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Unknown Error"),
+            icon: const Icon(
+              Icons.error_rounded,
+              size: 72,
+            ),
+            content: Text(
+              e.toString(),
+              style: const TextStyle(fontFamily: "RobotoMono"),
+            ),
+            actionsOverflowButtonSpacing: 20,
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override
@@ -833,6 +927,15 @@ class _FormAppPageState extends State<FormAppPage> {
                 icon: const Icon(Icons.start),
               )
             ],
+          ),
+          body: Center(
+            child: Column(
+              children: [
+                ElevatedButton(
+                    onPressed: importTeamList,
+                    child: const Text("Import team list"))
+              ],
+            ),
           ),
         )
       ],
