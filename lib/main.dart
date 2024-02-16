@@ -252,21 +252,26 @@ class _FormAppPageState extends State<FormAppPage> {
                     ),
                   ),
                 ),
+                const SizedBox(
+                  height: 8.0,
+                ),
                 Flexible(
                     fit: FlexFit.tight,
-                    flex: 2,
+                    flex: 1,
                     child: ElevatedButton(
                       onPressed: () {
                         showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text("Are you sure?"),
-                                content: const Text("Do you want to reset all information on the app?"),
-                                actions: [
-                                  TextButton(
-                                    child: const Text('Reset'),
-                                    onPressed: () {
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Are you sure?"),
+                              content: const Text(
+                                  "Do you want to reset all information on the app?"),
+                              actions: [
+                                TextButton(
+                                  child: const Text('Reset'),
+                                  onPressed: () {
+                                    setState(() {
                                       pitPageIndex = 0;
                                       fieldPageIndex = 0;
                                       appMode = 0;
@@ -296,17 +301,19 @@ class _FormAppPageState extends State<FormAppPage> {
                                       fieldAutonAmpNotes = 0;
                                       fieldAutonSpeakerNotesMissed = 0;
                                       fieldAutonAmpNotesMissed = 0;
-                                    },
-                                  ),
-                                  TextButton(
-                                    child: const Text('Cancel'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ],
-                              );
-                            },
+                                    });
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: const Text('Cancel'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
                         );
                       },
                       style: ButtonStyle(
