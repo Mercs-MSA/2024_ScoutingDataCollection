@@ -257,7 +257,57 @@ class _FormAppPageState extends State<FormAppPage> {
                     flex: 2,
                     child: ElevatedButton(
                       onPressed: () {
-                        pitDoesGroundPickup = false;
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text("Are you sure?"),
+                                content: Text("Do you want to reset all information on the app?"),
+                                actions: [
+                                  TextButton(
+                                    child: const Text('Reset'),
+                                    onPressed: () {
+                                      pitPageIndex = 0;
+                                      fieldPageIndex = 0;
+                                      appMode = 0;
+                                      fieldTeamNumber = null;
+                                      pitTeamNumber = null;
+                                      fieldMatchNumber = null;
+                                      pitRepairabilityScore = 0;
+                                      pitDrivebaseType = "Swerve";
+                                      pitAltDrivebaseType = null;
+                                      pitWidthData = null;
+                                      pitLengthData = null;
+                                      pitHeightData = null;
+                                      pitCanPassStage = false;
+                                      pitIntakeInBumper = false;
+                                      pitClimberType = "Tube-in-Tube";
+                                      pitAltClimberType = null;
+                                      fieldAutonExists = false;
+                                      pitAutonExists = false;
+                                      pitDoesSpeaker = true;
+                                      pitDoesAmp = true;
+                                      pitDoesTrap = false;
+                                      pitDoesGroundPickup = false;
+                                      pitDoesSourcePickup = false;
+                                      pitDoesTurretShoot = false;
+                                      pitDoesExtendShoot = true;
+                                      fieldAutonSpeakerNotes = 0;
+                                      fieldAutonAmpNotes = 0;
+                                      fieldAutonSpeakerNotesMissed = 0;
+                                      fieldAutonAmpNotesMissed = 0;
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: const Text('Cancel'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                        );
                       },
                       style: ButtonStyle(
                         minimumSize: MaterialStateProperty.all(
