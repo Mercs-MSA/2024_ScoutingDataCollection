@@ -148,6 +148,8 @@ class _FormAppPageState extends State<FormAppPage> {
   }
 
   Future<void> importTeamList() async {
+    List<PitScoutingTask> newIncompletePitScoutingTasks = [];
+
     try {
       // Specify the file path (adjust it based on your actual file location)
       var file = await fileImport(["json"]);
@@ -170,8 +172,8 @@ class _FormAppPageState extends State<FormAppPage> {
             jsonData["pit"] is List &&
             jsonData["field"] is List) {
           for (Map pitTeam in jsonData["pit"]) {
-            if (pitTeam is Map && pitTeam.containsKey("teamNumber")) {
-              incompletePitScoutingTasks
+            if (pitTeam.containsKey("teamNumber")) {
+              newIncompletePitScoutingTasks
                   .add(PitScoutingTask(team: pitTeam["teamNumber"]));
             } else {
               if (!context.mounted) return;
@@ -198,6 +200,7 @@ class _FormAppPageState extends State<FormAppPage> {
                   );
                 },
               );
+              return;
             }
           }
         } else {
@@ -225,6 +228,7 @@ class _FormAppPageState extends State<FormAppPage> {
               );
             },
           );
+          return;
         }
       }
     } catch (e) {
@@ -254,7 +258,43 @@ class _FormAppPageState extends State<FormAppPage> {
           );
         },
       );
+      return;
     }
+
+    if (!context.mounted) return;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Import"),
+          icon: const Icon(
+            Icons.download,
+            size: 72,
+          ),
+          content: const Text(
+              "Do you want to import and REMOVE ALL old pit and field scouting data"),
+          actionsOverflowButtonSpacing: 20,
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("No"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  incompletePitScoutingTasks = newIncompletePitScoutingTasks;
+                  completePitScoutingTasks = [];
+                });
+                Navigator.of(context).pop();
+              },
+              child: const Text("Yes, I'm Sure"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
