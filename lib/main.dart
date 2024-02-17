@@ -447,7 +447,7 @@ class _FormAppPageState extends State<FormAppPage> {
                 ),
                 Flexible(
                   fit: FlexFit.tight,
-                  flex: 1,
+                  flex: 2,
                   child: ElevatedButton(
                     onPressed: () {
                       showDialog(
@@ -523,6 +523,7 @@ class _FormAppPageState extends State<FormAppPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text("Reset App", style: TextStyle(fontSize: 24)),
+                          Text("Resets all stored information")
                         ],
                       ),
                     ),
@@ -825,13 +826,47 @@ class _FormAppPageState extends State<FormAppPage> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton.icon(
-                          onPressed:
-                              saveDisabled == false ? onPitScoutSave : null,
-                          label: const Text("Export CSV"),
-                          icon: const Icon(Icons.save),
+                        child: Row(
+                          children: [
+                            ElevatedButton.icon(
+                              onPressed:
+                                  saveDisabled == false ? onPitScoutSave : null,
+                              label: const Text("Export CSV"),
+                              icon: const Icon(Icons.save),
+                            ),
+                            const SizedBox(
+                              width: 8.0,
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                pitTeamNumber = null;
+                                pitRepairabilityScore = 0;
+                                pitDrivebaseType = "Swerve";
+                                pitAltDrivebaseType = null;
+                                pitWidthData = null;
+                                pitLengthData = null;
+                                pitHeightData = null;
+                                pitCanPassStage = false;
+                                pitIntakeInBumper = false;
+                                pitClimberType = "Tube-in-Tube";
+                                pitAltClimberType = null;
+                                pitAutonExists = false;
+                                pitDoesSpeaker = true;
+                                pitDoesAmp = true;
+                                pitDoesTrap = false;
+                                pitDoesGroundPickup = false;
+                                pitDoesSourcePickup = false;
+                                pitDoesTurretShoot = false;
+                                pitDoesExtendShoot = true;
+                                setState(() {
+                                  pitPageIndex = 0;
+                                });
+                              },
+                              child: const Text("Reset Data"),
+                            ),
+                          ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ],
@@ -974,13 +1009,43 @@ class _FormAppPageState extends State<FormAppPage> {
               ),
               const Placeholder(),
               const Placeholder(),
-              Center(
-                child: ElevatedButton.icon(
-                  onPressed: saveDisabled == false ? onFieldScoutSave : null,
-                  label: const Text("Export CSV"),
-                  icon: const Icon(Icons.save),
-                ),
-              )
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed:
+                              saveDisabled == false ? onFieldScoutSave : null,
+                          label: const Text("Export CSV"),
+                          icon: const Icon(Icons.save),
+                        ),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            fieldTeamNumber = null;
+                            fieldMatchNumber = null;
+                            fieldAutonExists = false;
+                            fieldAutonSpeakerNotes = 0;
+                            fieldAutonAmpNotes = 0;
+                            fieldAutonSpeakerNotesMissed = 0;
+                            fieldAutonAmpNotesMissed = 0;
+                            setState(() {
+                              fieldPageIndex = 0;
+                            });
+                          },
+                          child: const Text("Reset Data"),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
           bottomNavigationBar: NavigationBar(
