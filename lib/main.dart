@@ -89,6 +89,9 @@ class _FormAppPageState extends State<FormAppPage> {
   bool pitDoesTurretShoot = false;
   bool pitDoesExtendShoot = true;
 
+  bool pitPlayerPreferAmp = false;
+  bool pitPlayerPreferSource = false;
+
   int fieldAutonSpeakerNotes = 0;
   int fieldAutonAmpNotes = 0;
 
@@ -785,6 +788,16 @@ class _FormAppPageState extends State<FormAppPage> {
                     pitAutonExists = value;
                   });
                 },
+                onPlayerPreferAmpChanged: (value) {
+                  setState(() {
+                    pitPlayerPreferAmp = value;
+                  });
+                },
+                onPlayerPreferSourceChanged: (value) {
+                  setState(() {
+                    pitPlayerPreferSource = value;
+                  });
+                },
                 repairability: pitRepairabilityScore,
                 drivebase: pitDrivebaseType,
                 altDrivebase: pitAltDrivebaseType,
@@ -802,6 +815,8 @@ class _FormAppPageState extends State<FormAppPage> {
                 doesExtendShoot: pitDoesExtendShoot,
                 doesTurretShoot: pitDoesTurretShoot,
                 autonExists: pitAutonExists,
+                playerPreferAmp: pitPlayerPreferAmp,
+                playerPreferSource: pitPlayerPreferSource,
               ),
               Column(
                 children: [
@@ -858,6 +873,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                 pitDoesSourcePickup = false;
                                 pitDoesTurretShoot = false;
                                 pitDoesExtendShoot = true;
+
                                 setState(() {
                                   pitPageIndex = 0;
                                 });

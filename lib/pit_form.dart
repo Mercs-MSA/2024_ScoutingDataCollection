@@ -23,6 +23,8 @@ class PitForm extends StatefulWidget {
     required this.onDoesExtendShootChanged,
     required this.onDoesTurretShootChanged,
     required this.onAutonExistsChanged,
+    required this.onPlayerPreferAmpChanged,
+    required this.onPlayerPreferSourceChanged,
     required this.repairability,
     required this.drivebase,
     required this.altDrivebase,
@@ -40,6 +42,8 @@ class PitForm extends StatefulWidget {
     required this.doesExtendShoot,
     required this.doesTurretShoot,
     required this.autonExists,
+    required this.playerPreferAmp,
+    required this.playerPreferSource,
   });
 
   final bool teamNumberPresent;
@@ -61,6 +65,8 @@ class PitForm extends StatefulWidget {
   final Function(bool) onDoesExtendShootChanged;
   final Function(bool) onDoesTurretShootChanged;
   final Function(bool) onAutonExistsChanged;
+  final Function(bool) onPlayerPreferAmpChanged;
+  final Function(bool) onPlayerPreferSourceChanged;
 
   final double repairability;
   final String drivebase;
@@ -79,6 +85,8 @@ class PitForm extends StatefulWidget {
   final bool doesExtendShoot;
   final bool doesTurretShoot;
   final bool autonExists;
+  final bool playerPreferAmp;
+  final bool playerPreferSource;
 
   @override
   State<PitForm> createState() => _PitFormState();
@@ -268,6 +276,7 @@ class _PitFormState extends State<PitForm> {
                   },
                 ),
                 const Divider(),
+                Text("Can they score speaker, amp or both?"),
                 Row(
                   children: [
                     Expanded(
@@ -306,6 +315,8 @@ class _PitFormState extends State<PitForm> {
                   ],
                 ),
                 const Divider(),
+                Text(
+                    "Can their robot pick up from the ground, source or both?"),
                 Row(
                   children: [
                     Expanded(
@@ -333,6 +344,7 @@ class _PitFormState extends State<PitForm> {
                   ],
                 ),
                 const Divider(),
+                Text("Does their shooter have any of these special functions?"),
                 Row(
                   children: [
                     Expanded(
@@ -368,7 +380,36 @@ class _PitFormState extends State<PitForm> {
                     });
                   },
                   initialRating: widget.repairability,
-                )
+                ),
+                const Divider(),
+                Text(
+                    "Where is their human player most comfortable? (if they don't care check both boxes)"),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: const Text('Amp'),
+                        value: widget.playerPreferAmp,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            widget.onPlayerPreferAmpChanged(newValue!);
+                          });
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: const Text('Source'),
+                        value: widget.playerPreferSource,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            widget.onPlayerPreferSourceChanged(newValue!);
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
