@@ -92,6 +92,10 @@ class _FormAppPageState extends State<FormAppPage> {
   bool pitPlayerPreferAmp = false;
   bool pitPlayerPreferSource = false;
 
+  int? pitDriverYears = 0;
+  int? pitOperatorYears = 0;
+  int? pitCoachYears = 0;
+
   int fieldAutonSpeakerNotes = 0;
   int fieldAutonAmpNotes = 0;
 
@@ -490,6 +494,11 @@ class _FormAppPageState extends State<FormAppPage> {
                                     pitDoesSourcePickup = false;
                                     pitDoesTurretShoot = false;
                                     pitDoesExtendShoot = true;
+                                    pitPlayerPreferAmp = false;
+                                    pitPlayerPreferSource = false;
+                                    pitDriverYears = 0;
+                                    pitOperatorYears = 0;
+                                    pitCoachYears = 0;
                                     fieldAutonSpeakerNotes = 0;
                                     fieldAutonAmpNotes = 0;
                                     fieldAutonSpeakerNotesMissed = 0;
@@ -798,6 +807,21 @@ class _FormAppPageState extends State<FormAppPage> {
                     pitPlayerPreferSource = value;
                   });
                 },
+                onDriverYearsChanged: (value) {
+                  setState(() {
+                    pitDriverYears = value;
+                  });
+                },
+                onOperatorYearsChanged: (value) {
+                  setState(() {
+                    pitOperatorYears = value;
+                  });
+                },
+                onCoachYearsChanged: (value) {
+                  setState(() {
+                    pitCoachYears = value;
+                  });
+                },
                 repairability: pitRepairabilityScore,
                 drivebase: pitDrivebaseType,
                 altDrivebase: pitAltDrivebaseType,
@@ -817,6 +841,9 @@ class _FormAppPageState extends State<FormAppPage> {
                 autonExists: pitAutonExists,
                 playerPreferAmp: pitPlayerPreferAmp,
                 playerPreferSource: pitPlayerPreferSource,
+                driverYears: pitDriverYears,
+                operatorYears: pitOperatorYears,
+                coachYears: pitCoachYears,
               ),
               Column(
                 children: [
@@ -873,7 +900,11 @@ class _FormAppPageState extends State<FormAppPage> {
                                 pitDoesSourcePickup = false;
                                 pitDoesTurretShoot = false;
                                 pitDoesExtendShoot = true;
-
+                                pitPlayerPreferAmp = false;
+                                pitPlayerPreferSource = false;
+                                pitDriverYears = 0;
+                                pitOperatorYears = 0;
+                                pitCoachYears = 0;
                                 setState(() {
                                   pitPageIndex = 0;
                                 });

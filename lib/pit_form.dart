@@ -25,6 +25,9 @@ class PitForm extends StatefulWidget {
     required this.onAutonExistsChanged,
     required this.onPlayerPreferAmpChanged,
     required this.onPlayerPreferSourceChanged,
+    required this.onDriverYearsChanged,
+    required this.onOperatorYearsChanged,
+    required this.onCoachYearsChanged,
     required this.repairability,
     required this.drivebase,
     required this.altDrivebase,
@@ -44,6 +47,9 @@ class PitForm extends StatefulWidget {
     required this.autonExists,
     required this.playerPreferAmp,
     required this.playerPreferSource,
+    required this.driverYears,
+    required this.operatorYears,
+    required this.coachYears,
   });
 
   final bool teamNumberPresent;
@@ -67,6 +73,9 @@ class PitForm extends StatefulWidget {
   final Function(bool) onAutonExistsChanged;
   final Function(bool) onPlayerPreferAmpChanged;
   final Function(bool) onPlayerPreferSourceChanged;
+  final Function(int?) onDriverYearsChanged;
+  final Function(int?) onOperatorYearsChanged;
+  final Function(int?) onCoachYearsChanged;
 
   final double repairability;
   final String drivebase;
@@ -87,6 +96,9 @@ class PitForm extends StatefulWidget {
   final bool autonExists;
   final bool playerPreferAmp;
   final bool playerPreferSource;
+  final int? driverYears;
+  final int? operatorYears;
+  final int? coachYears;
 
   @override
   State<PitForm> createState() => _PitFormState();
@@ -406,6 +418,78 @@ class _PitFormState extends State<PitForm> {
                             widget.onPlayerPreferSourceChanged(newValue!);
                           });
                         },
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                    "How long has each member of the drive team been in their role?"),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Driver',
+                          suffixText: "Years",
+                        ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(1),
+                        ],
+                        onChanged: (value) {
+                          widget.onDriverYearsChanged(int.tryParse(value));
+                        },
+                        controller: TextEditingController(
+                          text: widget.driverYears == null
+                              ? ''
+                              : widget.driverYears.toString(),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Operator',
+                          suffixText: "Years",
+                        ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(1),
+                        ],
+                        onChanged: (value) {
+                          widget.onOperatorYearsChanged(int.tryParse(value));
+                        },
+                        controller: TextEditingController(
+                          text: widget.operatorYears == null
+                              ? ''
+                              : widget.operatorYears.toString(),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Coach',
+                          suffixText: "Years",
+                        ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(2),
+                        ],
+                        onChanged: (value) {
+                          widget.onCoachYearsChanged(int.tryParse(value));
+                        },
+                        controller: TextEditingController(
+                          text: widget.coachYears == null
+                              ? ''
+                              : widget.coachYears.toString(),
+                        ),
                       ),
                     ),
                   ],
