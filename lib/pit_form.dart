@@ -288,7 +288,7 @@ class _PitFormState extends State<PitForm> {
                   },
                 ),
                 const Divider(),
-                Text("Can they score speaker, amp or both?"),
+                const Text("Can they score speaker, amp or both?"),
                 Row(
                   children: [
                     Expanded(
@@ -327,7 +327,7 @@ class _PitFormState extends State<PitForm> {
                   ],
                 ),
                 const Divider(),
-                Text(
+                const Text(
                     "Can their robot pick up from the ground, source or both?"),
                 Row(
                   children: [
@@ -356,7 +356,8 @@ class _PitFormState extends State<PitForm> {
                   ],
                 ),
                 const Divider(),
-                Text("Does their shooter have any of these special functions?"),
+                const Text(
+                    "Does their shooter have any of these special functions?"),
                 Row(
                   children: [
                     Expanded(
@@ -384,7 +385,7 @@ class _PitFormState extends State<PitForm> {
                   ],
                 ),
                 const Divider(),
-                Text(
+                const Text(
                     "Where is their human player most comfortable? (if they don't care check both boxes)"),
                 Row(
                   children: [
@@ -423,8 +424,9 @@ class _PitFormState extends State<PitForm> {
                   initialRating: widget.repairability,
                 ),
                 const Divider(),
-                Text(
+                const Text(
                     "How long has each member of the drive team been in their role?"),
+                const SizedBox(height: 4.0),
                 Row(
                   children: [
                     Expanded(
@@ -449,6 +451,7 @@ class _PitFormState extends State<PitForm> {
                         ),
                       ),
                     ),
+                    const SizedBox(width: 8.0),
                     Expanded(
                       child: TextField(
                         decoration: const InputDecoration(
@@ -471,6 +474,7 @@ class _PitFormState extends State<PitForm> {
                         ),
                       ),
                     ),
+                    const SizedBox(width: 8.0),
                     Expanded(
                       child: TextField(
                         decoration: const InputDecoration(
