@@ -384,16 +384,6 @@ class _PitFormState extends State<PitForm> {
                   ],
                 ),
                 const Divider(),
-                RatingInput(
-                  title: 'Repairability',
-                  onRatingUpdate: (rating) {
-                    setState(() {
-                      widget.onRepairabilityChanged(rating);
-                    });
-                  },
-                  initialRating: widget.repairability,
-                ),
-                const Divider(),
                 Text(
                     "Where is their human player most comfortable? (if they don't care check both boxes)"),
                 Row(
@@ -422,6 +412,17 @@ class _PitFormState extends State<PitForm> {
                     ),
                   ],
                 ),
+                const Divider(),
+                RatingInput(
+                  title: 'Repairability',
+                  onRatingUpdate: (rating) {
+                    setState(() {
+                      widget.onRepairabilityChanged(rating);
+                    });
+                  },
+                  initialRating: widget.repairability,
+                ),
+                const Divider(),
                 Text(
                     "How long has each member of the drive team been in their role?"),
                 Row(

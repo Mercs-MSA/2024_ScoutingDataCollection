@@ -808,19 +808,13 @@ class _FormAppPageState extends State<FormAppPage> {
                   });
                 },
                 onDriverYearsChanged: (value) {
-                  setState(() {
-                    pitDriverYears = value;
-                  });
+                  pitDriverYears = value;
                 },
                 onOperatorYearsChanged: (value) {
-                  setState(() {
-                    pitOperatorYears = value;
-                  });
+                  pitOperatorYears = value;
                 },
                 onCoachYearsChanged: (value) {
-                  setState(() {
-                    pitCoachYears = value;
-                  });
+                  pitCoachYears = value;
                 },
                 repairability: pitRepairabilityScore,
                 drivebase: pitDrivebaseType,
