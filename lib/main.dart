@@ -157,6 +157,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
   Future<void> importTeamList() async {
     List<PitScoutingTask> newIncompletePitScoutingTasks = [];
+    List<ScoutingTask> newIncompleteFieldScoutingTasks = [];
 
     try {
       // Specify the file path (adjust it based on your actual file location)
@@ -183,6 +184,42 @@ class _FormAppPageState extends State<FormAppPage> {
             if (pitTeam.containsKey("teamNumber")) {
               newIncompletePitScoutingTasks
                   .add(PitScoutingTask(team: pitTeam["teamNumber"]));
+            } else {
+              if (!context.mounted) return;
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text("JSON Formatting Error"),
+                    icon: const Icon(
+                      Icons.error_rounded,
+                      size: 72,
+                    ),
+                    content: const Text(
+                        "Imported json file is not correctly formatted"),
+                    actionsOverflowButtonSpacing: 20,
+                    actions: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text("OK"),
+                      ),
+                    ],
+                  );
+                },
+              );
+              return;
+            }
+          }
+          for (Map fieldTeam in jsonData["field"]) {
+            if (fieldTeam.containsKey("teamNumber") &&
+                fieldTeam.containsKey("match") &&
+                fieldTeam.containsKey("alliance")) {
+              newIncompleteFieldScoutingTasks.add(ScoutingTask(
+                  team: fieldTeam["teamNumber"],
+                  match: fieldTeam["match"],
+                  alliance: Alliances.values[fieldTeam["alliance"]]));
             } else {
               if (!context.mounted) return;
               showDialog(
@@ -313,6 +350,8 @@ class _FormAppPageState extends State<FormAppPage> {
                     setState(() {
                       incompletePitScoutingTasks =
                           newIncompletePitScoutingTasks;
+                      incompleteFieldScoutingTasks =
+                          newIncompleteFieldScoutingTasks;
                       if (!importerSaveCompletes) {
                         completePitScoutingTasks = [];
                       }
