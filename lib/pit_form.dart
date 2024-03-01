@@ -12,6 +12,7 @@ class PitForm extends StatefulWidget {
     required this.onLengthChanged,
     required this.onWidthChanged,
     required this.onHeightChanged,
+    required this.onWeightChanged,
     required this.onIntakeInBumperChanged,
     required this.onClimberTypeChanged,
     required this.onAltClimberTypeChanged,
@@ -34,6 +35,7 @@ class PitForm extends StatefulWidget {
     required this.length,
     required this.width,
     required this.height,
+    required this.weight,
     required this.intakeInBumper,
     required this.climberType,
     required this.altClimberType,
@@ -60,6 +62,7 @@ class PitForm extends StatefulWidget {
   final Function(int?) onLengthChanged;
   final Function(int?) onWidthChanged;
   final Function(int?) onHeightChanged;
+  final Function(int?) onWeightChanged;
   final Function(bool) onIntakeInBumperChanged;
   final Function(String) onClimberTypeChanged;
   final Function(String) onAltClimberTypeChanged;
@@ -83,6 +86,7 @@ class PitForm extends StatefulWidget {
   final int? length;
   final int? width;
   final int? height;
+  final int? weight;
   final bool intakeInBumper;
   final String climberType;
   final String? altClimberType;
@@ -184,6 +188,29 @@ class _PitFormState extends State<PitForm> {
                           text: widget.height == null
                               ? ''
                               : widget.height.toString(),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8.0),
+                    Expanded(
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Weight',
+                          suffixText: 'lbs',
+                        ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(3),
+                        ],
+                        onChanged: (value) {
+                          widget.onWeightChanged(int.tryParse(value));
+                        },
+                        controller: TextEditingController(
+                          text: widget.weight == null
+                              ? ''
+                              : widget.weight.toString(),
                         ),
                       ),
                     ),
@@ -426,7 +453,7 @@ class _PitFormState extends State<PitForm> {
                 const Divider(),
                 const Text(
                     "How long has each member of the drive team been in their role?"),
-                const SizedBox(height: 4.0),
+                const SizedBox(height: 8.0),
                 Row(
                   children: [
                     Expanded(
