@@ -7,6 +7,7 @@ class PitForm extends StatefulWidget {
     super.key,
     required this.teamNumberPresent,
     required this.onRepairabilityChanged,
+    required this.onManeuverabilityChanged,
     required this.onDrivebaseChanged,
     required this.onAltDrivebaseChanged,
     required this.onLengthChanged,
@@ -30,6 +31,7 @@ class PitForm extends StatefulWidget {
     required this.onOperatorYearsChanged,
     required this.onCoachYearsChanged,
     required this.repairability,
+    required this.maneuverability,
     required this.drivebase,
     required this.altDrivebase,
     required this.length,
@@ -57,6 +59,7 @@ class PitForm extends StatefulWidget {
   final bool teamNumberPresent;
 
   final Function(double) onRepairabilityChanged;
+  final Function(double) onManeuverabilityChanged;
   final Function(String) onDrivebaseChanged;
   final Function(String) onAltDrivebaseChanged;
   final Function(int?) onLengthChanged;
@@ -81,6 +84,7 @@ class PitForm extends StatefulWidget {
   final Function(int?) onCoachYearsChanged;
 
   final double repairability;
+  final double maneuverability;
   final String drivebase;
   final String? altDrivebase;
   final int? length;
@@ -449,6 +453,16 @@ class _PitFormState extends State<PitForm> {
                     });
                   },
                   initialRating: widget.repairability,
+                ),
+                const Divider(),
+                RatingInput(
+                  title: 'Maneuverability',
+                  onRatingUpdate: (rating) {
+                    setState(() {
+                      widget.onManeuverabilityChanged(rating);
+                    });
+                  },
+                  initialRating: widget.maneuverability,
                 ),
                 const Divider(),
                 const Text(

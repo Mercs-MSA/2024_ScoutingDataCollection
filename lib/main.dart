@@ -64,6 +64,7 @@ class _FormAppPageState extends State<FormAppPage> {
   int? fieldMatchNumber;
 
   double pitRepairabilityScore = 0;
+  double pitManeuverabilityScore = 0;
   String pitDrivebaseType = "Swerve";
   String? pitAltDrivebaseType;
 
@@ -775,6 +776,9 @@ class _FormAppPageState extends State<FormAppPage> {
                 onRepairabilityChanged: (value) {
                   pitRepairabilityScore = value;
                 },
+                onManeuverabilityChanged: (value) {
+                  pitManeuverabilityScore = value;
+                },
                 onDrivebaseChanged: (value) {
                   setState(() {
                     pitDrivebaseType = value;
@@ -860,6 +864,7 @@ class _FormAppPageState extends State<FormAppPage> {
                   pitCoachYears = value;
                 },
                 repairability: pitRepairabilityScore,
+                maneuverability: pitManeuverabilityScore,
                 drivebase: pitDrivebaseType,
                 altDrivebase: pitAltDrivebaseType,
                 length: pitLengthData,
@@ -921,6 +926,7 @@ class _FormAppPageState extends State<FormAppPage> {
                               onPressed: () {
                                 pitTeamNumber = null;
                                 pitRepairabilityScore = 0;
+                                pitManeuverabilityScore = 0;
                                 pitDrivebaseType = "Swerve";
                                 pitAltDrivebaseType = null;
                                 pitWidthData = null;
@@ -1239,6 +1245,7 @@ class _FormAppPageState extends State<FormAppPage> {
       ['turretShoot', pitDoesTurretShoot],
       ['extendShoot', pitDoesExtendShoot],
       ['repairability', pitRepairabilityScore],
+      ['maneuverability', pitManeuverabilityScore],
     ];
   }
 
