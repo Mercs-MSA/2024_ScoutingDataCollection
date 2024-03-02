@@ -513,48 +513,7 @@ class _FormAppPageState extends State<FormAppPage> {
                               TextButton(
                                 child: const Text('Reset'),
                                 onPressed: () {
-                                  setState(() {
-                                    pitPageIndex = 0;
-                                    fieldPageIndex = 0;
-                                    appMode = 0;
-                                    fieldTeamNumber = null;
-                                    pitTeamNumber = null;
-                                    fieldMatchNumber = null;
-                                    pitRepairabilityScore = 0;
-                                    pitManeuverabilityScore = 0;
-                                    pitDrivebaseType = "Swerve";
-                                    pitAltDrivebaseType = null;
-                                    pitWidthData = null;
-                                    pitLengthData = null;
-                                    pitHeightData = null;
-                                    pitWeightData = null;
-                                    pitCanPassStage = false;
-                                    pitIntakeInBumper = false;
-                                    pitClimberType = "Tube-in-Tube";
-                                    pitAltClimberType = null;
-                                    fieldAutonExists = false;
-                                    pitAutonExists = false;
-                                    pitAutonSpeakerNotes = 0;
-                                    pitAutonAmpNotes = 0;
-                                    pitAutonConsistency = 0;
-                                    pitAutonRoutes = 0;
-                                    pitDoesSpeaker = true;
-                                    pitDoesAmp = true;
-                                    pitDoesTrap = false;
-                                    pitDoesGroundPickup = false;
-                                    pitDoesSourcePickup = false;
-                                    pitDoesTurretShoot = false;
-                                    pitDoesExtendShoot = true;
-                                    pitPlayerPreferAmp = false;
-                                    pitPlayerPreferSource = false;
-                                    pitDriverYears = 0;
-                                    pitOperatorYears = 0;
-                                    pitCoachYears = 0;
-                                    fieldAutonSpeakerNotes = 0;
-                                    fieldAutonAmpNotes = 0;
-                                    fieldAutonSpeakerNotesMissed = 0;
-                                    fieldAutonAmpNotesMissed = 0;
-                                  });
+                                  resetAll();
                                   Navigator.of(context).pop();
                                 },
                               ),
@@ -958,39 +917,7 @@ class _FormAppPageState extends State<FormAppPage> {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                pitTeamNumber = null;
-                                pitRepairabilityScore = 0;
-                                pitManeuverabilityScore = 0;
-                                pitDrivebaseType = "Swerve";
-                                pitAltDrivebaseType = null;
-                                pitWidthData = null;
-                                pitLengthData = null;
-                                pitHeightData = null;
-                                pitWeightData = null;
-                                pitCanPassStage = false;
-                                pitIntakeInBumper = false;
-                                pitClimberType = "Tube-in-Tube";
-                                pitAltClimberType = null;
-                                pitAutonExists = false;
-                                pitAutonSpeakerNotes = 0;
-                                pitAutonAmpNotes = 0;
-                                pitAutonConsistency = 0;
-                                pitAutonRoutes = 0;
-                                pitDoesSpeaker = true;
-                                pitDoesAmp = true;
-                                pitDoesTrap = false;
-                                pitDoesGroundPickup = false;
-                                pitDoesSourcePickup = false;
-                                pitDoesTurretShoot = false;
-                                pitDoesExtendShoot = true;
-                                pitPlayerPreferAmp = false;
-                                pitPlayerPreferSource = false;
-                                pitDriverYears = 0;
-                                pitOperatorYears = 0;
-                                pitCoachYears = 0;
-                                setState(() {
-                                  pitPageIndex = 0;
-                                });
+                                resetPit();
                               },
                               child: const Text("Reset Data"),
                             ),
@@ -1312,8 +1239,8 @@ class _FormAppPageState extends State<FormAppPage> {
     }
 
     completePitScoutingTasks.add(PitScoutingTask(team: pitTeamNumber!));
-    incompletePitScoutingTasks.removeWhere((task) => task.team == pitTeamNumber);
-
+    incompletePitScoutingTasks
+        .removeWhere((task) => task.team == pitTeamNumber);
   }
 
   void onFieldScoutSave() async {
@@ -1332,6 +1259,8 @@ class _FormAppPageState extends State<FormAppPage> {
     } else {
       return;
     }
+
+    resetPit();
   }
 
   Future<void> saveFileMobile(Uint8List data, String fileName) async {
@@ -1354,6 +1283,87 @@ class _FormAppPageState extends State<FormAppPage> {
     }
     setState(() {
       saveDisabled = false;
+    });
+  }
+
+  void resetAll() {
+    setState(() {
+      pitPageIndex = 0;
+      fieldPageIndex = 0;
+      appMode = 0;
+      fieldTeamNumber = null;
+      pitTeamNumber = null;
+      fieldMatchNumber = null;
+      pitRepairabilityScore = 0;
+      pitManeuverabilityScore = 0;
+      pitDrivebaseType = "Swerve";
+      pitAltDrivebaseType = null;
+      pitWidthData = null;
+      pitLengthData = null;
+      pitHeightData = null;
+      pitWeightData = null;
+      pitCanPassStage = false;
+      pitIntakeInBumper = false;
+      pitClimberType = "Tube-in-Tube";
+      pitAltClimberType = null;
+      fieldAutonExists = false;
+      pitAutonExists = false;
+      pitAutonSpeakerNotes = 0;
+      pitAutonAmpNotes = 0;
+      pitAutonConsistency = 0;
+      pitAutonRoutes = 0;
+      pitDoesSpeaker = true;
+      pitDoesAmp = true;
+      pitDoesTrap = false;
+      pitDoesGroundPickup = false;
+      pitDoesSourcePickup = false;
+      pitDoesTurretShoot = false;
+      pitDoesExtendShoot = true;
+      pitPlayerPreferAmp = false;
+      pitPlayerPreferSource = false;
+      pitDriverYears = 0;
+      pitOperatorYears = 0;
+      pitCoachYears = 0;
+      fieldAutonSpeakerNotes = 0;
+      fieldAutonAmpNotes = 0;
+      fieldAutonSpeakerNotesMissed = 0;
+      fieldAutonAmpNotesMissed = 0;
+    });
+  }
+
+  void resetPit() {
+    pitTeamNumber = null;
+    pitRepairabilityScore = 0;
+    pitManeuverabilityScore = 0;
+    pitDrivebaseType = "Swerve";
+    pitAltDrivebaseType = null;
+    pitWidthData = null;
+    pitLengthData = null;
+    pitHeightData = null;
+    pitWeightData = null;
+    pitCanPassStage = false;
+    pitIntakeInBumper = false;
+    pitClimberType = "Tube-in-Tube";
+    pitAltClimberType = null;
+    pitAutonExists = false;
+    pitAutonSpeakerNotes = 0;
+    pitAutonAmpNotes = 0;
+    pitAutonConsistency = 0;
+    pitAutonRoutes = 0;
+    pitDoesSpeaker = true;
+    pitDoesAmp = true;
+    pitDoesTrap = false;
+    pitDoesGroundPickup = false;
+    pitDoesSourcePickup = false;
+    pitDoesTurretShoot = false;
+    pitDoesExtendShoot = true;
+    pitPlayerPreferAmp = false;
+    pitPlayerPreferSource = false;
+    pitDriverYears = 0;
+    pitOperatorYears = 0;
+    pitCoachYears = 0;
+    setState(() {
+      pitPageIndex = 0;
     });
   }
 }
