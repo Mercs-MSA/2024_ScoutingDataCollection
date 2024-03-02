@@ -314,72 +314,87 @@ class _PitFormState extends State<PitForm> {
                   ),
                 ),
                 const SizedBox(height: 8.0),
-                CheckboxListTile(
-                  title: const Text('Has Auton'),
-                  value: widget.autonExists,
-                  onChanged: (bool? newValue) {
-                    setState(() {
-                      widget.onAutonExistsChanged(newValue!);
-                    });
-                  },
-                ),
-                Visibility(
-                  visible: widget.autonExists,
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Theme.of(context).dividerColor,
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+                  ),
+                  padding: EdgeInsets.all(8.0),
                   child: Column(
                     children: [
-                      const SizedBox(height: 8.0),
-                      NumberInput(
-                        title: "Speaker Notes",
-                        value: widget.autonSpeakerNotes,
-                        onValueAdd: () {
+                      CheckboxListTile(
+                        title: const Text('Has Auton'),
+                        value: widget.autonExists,
+                        onChanged: (bool? newValue) {
                           setState(() {
-                            if (widget.autonSpeakerNotes < 10) {
-                              autonSpeakerNotes = widget.autonSpeakerNotes + 1;
-                            }
-                            widget
-                                .onAutonSpeakerNotesChanged(autonSpeakerNotes);
-                          });
-                        },
-                        onValueSubtract: () {
-                          setState(() {
-                            if (widget.autonSpeakerNotes > 0) {
-                              autonSpeakerNotes = widget.autonSpeakerNotes - 1;
-                            }
-                            widget
-                                .onAutonSpeakerNotesChanged(autonSpeakerNotes);
+                            widget.onAutonExistsChanged(newValue!);
                           });
                         },
                       ),
-                      const SizedBox(height: 8.0),
-                      NumberInput(
-                        title: "Amp Notes",
-                        value: widget.autonAmpNotes,
-                        onValueAdd: () {
-                          setState(() {
-                            if (widget.autonAmpNotes < 10) {
-                              autonAmpNotes = widget.autonAmpNotes + 1;
-                            }
-                            widget.onAutonAmpNotesChanged(autonAmpNotes);
-                          });
-                        },
-                        onValueSubtract: () {
-                          setState(() {
-                            if (widget.autonAmpNotes > 0) {
-                              autonAmpNotes = widget.autonAmpNotes - 1;
-                            }
-                            widget.onAutonAmpNotesChanged(autonAmpNotes);
-                          });
-                        },
+                      Visibility(
+                        visible: widget.autonExists,
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 8.0),
+                            NumberInput(
+                              title: "Speaker Notes",
+                              value: widget.autonSpeakerNotes,
+                              onValueAdd: () {
+                                setState(() {
+                                  if (widget.autonSpeakerNotes < 10) {
+                                    autonSpeakerNotes =
+                                        widget.autonSpeakerNotes + 1;
+                                  }
+                                  widget.onAutonSpeakerNotesChanged(
+                                      autonSpeakerNotes);
+                                });
+                              },
+                              onValueSubtract: () {
+                                setState(() {
+                                  if (widget.autonSpeakerNotes > 0) {
+                                    autonSpeakerNotes =
+                                        widget.autonSpeakerNotes - 1;
+                                  }
+                                  widget.onAutonSpeakerNotesChanged(
+                                      autonSpeakerNotes);
+                                });
+                              },
+                            ),
+                            const SizedBox(height: 8.0),
+                            NumberInput(
+                              title: "Amp Notes",
+                              value: widget.autonAmpNotes,
+                              onValueAdd: () {
+                                setState(() {
+                                  if (widget.autonAmpNotes < 10) {
+                                    autonAmpNotes = widget.autonAmpNotes + 1;
+                                  }
+                                  widget.onAutonAmpNotesChanged(autonAmpNotes);
+                                });
+                              },
+                              onValueSubtract: () {
+                                setState(() {
+                                  if (widget.autonAmpNotes > 0) {
+                                    autonAmpNotes = widget.autonAmpNotes - 1;
+                                  }
+                                  widget.onAutonAmpNotesChanged(autonAmpNotes);
+                                });
+                              },
+                            ),
+                            const SizedBox(height: 8.0),
+                            RatingInput(
+                              title: "Auto Consistency",
+                              onRatingUpdate: (value) {
+                                widget.onAutonConsistencyChanged(value);
+                              },
+                              initialRating: widget.autonConsistency,
+                              itemCount: 4,
+                            )
+                          ],
+                        ),
                       ),
-                      const SizedBox(height: 8.0),
-                      RatingInput(
-                        title: "Auto Consistency",
-                        onRatingUpdate: (value) {
-                          widget.onAutonConsistencyChanged(value);
-                        },
-                        initialRating: widget.autonConsistency,
-                        itemCount: 4,
-                      )
                     ],
                   ),
                 ),
