@@ -102,6 +102,8 @@ class _FormAppPageState extends State<FormAppPage> {
   int? pitOperatorYears = 0;
   int? pitCoachYears = 0;
 
+  StartPositions pitPrefStart = StartPositions.middle;
+
   int fieldAutonSpeakerNotes = 0;
   int fieldAutonAmpNotes = 0;
 
@@ -852,6 +854,11 @@ class _FormAppPageState extends State<FormAppPage> {
                 onCoachYearsChanged: (value) {
                   pitCoachYears = value;
                 },
+                onPrefStartChanged: (value) {
+                  setState(() {
+                    pitPrefStart = value;
+                  });
+                },
                 repairability: pitRepairabilityScore,
                 maneuverability: pitManeuverabilityScore,
                 drivebase: pitDrivebaseType,
@@ -880,6 +887,7 @@ class _FormAppPageState extends State<FormAppPage> {
                 driverYears: pitDriverYears,
                 operatorYears: pitOperatorYears,
                 coachYears: pitCoachYears,
+                prefStart: pitPrefStart,
               ),
               Column(
                 children: [
@@ -1214,6 +1222,7 @@ class _FormAppPageState extends State<FormAppPage> {
       ['autonAmpNotes', pitAutonAmpNotes],
       ['autonConsistency', pitAutonConsistency],
       ['autonRoutes', pitAutonRoutes],
+      ['autonPrefStart', pitPrefStart.name],
       ['hasAuton', pitAutonExists],
       ['repairability', pitRepairabilityScore],
       ['maneuverability', pitManeuverabilityScore],
@@ -1324,6 +1333,7 @@ class _FormAppPageState extends State<FormAppPage> {
       pitDriverYears = 0;
       pitOperatorYears = 0;
       pitCoachYears = 0;
+      pitPrefStart = StartPositions.middle;
       fieldAutonSpeakerNotes = 0;
       fieldAutonAmpNotes = 0;
       fieldAutonSpeakerNotesMissed = 0;
@@ -1362,6 +1372,7 @@ class _FormAppPageState extends State<FormAppPage> {
     pitDriverYears = 0;
     pitOperatorYears = 0;
     pitCoachYears = 0;
+    pitPrefStart = StartPositions.middle;
     setState(() {
       pitPageIndex = 0;
     });

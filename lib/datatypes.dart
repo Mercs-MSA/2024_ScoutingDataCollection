@@ -1,5 +1,7 @@
 enum Alliances { red, blue }
 
+enum StartPositions { left, middle, right }
+
 class ScoutingTask {
   final int team;
   final int match;

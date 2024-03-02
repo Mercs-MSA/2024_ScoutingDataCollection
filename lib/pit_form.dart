@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_form_elements/datatypes.dart';
 import 'package:flutter_form_elements/widgets.dart';
 
 class PitForm extends StatefulWidget {
@@ -34,6 +35,7 @@ class PitForm extends StatefulWidget {
     required this.onDriverYearsChanged,
     required this.onOperatorYearsChanged,
     required this.onCoachYearsChanged,
+    required this.onPrefStartChanged,
     required this.repairability,
     required this.maneuverability,
     required this.drivebase,
@@ -62,6 +64,7 @@ class PitForm extends StatefulWidget {
     required this.driverYears,
     required this.operatorYears,
     required this.coachYears,
+    required this.prefStart,
   });
 
   final bool teamNumberPresent;
@@ -94,6 +97,7 @@ class PitForm extends StatefulWidget {
   final Function(int?) onDriverYearsChanged;
   final Function(int?) onOperatorYearsChanged;
   final Function(int?) onCoachYearsChanged;
+  final Function(StartPositions) onPrefStartChanged;
 
   final double repairability;
   final double maneuverability;
@@ -123,6 +127,7 @@ class PitForm extends StatefulWidget {
   final int? driverYears;
   final int? operatorYears;
   final int? coachYears;
+  final StartPositions prefStart;
 
   @override
   State<PitForm> createState() => _PitFormState();
@@ -315,112 +320,6 @@ class _PitFormState extends State<PitForm> {
                         ),
                       ),
                       const SizedBox(height: 8.0),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Theme.of(context).dividerColor,
-                    ),
-                    borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-                  ),
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      CheckboxListTile(
-                        title: const Text('Has Auton'),
-                        value: widget.autonExists,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            widget.onAutonExistsChanged(newValue!);
-                          });
-                        },
-                      ),
-                      Visibility(
-                        visible: widget.autonExists,
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 8.0),
-                            NumberInput(
-                              title: "Speaker Notes",
-                              value: widget.autonSpeakerNotes,
-                              onValueAdd: () {
-                                setState(() {
-                                  if (widget.autonSpeakerNotes < 10) {
-                                    autonSpeakerNotes =
-                                        widget.autonSpeakerNotes + 1;
-                                  }
-                                  widget.onAutonSpeakerNotesChanged(
-                                      autonSpeakerNotes);
-                                });
-                              },
-                              onValueSubtract: () {
-                                setState(() {
-                                  if (widget.autonSpeakerNotes > 0) {
-                                    autonSpeakerNotes =
-                                        widget.autonSpeakerNotes - 1;
-                                  }
-                                  widget.onAutonSpeakerNotesChanged(
-                                      autonSpeakerNotes);
-                                });
-                              },
-                            ),
-                            const SizedBox(height: 8.0),
-                            NumberInput(
-                              title: "Amp Notes",
-                              value: widget.autonAmpNotes,
-                              onValueAdd: () {
-                                setState(() {
-                                  if (widget.autonAmpNotes < 10) {
-                                    autonAmpNotes = widget.autonAmpNotes + 1;
-                                  }
-                                  widget.onAutonAmpNotesChanged(autonAmpNotes);
-                                });
-                              },
-                              onValueSubtract: () {
-                                setState(() {
-                                  if (widget.autonAmpNotes > 0) {
-                                    autonAmpNotes = widget.autonAmpNotes - 1;
-                                  }
-                                  widget.onAutonAmpNotesChanged(autonAmpNotes);
-                                });
-                              },
-                            ),
-                            const SizedBox(height: 8.0),
-                            NumberInput(
-                              title: "Auto Routes",
-                              value: widget.autonAmpNotes,
-                              onValueAdd: () {
-                                setState(() {
-                                  if (widget.autonRoutes < 10) {
-                                    autonRoutes = widget.autonRoutes + 1;
-                                  }
-                                  widget.onAutonRoutesChanged(autonRoutes);
-                                });
-                              },
-                              onValueSubtract: () {
-                                setState(() {
-                                  if (widget.autonRoutes > 0) {
-                                    autonRoutes = widget.autonRoutes - 1;
-                                  }
-                                  widget.onAutonRoutesChanged(autonRoutes);
-                                });
-                              },
-                            ),
-                            const SizedBox(height: 8.0),
-                            RatingInput(
-                              title: "Auto Consistency",
-                              onRatingUpdate: (value) {
-                                widget.onAutonConsistencyChanged(value);
-                              },
-                              initialRating: widget.autonConsistency,
-                              itemCount: 4,
-                            )
-                          ],
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -635,6 +534,150 @@ class _PitFormState extends State<PitForm> {
                       ),
                     ),
                   ],
+                ),
+                const Divider(),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Theme.of(context).dividerColor,
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+                  ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      CheckboxListTile(
+                        title: const Text('Has Auton'),
+                        value: widget.autonExists,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            widget.onAutonExistsChanged(newValue!);
+                          });
+                        },
+                      ),
+                      Visibility(
+                        visible: widget.autonExists,
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 8.0),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: RadioListTile<StartPositions>(
+                                    title: const Text('Left'),
+                                    value: StartPositions.left,
+                                    groupValue: widget.prefStart,
+                                    onChanged: (StartPositions? value) {
+                                      widget.onPrefStartChanged(
+                                          value ?? StartPositions.middle);
+                                    },
+                                  ),
+                                ),
+                                Expanded(
+                                  child: RadioListTile<StartPositions>(
+                                    title: const Text('Mid'),
+                                    value: StartPositions.middle,
+                                    groupValue: widget.prefStart,
+                                    onChanged: (StartPositions? value) {
+                                      widget.onPrefStartChanged(
+                                          value ?? StartPositions.middle);
+                                    },
+                                  ),
+                                ),
+                                Expanded(
+                                  child: RadioListTile<StartPositions>(
+                                    title: const Text('Right'),
+                                    value: StartPositions.right,
+                                    groupValue: widget.prefStart,
+                                    onChanged: (StartPositions? value) {
+                                      widget.onPrefStartChanged(
+                                          value ?? StartPositions.middle);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8.0),
+                            NumberInput(
+                              title: "Speaker Notes",
+                              value: widget.autonSpeakerNotes,
+                              onValueAdd: () {
+                                setState(() {
+                                  if (widget.autonSpeakerNotes < 10) {
+                                    autonSpeakerNotes =
+                                        widget.autonSpeakerNotes + 1;
+                                  }
+                                  widget.onAutonSpeakerNotesChanged(
+                                      autonSpeakerNotes);
+                                });
+                              },
+                              onValueSubtract: () {
+                                setState(() {
+                                  if (widget.autonSpeakerNotes > 0) {
+                                    autonSpeakerNotes =
+                                        widget.autonSpeakerNotes - 1;
+                                  }
+                                  widget.onAutonSpeakerNotesChanged(
+                                      autonSpeakerNotes);
+                                });
+                              },
+                            ),
+                            const SizedBox(height: 8.0),
+                            NumberInput(
+                              title: "Amp Notes",
+                              value: widget.autonAmpNotes,
+                              onValueAdd: () {
+                                setState(() {
+                                  if (widget.autonAmpNotes < 10) {
+                                    autonAmpNotes = widget.autonAmpNotes + 1;
+                                  }
+                                  widget.onAutonAmpNotesChanged(autonAmpNotes);
+                                });
+                              },
+                              onValueSubtract: () {
+                                setState(() {
+                                  if (widget.autonAmpNotes > 0) {
+                                    autonAmpNotes = widget.autonAmpNotes - 1;
+                                  }
+                                  widget.onAutonAmpNotesChanged(autonAmpNotes);
+                                });
+                              },
+                            ),
+                            const SizedBox(height: 8.0),
+                            NumberInput(
+                              title: "Auto Routes",
+                              value: widget.autonRoutes,
+                              onValueAdd: () {
+                                setState(() {
+                                  if (widget.autonRoutes < 10) {
+                                    autonRoutes = widget.autonRoutes + 1;
+                                  }
+                                  widget.onAutonRoutesChanged(autonRoutes);
+                                });
+                              },
+                              onValueSubtract: () {
+                                setState(() {
+                                  if (widget.autonRoutes > 0) {
+                                    autonRoutes = widget.autonRoutes - 1;
+                                  }
+                                  widget.onAutonRoutesChanged(autonRoutes);
+                                });
+                              },
+                            ),
+                            const SizedBox(height: 8.0),
+                            RatingInput(
+                              title: "Auto Consistency",
+                              onRatingUpdate: (value) {
+                                widget.onAutonConsistencyChanged(value);
+                              },
+                              initialRating: widget.autonConsistency,
+                              itemCount: 4,
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 const Divider(),
                 RatingInput(
