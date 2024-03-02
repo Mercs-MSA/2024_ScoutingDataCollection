@@ -28,6 +28,7 @@ class PitForm extends StatefulWidget {
     required this.onAutonSpeakerNotesChanged,
     required this.onAutonAmpNotesChanged,
     required this.onAutonConsistencyChanged,
+    required this.onAutonRoutesChanged,
     required this.onPlayerPreferAmpChanged,
     required this.onPlayerPreferSourceChanged,
     required this.onDriverYearsChanged,
@@ -55,6 +56,7 @@ class PitForm extends StatefulWidget {
     required this.autonSpeakerNotes,
     required this.autonAmpNotes,
     required this.autonConsistency,
+    required this.autonRoutes,
     required this.playerPreferAmp,
     required this.playerPreferSource,
     required this.driverYears,
@@ -86,6 +88,7 @@ class PitForm extends StatefulWidget {
   final Function(int) onAutonSpeakerNotesChanged;
   final Function(int) onAutonAmpNotesChanged;
   final Function(double) onAutonConsistencyChanged;
+  final Function(int) onAutonRoutesChanged;
   final Function(bool) onPlayerPreferAmpChanged;
   final Function(bool) onPlayerPreferSourceChanged;
   final Function(int?) onDriverYearsChanged;
@@ -114,6 +117,7 @@ class PitForm extends StatefulWidget {
   final int autonSpeakerNotes;
   final int autonAmpNotes;
   final double autonConsistency;
+  final int autonRoutes;
   final bool playerPreferAmp;
   final bool playerPreferSource;
   final int? driverYears;
@@ -127,6 +131,7 @@ class PitForm extends StatefulWidget {
 class _PitFormState extends State<PitForm> {
   int autonSpeakerNotes = 0;
   int autonAmpNotes = 0;
+  int autonRoutes = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -380,6 +385,27 @@ class _PitFormState extends State<PitForm> {
                                     autonAmpNotes = widget.autonAmpNotes - 1;
                                   }
                                   widget.onAutonAmpNotesChanged(autonAmpNotes);
+                                });
+                              },
+                            ),
+                            const SizedBox(height: 8.0),
+                            NumberInput(
+                              title: "Auto Routes",
+                              value: widget.autonAmpNotes,
+                              onValueAdd: () {
+                                setState(() {
+                                  if (widget.autonRoutes < 10) {
+                                    autonRoutes = widget.autonRoutes + 1;
+                                  }
+                                  widget.onAutonRoutesChanged(autonRoutes);
+                                });
+                              },
+                              onValueSubtract: () {
+                                setState(() {
+                                  if (widget.autonRoutes > 0) {
+                                    autonRoutes = widget.autonRoutes - 1;
+                                  }
+                                  widget.onAutonRoutesChanged(autonRoutes);
                                 });
                               },
                             ),

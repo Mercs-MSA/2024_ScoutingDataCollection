@@ -83,6 +83,7 @@ class _FormAppPageState extends State<FormAppPage> {
   int pitAutonSpeakerNotes = 0;
   int pitAutonAmpNotes = 0;
   double pitAutonConsistency = 0.0;
+  int pitAutonRoutes = 0;
 
   bool pitDoesSpeaker = true;
   bool pitDoesAmp = true;
@@ -536,6 +537,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                     pitAutonSpeakerNotes = 0;
                                     pitAutonAmpNotes = 0;
                                     pitAutonConsistency = 0;
+                                    pitAutonRoutes = 0;
                                     pitDoesSpeaker = true;
                                     pitDoesAmp = true;
                                     pitDoesTrap = false;
@@ -867,6 +869,11 @@ class _FormAppPageState extends State<FormAppPage> {
                     pitAutonConsistency = value;
                   });
                 },
+                onAutonRoutesChanged: (value) {
+                  setState(() {
+                    pitAutonRoutes = value;
+                  });
+                },
                 onPlayerPreferAmpChanged: (value) {
                   setState(() {
                     pitPlayerPreferAmp = value;
@@ -908,6 +915,7 @@ class _FormAppPageState extends State<FormAppPage> {
                 autonSpeakerNotes: pitAutonSpeakerNotes,
                 autonAmpNotes: pitAutonAmpNotes,
                 autonConsistency: pitAutonConsistency,
+                autonRoutes: pitAutonRoutes,
                 playerPreferAmp: pitPlayerPreferAmp,
                 playerPreferSource: pitPlayerPreferSource,
                 driverYears: pitDriverYears,
@@ -967,6 +975,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                 pitAutonSpeakerNotes = 0;
                                 pitAutonAmpNotes = 0;
                                 pitAutonConsistency = 0;
+                                pitAutonRoutes = 0;
                                 pitDoesSpeaker = true;
                                 pitDoesAmp = true;
                                 pitDoesTrap = false;
@@ -1277,6 +1286,7 @@ class _FormAppPageState extends State<FormAppPage> {
       ['autonSpeakerNotes', pitAutonSpeakerNotes],
       ['autonAmpNotes', pitAutonAmpNotes],
       ['autonConsistency', pitAutonConsistency],
+      ['autonRoutes', pitAutonRoutes],
       ['hasAuton', pitAutonExists],
       ['repairability', pitRepairabilityScore],
       ['maneuverability', pitManeuverabilityScore],
@@ -1300,6 +1310,10 @@ class _FormAppPageState extends State<FormAppPage> {
     } else {
       return;
     }
+
+    completePitScoutingTasks.add(PitScoutingTask(team: pitTeamNumber!));
+    incompletePitScoutingTasks.removeWhere((task) => task.team == pitTeamNumber);
+
   }
 
   void onFieldScoutSave() async {
