@@ -326,7 +326,7 @@ class _PitFormState extends State<PitForm> {
                     ),
                     borderRadius: const BorderRadius.all(Radius.circular(4.0)),
                   ),
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
                       CheckboxListTile(
