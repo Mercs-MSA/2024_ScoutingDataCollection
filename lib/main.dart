@@ -520,11 +520,13 @@ class _FormAppPageState extends State<FormAppPage> {
                                     pitTeamNumber = null;
                                     fieldMatchNumber = null;
                                     pitRepairabilityScore = 0;
+                                    pitManeuverabilityScore = 0;
                                     pitDrivebaseType = "Swerve";
                                     pitAltDrivebaseType = null;
                                     pitWidthData = null;
                                     pitLengthData = null;
                                     pitHeightData = null;
+                                    pitWeightData = null;
                                     pitCanPassStage = false;
                                     pitIntakeInBumper = false;
                                     pitClimberType = "Tube-in-Tube";
