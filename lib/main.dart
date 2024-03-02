@@ -80,6 +80,9 @@ class _FormAppPageState extends State<FormAppPage> {
 
   bool fieldAutonExists = false;
   bool pitAutonExists = false;
+  int pitAutonSpeakerNotes = 0;
+  int pitAutonAmpNotes = 0;
+  double pitAutonConsistency = 0.0;
 
   bool pitDoesSpeaker = true;
   bool pitDoesAmp = true;
@@ -528,6 +531,9 @@ class _FormAppPageState extends State<FormAppPage> {
                                     pitAltClimberType = null;
                                     fieldAutonExists = false;
                                     pitAutonExists = false;
+                                    pitAutonSpeakerNotes = 0;
+                                    pitAutonAmpNotes = 0;
+                                    pitAutonConsistency = 0;
                                     pitDoesSpeaker = true;
                                     pitDoesAmp = true;
                                     pitDoesTrap = false;
@@ -844,6 +850,21 @@ class _FormAppPageState extends State<FormAppPage> {
                     pitAutonExists = value;
                   });
                 },
+                onAutonSpeakerNotesChanged: (value) {
+                  setState(() {
+                    pitAutonSpeakerNotes = value;
+                  });
+                },
+                onAutonAmpNotesChanged: (value) {
+                  setState(() {
+                    pitAutonAmpNotes = value;
+                  });
+                },
+                onAutonConsistencyChanged: (value) {
+                  setState(() {
+                    pitAutonConsistency = value;
+                  });
+                },
                 onPlayerPreferAmpChanged: (value) {
                   setState(() {
                     pitPlayerPreferAmp = value;
@@ -882,6 +903,9 @@ class _FormAppPageState extends State<FormAppPage> {
                 doesExtendShoot: pitDoesExtendShoot,
                 doesTurretShoot: pitDoesTurretShoot,
                 autonExists: pitAutonExists,
+                autonSpeakerNotes: pitAutonSpeakerNotes,
+                autonAmpNotes: pitAutonAmpNotes,
+                autonConsistency: pitAutonConsistency,
                 playerPreferAmp: pitPlayerPreferAmp,
                 playerPreferSource: pitPlayerPreferSource,
                 driverYears: pitDriverYears,
@@ -938,6 +962,9 @@ class _FormAppPageState extends State<FormAppPage> {
                                 pitClimberType = "Tube-in-Tube";
                                 pitAltClimberType = null;
                                 pitAutonExists = false;
+                                pitAutonSpeakerNotes = 0;
+                                pitAutonAmpNotes = 0;
+                                pitAutonConsistency = 0;
                                 pitDoesSpeaker = true;
                                 pitDoesAmp = true;
                                 pitDoesTrap = false;
@@ -1244,6 +1271,11 @@ class _FormAppPageState extends State<FormAppPage> {
       ['sourcePickup', pitDoesSourcePickup],
       ['turretShoot', pitDoesTurretShoot],
       ['extendShoot', pitDoesExtendShoot],
+      ['hasAuton', pitAutonExists],
+      ['autonSpeakerNotes', pitAutonSpeakerNotes],
+      ['autonAmpNotes', pitAutonAmpNotes],
+      ['autonConsistency', pitAutonConsistency],
+      ['hasAuton', pitAutonExists],
       ['repairability', pitRepairabilityScore],
       ['maneuverability', pitManeuverabilityScore],
     ];

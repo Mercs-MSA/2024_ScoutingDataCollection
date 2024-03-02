@@ -124,11 +124,13 @@ class RatingInput extends StatelessWidget {
     required this.title,
     required this.onRatingUpdate,
     required this.initialRating,
+    this.itemCount = 5,
   });
 
   final String title;
   final Function(double) onRatingUpdate;
   final double initialRating;
+  final int itemCount;
 
   @override
   Widget build(BuildContext context) {
@@ -142,6 +144,7 @@ class RatingInput extends StatelessWidget {
         ),
         onRatingUpdate: onRatingUpdate,
         glow: true,
+        itemCount: itemCount,
         allowHalfRating: true,
       ),
     );

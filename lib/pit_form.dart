@@ -25,6 +25,9 @@ class PitForm extends StatefulWidget {
     required this.onDoesExtendShootChanged,
     required this.onDoesTurretShootChanged,
     required this.onAutonExistsChanged,
+    required this.onAutonSpeakerNotesChanged,
+    required this.onAutonAmpNotesChanged,
+    required this.onAutonConsistencyChanged,
     required this.onPlayerPreferAmpChanged,
     required this.onPlayerPreferSourceChanged,
     required this.onDriverYearsChanged,
@@ -49,6 +52,9 @@ class PitForm extends StatefulWidget {
     required this.doesExtendShoot,
     required this.doesTurretShoot,
     required this.autonExists,
+    required this.autonSpeakerNotes,
+    required this.autonAmpNotes,
+    required this.autonConsistency,
     required this.playerPreferAmp,
     required this.playerPreferSource,
     required this.driverYears,
@@ -77,6 +83,9 @@ class PitForm extends StatefulWidget {
   final Function(bool) onDoesExtendShootChanged;
   final Function(bool) onDoesTurretShootChanged;
   final Function(bool) onAutonExistsChanged;
+  final Function(int) onAutonSpeakerNotesChanged;
+  final Function(int) onAutonAmpNotesChanged;
+  final Function(double) onAutonConsistencyChanged;
   final Function(bool) onPlayerPreferAmpChanged;
   final Function(bool) onPlayerPreferSourceChanged;
   final Function(int?) onDriverYearsChanged;
@@ -102,6 +111,9 @@ class PitForm extends StatefulWidget {
   final bool doesExtendShoot;
   final bool doesTurretShoot;
   final bool autonExists;
+  final int autonSpeakerNotes;
+  final int autonAmpNotes;
+  final double autonConsistency;
   final bool playerPreferAmp;
   final bool playerPreferSource;
   final int? driverYears;
@@ -113,6 +125,9 @@ class PitForm extends StatefulWidget {
 }
 
 class _PitFormState extends State<PitForm> {
+  int autonSpeakerNotes = 0;
+  int autonAmpNotes = 0;
+
   @override
   Widget build(BuildContext context) {
     return IndexedStack(
@@ -308,6 +323,66 @@ class _PitFormState extends State<PitForm> {
                     });
                   },
                 ),
+                Visibility(
+                  visible: widget.autonExists,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 8.0),
+                      NumberInput(
+                        title: "Speaker Notes",
+                        value: widget.autonSpeakerNotes,
+                        onValueAdd: () {
+                          setState(() {
+                            if (widget.autonSpeakerNotes < 10) {
+                              autonSpeakerNotes = widget.autonSpeakerNotes + 1;
+                            }
+                            widget
+                                .onAutonSpeakerNotesChanged(autonSpeakerNotes);
+                          });
+                        },
+                        onValueSubtract: () {
+                          setState(() {
+                            if (widget.autonSpeakerNotes > 0) {
+                              autonSpeakerNotes = widget.autonSpeakerNotes - 1;
+                            }
+                            widget
+                                .onAutonSpeakerNotesChanged(autonSpeakerNotes);
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 8.0),
+                      NumberInput(
+                        title: "Amp Notes",
+                        value: widget.autonAmpNotes,
+                        onValueAdd: () {
+                          setState(() {
+                            if (widget.autonAmpNotes < 10) {
+                              autonAmpNotes = widget.autonAmpNotes + 1;
+                            }
+                            widget.onAutonAmpNotesChanged(autonAmpNotes);
+                          });
+                        },
+                        onValueSubtract: () {
+                          setState(() {
+                            if (widget.autonAmpNotes > 0) {
+                              autonAmpNotes = widget.autonAmpNotes - 1;
+                            }
+                            widget.onAutonAmpNotesChanged(autonAmpNotes);
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 8.0),
+                      RatingInput(
+                        title: "Auto Consistency",
+                        onRatingUpdate: (value) {
+                          widget.onAutonConsistencyChanged(value);
+                        },
+                        initialRating: widget.autonConsistency,
+                        itemCount: 4,
+                      )
+                    ],
+                  ),
+                ),
                 const Divider(),
                 CheckboxListTile(
                   title: const Text('Inside Bumper Intake?'),
@@ -317,6 +392,35 @@ class _PitFormState extends State<PitForm> {
                       widget.onIntakeInBumperChanged(newValue!);
                     });
                   },
+                ),
+                const Divider(),
+                const Text(
+                    "Can their robot pick up from the ground, source or both?"),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: const Text('Ground'),
+                        value: widget.doesGroundPickup,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            widget.onDoesGroundPickupChanged(newValue!);
+                          });
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: const Text('Source'),
+                        value: widget.doesSourcePickup,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            widget.onDoesSourcePickupChanged(newValue!);
+                          });
+                        },
+                      ),
+                    ),
+                  ],
                 ),
                 const Divider(),
                 const Text("Can they score speaker, amp or both?"),
@@ -351,35 +455,6 @@ class _PitFormState extends State<PitForm> {
                         onChanged: (bool? newValue) {
                           setState(() {
                             widget.onDoesTrapChanged(newValue!);
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                const Divider(),
-                const Text(
-                    "Can their robot pick up from the ground, source or both?"),
-                Row(
-                  children: [
-                    Expanded(
-                      child: CheckboxListTile(
-                        title: const Text('Ground'),
-                        value: widget.doesGroundPickup,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            widget.onDoesGroundPickupChanged(newValue!);
-                          });
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: CheckboxListTile(
-                        title: const Text('Source'),
-                        value: widget.doesSourcePickup,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            widget.onDoesSourcePickupChanged(newValue!);
                           });
                         },
                       ),
@@ -443,26 +518,6 @@ class _PitFormState extends State<PitForm> {
                       ),
                     ),
                   ],
-                ),
-                const Divider(),
-                RatingInput(
-                  title: 'Repairability',
-                  onRatingUpdate: (rating) {
-                    setState(() {
-                      widget.onRepairabilityChanged(rating);
-                    });
-                  },
-                  initialRating: widget.repairability,
-                ),
-                const Divider(),
-                RatingInput(
-                  title: 'Maneuverability',
-                  onRatingUpdate: (rating) {
-                    setState(() {
-                      widget.onManeuverabilityChanged(rating);
-                    });
-                  },
-                  initialRating: widget.maneuverability,
                 ),
                 const Divider(),
                 const Text(
@@ -539,6 +594,26 @@ class _PitFormState extends State<PitForm> {
                       ),
                     ),
                   ],
+                ),
+                const Divider(),
+                RatingInput(
+                  title: 'Repairability',
+                  onRatingUpdate: (rating) {
+                    setState(() {
+                      widget.onRepairabilityChanged(rating);
+                    });
+                  },
+                  initialRating: widget.repairability,
+                ),
+                const Divider(),
+                RatingInput(
+                  title: 'Maneuverability',
+                  onRatingUpdate: (rating) {
+                    setState(() {
+                      widget.onManeuverabilityChanged(rating);
+                    });
+                  },
+                  initialRating: widget.maneuverability,
                 ),
               ],
             ),
