@@ -29,6 +29,7 @@ class PitForm extends StatefulWidget {
     required this.onAutonSpeakerNotesChanged,
     required this.onAutonAmpNotesChanged,
     required this.onAutonConsistencyChanged,
+    required this.onAutonVersatilityChanged,
     required this.onAutonRoutesChanged,
     required this.onPlayerPreferAmpChanged,
     required this.onPlayerPreferSourceChanged,
@@ -58,6 +59,7 @@ class PitForm extends StatefulWidget {
     required this.autonSpeakerNotes,
     required this.autonAmpNotes,
     required this.autonConsistency,
+    required this.autonVersatility,
     required this.autonRoutes,
     required this.playerPreferAmp,
     required this.playerPreferSource,
@@ -91,6 +93,7 @@ class PitForm extends StatefulWidget {
   final Function(int) onAutonSpeakerNotesChanged;
   final Function(int) onAutonAmpNotesChanged;
   final Function(double) onAutonConsistencyChanged;
+  final Function(double) onAutonVersatilityChanged;
   final Function(int) onAutonRoutesChanged;
   final Function(bool) onPlayerPreferAmpChanged;
   final Function(bool) onPlayerPreferSourceChanged;
@@ -121,6 +124,7 @@ class PitForm extends StatefulWidget {
   final int autonSpeakerNotes;
   final int autonAmpNotes;
   final double autonConsistency;
+  final double autonVersatility;
   final int autonRoutes;
   final bool playerPreferAmp;
   final bool playerPreferSource;
@@ -672,7 +676,15 @@ class _PitFormState extends State<PitForm> {
                               },
                               initialRating: widget.autonConsistency,
                               itemCount: 4,
-                            )
+                            ),
+                            RatingInput(
+                              title: "Auto Versatility",
+                              onRatingUpdate: (value) {
+                                widget.onAutonVersatilityChanged(value);
+                              },
+                              initialRating: widget.autonVersatility,
+                              itemCount: 4,
+                            ),
                           ],
                         ),
                       ),

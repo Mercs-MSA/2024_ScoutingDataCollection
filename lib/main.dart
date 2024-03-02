@@ -83,6 +83,7 @@ class _FormAppPageState extends State<FormAppPage> {
   int pitAutonSpeakerNotes = 0;
   int pitAutonAmpNotes = 0;
   double pitAutonConsistency = 0.0;
+  double pitAutonVersatility = 0.0;
   int pitAutonRoutes = 0;
 
   bool pitDoesSpeaker = true;
@@ -830,6 +831,11 @@ class _FormAppPageState extends State<FormAppPage> {
                     pitAutonConsistency = value;
                   });
                 },
+                onAutonVersatilityChanged: (value) {
+                  setState(() {
+                    pitAutonVersatility = value;
+                  });
+                },
                 onAutonRoutesChanged: (value) {
                   setState(() {
                     pitAutonRoutes = value;
@@ -881,6 +887,7 @@ class _FormAppPageState extends State<FormAppPage> {
                 autonSpeakerNotes: pitAutonSpeakerNotes,
                 autonAmpNotes: pitAutonAmpNotes,
                 autonConsistency: pitAutonConsistency,
+                autonVersatility: pitAutonVersatility,
                 autonRoutes: pitAutonRoutes,
                 playerPreferAmp: pitPlayerPreferAmp,
                 playerPreferSource: pitPlayerPreferSource,
@@ -1221,6 +1228,7 @@ class _FormAppPageState extends State<FormAppPage> {
       ['autonSpeakerNotes', pitAutonSpeakerNotes],
       ['autonAmpNotes', pitAutonAmpNotes],
       ['autonConsistency', pitAutonConsistency],
+      ['autonVersatility', pitAutonVersatility],
       ['autonRoutes', pitAutonRoutes],
       ['autonPrefStart', pitPrefStart.name],
       ['hasAuton', pitAutonExists],
