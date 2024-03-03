@@ -121,6 +121,8 @@ class _FormAppPageState extends State<FormAppPage> {
 
   List<PitScoutingTask> incompletePitScoutingTasks = [];
 
+  List<ScoutingTask> completeFieldScoutingTasks = [];
+
   List<PitScoutingTask> completePitScoutingTasks = [];
 
   @override
@@ -1172,7 +1174,80 @@ class _FormAppPageState extends State<FormAppPage> {
                     ),
                     const SizedBox(width: 8.0),
                     ElevatedButton(
-                      onPressed: loadTestTeams,
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Are you sure?"),
+                              icon: const Icon(
+                                Icons.error_rounded,
+                                size: 72,
+                              ),
+                              content: const Text(
+                                  "Are you ABSOLUTELY SURE you want to remove ALL saved team lists"),
+                              actionsOverflowButtonSpacing: 20,
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("No"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("No"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    resetAllTeams();
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("Yes"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: const Text("RESET ALL TEAMS"),
+                    ),
+                    const SizedBox(width: 8.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Are you sure?"),
+                              icon: const Icon(
+                                Icons.error_rounded,
+                                size: 72,
+                              ),
+                              content: const Text(
+                                  "Are you ABSOLUTELY SURE you want to add 3 nonsense teams to each list"),
+                              actionsOverflowButtonSpacing: 20,
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("No"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    loadTestTeams();
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("Yes"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
                       child: const Text("Load debug teams"),
                     ),
                   ],
@@ -1406,5 +1481,12 @@ class _FormAppPageState extends State<FormAppPage> {
           match: rng.nextInt(80),
           alliance: Alliances.values[rng.nextInt(2)]));
     }
+  }
+
+  void resetAllTeams() {
+    incompleteFieldScoutingTasks = [];
+    incompletePitScoutingTasks = [];
+    completeFieldScoutingTasks = [];
+    completePitScoutingTasks = [];
   }
 }
