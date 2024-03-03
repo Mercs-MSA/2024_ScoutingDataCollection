@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
@@ -115,24 +116,12 @@ class _FormAppPageState extends State<FormAppPage> {
   bool saveDisabled = false;
   bool importerSaveCompletes = false;
 
-  //TODO: Make this data real with json import
-  List<ScoutingTask> incompleteFieldScoutingTasks = [
-    ScoutingTask(team: 9999, match: 18, alliance: Alliances.blue),
-    ScoutingTask(team: 9998, match: 19, alliance: Alliances.red),
-    ScoutingTask(team: 9997, match: 20, alliance: Alliances.blue),
-  ];
+  //TODO: Make this data actually save
+  List<ScoutingTask> incompleteFieldScoutingTasks = [];
 
-  List<PitScoutingTask> incompletePitScoutingTasks = [
-    PitScoutingTask(team: 9999),
-    PitScoutingTask(team: 9998),
-    PitScoutingTask(team: 9997)
-  ];
+  List<PitScoutingTask> incompletePitScoutingTasks = [];
 
-  List<PitScoutingTask> completePitScoutingTasks = [
-    PitScoutingTask(team: 9000),
-    PitScoutingTask(team: 8999),
-    PitScoutingTask(team: 8998)
-  ];
+  List<PitScoutingTask> completePitScoutingTasks = [];
 
   @override
   void initState() {
@@ -1174,9 +1163,20 @@ class _FormAppPageState extends State<FormAppPage> {
           body: Center(
             child: Column(
               children: [
-                ElevatedButton(
-                    onPressed: importTeamList,
-                    child: const Text("Import team list"))
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: importTeamList,
+                      child: const Text("Import team list"),
+                    ),
+                    const SizedBox(width: 8.0),
+                    ElevatedButton(
+                      onPressed: loadTestTeams,
+                      child: const Text("Load debug teams"),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -1392,5 +1392,19 @@ class _FormAppPageState extends State<FormAppPage> {
     setState(() {
       pitPageIndex = 0;
     });
+  }
+
+  void loadTestTeams() {
+    var rng = Random();
+    for (var i = 0; i < 3; i++) {
+      incompletePitScoutingTasks.add(PitScoutingTask(team: rng.nextInt(9999)));
+    }
+
+    for (var i = 0; i < 3; i++) {
+      incompleteFieldScoutingTasks.add(ScoutingTask(
+          team: rng.nextInt(9999),
+          match: rng.nextInt(80),
+          alliance: Alliances.values[rng.nextInt(2)]));
+    }
   }
 }
