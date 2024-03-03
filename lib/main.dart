@@ -1336,9 +1336,42 @@ class _FormAppPageState extends State<FormAppPage> {
       return;
     }
 
-    completePitScoutingTasks.add(PitScoutingTask(team: pitTeamNumber!));
-    incompletePitScoutingTasks
-        .removeWhere((task) => task.team == pitTeamNumber);
+    if (!context.mounted) return;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Completed?"),
+          icon: const Icon(
+            Icons.question_mark_rounded,
+            size: 72,
+          ),
+          content: const Text("Do you want to mark the task as complete?"),
+          actionsOverflowButtonSpacing: 20,
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("No"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                completePitScoutingTasks
+                    .add(PitScoutingTask(team: pitTeamNumber!));
+                incompletePitScoutingTasks
+                    .removeWhere((task) => task.team == pitTeamNumber);
+                setState(() {
+                  pitPageIndex = 0;
+                });
+                Navigator.of(context).pop();
+              },
+              child: const Text("Yes"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void onFieldScoutSave() async {
