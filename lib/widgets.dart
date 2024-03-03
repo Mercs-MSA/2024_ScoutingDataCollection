@@ -366,7 +366,7 @@ class DataCard extends StatelessWidget {
           children: [
             Text(item),
             const Spacer(),
-            Text(data),
+            Text((data.length <= 20) ? data : '${data.substring(0, 20)}...'),
             const Spacer(),
             Text(type == null ? "Unknown" : type!),
           ],

@@ -85,6 +85,7 @@ class _FormAppPageState extends State<FormAppPage> {
   double pitAutonConsistency = 0.0;
   double pitAutonVersatility = 0.0;
   int pitAutonRoutes = 0;
+  String pitAutonStrat = "";
 
   bool pitDoesSpeaker = true;
   bool pitDoesAmp = true;
@@ -841,6 +842,9 @@ class _FormAppPageState extends State<FormAppPage> {
                     pitAutonRoutes = value;
                   });
                 },
+                onAutonStratChanged: (value) {
+                  pitAutonStrat = value;
+                },
                 onPlayerPreferAmpChanged: (value) {
                   setState(() {
                     pitPlayerPreferAmp = value;
@@ -889,6 +893,7 @@ class _FormAppPageState extends State<FormAppPage> {
                 autonConsistency: pitAutonConsistency,
                 autonVersatility: pitAutonVersatility,
                 autonRoutes: pitAutonRoutes,
+                autonStrat: pitAutonStrat,
                 playerPreferAmp: pitPlayerPreferAmp,
                 playerPreferSource: pitPlayerPreferSource,
                 driverYears: pitDriverYears,
@@ -1231,6 +1236,7 @@ class _FormAppPageState extends State<FormAppPage> {
       ['autonVersatility', pitAutonVersatility],
       ['autonRoutes', pitAutonRoutes],
       ['autonPrefStart', pitPrefStart.name],
+      ['autonStrat', pitAutonStrat.replaceAll("\n", "*")],
       ['hasAuton', pitAutonExists],
       ['repairability', pitRepairabilityScore],
       ['maneuverability', pitManeuverabilityScore],
@@ -1329,6 +1335,7 @@ class _FormAppPageState extends State<FormAppPage> {
       pitAutonAmpNotes = 0;
       pitAutonConsistency = 0;
       pitAutonRoutes = 0;
+      pitAutonStrat = "";
       pitDoesSpeaker = true;
       pitDoesAmp = true;
       pitDoesTrap = false;
@@ -1368,6 +1375,7 @@ class _FormAppPageState extends State<FormAppPage> {
     pitAutonAmpNotes = 0;
     pitAutonConsistency = 0;
     pitAutonRoutes = 0;
+    pitAutonStrat = "";
     pitDoesSpeaker = true;
     pitDoesAmp = true;
     pitDoesTrap = false;

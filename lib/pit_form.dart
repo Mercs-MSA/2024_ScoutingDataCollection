@@ -31,6 +31,7 @@ class PitForm extends StatefulWidget {
     required this.onAutonConsistencyChanged,
     required this.onAutonVersatilityChanged,
     required this.onAutonRoutesChanged,
+    required this.onAutonStratChanged,
     required this.onPlayerPreferAmpChanged,
     required this.onPlayerPreferSourceChanged,
     required this.onDriverYearsChanged,
@@ -60,6 +61,7 @@ class PitForm extends StatefulWidget {
     required this.autonAmpNotes,
     required this.autonConsistency,
     required this.autonVersatility,
+    required this.autonStrat,
     required this.autonRoutes,
     required this.playerPreferAmp,
     required this.playerPreferSource,
@@ -95,6 +97,7 @@ class PitForm extends StatefulWidget {
   final Function(double) onAutonConsistencyChanged;
   final Function(double) onAutonVersatilityChanged;
   final Function(int) onAutonRoutesChanged;
+  final Function(String) onAutonStratChanged;
   final Function(bool) onPlayerPreferAmpChanged;
   final Function(bool) onPlayerPreferSourceChanged;
   final Function(int?) onDriverYearsChanged;
@@ -126,6 +129,7 @@ class PitForm extends StatefulWidget {
   final double autonConsistency;
   final double autonVersatility;
   final int autonRoutes;
+  final String autonStrat;
   final bool playerPreferAmp;
   final bool playerPreferSource;
   final int? driverYears;
@@ -685,6 +689,26 @@ class _PitFormState extends State<PitForm> {
                               initialRating: widget.autonVersatility,
                               itemCount: 4,
                             ),
+                            TextField(
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Auton Strategy',
+                              ),
+                              maxLines: 5,
+                              inputFormatters: <TextInputFormatter>[
+                                LengthLimitingTextInputFormatter(500),
+                                FilteringTextInputFormatter(
+                                  RegExp(r'[a-zA-Z]|-| |\n'),
+                                  allow: true,
+                                )
+                              ],
+                              onChanged: (value) {
+                                widget.onAutonStratChanged(value);
+                              },
+                              controller: TextEditingController(
+                                text: widget.autonStrat,
+                              ),
+                            )
                           ],
                         ),
                       ),
