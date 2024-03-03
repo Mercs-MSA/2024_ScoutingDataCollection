@@ -116,7 +116,6 @@ class _FormAppPageState extends State<FormAppPage> {
   bool saveDisabled = false;
   bool importerSaveCompletes = false;
 
-  //TODO: Make this data actually save
   List<ScoutingTask> incompleteFieldScoutingTasks = [];
 
   List<PitScoutingTask> incompletePitScoutingTasks = [];
@@ -133,7 +132,22 @@ class _FormAppPageState extends State<FormAppPage> {
 
   Future<void> loadPrefs() async {
     final prefs = await SharedPreferences.getInstance();
+
     setState(() {
+      incompletePitScoutingTasks = convertJsonStringToTasksList(
+          prefs.getString("jsonIncompletePitTasks") ?? "",
+          (json) => PitScoutingTask.fromJson(json));
+      completePitScoutingTasks = convertJsonStringToTasksList(
+          prefs.getString("jsonCompletePitTasks") ?? "",
+          (json) => PitScoutingTask.fromJson(json));
+
+      incompleteFieldScoutingTasks = convertJsonStringToTasksList(
+          prefs.getString("jsonIncompleteFieldTasks") ?? "",
+          (json) => ScoutingTask.fromJson(json));
+      completeFieldScoutingTasks = convertJsonStringToTasksList(
+          prefs.getString("jsonCompleteFieldTasks") ?? "",
+          (json) => ScoutingTask.fromJson(json));
+
       appMode = prefs.getInt('appMode') ?? 0;
     });
   }
@@ -1364,6 +1378,7 @@ class _FormAppPageState extends State<FormAppPage> {
                 setState(() {
                   pitPageIndex = 0;
                 });
+                updateTeamSaves();
                 Navigator.of(context).pop();
               },
               child: const Text("Yes"),
@@ -1392,6 +1407,7 @@ class _FormAppPageState extends State<FormAppPage> {
     }
 
     resetPit();
+    updateTeamSaves();
   }
 
   Future<void> saveFileMobile(Uint8List data, String fileName) async {
@@ -1514,6 +1530,8 @@ class _FormAppPageState extends State<FormAppPage> {
           match: rng.nextInt(80),
           alliance: Alliances.values[rng.nextInt(2)]));
     }
+
+    updateTeamSaves();
   }
 
   void resetAllTeams() {
@@ -1521,5 +1539,42 @@ class _FormAppPageState extends State<FormAppPage> {
     incompletePitScoutingTasks = [];
     completeFieldScoutingTasks = [];
     completePitScoutingTasks = [];
+    updateTeamSaves();
+  }
+
+  String convertTasksListToJsonString<T>(List<T> tasks) {
+    return json.encode(tasks.map((task) {
+      if (task is ScoutingTask) {
+        return (task as ScoutingTask).toJson();
+      } else if (task is PitScoutingTask) {
+        return (task as PitScoutingTask).toJson();
+      }
+      return null;
+    }).toList());
+  }
+
+  List<T> convertJsonStringToTasksList<T>(
+      String jsonString, T Function(Map<String, dynamic>) fromJson) {
+    List jsonList = json.decode(jsonString);
+    return jsonList.map((json) => fromJson(json)).toList();
+  }
+
+  Future<void> updateTeamSaves() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    String jsonIncompleteFieldTasks =
+        convertTasksListToJsonString(incompleteFieldScoutingTasks);
+    String jsonCompleteFieldTasks =
+        convertTasksListToJsonString(completeFieldScoutingTasks);
+
+    String jsonIncompletePitTasks =
+        convertTasksListToJsonString(incompletePitScoutingTasks);
+    String jsonCompletePitTasks =
+        convertTasksListToJsonString(completePitScoutingTasks);
+
+    prefs.setString("jsonIncompleteFieldTasks", jsonIncompleteFieldTasks);
+    prefs.setString("jsonCompleteFieldTasks", jsonCompleteFieldTasks);
+    prefs.setString("jsonIncompletePitTasks", jsonIncompletePitTasks);
+    prefs.setString("jsonCompletePitTasks", jsonCompletePitTasks);
   }
 }
