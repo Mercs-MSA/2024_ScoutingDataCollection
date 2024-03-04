@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
@@ -115,24 +116,13 @@ class _FormAppPageState extends State<FormAppPage> {
   bool saveDisabled = false;
   bool importerSaveCompletes = false;
 
-  //TODO: Make this data real with json import
-  List<ScoutingTask> incompleteFieldScoutingTasks = [
-    ScoutingTask(team: 9999, match: 18, alliance: Alliances.blue),
-    ScoutingTask(team: 9998, match: 19, alliance: Alliances.red),
-    ScoutingTask(team: 9997, match: 20, alliance: Alliances.blue),
-  ];
+  List<ScoutingTask> incompleteFieldScoutingTasks = [];
 
-  List<PitScoutingTask> incompletePitScoutingTasks = [
-    PitScoutingTask(team: 9999),
-    PitScoutingTask(team: 9998),
-    PitScoutingTask(team: 9997)
-  ];
+  List<PitScoutingTask> incompletePitScoutingTasks = [];
 
-  List<PitScoutingTask> completePitScoutingTasks = [
-    PitScoutingTask(team: 9000),
-    PitScoutingTask(team: 8999),
-    PitScoutingTask(team: 8998)
-  ];
+  List<ScoutingTask> completeFieldScoutingTasks = [];
+
+  List<PitScoutingTask> completePitScoutingTasks = [];
 
   @override
   void initState() {
@@ -142,7 +132,22 @@ class _FormAppPageState extends State<FormAppPage> {
 
   Future<void> loadPrefs() async {
     final prefs = await SharedPreferences.getInstance();
+
     setState(() {
+      incompletePitScoutingTasks = convertJsonStringToTasksList(
+          prefs.getString("jsonIncompletePitTasks") ?? "",
+          (json) => PitScoutingTask.fromJson(json));
+      completePitScoutingTasks = convertJsonStringToTasksList(
+          prefs.getString("jsonCompletePitTasks") ?? "",
+          (json) => PitScoutingTask.fromJson(json));
+
+      incompleteFieldScoutingTasks = convertJsonStringToTasksList(
+          prefs.getString("jsonIncompleteFieldTasks") ?? "",
+          (json) => ScoutingTask.fromJson(json));
+      completeFieldScoutingTasks = convertJsonStringToTasksList(
+          prefs.getString("jsonCompleteFieldTasks") ?? "",
+          (json) => ScoutingTask.fromJson(json));
+
       appMode = prefs.getInt('appMode') ?? 0;
     });
   }
@@ -1176,9 +1181,93 @@ class _FormAppPageState extends State<FormAppPage> {
           body: Center(
             child: Column(
               children: [
-                ElevatedButton(
-                    onPressed: importTeamList,
-                    child: const Text("Import team list"))
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: importTeamList,
+                      child: const Text("Import team list"),
+                    ),
+                    const SizedBox(width: 8.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Are you sure?"),
+                              icon: const Icon(
+                                Icons.error_rounded,
+                                size: 72,
+                              ),
+                              content: const Text(
+                                  "Are you ABSOLUTELY SURE you want to remove ALL saved team lists"),
+                              actionsOverflowButtonSpacing: 20,
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("No"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("No"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    resetAllTeams();
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("Yes"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: const Text("RESET ALL TEAMS"),
+                    ),
+                    const SizedBox(width: 8.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Are you sure?"),
+                              icon: const Icon(
+                                Icons.error_rounded,
+                                size: 72,
+                              ),
+                              content: const Text(
+                                  "Are you ABSOLUTELY SURE you want to add 3 nonsense teams to each list"),
+                              actionsOverflowButtonSpacing: 20,
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("No"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    loadTestTeams();
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("Yes"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: const Text("Load debug teams"),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -1263,9 +1352,43 @@ class _FormAppPageState extends State<FormAppPage> {
       return;
     }
 
-    completePitScoutingTasks.add(PitScoutingTask(team: pitTeamNumber!));
-    incompletePitScoutingTasks
-        .removeWhere((task) => task.team == pitTeamNumber);
+    if (!context.mounted) return;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Completed?"),
+          icon: const Icon(
+            Icons.question_mark_rounded,
+            size: 72,
+          ),
+          content: const Text("Do you want to mark the task as complete?"),
+          actionsOverflowButtonSpacing: 20,
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("No"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                completePitScoutingTasks
+                    .add(PitScoutingTask(team: pitTeamNumber!));
+                incompletePitScoutingTasks
+                    .removeWhere((task) => task.team == pitTeamNumber);
+                setState(() {
+                  pitPageIndex = 0;
+                });
+                updateTeamSaves();
+                Navigator.of(context).pop();
+              },
+              child: const Text("Yes"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void onFieldScoutSave() async {
@@ -1286,6 +1409,7 @@ class _FormAppPageState extends State<FormAppPage> {
     }
 
     resetPit();
+    updateTeamSaves();
   }
 
   Future<void> saveFileMobile(Uint8List data, String fileName) async {
@@ -1394,5 +1518,65 @@ class _FormAppPageState extends State<FormAppPage> {
     setState(() {
       pitPageIndex = 0;
     });
+  }
+
+  void loadTestTeams() {
+    var rng = Random();
+    for (var i = 0; i < 3; i++) {
+      incompletePitScoutingTasks.add(PitScoutingTask(team: rng.nextInt(9999)));
+    }
+
+    for (var i = 0; i < 3; i++) {
+      incompleteFieldScoutingTasks.add(ScoutingTask(
+          team: rng.nextInt(9999),
+          match: rng.nextInt(80),
+          alliance: Alliances.values[rng.nextInt(2)]));
+    }
+
+    updateTeamSaves();
+  }
+
+  void resetAllTeams() {
+    incompleteFieldScoutingTasks = [];
+    incompletePitScoutingTasks = [];
+    completeFieldScoutingTasks = [];
+    completePitScoutingTasks = [];
+    updateTeamSaves();
+  }
+
+  String convertTasksListToJsonString<T>(List<T> tasks) {
+    return json.encode(tasks.map((task) {
+      if (task is ScoutingTask) {
+        return (task as ScoutingTask).toJson();
+      } else if (task is PitScoutingTask) {
+        return (task as PitScoutingTask).toJson();
+      }
+      return null;
+    }).toList());
+  }
+
+  List<T> convertJsonStringToTasksList<T>(
+      String jsonString, T Function(Map<String, dynamic>) fromJson) {
+    List jsonList = json.decode(jsonString);
+    return jsonList.map((json) => fromJson(json)).toList();
+  }
+
+  Future<void> updateTeamSaves() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    String jsonIncompleteFieldTasks =
+        convertTasksListToJsonString(incompleteFieldScoutingTasks);
+    String jsonCompleteFieldTasks =
+        convertTasksListToJsonString(completeFieldScoutingTasks);
+
+    String jsonIncompletePitTasks =
+        convertTasksListToJsonString(incompletePitScoutingTasks);
+    String jsonCompletePitTasks =
+        convertTasksListToJsonString(completePitScoutingTasks);
+
+    prefs.setString("jsonIncompleteFieldTasks", jsonIncompleteFieldTasks);
+    prefs.setString("jsonCompleteFieldTasks", jsonCompleteFieldTasks);
+    prefs.setString("jsonIncompletePitTasks", jsonIncompletePitTasks);
+    prefs.setString("jsonCompletePitTasks", jsonCompletePitTasks);
   }
 }

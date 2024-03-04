@@ -681,6 +681,7 @@ class _PitFormState extends State<PitForm> {
                               initialRating: widget.autonConsistency,
                               itemCount: 4,
                             ),
+                            const SizedBox(height: 8.0),
                             RatingInput(
                               title: "Auto Versatility",
                               onRatingUpdate: (value) {
@@ -689,6 +690,7 @@ class _PitFormState extends State<PitForm> {
                               initialRating: widget.autonVersatility,
                               itemCount: 4,
                             ),
+                            const SizedBox(height: 8.0),
                             TextField(
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
