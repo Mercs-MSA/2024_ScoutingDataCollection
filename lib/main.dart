@@ -105,6 +105,8 @@ class _FormAppPageState extends State<FormAppPage> {
   int? pitOperatorYears = 0;
   int? pitCoachYears = 0;
 
+  String pitTeleopStrat = "";
+
   StartPositions pitPrefStart = StartPositions.middle;
 
   int fieldAutonSpeakerNotes = 0;
@@ -876,6 +878,9 @@ class _FormAppPageState extends State<FormAppPage> {
                     pitPrefStart = value;
                   });
                 },
+                onTeleopStratChnaged: (value) {
+                  pitTeleopStrat = value;
+                },
                 repairability: pitRepairabilityScore,
                 maneuverability: pitManeuverabilityScore,
                 drivebase: pitDrivebaseType,
@@ -907,6 +912,7 @@ class _FormAppPageState extends State<FormAppPage> {
                 operatorYears: pitOperatorYears,
                 coachYears: pitCoachYears,
                 prefStart: pitPrefStart,
+                teleopStrat: pitTeleopStrat,
               ),
               Column(
                 children: [
@@ -1331,6 +1337,7 @@ class _FormAppPageState extends State<FormAppPage> {
       ['hasAuton', pitAutonExists],
       ['repairability', pitRepairabilityScore],
       ['maneuverability', pitManeuverabilityScore],
+      ['teleopStrat', pitTeleopStrat.replaceAll("\n", "*")],
     ];
   }
 
@@ -1475,6 +1482,7 @@ class _FormAppPageState extends State<FormAppPage> {
       pitOperatorYears = 0;
       pitCoachYears = 0;
       pitPrefStart = StartPositions.middle;
+      pitTeleopStrat = "";
       fieldAutonSpeakerNotes = 0;
       fieldAutonAmpNotes = 0;
       fieldAutonSpeakerNotesMissed = 0;
@@ -1515,6 +1523,7 @@ class _FormAppPageState extends State<FormAppPage> {
     pitOperatorYears = 0;
     pitCoachYears = 0;
     pitPrefStart = StartPositions.middle;
+    pitTeleopStrat = "";
     setState(() {
       pitPageIndex = 0;
     });
