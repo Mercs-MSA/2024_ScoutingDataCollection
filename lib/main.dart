@@ -166,6 +166,8 @@ class _FormAppPageState extends State<FormAppPage> {
   }
 
   Future<void> importTeamList() async {
+    if (!context.mounted) return;
+
     List<PitScoutingTask> newIncompletePitScoutingTasks = [];
     List<ScoutingTask> newIncompleteFieldScoutingTasks = [];
 
@@ -195,7 +197,7 @@ class _FormAppPageState extends State<FormAppPage> {
               newIncompletePitScoutingTasks
                   .add(PitScoutingTask(team: pitTeam["teamNumber"]));
             } else {
-              if (!context.mounted) return;
+              if (!mounted) return;
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -231,7 +233,7 @@ class _FormAppPageState extends State<FormAppPage> {
                   match: fieldTeam["match"],
                   alliance: Alliances.values[fieldTeam["alliance"]]));
             } else {
-              if (!context.mounted) return;
+              if (!mounted) return;
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -259,7 +261,7 @@ class _FormAppPageState extends State<FormAppPage> {
             }
           }
         } else {
-          if (!context.mounted) return;
+          if (!mounted) return;
           showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -287,7 +289,7 @@ class _FormAppPageState extends State<FormAppPage> {
         }
       }
     } catch (e) {
-      if (!context.mounted) return;
+      if (!mounted) return;
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -316,7 +318,7 @@ class _FormAppPageState extends State<FormAppPage> {
       return;
     }
 
-    if (!context.mounted) return;
+    if (!mounted) return;
     showDialog(
       context: context,
       builder: (BuildContext context) {
