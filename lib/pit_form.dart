@@ -4,72 +4,75 @@ import 'package:flutter_form_elements/datatypes.dart';
 import 'package:flutter_form_elements/widgets.dart';
 
 class PitForm extends StatefulWidget {
-  const PitForm({
-    super.key,
-    required this.teamNumberPresent,
-    required this.onRepairabilityChanged,
-    required this.onManeuverabilityChanged,
-    required this.onDrivebaseChanged,
-    required this.onAltDrivebaseChanged,
-    required this.onLengthChanged,
-    required this.onWidthChanged,
-    required this.onHeightChanged,
-    required this.onWeightChanged,
-    required this.onIntakeInBumperChanged,
-    required this.onClimberTypeChanged,
-    required this.onAltClimberTypeChanged,
-    required this.onDoesSpeakerChanged,
-    required this.onDoesAmpChanged,
-    required this.onDoesTrapChanged,
-    required this.onDoesSourcePickupChanged,
-    required this.onDoesGroundPickupChanged,
-    required this.onDoesExtendShootChanged,
-    required this.onDoesTurretShootChanged,
-    required this.onAutonExistsChanged,
-    required this.onAutonSpeakerNotesChanged,
-    required this.onAutonAmpNotesChanged,
-    required this.onAutonConsistencyChanged,
-    required this.onAutonVersatilityChanged,
-    required this.onAutonRoutesChanged,
-    required this.onAutonStratChanged,
-    required this.onPlayerPreferAmpChanged,
-    required this.onPlayerPreferSourceChanged,
-    required this.onDriverYearsChanged,
-    required this.onOperatorYearsChanged,
-    required this.onCoachYearsChanged,
-    required this.onPrefStartChanged,
-    required this.repairability,
-    required this.maneuverability,
-    required this.drivebase,
-    required this.altDrivebase,
-    required this.length,
-    required this.width,
-    required this.height,
-    required this.weight,
-    required this.intakeInBumper,
-    required this.climberType,
-    required this.altClimberType,
-    required this.doesSpeaker,
-    required this.doesAmp,
-    required this.doesTrap,
-    required this.doesSourcePickup,
-    required this.doesGroundPickup,
-    required this.doesExtendShoot,
-    required this.doesTurretShoot,
-    required this.autonExists,
-    required this.autonSpeakerNotes,
-    required this.autonAmpNotes,
-    required this.autonConsistency,
-    required this.autonVersatility,
-    required this.autonStrat,
-    required this.autonRoutes,
-    required this.playerPreferAmp,
-    required this.playerPreferSource,
-    required this.driverYears,
-    required this.operatorYears,
-    required this.coachYears,
-    required this.prefStart,
-  });
+  const PitForm(
+      {super.key,
+      required this.teamNumberPresent,
+      required this.onRepairabilityChanged,
+      required this.onManeuverabilityChanged,
+      required this.onDrivebaseChanged,
+      required this.onAltDrivebaseChanged,
+      required this.onLengthChanged,
+      required this.onWidthChanged,
+      required this.onHeightChanged,
+      required this.onWeightChanged,
+      required this.onIntakeInBumperChanged,
+      required this.onIsKitbotChanged,
+      required this.onClimberTypeChanged,
+      required this.onAltClimberTypeChanged,
+      required this.onDoesSpeakerChanged,
+      required this.onDoesAmpChanged,
+      required this.onDoesTrapChanged,
+      required this.onDoesSourcePickupChanged,
+      required this.onDoesGroundPickupChanged,
+      required this.onDoesExtendShootChanged,
+      required this.onDoesTurretShootChanged,
+      required this.onAutonExistsChanged,
+      required this.onAutonSpeakerNotesChanged,
+      required this.onAutonAmpNotesChanged,
+      required this.onAutonConsistencyChanged,
+      required this.onAutonVersatilityChanged,
+      required this.onAutonRoutesChanged,
+      required this.onAutonStratChanged,
+      required this.onPlayerPreferAmpChanged,
+      required this.onPlayerPreferSourceChanged,
+      required this.onDriverYearsChanged,
+      required this.onOperatorYearsChanged,
+      required this.onCoachYearsChanged,
+      required this.onPrefStartChanged,
+      required this.onTeleopStratChnaged,
+      required this.repairability,
+      required this.maneuverability,
+      required this.drivebase,
+      required this.altDrivebase,
+      required this.length,
+      required this.width,
+      required this.height,
+      required this.weight,
+      required this.intakeInBumper,
+      required this.isKitbot,
+      required this.climberType,
+      required this.altClimberType,
+      required this.doesSpeaker,
+      required this.doesAmp,
+      required this.doesTrap,
+      required this.doesSourcePickup,
+      required this.doesGroundPickup,
+      required this.doesExtendShoot,
+      required this.doesTurretShoot,
+      required this.autonExists,
+      required this.autonSpeakerNotes,
+      required this.autonAmpNotes,
+      required this.autonConsistency,
+      required this.autonVersatility,
+      required this.autonStrat,
+      required this.autonRoutes,
+      required this.playerPreferAmp,
+      required this.playerPreferSource,
+      required this.driverYears,
+      required this.operatorYears,
+      required this.coachYears,
+      required this.prefStart,
+      required this.teleopStrat});
 
   final bool teamNumberPresent;
 
@@ -82,6 +85,7 @@ class PitForm extends StatefulWidget {
   final Function(int?) onHeightChanged;
   final Function(int?) onWeightChanged;
   final Function(bool) onIntakeInBumperChanged;
+  final Function(bool) onIsKitbotChanged;
   final Function(String) onClimberTypeChanged;
   final Function(String) onAltClimberTypeChanged;
   final Function(bool) onDoesSpeakerChanged;
@@ -104,6 +108,7 @@ class PitForm extends StatefulWidget {
   final Function(int?) onOperatorYearsChanged;
   final Function(int?) onCoachYearsChanged;
   final Function(StartPositions) onPrefStartChanged;
+  final Function(String) onTeleopStratChnaged;
 
   final double repairability;
   final double maneuverability;
@@ -113,6 +118,7 @@ class PitForm extends StatefulWidget {
   final int? width;
   final int? height;
   final int? weight;
+  final bool isKitbot;
   final bool intakeInBumper;
   final String climberType;
   final String? altClimberType;
@@ -136,6 +142,7 @@ class PitForm extends StatefulWidget {
   final int? operatorYears;
   final int? coachYears;
   final StartPositions prefStart;
+  final String teleopStrat;
 
   @override
   State<PitForm> createState() => _PitFormState();
@@ -145,6 +152,16 @@ class _PitFormState extends State<PitForm> {
   int autonSpeakerNotes = 0;
   int autonAmpNotes = 0;
   int autonRoutes = 0;
+
+  final MaterialStateProperty<Icon?> thumbIcon =
+      MaterialStateProperty.resolveWith<Icon?>(
+    (Set<MaterialState> states) {
+      if (states.contains(MaterialState.selected)) {
+        return const Icon(Icons.check);
+      }
+      return const Icon(Icons.close);
+    },
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -330,6 +347,17 @@ class _PitFormState extends State<PitForm> {
                       const SizedBox(height: 8.0),
                     ],
                   ),
+                ),
+                const Divider(),
+                SwitchListTile(
+                  title: const Text('Is Kitbot?'),
+                  value: widget.isKitbot,
+                  onChanged: (bool? newValue) {
+                    setState(() {
+                      widget.onIsKitbotChanged(newValue!);
+                    });
+                  },
+                  thumbIcon: thumbIcon,
                 ),
                 const Divider(),
                 CheckboxListTile(
@@ -710,7 +738,7 @@ class _PitFormState extends State<PitForm> {
                               controller: TextEditingController(
                                 text: widget.autonStrat,
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -737,6 +765,27 @@ class _PitFormState extends State<PitForm> {
                   },
                   initialRating: widget.maneuverability,
                 ),
+                const SizedBox(height: 8.0),
+                TextField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Teleop Strategy',
+                  ),
+                  maxLines: 5,
+                  inputFormatters: <TextInputFormatter>[
+                    LengthLimitingTextInputFormatter(500),
+                    FilteringTextInputFormatter(
+                      RegExp(r'[a-zA-Z]|-| |\n'),
+                      allow: true,
+                    ),
+                  ],
+                  onChanged: (value) {
+                    widget.onTeleopStratChnaged(value);
+                  },
+                  controller: TextEditingController(
+                    text: widget.teleopStrat,
+                  ),
+                )
               ],
             ),
           ),

@@ -76,6 +76,7 @@ class _FormAppPageState extends State<FormAppPage> {
   bool pitCanPassStage = false;
 
   bool pitIntakeInBumper = false;
+  bool pitIsKitbot = false;
   String pitClimberType = "Tube-in-Tube";
   String? pitAltClimberType;
 
@@ -771,6 +772,11 @@ class _FormAppPageState extends State<FormAppPage> {
                     pitAltDrivebaseType = value;
                   });
                 },
+                onIsKitbotChanged: (value) {
+                  setState(() {
+                    pitIsKitbot = value;
+                  });
+                },
                 onIntakeInBumperChanged: (value) {
                   setState(() {
                     pitIntakeInBumper = value;
@@ -889,6 +895,7 @@ class _FormAppPageState extends State<FormAppPage> {
                 width: pitWidthData,
                 height: pitHeightData,
                 weight: pitWeightData,
+                isKitbot: pitIsKitbot,
                 intakeInBumper: pitIntakeInBumper,
                 climberType: pitClimberType,
                 altClimberType: pitAltClimberType,
@@ -1318,6 +1325,7 @@ class _FormAppPageState extends State<FormAppPage> {
       ['drivebaseAlt', pitAltDrivebaseType],
       ['climber', pitClimberType],
       ['climberAlt', pitAltClimberType],
+      ['isKitbot', pitIsKitbot],
       ['intakeInBumper', pitIntakeInBumper],
       ['speakerScore', pitDoesSpeaker],
       ['ampScore', pitDoesAmp],
@@ -1459,6 +1467,7 @@ class _FormAppPageState extends State<FormAppPage> {
       pitHeightData = null;
       pitWeightData = null;
       pitCanPassStage = false;
+      pitIsKitbot = false;
       pitIntakeInBumper = false;
       pitClimberType = "Tube-in-Tube";
       pitAltClimberType = null;
@@ -1501,6 +1510,7 @@ class _FormAppPageState extends State<FormAppPage> {
     pitHeightData = null;
     pitWeightData = null;
     pitCanPassStage = false;
+    pitIsKitbot = false;
     pitIntakeInBumper = false;
     pitClimberType = "Tube-in-Tube";
     pitAltClimberType = null;
