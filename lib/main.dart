@@ -102,9 +102,9 @@ class _FormAppPageState extends State<FormAppPage> {
   bool pitPlayerPreferAmp = false;
   bool pitPlayerPreferSource = false;
 
-  int? pitDriverYears = 0;
-  int? pitOperatorYears = 0;
-  int? pitCoachYears = 0;
+  int? pitDriverYears;
+  int? pitOperatorYears;
+  int? pitCoachYears;
 
   String pitTeleopStrat = "";
 
@@ -1487,9 +1487,9 @@ class _FormAppPageState extends State<FormAppPage> {
       pitDoesExtendShoot = true;
       pitPlayerPreferAmp = false;
       pitPlayerPreferSource = false;
-      pitDriverYears = 0;
-      pitOperatorYears = 0;
-      pitCoachYears = 0;
+      pitDriverYears = null;
+      pitOperatorYears = null;
+      pitCoachYears = null;
       pitPrefStart = StartPositions.middle;
       pitTeleopStrat = "";
       fieldAutonSpeakerNotes = 0;
@@ -1529,9 +1529,9 @@ class _FormAppPageState extends State<FormAppPage> {
     pitDoesExtendShoot = true;
     pitPlayerPreferAmp = false;
     pitPlayerPreferSource = false;
-    pitDriverYears = 0;
-    pitOperatorYears = 0;
-    pitCoachYears = 0;
+    pitDriverYears = null;
+    pitOperatorYears = null;
+    pitCoachYears = null;
     pitPrefStart = StartPositions.middle;
     pitTeleopStrat = "";
     setState(() {
