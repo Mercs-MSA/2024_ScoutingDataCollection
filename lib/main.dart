@@ -1481,6 +1481,7 @@ class _FormAppPageState extends State<FormAppPage> {
       pitDoesSpeaker = true;
       pitDoesAmp = true;
       pitDoesTrap = false;
+      pitDoesTrap = false;
       pitDoesGroundPickup = false;
       pitDoesSourcePickup = false;
       pitDoesTurretShoot = false;
