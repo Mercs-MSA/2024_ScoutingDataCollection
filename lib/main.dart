@@ -12,6 +12,8 @@ import 'package:flutter_form_elements/camerascreen.dart';
 import 'package:flutter_form_elements/datatypes.dart';
 import 'package:flutter_form_elements/field_forms.dart';
 import 'package:flutter_form_elements/pit_form.dart';
+import 'package:path/path.dart' as path;
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'widgets.dart';
@@ -84,6 +86,8 @@ class _FormAppPageState extends State<FormAppPage> {
   int pitPageIndex = 0;
   int fieldPageIndex = 0;
   int appMode = 0;
+
+  String eventId = "";
 
   int? fieldTeamNumber;
   int? pitTeamNumber;
@@ -168,11 +172,29 @@ class _FormAppPageState extends State<FormAppPage> {
           enableAudio: false,
         );
 
-        futureCamController = cameraController!.initialize();
+        // futureCamController = cameraController!.initialize();
       });
     });
 
     loadPrefs();
+
+    initPerms();
+  }
+
+  Future<void> initPerms() async {
+    await Permission.manageExternalStorage.onDeniedCallback(() {
+      print('pedenied');
+    }).onGrantedCallback(() {
+      print('pegrant');
+    }).onPermanentlyDeniedCallback(() {
+      print('peperm denied');
+    }).onRestrictedCallback(() {
+      print('perestr');
+    }).onLimitedCallback(() {
+      print('pelimit');
+    }).onProvisionalCallback(() {
+      print('peprov');
+    }).request();
   }
 
   Future<void> loadPrefs() async {
@@ -192,6 +214,8 @@ class _FormAppPageState extends State<FormAppPage> {
       completeFieldScoutingTasks = convertJsonStringToTasksList(
           prefs.getString("jsonCompleteFieldTasks") ?? "",
           (json) => ScoutingTask.fromJson(json));
+
+      eventId = prefs.getString("eventId") ?? "";
 
       appMode = prefs.getInt('appMode') ?? 0;
     });
@@ -689,6 +713,8 @@ class _FormAppPageState extends State<FormAppPage> {
               setState(() {
                 pitPageIndex = index;
                 if (pitPageIndex == 2) {
+                  futureCamController ??= cameraController!.initialize();
+
                   cameraController?.resumePreview();
                 } else {
                   cameraController?.pausePreview();
@@ -972,8 +998,8 @@ class _FormAppPageState extends State<FormAppPage> {
                 prefStart: pitPrefStart,
                 teleopStrat: pitTeleopStrat,
               ),
-              cameraController == null
-                  ? Placeholder()
+              futureCamController == null
+                  ? const Placeholder()
                   : TakePictureScreen(
                       controller: cameraController!,
                       futureController: futureCamController!,
@@ -1249,97 +1275,115 @@ class _FormAppPageState extends State<FormAppPage> {
               )
             ],
           ),
-          body: Center(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: importTeamList,
-                      child: const Text("Import team list"),
+          body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: importTeamList,
+                        child: const Text("Import team list"),
+                      ),
+                      const SizedBox(width: 8.0),
+                      ElevatedButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("Are you sure?"),
+                                icon: const Icon(
+                                  Icons.error_rounded,
+                                  size: 72,
+                                ),
+                                content: const Text(
+                                    "Are you ABSOLUTELY SURE you want to remove ALL saved team lists"),
+                                actionsOverflowButtonSpacing: 20,
+                                actions: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("No"),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("No"),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      resetAllTeams();
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("Yes"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        child: const Text("RESET ALL TEAMS"),
+                      ),
+                      const SizedBox(width: 8.0),
+                      ElevatedButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("Are you sure?"),
+                                icon: const Icon(
+                                  Icons.error_rounded,
+                                  size: 72,
+                                ),
+                                content: const Text(
+                                    "Are you ABSOLUTELY SURE you want to add 3 nonsense teams to each list"),
+                                actionsOverflowButtonSpacing: 20,
+                                actions: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("No"),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      loadTestTeams();
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("Yes"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        child: const Text("Load debug teams"),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
+                  TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Event ID',
                     ),
-                    const SizedBox(width: 8.0),
-                    ElevatedButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text("Are you sure?"),
-                              icon: const Icon(
-                                Icons.error_rounded,
-                                size: 72,
-                              ),
-                              content: const Text(
-                                  "Are you ABSOLUTELY SURE you want to remove ALL saved team lists"),
-                              actionsOverflowButtonSpacing: 20,
-                              actions: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text("No"),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text("No"),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    resetAllTeams();
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text("Yes"),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                      child: const Text("RESET ALL TEAMS"),
-                    ),
-                    const SizedBox(width: 8.0),
-                    ElevatedButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text("Are you sure?"),
-                              icon: const Icon(
-                                Icons.error_rounded,
-                                size: 72,
-                              ),
-                              content: const Text(
-                                  "Are you ABSOLUTELY SURE you want to add 3 nonsense teams to each list"),
-                              actionsOverflowButtonSpacing: 20,
-                              actions: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text("No"),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    loadTestTeams();
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text("Yes"),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                      child: const Text("Load debug teams"),
-                    ),
-                  ],
-                ),
-              ],
+                    inputFormatters: <TextInputFormatter>[
+                      LengthLimitingTextInputFormatter(15),
+                    ],
+                    onChanged: (value) {
+                      eventId = value;
+                      attemptSaveEventId();
+                    },
+                    controller: TextEditingController(text: eventId),
+                  ),
+                ],
+              ),
             ),
           ),
         )
@@ -1408,6 +1452,33 @@ class _FormAppPageState extends State<FormAppPage> {
   }
 
   void onPitScoutSave() async {
+    if (pitTeamNumber == null) {
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Team Number Required"),
+            icon: const Icon(
+              Icons.numbers_rounded,
+              size: 72,
+            ),
+            content: const Text("Save operation cancelled"),
+            actionsOverflowButtonSpacing: 20,
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
     final fileData =
         const ListToCsvConverter().convert(getPitKVFormattedData());
 
@@ -1415,14 +1486,19 @@ class _FormAppPageState extends State<FormAppPage> {
       saveDisabled = true;
     });
 
-    if (Platform.isAndroid | Platform.isIOS) {
-      await saveFileMobile(
-          Uint8List.fromList(fileData.codeUnits), "output.csv");
-    } else if (Platform.isLinux | Platform.isMacOS | Platform.isWindows) {
-      await saveFileDesktop(
-          Uint8List.fromList(fileData.codeUnits), "output.csv");
-    } else {
-      return;
+    final dirPath = await grabDir();
+
+    if (dirPath != null) {
+      print(path.join(dirPath, "exportt.csv"));
+      File(path.join(dirPath, "exportt.csv"))
+          .create(recursive: true)
+          .onError((e, s) {
+        print(e);
+        throw Error;
+      }).then((File file) {
+        print(123);
+        file.writeAsBytes(Uint8List.fromList(fileData.codeUnits));
+      });
     }
 
     if (!mounted) return;
@@ -1506,6 +1582,18 @@ class _FormAppPageState extends State<FormAppPage> {
     setState(() {
       saveDisabled = false;
     });
+  }
+
+  Future<String?> grabDir() async {
+    String? outputFile = await FilePicker.platform.getDirectoryPath(
+      dialogTitle: 'Export directory',
+    );
+
+    setState(() {
+      saveDisabled = false;
+    });
+
+    return outputFile;
   }
 
   void resetAll() {
@@ -1655,5 +1743,11 @@ class _FormAppPageState extends State<FormAppPage> {
     prefs.setString("jsonCompleteFieldTasks", jsonCompleteFieldTasks);
     prefs.setString("jsonIncompletePitTasks", jsonIncompletePitTasks);
     prefs.setString("jsonCompletePitTasks", jsonCompletePitTasks);
+  }
+
+  Future<void> attemptSaveEventId() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.setString("eventId", eventId);
   }
 }
