@@ -360,7 +360,7 @@ class _PitFormState extends State<PitForm> {
                   thumbIcon: thumbIcon,
                 ),
                 const Divider(),
-                CheckboxListTile(
+                SwitchListTile(
                   title: const Text('Inside Bumper Intake?'),
                   value: widget.intakeInBumper,
                   onChanged: (bool? newValue) {
@@ -368,6 +368,7 @@ class _PitFormState extends State<PitForm> {
                       widget.onIntakeInBumperChanged(newValue!);
                     });
                   },
+                  thumbIcon: thumbIcon,
                 ),
                 const Divider(),
                 const Text(
