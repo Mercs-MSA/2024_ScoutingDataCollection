@@ -204,19 +204,7 @@ class _FormAppPageState extends State<FormAppPage> {
   }
 
   Future<void> initPerms() async {
-    await Permission.manageExternalStorage.onDeniedCallback(() {
-      print('pedenied');
-    }).onGrantedCallback(() {
-      print('pegrant');
-    }).onPermanentlyDeniedCallback(() {
-      print('peperm denied');
-    }).onRestrictedCallback(() {
-      print('perestr');
-    }).onLimitedCallback(() {
-      print('pelimit');
-    }).onProvisionalCallback(() {
-      print('peprov');
-    }).request();
+    await Permission.manageExternalStorage.request();
   }
 
   Future<void> loadPrefs() async {
@@ -476,127 +464,160 @@ class _FormAppPageState extends State<FormAppPage> {
     );
   }
 
+  void _onBackPressed(bool x) {
+    print(x);
+    showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text('Are you sure?'),
+        content: new Text('Do you want to exit the app?'),
+        actions: <Widget>[
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text("No"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              SystemNavigator.pop();
+            },
+            child: const Text("Yes"),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return IndexedStack(
       index: appMode,
       children: [
-        Scaffold(
-          appBar: AppBar(
-            title: const Text("Welcome!"),
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Flexible(
-                  fit: FlexFit.tight,
-                  flex: 2,
-                  child: FilledButton(
-                    onPressed: () {
-                      setState(() {
-                        appMode = 1;
-                        setAppModePref(appMode);
-                      });
-                    },
-                    style: ButtonStyle(
-                      minimumSize:
-                          MaterialStateProperty.all(const Size.fromHeight(150)),
-                      maximumSize:
-                          MaterialStateProperty.all(const Size.fromHeight(200)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.0),
+        PopScope(
+          canPop: false,
+          onPopInvoked: _onBackPressed,
+          child: Scaffold(
+            appBar: AppBar(
+              title: const Text("Welcome!"),
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Flexible(
+                    fit: FlexFit.tight,
+                    flex: 2,
+                    child: FilledButton(
+                      onPressed: () {
+                        setState(() {
+                          appMode = 1;
+                          setAppModePref(appMode);
+                        });
+                      },
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all(
+                            const Size.fromHeight(150)),
+                        maximumSize: MaterialStateProperty.all(
+                            const Size.fromHeight(200)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
                         ),
                       ),
-                    ),
-                    child: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Pit Scouting",
-                          style: TextStyle(fontSize: 24),
-                        ),
-                        Text("Enter pit scouting mode.")
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-                Flexible(
-                  fit: FlexFit.tight,
-                  flex: 2,
-                  child: FilledButton(
-                    onPressed: () {
-                      setState(() {
-                        appMode = 2;
-                        setAppModePref(appMode);
-                      });
-                    },
-                    style: ButtonStyle(
-                      minimumSize:
-                          MaterialStateProperty.all(const Size.fromHeight(150)),
-                      maximumSize:
-                          MaterialStateProperty.all(const Size.fromHeight(200)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                      ),
-                    ),
-                    child: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Field Scouting", style: TextStyle(fontSize: 24)),
-                        Text("Enter field scouting mode.")
-                      ],
-                    ),
-                  ),
-                ),
-                const Spacer(),
-                const Image(
-                  image: AssetImage('images/mercs.png'),
-                  fit: BoxFit.scaleDown,
-                  width: 256,
-                  isAntiAlias: true,
-                ),
-                const Spacer(),
-                Flexible(
-                  fit: FlexFit.tight,
-                  flex: 1,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        appMode = 3;
-                        setAppModePref(appMode);
-                      });
-                    },
-                    style: ButtonStyle(
-                      minimumSize:
-                          MaterialStateProperty.all(const Size.fromHeight(100)),
-                      maximumSize:
-                          MaterialStateProperty.all(const Size.fromHeight(200)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                      ),
-                    ),
-                    child: const FittedBox(
-                      child: Column(
+                      child: const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("App Setup", style: TextStyle(fontSize: 24)),
-                          Text("Configure app and team lists")
+                          Text(
+                            "Pit Scouting",
+                            style: TextStyle(fontSize: 24),
+                          ),
+                          Text("Enter pit scouting mode.")
                         ],
                       ),
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 8.0),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    flex: 2,
+                    child: FilledButton(
+                      onPressed: () {
+                        setState(() {
+                          appMode = 2;
+                          setAppModePref(appMode);
+                        });
+                      },
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all(
+                            const Size.fromHeight(150)),
+                        maximumSize: MaterialStateProperty.all(
+                            const Size.fromHeight(200)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                        ),
+                      ),
+                      child: const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Field Scouting",
+                              style: TextStyle(fontSize: 24)),
+                          Text("Enter field scouting mode.")
+                        ],
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  const Image(
+                    image: AssetImage('images/mercs.png'),
+                    fit: BoxFit.scaleDown,
+                    width: 256,
+                    isAntiAlias: true,
+                  ),
+                  const Spacer(),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    flex: 1,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          appMode = 3;
+                          setAppModePref(appMode);
+                        });
+                      },
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all(
+                            const Size.fromHeight(100)),
+                        maximumSize: MaterialStateProperty.all(
+                            const Size.fromHeight(200)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                        ),
+                      ),
+                      child: const FittedBox(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("App Setup", style: TextStyle(fontSize: 24)),
+                            Text("Configure app and team lists")
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
