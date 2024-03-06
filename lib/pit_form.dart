@@ -597,6 +597,8 @@ class _PitFormState extends State<PitForm> {
                         child: Column(
                           children: [
                             const SizedBox(height: 8.0),
+                            const Text(
+                                "What is their prefered auton start position?"),
                             Row(
                               children: [
                                 Expanded(

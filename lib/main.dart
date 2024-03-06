@@ -1041,7 +1041,7 @@ class _FormAppPageState extends State<FormAppPage> {
                             ElevatedButton.icon(
                               onPressed:
                                   saveDisabled == false ? onPitScoutSave : null,
-                              label: const Text("Export CSV"),
+                              label: const Text("Export Bundle"),
                               icon: const Icon(Icons.save),
                             ),
                             const SizedBox(
@@ -1563,74 +1563,104 @@ class _FormAppPageState extends State<FormAppPage> {
         file.writeAsBytes(Uint8List.fromList(fileData.codeUnits));
       });
 
-      if (totalAngleImage != null) {
-        File("${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_total.jpg")
+      if (totalAngleImage != null && pitCameraTotalTaken) {
+        File(path.join(
+                dirPath,
+                "${eventId}_frc${pitTeamNumber}_pit/"
+                "${eventId}_frc${pitTeamNumber}_total.jpg"))
             .create(recursive: true);
         File(totalAngleImage!.path).create(recursive: true).onError((e, s) {
           print(e);
           throw Error;
         }).then((File file) {
-          file.copySync(path.join(dirPath,
-              "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_total.jpg"));
+          file.copySync(path.join(
+              dirPath,
+              "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc"
+              "${pitTeamNumber}_total.jpg"));
         });
       }
-      if (topAngleImage != null) {
-        File("${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_top.jpg")
+      if (topAngleImage != null && pitCameraTopTaken) {
+        File(path.join(
+                dirPath,
+                "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc"
+                "${pitTeamNumber}_top.jpg"))
             .create(recursive: true);
         File(topAngleImage!.path).create(recursive: true).onError((e, s) {
           print(e);
           throw Error;
         }).then((File file) {
-          file.copySync(path.join(dirPath,
-              "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_top.jpg"));
+          file.copySync(path.join(
+              dirPath,
+              "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc"
+              "${pitTeamNumber}_top.jpg"));
         });
       }
       //if goes here
-      if (leftAngleImage != null) {
-        File("${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_left.jpg")
+      if (leftAngleImage != null && pitCameraLeftTaken) {
+        File(path.join(
+                dirPath,
+                "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc"
+                "${pitTeamNumber}_left.jpg"))
             .create(recursive: true);
         File(leftAngleImage!.path).create(recursive: true).onError((e, s) {
           print(e);
           throw Error;
         }).then((File file) {
-          file.copySync(path.join(dirPath,
-              "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_left.jpg"));
+          file.copySync(path.join(
+              dirPath,
+              "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc"
+              "${pitTeamNumber}_left.jpg"));
         });
       }
       //if goes here
-      if (rightAngleImage != null) {
-        File("${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_right.jpg")
+      if (rightAngleImage != null && pitCameraRightTaken) {
+        File(path.join(
+                dirPath,
+                "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc"
+                "${pitTeamNumber}_right.jpg"))
             .create(recursive: true);
         File(rightAngleImage!.path).create(recursive: true).onError((e, s) {
           print(e);
           throw Error;
         }).then((File file) {
-          file.copySync(path.join(dirPath,
-              "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_right.jpg"));
+          file.copySync(path.join(
+              dirPath,
+              "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc"
+              "${pitTeamNumber}_right.jpg"));
         });
       }
       //if goes here
-      if (frontAngleImage != null) {
-        File("${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_front.jpg")
+      if (frontAngleImage != null && pitCameraFrontTaken) {
+        File(path.join(
+                dirPath,
+                "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc"
+                "${pitTeamNumber}_front.jpg"))
             .create(recursive: true);
         File(frontAngleImage!.path).create(recursive: true).onError((e, s) {
           print(e);
           throw Error;
         }).then((File file) {
-          file.copySync(path.join(dirPath,
-              "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_front.jpg"));
+          file.copySync(path.join(
+              dirPath,
+              "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc"
+              "${pitTeamNumber}_front.jpg"));
         });
       }
       //if goes here
-      if (rearAngleImage != null) {
-        File("${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_rear.jpg")
+      if (rearAngleImage != null && pitCameraRearTaken) {
+        File(path.join(
+                dirPath,
+                "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc"
+                "${pitTeamNumber}_rear.jpg"))
             .create(recursive: true);
         File(rearAngleImage!.path).create(recursive: true).onError((e, s) {
           print(e);
           throw Error;
         }).then((File file) {
-          file.copySync(path.join(dirPath,
-              "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_rear.jpg"));
+          file.copySync(path.join(
+              dirPath,
+              "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc"
+              "${pitTeamNumber}_rear.jpg"));
         });
       }
     }
@@ -1763,6 +1793,7 @@ class _FormAppPageState extends State<FormAppPage> {
       pitAutonSpeakerNotes = 0;
       pitAutonAmpNotes = 0;
       pitAutonConsistency = 0;
+      pitAutonVersatility = 0;
       pitAutonRoutes = 0;
       pitAutonStrat = "";
       pitDoesSpeaker = true;
@@ -1811,6 +1842,7 @@ class _FormAppPageState extends State<FormAppPage> {
     pitAutonSpeakerNotes = 0;
     pitAutonAmpNotes = 0;
     pitAutonConsistency = 0;
+    pitAutonVersatility = 0;
     pitAutonRoutes = 0;
     pitAutonStrat = "";
     pitDoesSpeaker = true;
