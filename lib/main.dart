@@ -560,7 +560,7 @@ class _FormAppPageState extends State<FormAppPage> {
                 const Spacer(),
                 Flexible(
                   fit: FlexFit.tight,
-                  flex: 2,
+                  flex: 1,
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
@@ -591,63 +591,6 @@ class _FormAppPageState extends State<FormAppPage> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                Flexible(
-                  fit: FlexFit.tight,
-                  flex: 2,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text("Are you sure?"),
-                            content: const Text(
-                                "Do you want to reset all information on the app?"),
-                            actions: [
-                              TextButton(
-                                child: const Text('Reset'),
-                                onPressed: () {
-                                  resetAll();
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              TextButton(
-                                child: const Text('Cancel'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    style: ButtonStyle(
-                      minimumSize:
-                          MaterialStateProperty.all(const Size.fromHeight(100)),
-                      maximumSize:
-                          MaterialStateProperty.all(const Size.fromHeight(200)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                      ),
-                    ),
-                    child: const FittedBox(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Reset App", style: TextStyle(fontSize: 24)),
-                          Text("Resets all stored information")
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
@@ -662,6 +605,7 @@ class _FormAppPageState extends State<FormAppPage> {
                       appMode = 0;
                       pitPageIndex = 0;
                       setAppModePref(appMode);
+                      cameraPauseCheck();
                     });
                   },
                   icon: const Icon(Icons.start))
@@ -729,14 +673,8 @@ class _FormAppPageState extends State<FormAppPage> {
               }
               setState(() {
                 pitPageIndex = index;
-                if (pitPageIndex == 2) {
-                  futureCamController ??= cameraController!.initialize();
-
-                  cameraController?.resumePreview();
-                } else {
-                  cameraController?.pausePreview();
-                }
               });
+              cameraPauseCheck();
             },
           ),
           body: IndexedStack(
@@ -1452,6 +1390,62 @@ class _FormAppPageState extends State<FormAppPage> {
                     },
                     controller: TextEditingController(text: eventId),
                   ),
+                  Spacer(),
+                  ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            icon: Icon(
+                              Icons.warning_rounded,
+                              size: 180,
+                            ),
+                            title: const Text("Are you sure?"),
+                            content: const Text(
+                                "Do you want to reset all information on the app?"),
+                            actions: [
+                              TextButton(
+                                child: const Text('Reset'),
+                                onPressed: () {
+                                  resetAll();
+                                  resetPrefs();
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              TextButton(
+                                child: const Text('Cancel'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    style: ButtonStyle(
+                      minimumSize:
+                          MaterialStateProperty.all(const Size.fromHeight(100)),
+                      maximumSize:
+                          MaterialStateProperty.all(const Size.fromHeight(200)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                    ),
+                    child: const FittedBox(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Reset App", style: TextStyle(fontSize: 24)),
+                          Text("Resets all stored information")
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -1560,7 +1554,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
     if (dirPath != null) {
       File(path.join(dirPath,
-              "${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_pit.csv"))
+              "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_pit.csv"))
           .create(recursive: true)
           .onError((e, s) {
         print(e);
@@ -1570,73 +1564,73 @@ class _FormAppPageState extends State<FormAppPage> {
       });
 
       if (totalAngleImage != null) {
-        File("${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_total.jpg")
+        File("${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_total.jpg")
             .create(recursive: true);
         File(totalAngleImage!.path).create(recursive: true).onError((e, s) {
           print(e);
           throw Error;
         }).then((File file) {
           file.copySync(path.join(dirPath,
-              "${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_total.jpg"));
+              "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_total.jpg"));
         });
       }
       if (topAngleImage != null) {
-        File("${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_top.jpg")
+        File("${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_top.jpg")
             .create(recursive: true);
         File(topAngleImage!.path).create(recursive: true).onError((e, s) {
           print(e);
           throw Error;
         }).then((File file) {
           file.copySync(path.join(dirPath,
-              "${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_top.jpg"));
+              "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_top.jpg"));
         });
       }
       //if goes here
       if (leftAngleImage != null) {
-        File("${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_left.jpg")
+        File("${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_left.jpg")
             .create(recursive: true);
         File(leftAngleImage!.path).create(recursive: true).onError((e, s) {
           print(e);
           throw Error;
         }).then((File file) {
           file.copySync(path.join(dirPath,
-              "${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_left.jpg"));
+              "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_left.jpg"));
         });
       }
       //if goes here
       if (rightAngleImage != null) {
-        File("${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_right.jpg")
+        File("${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_right.jpg")
             .create(recursive: true);
         File(rightAngleImage!.path).create(recursive: true).onError((e, s) {
           print(e);
           throw Error;
         }).then((File file) {
           file.copySync(path.join(dirPath,
-              "${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_right.jpg"));
+              "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_right.jpg"));
         });
       }
       //if goes here
       if (frontAngleImage != null) {
-        File("${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_front.jpg")
+        File("${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_front.jpg")
             .create(recursive: true);
         File(frontAngleImage!.path).create(recursive: true).onError((e, s) {
           print(e);
           throw Error;
         }).then((File file) {
           file.copySync(path.join(dirPath,
-              "${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_front.jpg"));
+              "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_front.jpg"));
         });
       }
       //if goes here
       if (rearAngleImage != null) {
-        File("${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_rear.jpg")
+        File("${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_rear.jpg")
             .create(recursive: true);
         File(rearAngleImage!.path).create(recursive: true).onError((e, s) {
           print(e);
           throw Error;
         }).then((File file) {
           file.copySync(path.join(dirPath,
-              "${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_rear.jpg"));
+              "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_rear.jpg"));
         });
       }
     }
@@ -1670,6 +1664,7 @@ class _FormAppPageState extends State<FormAppPage> {
                   pitPageIndex = 0;
                 });
                 updateTeamSaves();
+                resetPit();
                 Navigator.of(context).pop();
               },
               child: const Text("Yes"),
@@ -1736,6 +1731,12 @@ class _FormAppPageState extends State<FormAppPage> {
     return outputFile;
   }
 
+  Future<void> resetPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.clear();
+  }
+
   void resetAll() {
     setState(() {
       pitPageIndex = 0;
@@ -1778,6 +1779,12 @@ class _FormAppPageState extends State<FormAppPage> {
       pitCoachYears = null;
       pitPrefStart = StartPositions.middle;
       pitTeleopStrat = "";
+      pitCameraTotalTaken = false;
+      pitCameraTopTaken = false;
+      pitCameraRightTaken = false;
+      pitCameraLeftTaken = false;
+      pitCameraRearTaken = false;
+      pitCameraFrontTaken = false;
       fieldAutonSpeakerNotes = 0;
       fieldAutonAmpNotes = 0;
       fieldAutonSpeakerNotesMissed = 0;
@@ -1853,6 +1860,16 @@ class _FormAppPageState extends State<FormAppPage> {
     completeFieldScoutingTasks = [];
     completePitScoutingTasks = [];
     updateTeamSaves();
+  }
+
+  void cameraPauseCheck() {
+    if (pitPageIndex == 2 && appMode == 1) {
+      futureCamController ??= cameraController!.initialize();
+
+      cameraController?.resumePreview();
+    } else {
+      cameraController?.pausePreview();
+    }
   }
 
   String convertTasksListToJsonString<T>(List<T> tasks) {

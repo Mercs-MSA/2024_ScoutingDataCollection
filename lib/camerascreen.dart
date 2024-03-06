@@ -93,14 +93,14 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                               (image) {
                                 topAngle = image;
                                 setState(() {
-                                  widget.totalUpdated(true);
+                                  widget.topUpdated(true);
                                 });
                                 widget.onImageTaken(image, ImageAngles.top);
                               },
                               () {
                                 topAngle = null;
                                 setState(() {
-                                  widget.topUpdated(true);
+                                  widget.topUpdated(false);
                                 });
                                 Navigator.of(context).pop();
                               },
