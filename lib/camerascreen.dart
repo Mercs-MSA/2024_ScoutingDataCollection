@@ -32,19 +32,19 @@ class TakePictureScreen extends StatefulWidget {
   final Future<void> futureController;
   final Function(XFile, ImageAngles) onImageTaken;
 
-  bool topAngleTaken = false;
-  bool frontAngleTaken = false;
-  bool rearAngleTaken = false;
-  bool leftAngleTaken = false;
-  bool rightAngleTaken = false;
-  bool totalAngleTaken = false;
+  final bool topAngleTaken;
+  final bool frontAngleTaken;
+  final bool rearAngleTaken;
+  final bool leftAngleTaken;
+  final bool rightAngleTaken;
+  final bool totalAngleTaken;
 
-  Function(bool) totalUpdated;
-  Function(bool) frontUpdated;
-  Function(bool) rearUpdated;
-  Function(bool) leftUpdated;
-  Function(bool) rightUpdated;
-  Function(bool) topUpdated;
+  final Function(bool) totalUpdated;
+  final Function(bool) frontUpdated;
+  final Function(bool) rearUpdated;
+  final Function(bool) leftUpdated;
+  final Function(bool) rightUpdated;
+  final Function(bool) topUpdated;
 
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
