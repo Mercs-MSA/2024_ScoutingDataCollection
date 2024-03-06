@@ -146,6 +146,22 @@ class _FormAppPageState extends State<FormAppPage> {
   int fieldAutonSpeakerNotesMissed = 0;
   int fieldAutonAmpNotesMissed = 0;
 
+  //angle variables
+
+  XFile? totalAngleImage;
+  XFile? topAngleImage;
+  XFile? frontAngleImage;
+  XFile? rearAngleImage;
+  XFile? leftAngleImage;
+  XFile? rightAngleImage;
+
+  bool pitCameraTotalTaken = false;
+  bool pitCameraTopTaken = false;
+  bool pitCameraRightTaken = false;
+  bool pitCameraLeftTaken = false;
+  bool pitCameraFrontTaken = false;
+  bool pitCameraRearTaken = false;
+
   bool saveDisabled = false;
   bool importerSaveCompletes = false;
 
@@ -171,6 +187,7 @@ class _FormAppPageState extends State<FormAppPage> {
           ResolutionPreset.medium,
           enableAudio: false,
         );
+        cameraController!.setFlashMode(FlashMode.off);
 
         // futureCamController = cameraController!.initialize();
       });
@@ -1003,7 +1020,60 @@ class _FormAppPageState extends State<FormAppPage> {
                   : TakePictureScreen(
                       controller: cameraController!,
                       futureController: futureCamController!,
-                      onImageTaken: (XFile image, ImageAngles angle) {},
+                      onImageTaken: (XFile image, ImageAngles angle) {
+                        //use switch case to set the image to a variable
+                        switch (angle) {
+                          case ImageAngles.total:
+                            totalAngleImage = image;
+                          case ImageAngles.top:
+                            topAngleImage = image;
+                          case ImageAngles.rear:
+                            rearAngleImage = image;
+                          case ImageAngles.left:
+                            leftAngleImage = image;
+                          case ImageAngles.right:
+                            rightAngleImage = image;
+                          case ImageAngles.front:
+                            frontAngleImage = image;
+                          default:
+                        }
+                      },
+                      totalAngleTaken: pitCameraTotalTaken,
+                      topAngleTaken: pitCameraTopTaken,
+                      rightAngleTaken: pitCameraRightTaken,
+                      leftAngleTaken: pitCameraLeftTaken,
+                      rearAngleTaken: pitCameraRearTaken,
+                      frontAngleTaken: pitCameraFrontTaken,
+                      totalUpdated: (value) {
+                        setState(() {
+                          pitCameraTotalTaken = value;
+                        });
+                      },
+                      topUpdated: (value) {
+                        setState(() {
+                          pitCameraTopTaken = value;
+                        });
+                      },
+                      rightUpdated: (value) {
+                        setState(() {
+                          pitCameraRightTaken = value;
+                        });
+                      },
+                      leftUpdated: (value) {
+                        setState(() {
+                          pitCameraLeftTaken = value;
+                        });
+                      },
+                      rearUpdated: (value) {
+                        setState(() {
+                          pitCameraRearTaken = value;
+                        });
+                      },
+                      frontUpdated: (value) {
+                        setState(() {
+                          pitCameraFrontTaken = value;
+                        });
+                      },
                     ),
               Column(
                 children: [
@@ -1489,16 +1559,86 @@ class _FormAppPageState extends State<FormAppPage> {
     final dirPath = await grabDir();
 
     if (dirPath != null) {
-      print(path.join(dirPath, "exportt.csv"));
-      File(path.join(dirPath, "exportt.csv"))
+      File(path.join(dirPath,
+              "${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_pit.csv"))
           .create(recursive: true)
           .onError((e, s) {
         print(e);
         throw Error;
       }).then((File file) {
-        print(123);
         file.writeAsBytes(Uint8List.fromList(fileData.codeUnits));
       });
+
+      if (totalAngleImage != null) {
+        File("${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_total.jpg")
+            .create(recursive: true);
+        File(totalAngleImage!.path).create(recursive: true).onError((e, s) {
+          print(e);
+          throw Error;
+        }).then((File file) {
+          file.copySync(path.join(dirPath,
+              "${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_total.jpg"));
+        });
+      }
+      if (topAngleImage != null) {
+        File("${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_top.jpg")
+            .create(recursive: true);
+        File(topAngleImage!.path).create(recursive: true).onError((e, s) {
+          print(e);
+          throw Error;
+        }).then((File file) {
+          file.copySync(path.join(dirPath,
+              "${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_top.jpg"));
+        });
+      }
+      //if goes here
+      if (leftAngleImage != null) {
+        File("${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_left.jpg")
+            .create(recursive: true);
+        File(leftAngleImage!.path).create(recursive: true).onError((e, s) {
+          print(e);
+          throw Error;
+        }).then((File file) {
+          file.copySync(path.join(dirPath,
+              "${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_left.jpg"));
+        });
+      }
+      //if goes here
+      if (rightAngleImage != null) {
+        File("${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_right.jpg")
+            .create(recursive: true);
+        File(rightAngleImage!.path).create(recursive: true).onError((e, s) {
+          print(e);
+          throw Error;
+        }).then((File file) {
+          file.copySync(path.join(dirPath,
+              "${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_right.jpg"));
+        });
+      }
+      //if goes here
+      if (frontAngleImage != null) {
+        File("${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_front.jpg")
+            .create(recursive: true);
+        File(frontAngleImage!.path).create(recursive: true).onError((e, s) {
+          print(e);
+          throw Error;
+        }).then((File file) {
+          file.copySync(path.join(dirPath,
+              "${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_front.jpg"));
+        });
+      }
+      //if goes here
+      if (rearAngleImage != null) {
+        File("${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_rear.jpg")
+            .create(recursive: true);
+        File(rearAngleImage!.path).create(recursive: true).onError((e, s) {
+          print(e);
+          throw Error;
+        }).then((File file) {
+          file.copySync(path.join(dirPath,
+              "${eventId}_frc${pitTeamNumber}/${eventId}_frc${pitTeamNumber}_rear.jpg"));
+        });
+      }
     }
 
     if (!mounted) return;
@@ -1557,7 +1697,7 @@ class _FormAppPageState extends State<FormAppPage> {
       return;
     }
 
-    resetPit();
+    // resetPit();
     updateTeamSaves();
   }
 
@@ -1680,6 +1820,12 @@ class _FormAppPageState extends State<FormAppPage> {
     pitCoachYears = null;
     pitPrefStart = StartPositions.middle;
     pitTeleopStrat = "";
+    pitCameraTotalTaken = false;
+    pitCameraTopTaken = false;
+    pitCameraRightTaken = false;
+    pitCameraLeftTaken = false;
+    pitCameraRearTaken = false;
+    pitCameraFrontTaken = false;
     setState(() {
       pitPageIndex = 0;
     });

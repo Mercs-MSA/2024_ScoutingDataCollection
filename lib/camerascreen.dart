@@ -9,22 +9,29 @@ enum ImageAngles { top, front, rear, left, right, total }
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
-  const TakePictureScreen({
+  TakePictureScreen({
     super.key,
     required this.controller,
     required this.futureController,
     required this.onImageTaken,
+    required this.totalAngleTaken,
+    required this.topAngleTaken,
+    required this.frontAngleTaken,
+    required this.rearAngleTaken,
+    required this.leftAngleTaken,
+    required this.rightAngleTaken,
+    required this.totalUpdated,
+    required this.topUpdated,
+    required this.frontUpdated,
+    required this.rearUpdated,
+    required this.leftUpdated,
+    required this.rightUpdated,
   });
 
   final CameraController controller;
   final Future<void> futureController;
   final Function(XFile, ImageAngles) onImageTaken;
 
-  @override
-  TakePictureScreenState createState() => TakePictureScreenState();
-}
-
-class TakePictureScreenState extends State<TakePictureScreen> {
   bool topAngleTaken = false;
   bool frontAngleTaken = false;
   bool rearAngleTaken = false;
@@ -32,6 +39,18 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   bool rightAngleTaken = false;
   bool totalAngleTaken = false;
 
+  Function(bool) totalUpdated;
+  Function(bool) frontUpdated;
+  Function(bool) rearUpdated;
+  Function(bool) leftUpdated;
+  Function(bool) rightUpdated;
+  Function(bool) topUpdated;
+
+  @override
+  TakePictureScreenState createState() => TakePictureScreenState();
+}
+
+class TakePictureScreenState extends State<TakePictureScreen> {
   XFile? topAngle;
   XFile? frontAngle;
   XFile? rearAngle;
@@ -60,21 +79,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             child: Stack(
               children: [
                 Center(child: CameraPreview(widget.controller)),
-                Container(
-                  padding: const EdgeInsets.all(5.0),
-                  alignment: Alignment.bottomCenter,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: <Color>[
-                        Colors.black.withAlpha(0),
-                        Theme.of(context).canvasColor.withAlpha(127),
-                        Theme.of(context).canvasColor
-                      ],
-                    ),
-                  ),
-                ),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
@@ -89,20 +93,20 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                               (image) {
                                 topAngle = image;
                                 setState(() {
-                                  topAngleTaken = true;
+                                  widget.totalUpdated(true);
                                 });
                                 widget.onImageTaken(image, ImageAngles.top);
                               },
                               () {
                                 topAngle = null;
                                 setState(() {
-                                  topAngleTaken = false;
+                                  widget.topUpdated(true);
                                 });
                                 Navigator.of(context).pop();
                               },
                             );
                           },
-                          style: topAngleTaken
+                          style: widget.topAngleTaken
                               ? ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
                                       ColorScheme.fromSeed(
@@ -130,20 +134,20 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                               (image) {
                                 frontAngle = image;
                                 setState(() {
-                                  frontAngleTaken = true;
+                                  widget.frontUpdated(true);
                                 });
                                 widget.onImageTaken(image, ImageAngles.front);
                               },
                               () {
                                 frontAngle = null;
                                 setState(() {
-                                  frontAngleTaken = false;
+                                  widget.frontUpdated(false);
                                 });
                                 Navigator.of(context).pop();
                               },
                             );
                           },
-                          style: frontAngleTaken
+                          style: widget.frontAngleTaken
                               ? ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
                                       ColorScheme.fromSeed(
@@ -171,20 +175,20 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                               (image) {
                                 rearAngle = image;
                                 setState(() {
-                                  rearAngleTaken = true;
+                                  widget.rearUpdated(true);
                                 });
                                 widget.onImageTaken(image, ImageAngles.rear);
                               },
                               () {
                                 rearAngle = null;
                                 setState(() {
-                                  rearAngleTaken = false;
+                                  widget.rearUpdated(true);
                                 });
                                 Navigator.of(context).pop();
                               },
                             );
                           },
-                          style: rearAngleTaken
+                          style: widget.rearAngleTaken
                               ? ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
                                       ColorScheme.fromSeed(
@@ -212,20 +216,20 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                               (image) {
                                 leftAngle = image;
                                 setState(() {
-                                  leftAngleTaken = true;
+                                  widget.leftUpdated(true);
                                 });
                                 widget.onImageTaken(image, ImageAngles.left);
                               },
                               () {
                                 leftAngle = null;
                                 setState(() {
-                                  leftAngleTaken = false;
+                                  widget.leftUpdated(true);
                                 });
                                 Navigator.of(context).pop();
                               },
                             );
                           },
-                          style: leftAngleTaken
+                          style: widget.leftAngleTaken
                               ? ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
                                       ColorScheme.fromSeed(
@@ -253,20 +257,20 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                               (image) {
                                 rightAngle = image;
                                 setState(() {
-                                  rightAngleTaken = true;
+                                  widget.rightUpdated(true);
                                 });
                                 widget.onImageTaken(image, ImageAngles.right);
                               },
                               () {
                                 rightAngle = null;
                                 setState(() {
-                                  rightAngleTaken = false;
+                                  widget.rightUpdated(true);
                                 });
                                 Navigator.of(context).pop();
                               },
                             );
                           },
-                          style: rightAngleTaken
+                          style: widget.rightAngleTaken
                               ? ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
                                       ColorScheme.fromSeed(
@@ -294,20 +298,20 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                               (image) {
                                 totalAngle = image;
                                 setState(() {
-                                  totalAngleTaken = true;
+                                  widget.totalUpdated(true);
                                 });
                                 widget.onImageTaken(image, ImageAngles.total);
                               },
                               () {
                                 totalAngle = null;
                                 setState(() {
-                                  totalAngleTaken = false;
+                                  widget.totalUpdated(false);
                                 });
                                 Navigator.of(context).pop();
                               },
                             );
                           },
-                          style: totalAngleTaken
+                          style: widget.totalAngleTaken
                               ? ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
                                       ColorScheme.fromSeed(
