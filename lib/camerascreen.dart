@@ -120,13 +120,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                   ).onPrimary),
                                 )
                               : null,
-                          child: const Row(
-                            children: [
-                              Icon(Icons.camera),
-                              SizedBox(width: 4.0),
-                              Text("Top"),
-                            ],
-                          ),
+                          child: Text("Top"),
                         ),
                         FilledButton(
                           onPressed: () {
@@ -161,13 +155,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                   ).onPrimary),
                                 )
                               : null,
-                          child: const Row(
-                            children: [
-                              Icon(Icons.camera),
-                              SizedBox(width: 4.0),
-                              Text("Front"),
-                            ],
-                          ),
+                          child: Text("Front"),
                         ),
                         FilledButton(
                           onPressed: () {
@@ -182,7 +170,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                               () {
                                 rearAngle = null;
                                 setState(() {
-                                  widget.rearUpdated(true);
+                                  widget.rearUpdated(false);
                                 });
                                 Navigator.of(context).pop();
                               },
@@ -202,13 +190,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                   ).onPrimary),
                                 )
                               : null,
-                          child: const Row(
-                            children: [
-                              Icon(Icons.camera),
-                              SizedBox(width: 4.0),
-                              Text("Rear"),
-                            ],
-                          ),
+                          child: Text("Rear"),
                         ),
                         FilledButton(
                           onPressed: () {
@@ -223,7 +205,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                               () {
                                 leftAngle = null;
                                 setState(() {
-                                  widget.leftUpdated(true);
+                                  widget.leftUpdated(false);
                                 });
                                 Navigator.of(context).pop();
                               },
@@ -243,13 +225,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                   ).onPrimary),
                                 )
                               : null,
-                          child: const Row(
-                            children: [
-                              Icon(Icons.camera),
-                              SizedBox(width: 4.0),
-                              Text("Left"),
-                            ],
-                          ),
+                          child: Text("Left"),
                         ),
                         FilledButton(
                           onPressed: () {
@@ -264,7 +240,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                               () {
                                 rightAngle = null;
                                 setState(() {
-                                  widget.rightUpdated(true);
+                                  widget.rightUpdated(false);
                                 });
                                 Navigator.of(context).pop();
                               },
@@ -284,13 +260,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                   ).onPrimary),
                                 )
                               : null,
-                          child: const Row(
-                            children: [
-                              Icon(Icons.camera),
-                              SizedBox(width: 4.0),
-                              Text("Right"),
-                            ],
-                          ),
+                          child: Text("Right"),
                         ),
                         FilledButton(
                           onPressed: () {
@@ -325,13 +295,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                                   ).onPrimary),
                                 )
                               : null,
-                          child: const Row(
-                            children: [
-                              Icon(Icons.camera),
-                              SizedBox(width: 4.0),
-                              Text("3/4"),
-                            ],
-                          ),
+                          child: Text("Iso"),
                         ),
                       ],
                     ),
