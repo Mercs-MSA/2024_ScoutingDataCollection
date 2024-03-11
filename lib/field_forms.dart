@@ -83,11 +83,13 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                   const SizedBox(height: 8.0),
                   Visibility(
                     visible: widget.autonExists,
-                    child: const Image(
-                      image: AssetImage('images/Field Red 2024.png'),
-                      fit: BoxFit.scaleDown,
-                      width: 256,
-                      isAntiAlias: true,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: const Image(
+                        image: AssetImage('images/Field Red 2024.png'),
+                        fit: BoxFit.scaleDown,
+                        isAntiAlias: true,
+                      ),
                     ),
                   ),
                   Visibility(
