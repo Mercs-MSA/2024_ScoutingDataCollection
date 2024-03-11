@@ -13,7 +13,6 @@ import 'package:flutter_form_elements/datatypes.dart';
 import 'package:flutter_form_elements/field_forms.dart';
 import 'package:flutter_form_elements/pit_form.dart';
 import 'package:path/path.dart' as path;
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'widgets.dart';
@@ -21,31 +20,20 @@ import 'widgets.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Obtain a list of the available cameras on the device.
-  final cameras = await availableCameras();
-
-  // Get a specific camera from the list of available cameras.
-  final firstCamera = cameras.first;
-
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
 
   runApp(
-    ScoutingApp(
-      camera: firstCamera,
-    ),
+    ScoutingApp(),
   );
 }
 
 class ScoutingApp extends StatelessWidget {
   const ScoutingApp({
     super.key,
-    required this.camera,
   });
-
-  final CameraDescription camera;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +56,7 @@ class ScoutingApp extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       themeMode: ThemeMode.system,
-      home: FormAppPage(camera: camera),
+      home: FormAppPage(),
     );
   }
 }
@@ -76,10 +64,7 @@ class ScoutingApp extends StatelessWidget {
 class FormAppPage extends StatefulWidget {
   const FormAppPage({
     super.key,
-    required this.camera,
   });
-
-  final CameraDescription camera;
 
   @override
   State<FormAppPage> createState() => _FormAppPageState();
@@ -178,33 +163,11 @@ class _FormAppPageState extends State<FormAppPage> {
 
   List<PitScoutingTask> completePitScoutingTasks = [];
 
-  CameraController? cameraController;
-  Future<void>? futureCamController;
-
   @override
   void initState() {
     super.initState();
 
-    availableCameras().then((cameras) {
-      setState(() {
-        cameraController = CameraController(
-          widget.camera,
-          ResolutionPreset.medium,
-          enableAudio: false,
-        );
-        cameraController!.setFlashMode(FlashMode.off);
-
-        // futureCamController = cameraController!.initialize();
-      });
-    });
-
     loadPrefs();
-
-    initPerms();
-  }
-
-  Future<void> initPerms() async {
-    await Permission.manageExternalStorage.request();
   }
 
   Future<void> loadPrefs() async {
@@ -979,66 +942,62 @@ class _FormAppPageState extends State<FormAppPage> {
                 prefStart: pitPrefStart,
                 teleopStrat: pitTeleopStrat,
               ),
-              futureCamController == null
-                  ? const Placeholder()
-                  : TakePictureScreen(
-                      controller: cameraController!,
-                      futureController: futureCamController!,
-                      onImageTaken: (XFile image, ImageAngles angle) {
-                        //use switch case to set the image to a variable
-                        switch (angle) {
-                          case ImageAngles.total:
-                            totalAngleImage = image;
-                          case ImageAngles.top:
-                            topAngleImage = image;
-                          case ImageAngles.rear:
-                            rearAngleImage = image;
-                          case ImageAngles.left:
-                            leftAngleImage = image;
-                          case ImageAngles.right:
-                            rightAngleImage = image;
-                          case ImageAngles.front:
-                            frontAngleImage = image;
-                          default:
-                        }
-                      },
-                      totalAngleTaken: pitCameraTotalTaken,
-                      topAngleTaken: pitCameraTopTaken,
-                      rightAngleTaken: pitCameraRightTaken,
-                      leftAngleTaken: pitCameraLeftTaken,
-                      rearAngleTaken: pitCameraRearTaken,
-                      frontAngleTaken: pitCameraFrontTaken,
-                      totalUpdated: (value) {
-                        setState(() {
-                          pitCameraTotalTaken = value;
-                        });
-                      },
-                      topUpdated: (value) {
-                        setState(() {
-                          pitCameraTopTaken = value;
-                        });
-                      },
-                      rightUpdated: (value) {
-                        setState(() {
-                          pitCameraRightTaken = value;
-                        });
-                      },
-                      leftUpdated: (value) {
-                        setState(() {
-                          pitCameraLeftTaken = value;
-                        });
-                      },
-                      rearUpdated: (value) {
-                        setState(() {
-                          pitCameraRearTaken = value;
-                        });
-                      },
-                      frontUpdated: (value) {
-                        setState(() {
-                          pitCameraFrontTaken = value;
-                        });
-                      },
-                    ),
+              TakePictureScreen(
+                onImageTaken: (XFile image, ImageAngles angle) {
+                  //use switch case to set the image to a variable
+                  switch (angle) {
+                    case ImageAngles.total:
+                      totalAngleImage = image;
+                    case ImageAngles.top:
+                      topAngleImage = image;
+                    case ImageAngles.rear:
+                      rearAngleImage = image;
+                    case ImageAngles.left:
+                      leftAngleImage = image;
+                    case ImageAngles.right:
+                      rightAngleImage = image;
+                    case ImageAngles.front:
+                      frontAngleImage = image;
+                    default:
+                  }
+                },
+                totalAngleTaken: pitCameraTotalTaken,
+                topAngleTaken: pitCameraTopTaken,
+                rightAngleTaken: pitCameraRightTaken,
+                leftAngleTaken: pitCameraLeftTaken,
+                rearAngleTaken: pitCameraRearTaken,
+                frontAngleTaken: pitCameraFrontTaken,
+                totalUpdated: (value) {
+                  setState(() {
+                    pitCameraTotalTaken = value;
+                  });
+                },
+                topUpdated: (value) {
+                  setState(() {
+                    pitCameraTopTaken = value;
+                  });
+                },
+                rightUpdated: (value) {
+                  setState(() {
+                    pitCameraRightTaken = value;
+                  });
+                },
+                leftUpdated: (value) {
+                  setState(() {
+                    pitCameraLeftTaken = value;
+                  });
+                },
+                rearUpdated: (value) {
+                  setState(() {
+                    pitCameraRearTaken = value;
+                  });
+                },
+                frontUpdated: (value) {
+                  setState(() {
+                    pitCameraFrontTaken = value;
+                  });
+                },
+              ),
               Column(
                 children: [
                   const Icon(
@@ -1921,13 +1880,13 @@ class _FormAppPageState extends State<FormAppPage> {
   }
 
   void cameraPauseCheck() {
-    if (pitPageIndex == 2 && appMode == 1) {
-      futureCamController ??= cameraController!.initialize();
-
-      cameraController?.resumePreview();
-    } else {
-      cameraController?.pausePreview();
-    }
+    // if (pitPageIndex == 2 && appMode == 1) {
+    //   futureCamController ??= cameraController!.initialize();
+    //
+    //   cameraController?.resumePreview();
+    // } else {
+    //   cameraController?.pausePreview();
+    // }
   }
 
   String convertTasksListToJsonString<T>(List<T> tasks) {

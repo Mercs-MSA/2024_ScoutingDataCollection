@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 enum ImageAngles { top, front, rear, left, right, total }
 
@@ -11,8 +12,6 @@ enum ImageAngles { top, front, rear, left, right, total }
 class TakePictureScreen extends StatefulWidget {
   TakePictureScreen({
     super.key,
-    required this.controller,
-    required this.futureController,
     required this.onImageTaken,
     required this.totalAngleTaken,
     required this.topAngleTaken,
@@ -28,8 +27,6 @@ class TakePictureScreen extends StatefulWidget {
     required this.rightUpdated,
   });
 
-  final CameraController controller;
-  final Future<void> futureController;
   final Function(XFile, ImageAngles) onImageTaken;
 
   final bool topAngleTaken;
@@ -58,27 +55,55 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   XFile? rightAngle;
   XFile? totalAngle;
 
+  CameraController? cameraController;
+  Future<void>? futureCamController;
+
   @override
   void initState() {
     super.initState();
+
+    initFutures();
+  }
+
+  Future<void> initFutures() async {
+    // Obtain a list of the available cameras on the device.
+    final cameras = await availableCameras();
+
+    // Get a specific camera from the list of available cameras.
+    final firstCamera = cameras.first;
+
+    availableCameras().then((cameras) {
+      setState(() {
+        cameraController = CameraController(
+          firstCamera,
+          ResolutionPreset.medium,
+          enableAudio: false,
+        );
+        cameraController!.setFlashMode(FlashMode.off);
+
+        futureCamController = cameraController!.initialize();
+      });
+    });
+
+    await Permission.manageExternalStorage.request();
   }
 
   @override
   void dispose() {
-    widget.controller.dispose();
+    cameraController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<void>(
-      future: widget.futureController,
+      future: futureCamController,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return Center(
             child: Stack(
               children: [
-                Center(child: CameraPreview(widget.controller)),
+                Center(child: CameraPreview(cameraController!)),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
@@ -314,12 +339,12 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   Future<void> takePicture(Function(XFile) onTaken, Function onReject) async {
     try {
       // Ensure that the camera is initialized.
-      await widget.futureController;
-      if (widget.controller.value.isTakingPicture)
+      await futureCamController;
+      if (cameraController!.value.isTakingPicture)
         return; // do not attempt to take multiple pics
       // Attempt to take a picture and get the file `image`
       // where it was saved.
-      final image = await widget.controller.takePicture();
+      final image = await cameraController!.takePicture();
       onTaken(image);
       if (!mounted) return;
       // If the picture was taken, display it on a new screen.
