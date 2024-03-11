@@ -607,12 +607,12 @@ class _FormAppPageState extends State<FormAppPage> {
                 label: 'Start',
               ),
               NavigationDestination(
-                icon: Icon(Icons.list_alt),
-                label: 'Data',
-              ),
-              NavigationDestination(
                 icon: Icon(Icons.camera_alt),
                 label: 'Camera',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.list_alt),
+                label: 'Data',
               ),
               NavigationDestination(
                 icon: Icon(Icons.outbox),
