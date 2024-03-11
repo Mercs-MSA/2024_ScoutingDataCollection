@@ -7,6 +7,9 @@ class FieldAutonForm extends StatefulWidget {
   final Function(bool?) onAutonExistsChanged;
   final bool autonExists;
 
+  final Function(bool) onLeaveChanged;
+  final bool leave;
+
   final Function(int) onSpeakerNotesChanged;
   final int speakerNotes;
 
@@ -24,6 +27,8 @@ class FieldAutonForm extends StatefulWidget {
       required this.teamNumberPresent,
       required this.onAutonExistsChanged,
       required this.autonExists,
+      required this.onLeaveChanged,
+      required this.leave,
       required this.onSpeakerNotesChanged,
       required this.speakerNotes,
       required this.onSpeakerNotesMissedChanged,
@@ -38,6 +43,8 @@ class FieldAutonForm extends StatefulWidget {
 }
 
 class _FieldAutonFormState extends State<FieldAutonForm> {
+  bool leave = false;
+
   int speakerNotes = 0;
   int ampNotes = 0;
 
@@ -61,6 +68,28 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                       value: widget.autonExists,
                       onChanged: widget.onAutonExistsChanged),
                   const Divider(),
+                  Visibility(
+                    visible: widget.autonExists,
+                    child: CheckboxListTile(
+                      title: const Text('Did they leave wing?'),
+                      value: widget.leave,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          widget.onLeaveChanged(newValue!);
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  Visibility(
+                    visible: widget.autonExists,
+                    child: const Image(
+                      image: AssetImage('images/Field Red 2024.png'),
+                      fit: BoxFit.scaleDown,
+                      width: 256,
+                      isAntiAlias: true,
+                    ),
+                  ),
                   Visibility(
                     visible: widget.autonExists,
                     child: NumberInput(

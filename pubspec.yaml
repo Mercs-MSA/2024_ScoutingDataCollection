@@ -44,7 +44,7 @@ dependencies:
   shared_preferences: ^2.2.2
   camera: ^0.10.5+9
   path_provider: ^2.1.2
-  path: ^1.9.0
+  path: 1.8.3
   permission_handler: ^11.3.0
 
 
@@ -80,7 +80,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
      - images/mercs.png
-
+     - images/Field Blue 2024.png
+     - images/Field Red 2024.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

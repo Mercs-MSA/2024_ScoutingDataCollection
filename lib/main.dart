@@ -8,7 +8,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
-import 'package:flutter_form_elements/camerascreen.dart';
 import 'package:flutter_form_elements/datatypes.dart';
 import 'package:flutter_form_elements/field_forms.dart';
 import 'package:flutter_form_elements/pit_form.dart';
@@ -84,6 +83,8 @@ class _FormAppPageState extends State<FormAppPage> {
 
   int? fieldMatchNumber;
 
+  String? fieldPosition = "red 1";
+
   double pitRepairabilityScore = 0;
   double pitManeuverabilityScore = 0;
   String pitDrivebaseType = "Swerve";
@@ -99,6 +100,8 @@ class _FormAppPageState extends State<FormAppPage> {
   bool pitIsKitbot = false;
   String pitClimberType = "Tube-in-Tube";
   String? pitAltClimberType;
+
+  bool fieldLeave = false;
 
   bool fieldAutonExists = false;
   bool pitAutonExists = false;
@@ -607,10 +610,6 @@ class _FormAppPageState extends State<FormAppPage> {
                 label: 'Start',
               ),
               NavigationDestination(
-                icon: Icon(Icons.camera_alt),
-                label: 'Camera',
-              ),
-              NavigationDestination(
                 icon: Icon(Icons.list_alt),
                 label: 'Data',
               ),
@@ -942,62 +941,6 @@ class _FormAppPageState extends State<FormAppPage> {
                 prefStart: pitPrefStart,
                 teleopStrat: pitTeleopStrat,
               ),
-              TakePictureScreen(
-                onImageTaken: (XFile image, ImageAngles angle) {
-                  //use switch case to set the image to a variable
-                  switch (angle) {
-                    case ImageAngles.total:
-                      totalAngleImage = image;
-                    case ImageAngles.top:
-                      topAngleImage = image;
-                    case ImageAngles.rear:
-                      rearAngleImage = image;
-                    case ImageAngles.left:
-                      leftAngleImage = image;
-                    case ImageAngles.right:
-                      rightAngleImage = image;
-                    case ImageAngles.front:
-                      frontAngleImage = image;
-                    default:
-                  }
-                },
-                totalAngleTaken: pitCameraTotalTaken,
-                topAngleTaken: pitCameraTopTaken,
-                rightAngleTaken: pitCameraRightTaken,
-                leftAngleTaken: pitCameraLeftTaken,
-                rearAngleTaken: pitCameraRearTaken,
-                frontAngleTaken: pitCameraFrontTaken,
-                totalUpdated: (value) {
-                  setState(() {
-                    pitCameraTotalTaken = value;
-                  });
-                },
-                topUpdated: (value) {
-                  setState(() {
-                    pitCameraTopTaken = value;
-                  });
-                },
-                rightUpdated: (value) {
-                  setState(() {
-                    pitCameraRightTaken = value;
-                  });
-                },
-                leftUpdated: (value) {
-                  setState(() {
-                    pitCameraLeftTaken = value;
-                  });
-                },
-                rearUpdated: (value) {
-                  setState(() {
-                    pitCameraRearTaken = value;
-                  });
-                },
-                frontUpdated: (value) {
-                  setState(() {
-                    pitCameraFrontTaken = value;
-                  });
-                },
-              ),
               Column(
                 children: [
                   const Icon(
@@ -1137,6 +1080,24 @@ class _FormAppPageState extends State<FormAppPage> {
                                     : fieldMatchNumber.toString(),
                               ),
                             ),
+                            const SizedBox(height: 8.0),
+                            // ChoiceInput(
+                            //   title: "Field Position",
+                            //   onChoiceUpdate: (value) {
+                            //     setState(() {
+                            //
+                            //     });
+                            //   },
+                            //   choice: ,
+                            //   options: const [
+                            //     "Red 1",
+                            //     "Red 2",
+                            //     "Red 3",
+                            //     "Blue 1",
+                            //     "Blue 2",
+                            //     "Blue 3"
+                            //   ],
+                            // ),
                           ],
                         ),
                       ),
@@ -1156,6 +1117,12 @@ class _FormAppPageState extends State<FormAppPage> {
                     fieldAutonExists = value!;
                   });
                 },
+                onLeaveChanged: (value) {
+                  setState(() {
+                    fieldLeave = value;
+                  });
+                },
+                leave: fieldLeave,
                 speakerNotes: fieldAutonSpeakerNotes,
                 onSpeakerNotesChanged: (value) {
                   setState(() {
