@@ -1479,6 +1479,33 @@ class _FormAppPageState extends State<FormAppPage> {
       return;
     }
 
+    if (eventId == "") {
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Event ID Required"),
+            icon: const Icon(
+              Icons.abc_rounded,
+              size: 72,
+            ),
+            content: const Text("Save operation cancelled"),
+            actionsOverflowButtonSpacing: 20,
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
     final fileData =
         const ListToCsvConverter().convert(getPitKVFormattedData());
 
