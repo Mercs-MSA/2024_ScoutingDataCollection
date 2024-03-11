@@ -315,7 +315,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     try {
       // Ensure that the camera is initialized.
       await widget.futureController;
-
+      if (widget.controller.value.isTakingPicture)
+        return; // do not attempt to take multiple pics
       // Attempt to take a picture and get the file `image`
       // where it was saved.
       final image = await widget.controller.takePicture();
