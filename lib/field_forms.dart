@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_elements/datatypes.dart';
 import 'package:flutter_form_elements/widgets.dart';
 
 class FieldAutonForm extends StatefulWidget {
   final bool teamNumberPresent;
+  final Alliances allianceColor;
 
   final Function(bool?) onAutonExistsChanged;
   final bool autonExists;
@@ -25,6 +27,7 @@ class FieldAutonForm extends StatefulWidget {
   const FieldAutonForm(
       {super.key,
       required this.teamNumberPresent,
+      required this.allianceColor,
       required this.onAutonExistsChanged,
       required this.autonExists,
       required this.onLeaveChanged,
@@ -85,10 +88,22 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                     visible: widget.autonExists,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: const Image(
-                        image: AssetImage('images/Field Red 2024.png'),
-                        fit: BoxFit.scaleDown,
-                        isAntiAlias: true,
+                      child: Stack(
+                        children: [
+                          widget.allianceColor == Alliances.red
+                              ? Image(
+                                  image:
+                                      AssetImage('images/Field Red 2024.png'),
+                                  fit: BoxFit.scaleDown,
+                                  isAntiAlias: true,
+                                )
+                              : Image(
+                                  image:
+                                      AssetImage('images/Field Blue 2024.png'),
+                                  fit: BoxFit.scaleDown,
+                                  isAntiAlias: true,
+                                ),
+                        ],
                       ),
                     ),
                   ),

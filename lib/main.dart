@@ -1083,6 +1083,7 @@ class _FormAppPageState extends State<FormAppPage> {
                     : true && fieldMatchNumber == null
                         ? false
                         : true,
+                allianceColor: Alliances.red,
                 autonExists: fieldAutonExists,
                 onAutonExistsChanged: (value) {
                   setState(() {
