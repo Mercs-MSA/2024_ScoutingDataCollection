@@ -267,7 +267,7 @@ class ChoiceInput extends StatelessWidget {
 
 class NumberInput extends StatelessWidget {
   final String title;
-  final bool hasTitle;
+  final bool miniStyle;
 
   final int value;
   final void Function() onValueAdd;
@@ -281,7 +281,7 @@ class NumberInput extends StatelessWidget {
       required this.value,
       required this.onValueAdd,
       required this.onValueSubtract,
-      this.hasTitle = true,
+      this.miniStyle = false,
       this.style = NumberInputStyle.multi});
 
   @override
@@ -299,7 +299,7 @@ class NumberInput extends StatelessWidget {
         child: Row(
           children: [
             Visibility(
-              visible: hasTitle,
+              visible: !miniStyle,
               child: Expanded(
                 child: Row(
                   children: [
@@ -321,16 +321,16 @@ class NumberInput extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 value.toString(),
-                style:
-                    const TextStyle(fontSize: 36, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                    fontSize: miniStyle ? 28 : 36, fontWeight: FontWeight.w600),
               ),
             ),
-            FilledButton(
+            IconButton(
               onPressed: onValueAdd,
               style: style == NumberInputStyle.multi
                   ? ButtonStyle(
-                      fixedSize:
-                          MaterialStateProperty.all(const Size.square(56)),
+                      fixedSize: MaterialStateProperty.all(
+                          Size.square(miniStyle ? 42 : 56)),
                       padding: MaterialStateProperty.all(EdgeInsets.zero),
                       backgroundColor:
                           MaterialStateProperty.all(ColorScheme.fromSeed(
@@ -345,8 +345,8 @@ class NumberInput extends StatelessWidget {
                     )
                   : style == NumberInputStyle.red
                       ? ButtonStyle(
-                          fixedSize:
-                              MaterialStateProperty.all(const Size.square(56)),
+                          fixedSize: MaterialStateProperty.all(
+                              Size.square(miniStyle ? 42 : 56)),
                           padding: MaterialStateProperty.all(EdgeInsets.zero),
                           backgroundColor:
                               MaterialStateProperty.all(ColorScheme.fromSeed(
@@ -362,7 +362,7 @@ class NumberInput extends StatelessWidget {
                       : style == NumberInputStyle.green
                           ? ButtonStyle(
                               fixedSize: MaterialStateProperty.all(
-                                  const Size.square(56)),
+                                  Size.square(miniStyle ? 42 : 56)),
                               padding:
                                   MaterialStateProperty.all(EdgeInsets.zero),
                               backgroundColor: MaterialStateProperty.all(
@@ -377,62 +377,63 @@ class NumberInput extends StatelessWidget {
                               ).onPrimary),
                             )
                           : ButtonStyle(),
-              child: const Icon(Icons.add),
+              icon: const Icon(Icons.add),
             ),
             const SizedBox(width: 8.0),
-            FilledButton(
-                onPressed: onValueSubtract,
-                style: style == NumberInputStyle.multi
-                    ? ButtonStyle(
-                        fixedSize:
-                            MaterialStateProperty.all(const Size.square(56)),
-                        padding: MaterialStateProperty.all(EdgeInsets.zero),
-                        backgroundColor:
-                            MaterialStateProperty.all(ColorScheme.fromSeed(
-                          seedColor: Colors.orange,
-                          brightness: Brightness.dark,
-                        ).primary),
-                        foregroundColor:
-                            MaterialStateProperty.all(ColorScheme.fromSeed(
-                          seedColor: Colors.orange,
-                          brightness: Brightness.dark,
-                        ).onPrimary),
-                      )
-                    : style == NumberInputStyle.red
-                        ? ButtonStyle(
-                            fixedSize: MaterialStateProperty.all(
-                                const Size.square(56)),
-                            padding: MaterialStateProperty.all(EdgeInsets.zero),
-                            backgroundColor:
-                                MaterialStateProperty.all(ColorScheme.fromSeed(
-                              seedColor: Colors.red,
-                              brightness: Brightness.dark,
-                            ).primary),
-                            foregroundColor:
-                                MaterialStateProperty.all(ColorScheme.fromSeed(
-                              seedColor: Colors.red,
-                              brightness: Brightness.dark,
-                            ).onPrimary),
-                          )
-                        : style == NumberInputStyle.green
-                            ? ButtonStyle(
-                                fixedSize: MaterialStateProperty.all(
-                                    const Size.square(56)),
-                                padding:
-                                    MaterialStateProperty.all(EdgeInsets.zero),
-                                backgroundColor: MaterialStateProperty.all(
-                                    ColorScheme.fromSeed(
-                                  seedColor: Colors.green,
-                                  brightness: Brightness.dark,
-                                ).primary),
-                                foregroundColor: MaterialStateProperty.all(
-                                    ColorScheme.fromSeed(
-                                  seedColor: Colors.green,
-                                  brightness: Brightness.dark,
-                                ).onPrimary),
-                              )
-                            : ButtonStyle(),
-                child: const Icon(Icons.remove)),
+            IconButton(
+              onPressed: onValueSubtract,
+              style: style == NumberInputStyle.multi
+                  ? ButtonStyle(
+                      fixedSize: MaterialStateProperty.all(
+                          Size.square(miniStyle ? 42 : 56)),
+                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                      backgroundColor:
+                          MaterialStateProperty.all(ColorScheme.fromSeed(
+                        seedColor: Colors.orange,
+                        brightness: Brightness.dark,
+                      ).primary),
+                      foregroundColor:
+                          MaterialStateProperty.all(ColorScheme.fromSeed(
+                        seedColor: Colors.orange,
+                        brightness: Brightness.dark,
+                      ).onPrimary),
+                    )
+                  : style == NumberInputStyle.red
+                      ? ButtonStyle(
+                          fixedSize: MaterialStateProperty.all(
+                              Size.square(miniStyle ? 42 : 56)),
+                          padding: MaterialStateProperty.all(EdgeInsets.zero),
+                          backgroundColor:
+                              MaterialStateProperty.all(ColorScheme.fromSeed(
+                            seedColor: Colors.red,
+                            brightness: Brightness.dark,
+                          ).primary),
+                          foregroundColor:
+                              MaterialStateProperty.all(ColorScheme.fromSeed(
+                            seedColor: Colors.red,
+                            brightness: Brightness.dark,
+                          ).onPrimary),
+                        )
+                      : style == NumberInputStyle.green
+                          ? ButtonStyle(
+                              fixedSize: MaterialStateProperty.all(
+                                  Size.square(miniStyle ? 42 : 56)),
+                              padding:
+                                  MaterialStateProperty.all(EdgeInsets.zero),
+                              backgroundColor: MaterialStateProperty.all(
+                                  ColorScheme.fromSeed(
+                                seedColor: Colors.green,
+                                brightness: Brightness.dark,
+                              ).primary),
+                              foregroundColor: MaterialStateProperty.all(
+                                  ColorScheme.fromSeed(
+                                seedColor: Colors.green,
+                                brightness: Brightness.dark,
+                              ).onPrimary),
+                            )
+                          : ButtonStyle(),
+              icon: const Icon(Icons.remove),
+            ),
           ],
         ),
       ),
@@ -470,5 +471,101 @@ class DataCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class RingedCheckbox extends StatelessWidget {
+  const RingedCheckbox({
+    super.key,
+    required this.value,
+    required this.onChanged,
+    this.tristate = false,
+  });
+
+  final bool value;
+  final Function(bool?) onChanged;
+  final bool tristate;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: AlignmentDirectional.center,
+      children: [
+        Container(
+          width: 42.0,
+          height: 42.0,
+          decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                width: 5,
+                color: Colors.orange,
+              )),
+        ),
+        Checkbox(
+          value: value,
+          onChanged: onChanged,
+          tristate: tristate,
+        ),
+      ],
+    );
+  }
+}
+
+class RotatedTriangle extends StatelessWidget {
+  final double rotationAngle;
+  final Color color;
+  final Color borderColor;
+  final double borderWidth;
+
+  RotatedTriangle(
+      {required this.rotationAngle,
+      required this.color,
+      required this.borderColor,
+      required this.borderWidth});
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.rotate(
+      angle: rotationAngle,
+      alignment: Alignment.center,
+      child: CustomPaint(
+        size: Size(100, 100), // Change the size as needed
+        painter: RotatedTrianglePainter(
+            color: color, borderColor: borderColor, borderWidth: borderWidth),
+      ),
+    );
+  }
+}
+
+class RotatedTrianglePainter extends CustomPainter {
+  final Color color;
+  final Color borderColor;
+  final double borderWidth;
+
+  RotatedTrianglePainter(
+      {required this.color,
+      required this.borderColor,
+      required this.borderWidth});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint paint = Paint()..color = color;
+    final Paint borderPaint = Paint()
+      ..color = borderColor
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = borderWidth;
+
+    final Path path = Path();
+    path.moveTo(0, size.height); // Start at the bottom-left corner
+    path.lineTo(size.width / 2, 0); // Move to the top-center
+    path.lineTo(size.width, size.height); // Move to the bottom-right corner
+    path.close(); // Close the path to complete the triangle
+    canvas.drawPath(path, paint);
+    canvas.drawPath(path, borderPaint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
   }
 }
