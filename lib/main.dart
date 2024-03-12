@@ -1087,7 +1087,28 @@ class _FormAppPageState extends State<FormAppPage> {
                             ChoiceInput(
                               title: "Field Position",
                               onChoiceUpdate: (value) {
-                                setState(() {});
+                                setState(() {
+                                  switch (value) {
+                                    case "Red 1":
+                                      fieldAlliance = Alliances.red;
+                                      fieldRobotPosition = 0;
+                                    case "Red 2":
+                                      fieldAlliance = Alliances.red;
+                                      fieldRobotPosition = 1;
+                                    case "Red 3":
+                                      fieldAlliance = Alliances.red;
+                                      fieldRobotPosition = 2;
+                                    case "Blue 1":
+                                      fieldAlliance = Alliances.blue;
+                                      fieldRobotPosition = 0;
+                                    case "Blue 2":
+                                      fieldAlliance = Alliances.blue;
+                                      fieldRobotPosition = 1;
+                                    case "Blue 3":
+                                      fieldAlliance = Alliances.blue;
+                                      fieldRobotPosition = 2;
+                                  }
+                                });
                               },
                               choice:
                                   "${fieldAlliance.name.toString().capitalize} ${(fieldRobotPosition + 1).toString()}",
@@ -1113,8 +1134,8 @@ class _FormAppPageState extends State<FormAppPage> {
                     : true && fieldMatchNumber == null
                         ? false
                         : true,
-                allianceColor: Alliances.red,
-                robotPosition: 1,
+                allianceColor: fieldAlliance,
+                robotPosition: fieldRobotPosition,
                 autonExists: fieldAutonExists,
                 onAutonExistsChanged: (value) {
                   setState(() {

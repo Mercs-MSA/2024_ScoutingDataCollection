@@ -95,6 +95,9 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                     child: SizedBox(
                       height: 400,
                       child: Row(
+                        textDirection: widget.allianceColor == Alliances.red
+                            ? TextDirection.ltr
+                            : TextDirection.rtl,
                         children: [
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -223,13 +226,20 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                           ),
                           Spacer(),
                           RotatedTriangle(
-                            rotationAngle: -pi / 2, // radians
+                            rotationAngle:
+                                widget.allianceColor == Alliances.blue
+                                    ? pi / 2
+                                    : -pi / 2, // radians
                             color: Colors.transparent,
-                            borderColor: Colors.red,
+                            borderColor: widget.allianceColor == Alliances.blue
+                                ? Colors.blue
+                                : Colors.red,
                             borderWidth: 5.0,
                           ),
                           VerticalDivider(
-                            color: Colors.red,
+                            color: widget.allianceColor == Alliances.blue
+                                ? Colors.blue
+                                : Colors.red,
                             width: 4,
                             thickness: 4,
                           ),
