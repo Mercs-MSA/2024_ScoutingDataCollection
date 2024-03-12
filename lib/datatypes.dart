@@ -20,7 +20,7 @@ class ScoutingTask {
     return {
       'team': team,
       'match': match,
-      'alliance': alliance.toString(), // Convert enum to string
+      'alliance': alliance.name, // Convert enum to string
       'position': position
     };
   }

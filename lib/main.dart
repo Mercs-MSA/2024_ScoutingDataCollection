@@ -169,27 +169,28 @@ class _FormAppPageState extends State<FormAppPage> {
   Future<void> loadPrefs() async {
     final prefs = await SharedPreferences.getInstance();
 
+    incompletePitScoutingTasks = convertJsonStringToTasksList(
+        prefs.getString("jsonIncompletePitTasks") ?? "",
+        (json) => PitScoutingTask.fromJson(json));
+    completePitScoutingTasks = convertJsonStringToTasksList(
+        prefs.getString("jsonCompletePitTasks") ?? "",
+        (json) => PitScoutingTask.fromJson(json));
+
+    incompleteFieldScoutingTasks = convertJsonStringToTasksList(
+        prefs.getString("jsonIncompleteFieldTasks") ?? "",
+        (json) => ScoutingTask.fromJson(json));
+    completeFieldScoutingTasks = convertJsonStringToTasksList(
+        prefs.getString("jsonCompleteFieldTasks") ?? "",
+        (json) => ScoutingTask.fromJson(json));
+
+    eventId = prefs.getString("eventId") ?? "";
+
+    transposedExport = prefs.getBool("transposedExport") ?? true;
+    exportHeaders = prefs.getBool("exportHeaders") ?? true;
+
     setState(() {
-      incompletePitScoutingTasks = convertJsonStringToTasksList(
-          prefs.getString("jsonIncompletePitTasks") ?? "",
-          (json) => PitScoutingTask.fromJson(json));
-      completePitScoutingTasks = convertJsonStringToTasksList(
-          prefs.getString("jsonCompletePitTasks") ?? "",
-          (json) => PitScoutingTask.fromJson(json));
-
-      incompleteFieldScoutingTasks = convertJsonStringToTasksList(
-          prefs.getString("jsonIncompleteFieldTasks") ?? "",
-          (json) => ScoutingTask.fromJson(json));
-      completeFieldScoutingTasks = convertJsonStringToTasksList(
-          prefs.getString("jsonCompleteFieldTasks") ?? "",
-          (json) => ScoutingTask.fromJson(json));
-
-      eventId = prefs.getString("eventId") ?? "";
-
-      transposedExport = prefs.getBool("transposedExport") ?? true;
-      exportHeaders = prefs.getBool("exportHeaders") ?? true;
-
       appMode = prefs.getInt('appMode') ?? 0;
+      print(appMode);
     });
   }
 
