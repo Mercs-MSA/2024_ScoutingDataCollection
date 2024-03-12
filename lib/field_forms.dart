@@ -105,33 +105,56 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                                   fit: BoxFit.scaleDown,
                                   isAntiAlias: true,
                                 ),
+                          SizedBox(
+                            width: 290,
+                            child: NumberInput(
+                              title: "Speaker Notes",
+                              value: widget.speakerNotes,
+                              onValueAdd: () {
+                                setState(() {
+                                  if (widget.speakerNotes < 10) {
+                                    speakerNotes = widget.speakerNotes + 1;
+                                  }
+                                  widget.onSpeakerNotesChanged(speakerNotes);
+                                });
+                              },
+                              onValueSubtract: () {
+                                setState(() {
+                                  if (widget.speakerNotes > 0) {
+                                    speakerNotes = widget.speakerNotes - 1;
+                                  }
+                                  widget.onSpeakerNotesChanged(speakerNotes);
+                                });
+                              },
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   ),
-                  Visibility(
-                    visible: widget.autonExists,
-                    child: NumberInput(
-                      title: "Speaker Notes",
-                      value: widget.speakerNotes,
-                      onValueAdd: () {
-                        setState(() {
-                          if (widget.speakerNotes < 10) {
-                            speakerNotes = widget.speakerNotes + 1;
-                          }
-                          widget.onSpeakerNotesChanged(speakerNotes);
-                        });
-                      },
-                      onValueSubtract: () {
-                        setState(() {
-                          if (widget.speakerNotes > 0) {
-                            speakerNotes = widget.speakerNotes - 1;
-                          }
-                          widget.onSpeakerNotesChanged(speakerNotes);
-                        });
-                      },
-                    ),
-                  ),
+                  // Visibility(
+                  //   visible: widget.autonExists,
+                  //   child: NumberInput(
+                  //     title: "Speaker Notes",
+                  //     value: widget.speakerNotes,
+                  //     onValueAdd: () {
+                  //       setState(() {
+                  //         if (widget.speakerNotes < 10) {
+                  //           speakerNotes = widget.speakerNotes + 1;
+                  //         }
+                  //         widget.onSpeakerNotesChanged(speakerNotes);
+                  //       });
+                  //     },
+                  //     onValueSubtract: () {
+                  //       setState(() {
+                  //         if (widget.speakerNotes > 0) {
+                  //           speakerNotes = widget.speakerNotes - 1;
+                  //         }
+                  //         widget.onSpeakerNotesChanged(speakerNotes);
+                  //       });
+                  //     },
+                  //   ),
+                  // ),
                   const SizedBox(height: 8.0),
                   Visibility(
                     visible: widget.autonExists,
