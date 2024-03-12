@@ -4,6 +4,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'datatypes.dart';
 
+enum NumberInputStyle { multi, red, green }
+
 class ScoutSelection extends StatelessWidget {
   const ScoutSelection(
       {super.key,
@@ -265,81 +267,174 @@ class ChoiceInput extends StatelessWidget {
 
 class NumberInput extends StatelessWidget {
   final String title;
+  final bool hasTitle;
 
   final int value;
   final void Function() onValueAdd;
   final void Function() onValueSubtract;
 
-  const NumberInput(
+  final NumberInputStyle style;
+
+  NumberInput(
       {super.key,
       required this.title,
       required this.value,
       required this.onValueAdd,
-      required this.onValueSubtract});
+      required this.onValueSubtract,
+      this.hasTitle = true,
+      this.style = NumberInputStyle.multi});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(4.0),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Theme.of(context).dividerColor,
-          width: 1,
+    return Card(
+      child: Container(
+        padding: const EdgeInsets.all(4.0),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Theme.of(context).dividerColor,
+            width: 1,
+          ),
+          borderRadius: const BorderRadius.all(Radius.circular(4.0)),
         ),
-        borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-      ),
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontSize: 16,
+        child: Row(
+          children: [
+            Visibility(
+              visible: hasTitle,
+              child: Expanded(
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
+                  ],
+                ),
               ),
             ),
-          ),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              value.toString(),
-              style: const TextStyle(fontSize: 36, fontWeight: FontWeight.w600),
-            ),
-          ),
-          FilledButton(
-            onPressed: onValueAdd,
-            style: ButtonStyle(
-              fixedSize: MaterialStateProperty.all(const Size.square(56)),
-              padding: MaterialStateProperty.all(EdgeInsets.zero),
-              backgroundColor: MaterialStateProperty.all(ColorScheme.fromSeed(
-                seedColor: Colors.green,
-                brightness: Brightness.dark,
-              ).primary),
-              foregroundColor: MaterialStateProperty.all(ColorScheme.fromSeed(
-                seedColor: Colors.green,
-                brightness: Brightness.dark,
-              ).onPrimary),
-            ),
-            child: const Icon(Icons.add),
-          ),
-          const SizedBox(width: 8.0),
-          FilledButton(
-              onPressed: onValueSubtract,
-              style: ButtonStyle(
-                fixedSize: MaterialStateProperty.all(const Size.square(56)),
-                padding: MaterialStateProperty.all(EdgeInsets.zero),
-                backgroundColor: MaterialStateProperty.all(ColorScheme.fromSeed(
-                  seedColor: Colors.orange,
-                  brightness: Brightness.dark,
-                ).primary),
-                foregroundColor: MaterialStateProperty.all(ColorScheme.fromSeed(
-                  seedColor: Colors.orange,
-                  brightness: Brightness.dark,
-                ).onPrimary),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                value.toString(),
+                style:
+                    const TextStyle(fontSize: 36, fontWeight: FontWeight.w600),
               ),
-              child: const Icon(Icons.remove)),
-        ],
+            ),
+            FilledButton(
+              onPressed: onValueAdd,
+              style: style == NumberInputStyle.multi
+                  ? ButtonStyle(
+                      fixedSize:
+                          MaterialStateProperty.all(const Size.square(56)),
+                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                      backgroundColor:
+                          MaterialStateProperty.all(ColorScheme.fromSeed(
+                        seedColor: Colors.green,
+                        brightness: Brightness.dark,
+                      ).primary),
+                      foregroundColor:
+                          MaterialStateProperty.all(ColorScheme.fromSeed(
+                        seedColor: Colors.green,
+                        brightness: Brightness.dark,
+                      ).onPrimary),
+                    )
+                  : style == NumberInputStyle.red
+                      ? ButtonStyle(
+                          fixedSize:
+                              MaterialStateProperty.all(const Size.square(56)),
+                          padding: MaterialStateProperty.all(EdgeInsets.zero),
+                          backgroundColor:
+                              MaterialStateProperty.all(ColorScheme.fromSeed(
+                            seedColor: Colors.red,
+                            brightness: Brightness.dark,
+                          ).primary),
+                          foregroundColor:
+                              MaterialStateProperty.all(ColorScheme.fromSeed(
+                            seedColor: Colors.red,
+                            brightness: Brightness.dark,
+                          ).onPrimary),
+                        )
+                      : style == NumberInputStyle.green
+                          ? ButtonStyle(
+                              fixedSize: MaterialStateProperty.all(
+                                  const Size.square(56)),
+                              padding:
+                                  MaterialStateProperty.all(EdgeInsets.zero),
+                              backgroundColor: MaterialStateProperty.all(
+                                  ColorScheme.fromSeed(
+                                seedColor: Colors.green,
+                                brightness: Brightness.dark,
+                              ).primary),
+                              foregroundColor: MaterialStateProperty.all(
+                                  ColorScheme.fromSeed(
+                                seedColor: Colors.green,
+                                brightness: Brightness.dark,
+                              ).onPrimary),
+                            )
+                          : ButtonStyle(),
+              child: const Icon(Icons.add),
+            ),
+            const SizedBox(width: 8.0),
+            FilledButton(
+                onPressed: onValueSubtract,
+                style: style == NumberInputStyle.multi
+                    ? ButtonStyle(
+                        fixedSize:
+                            MaterialStateProperty.all(const Size.square(56)),
+                        padding: MaterialStateProperty.all(EdgeInsets.zero),
+                        backgroundColor:
+                            MaterialStateProperty.all(ColorScheme.fromSeed(
+                          seedColor: Colors.orange,
+                          brightness: Brightness.dark,
+                        ).primary),
+                        foregroundColor:
+                            MaterialStateProperty.all(ColorScheme.fromSeed(
+                          seedColor: Colors.orange,
+                          brightness: Brightness.dark,
+                        ).onPrimary),
+                      )
+                    : style == NumberInputStyle.red
+                        ? ButtonStyle(
+                            fixedSize: MaterialStateProperty.all(
+                                const Size.square(56)),
+                            padding: MaterialStateProperty.all(EdgeInsets.zero),
+                            backgroundColor:
+                                MaterialStateProperty.all(ColorScheme.fromSeed(
+                              seedColor: Colors.red,
+                              brightness: Brightness.dark,
+                            ).primary),
+                            foregroundColor:
+                                MaterialStateProperty.all(ColorScheme.fromSeed(
+                              seedColor: Colors.red,
+                              brightness: Brightness.dark,
+                            ).onPrimary),
+                          )
+                        : style == NumberInputStyle.green
+                            ? ButtonStyle(
+                                fixedSize: MaterialStateProperty.all(
+                                    const Size.square(56)),
+                                padding:
+                                    MaterialStateProperty.all(EdgeInsets.zero),
+                                backgroundColor: MaterialStateProperty.all(
+                                    ColorScheme.fromSeed(
+                                  seedColor: Colors.green,
+                                  brightness: Brightness.dark,
+                                ).primary),
+                                foregroundColor: MaterialStateProperty.all(
+                                    ColorScheme.fromSeed(
+                                  seedColor: Colors.green,
+                                  brightness: Brightness.dark,
+                                ).onPrimary),
+                              )
+                            : ButtonStyle(),
+                child: const Icon(Icons.remove)),
+          ],
+        ),
       ),
     );
   }
