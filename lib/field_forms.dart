@@ -31,6 +31,9 @@ class FieldAutonForm extends StatefulWidget {
   final Function(int, bool?) onWingNotesChanged;
   final List<bool?> wingNotes;
 
+  final Function(int, bool?) onCenterNotesChanged;
+  final List<bool?> centerNotes;
+
   const FieldAutonForm({
     super.key,
     required this.teamNumberPresent,
@@ -50,6 +53,8 @@ class FieldAutonForm extends StatefulWidget {
     required this.ampNotesMissed,
     required this.onWingNotesChanged,
     required this.wingNotes,
+    required this.onCenterNotesChanged,
+    required this.centerNotes,
   });
 
   @override
@@ -282,32 +287,42 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   NoteCheckbox(
-                                    value: true,
-                                    onChanged: (x) {},
+                                    value: widget.centerNotes[0],
+                                    onChanged: (x) {
+                                      widget.onCenterNotesChanged(0, x);
+                                    },
                                     tristate: true,
                                   ),
                                   const SizedBox(height: 32),
                                   NoteCheckbox(
-                                    value: true,
-                                    onChanged: (x) {},
+                                    value: widget.centerNotes[1],
+                                    onChanged: (x) {
+                                      widget.onCenterNotesChanged(1, x);
+                                    },
                                     tristate: true,
                                   ),
                                   const SizedBox(height: 32),
                                   NoteCheckbox(
-                                    value: true,
-                                    onChanged: (x) {},
+                                    value: widget.centerNotes[2],
+                                    onChanged: (x) {
+                                      widget.onCenterNotesChanged(2, x);
+                                    },
                                     tristate: true,
                                   ),
                                   const SizedBox(height: 32),
                                   NoteCheckbox(
-                                    value: true,
-                                    onChanged: (x) {},
+                                    value: widget.centerNotes[3],
+                                    onChanged: (x) {
+                                      widget.onCenterNotesChanged(3, x);
+                                    },
                                     tristate: true,
                                   ),
                                   const SizedBox(height: 32),
                                   NoteCheckbox(
-                                    value: true,
-                                    onChanged: (x) {},
+                                    value: widget.centerNotes[4],
+                                    onChanged: (x) {
+                                      widget.onCenterNotesChanged(4, x);
+                                    },
                                     tristate: true,
                                   ),
                                 ],

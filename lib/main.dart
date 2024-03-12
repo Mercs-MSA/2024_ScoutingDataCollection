@@ -146,6 +146,7 @@ class _FormAppPageState extends State<FormAppPage> {
   int fieldAutonAmpNotesMissed = 0;
 
   List<bool?> fieldWingNotes = [false, false, false];
+  List<bool?> fieldCenterNotes = [false, false, false, false, false];
 
   bool saveDisabled = false;
   bool importerSaveCompletes = false;
@@ -1183,6 +1184,12 @@ class _FormAppPageState extends State<FormAppPage> {
                     fieldWingNotes[index] = value;
                   });
                 },
+                centerNotes: fieldCenterNotes,
+                onCenterNotesChanged: (index, value) {
+                  setState(() {
+                    fieldCenterNotes[index] = value;
+                  });
+                },
               ),
               const Placeholder(),
               const Placeholder(),
@@ -1808,7 +1815,7 @@ class _FormAppPageState extends State<FormAppPage> {
         team: rng.nextInt(9999),
         match: rng.nextInt(80),
         alliance: Alliances.values[rng.nextInt(2)],
-        position: rng.nextInt(2),
+        position: rng.nextInt(3),
       ));
     }
 
