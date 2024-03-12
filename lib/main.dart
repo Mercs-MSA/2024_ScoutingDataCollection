@@ -1748,19 +1748,9 @@ class _FormAppPageState extends State<FormAppPage> {
   }
 
   void resetAll() {
+    appMode = 0;
     resetPit();
-    setState(() {
-      pitPageIndex = 0;
-      fieldPageIndex = 0;
-      appMode = 0;
-      fieldTeamNumber = null;
-      fieldMatchNumber = null;
-      fieldAutonExists = false;
-      fieldAutonSpeakerNotes = 0;
-      fieldAutonAmpNotes = 0;
-      fieldAutonSpeakerNotesMissed = 0;
-      fieldAutonAmpNotesMissed = 0;
-    });
+    resetField();
   }
 
   void resetPit() {
@@ -1801,6 +1791,22 @@ class _FormAppPageState extends State<FormAppPage> {
     pitTeleopStrat = "";
     setState(() {
       pitPageIndex = 0;
+    });
+  }
+
+  void resetField() {
+    fieldTeamNumber = null;
+    fieldMatchNumber = null;
+    fieldAutonExists = false;
+    fieldAutonSpeakerNotes = 0;
+    fieldAutonAmpNotes = 0;
+    fieldAutonSpeakerNotesMissed = 0;
+    fieldAutonAmpNotesMissed = 0;
+    fieldLeave = false;
+    fieldCenterNotes = [false, false, false, false, false];
+    fieldWingNotes = [false, false, false];
+    setState(() {
+      fieldPageIndex = 0;
     });
   }
 
