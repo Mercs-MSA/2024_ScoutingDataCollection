@@ -8,13 +8,13 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
-import 'package:flutter_form_elements/datatypes.dart';
-import 'package:flutter_form_elements/field_forms.dart';
-import 'package:flutter_form_elements/pit_form.dart';
 import 'package:path/path.dart' as path;
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'datatypes.dart';
+import 'field_forms.dart';
+import 'pit_form.dart';
 import 'widgets.dart';
 
 Future<void> main() async {
@@ -464,6 +464,16 @@ class _FormAppPageState extends State<FormAppPage> {
           child: Scaffold(
             appBar: AppBar(
               title: const Text("Welcome!"),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      setState(() {
+                        appMode = 3;
+                        setAppModePref(appMode);
+                      });
+                    },
+                    icon: Icon(Icons.settings_outlined))
+              ],
             ),
             body: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -491,15 +501,25 @@ class _FormAppPageState extends State<FormAppPage> {
                           ),
                         ),
                       ),
-                      child: const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      child: const Row(
                         children: [
-                          Text(
-                            "Pit Scouting",
-                            style: TextStyle(fontSize: 24),
+                          Icon(
+                            Icons.smart_toy_outlined,
+                            size: 72,
                           ),
-                          Text("Enter pit scouting mode.")
+                          Spacer(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Pit Scouting",
+                                style: TextStyle(fontSize: 24),
+                              ),
+                              Text("Enter pit scouting mode.")
+                            ],
+                          ),
+                          Spacer(),
                         ],
                       ),
                     ),
@@ -527,13 +547,25 @@ class _FormAppPageState extends State<FormAppPage> {
                           ),
                         ),
                       ),
-                      child: const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      child: Row(
                         children: [
-                          Text("Field Scouting",
-                              style: TextStyle(fontSize: 24)),
-                          Text("Enter field scouting mode.")
+                          Icon(
+                            Icons.sports_rounded,
+                            size: 72,
+                          ),
+                          Spacer(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Match Scouting",
+                                style: TextStyle(fontSize: 24),
+                              ),
+                              Text("Enter match scouting mode.")
+                            ],
+                          ),
+                          Spacer(),
                         ],
                       ),
                     ),
@@ -542,44 +574,10 @@ class _FormAppPageState extends State<FormAppPage> {
                   const Image(
                     image: AssetImage('images/mercs.png'),
                     fit: BoxFit.scaleDown,
-                    width: 256,
+                    width: 380,
                     isAntiAlias: true,
                   ),
                   const Spacer(),
-                  Flexible(
-                    fit: FlexFit.tight,
-                    flex: 1,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          appMode = 3;
-                          setAppModePref(appMode);
-                        });
-                      },
-                      style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all(
-                            const Size.fromHeight(100)),
-                        maximumSize: MaterialStateProperty.all(
-                            const Size.fromHeight(200)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                        ),
-                      ),
-                      child: const FittedBox(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("App Setup", style: TextStyle(fontSize: 24)),
-                            Text("Configure app and team lists")
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -1255,19 +1253,16 @@ class _FormAppPageState extends State<FormAppPage> {
         ),
         Scaffold(
           appBar: AppBar(
-            title: const Text('Application Setup'),
-            actions: [
-              IconButton(
+              title: const Text('Application Setup'),
+              leading: IconButton(
                 onPressed: () {
                   setState(() {
                     appMode = 0;
                     setAppModePref(appMode);
                   });
                 },
-                icon: const Icon(Icons.start),
-              )
-            ],
-          ),
+                icon: const Icon(Icons.arrow_back),
+              )),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Center(

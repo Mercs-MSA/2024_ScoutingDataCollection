@@ -1,8 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_form_elements/datatypes.dart';
-import 'package:flutter_form_elements/widgets.dart';
+
+import 'datatypes.dart';
+import 'widgets.dart';
 
 class FieldAutonForm extends StatefulWidget {
   final bool teamNumberPresent;

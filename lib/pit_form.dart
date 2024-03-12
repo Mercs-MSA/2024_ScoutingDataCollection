@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_form_elements/datatypes.dart';
-import 'package:flutter_form_elements/widgets.dart';
+
+import 'datatypes.dart';
+import 'widgets.dart';
 
 class PitForm extends StatefulWidget {
   const PitForm(

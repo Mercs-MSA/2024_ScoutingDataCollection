@@ -502,10 +502,27 @@ class NoteCheckbox extends StatelessWidget {
               )),
         ),
         Checkbox(
-          value: value,
-          onChanged: onChanged,
-          tristate: tristate,
-        ),
+            value: value,
+            onChanged: onChanged,
+            tristate: tristate,
+            activeColor: value == true
+                ? ColorScheme.fromSeed(
+                    seedColor: Colors.green,
+                    brightness: Brightness.dark,
+                  ).primary
+                : ColorScheme.fromSeed(
+                    seedColor: Colors.red,
+                    brightness: Brightness.dark,
+                  ).primary,
+            checkColor: value == true
+                ? ColorScheme.fromSeed(
+                    seedColor: Colors.green,
+                    brightness: Brightness.dark,
+                  ).onPrimary
+                : ColorScheme.fromSeed(
+                    seedColor: Colors.red,
+                    brightness: Brightness.dark,
+                  ).onPrimary),
       ],
     );
   }
