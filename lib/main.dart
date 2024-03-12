@@ -89,8 +89,6 @@ class _FormAppPageState extends State<FormAppPage> {
   Alliances fieldAlliance = Alliances.blue;
   int fieldRobotPosition = 1;
 
-  String? fieldPosition = "red 1";
-
   double pitRepairabilityScore = 0;
   double pitManeuverabilityScore = 0;
   String pitDrivebaseType = "Swerve";
@@ -147,6 +145,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
   List<bool?> fieldWingNotes = [false, false, false];
   List<bool?> fieldCenterNotes = [false, false, false, false, false];
+  bool? fieldPreload = false;
 
   bool saveDisabled = false;
   bool importerSaveCompletes = false;
@@ -190,7 +189,6 @@ class _FormAppPageState extends State<FormAppPage> {
 
     setState(() {
       appMode = prefs.getInt('appMode') ?? 0;
-      print(appMode);
     });
   }
 
@@ -1198,6 +1196,12 @@ class _FormAppPageState extends State<FormAppPage> {
                     fieldCenterNotes[index] = value;
                   });
                 },
+                preload: fieldPreload,
+                onPreloadChanged: (value) {
+                  setState(() {
+                    fieldPreload = value;
+                  });
+                },
               ),
               const Placeholder(),
               const Placeholder(),
@@ -1796,6 +1800,8 @@ class _FormAppPageState extends State<FormAppPage> {
   void resetField() {
     fieldTeamNumber = null;
     fieldMatchNumber = null;
+    fieldAlliance = Alliances.red;
+    fieldRobotPosition = 0;
     fieldAutonExists = false;
     fieldAutonSpeakerNotes = 0;
     fieldAutonAmpNotes = 0;
@@ -1804,6 +1810,7 @@ class _FormAppPageState extends State<FormAppPage> {
     fieldLeave = false;
     fieldCenterNotes = [false, false, false, false, false];
     fieldWingNotes = [false, false, false];
+    fieldPreload = false;
     setState(() {
       fieldPageIndex = 0;
     });

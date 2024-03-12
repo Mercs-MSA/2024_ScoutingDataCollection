@@ -34,6 +34,9 @@ class FieldAutonForm extends StatefulWidget {
   final Function(int, bool?) onCenterNotesChanged;
   final List<bool?> centerNotes;
 
+  final Function(bool?) onPreloadChanged;
+  final bool? preload;
+
   const FieldAutonForm({
     super.key,
     required this.teamNumberPresent,
@@ -55,6 +58,8 @@ class FieldAutonForm extends StatefulWidget {
     required this.wingNotes,
     required this.onCenterNotesChanged,
     required this.centerNotes,
+    required this.onPreloadChanged,
+    required this.preload,
   });
 
   @override
@@ -114,6 +119,36 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              const Text("PRELOAD"),
+                              const SizedBox(height: 24.0),
+                              Transform.scale(
+                                scale: 2.0,
+                                child: Checkbox(
+                                    value: widget.preload,
+                                    onChanged: (x) {
+                                      widget.onPreloadChanged(x);
+                                    },
+                                    tristate: true,
+                                    activeColor: widget.preload == true
+                                        ? ColorScheme.fromSeed(
+                                            seedColor: Colors.green,
+                                            brightness: Brightness.dark,
+                                          ).primary
+                                        : ColorScheme.fromSeed(
+                                            seedColor: Colors.red,
+                                            brightness: Brightness.dark,
+                                          ).primary,
+                                    checkColor: widget.preload == true
+                                        ? ColorScheme.fromSeed(
+                                            seedColor: Colors.green,
+                                            brightness: Brightness.dark,
+                                          ).onPrimary
+                                        : ColorScheme.fromSeed(
+                                            seedColor: Colors.red,
+                                            brightness: Brightness.dark,
+                                          ).onPrimary),
+                              ),
+                              const Spacer(),
                               const Text("SPEAKER"),
                               NumberInput(
                                 title: "Speaker Notes",
@@ -163,6 +198,7 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                                   });
                                 },
                               ),
+                              const Spacer(),
                             ],
                           ),
                           Column(
