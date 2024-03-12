@@ -222,7 +222,7 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              RingedCheckbox(
+                              NoteCheckbox(
                                 value: widget.wingNotes[0],
                                 onChanged: (x) {
                                   widget.onWingNotesChanged(0, x);
@@ -230,7 +230,7 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                                 tristate: true,
                               ),
                               SizedBox(height: 32),
-                              RingedCheckbox(
+                              NoteCheckbox(
                                 value: widget.wingNotes[1],
                                 onChanged: (x) {
                                   widget.onWingNotesChanged(1, x);
@@ -238,7 +238,7 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                                 tristate: true,
                               ),
                               SizedBox(height: 32),
-                              RingedCheckbox(
+                              NoteCheckbox(
                                 value: widget.wingNotes[2],
                                 onChanged: (x) {
                                   widget.onWingNotesChanged(2, x);
@@ -280,31 +280,31 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  RingedCheckbox(
+                                  NoteCheckbox(
                                     value: true,
                                     onChanged: (x) {},
                                     tristate: true,
                                   ),
                                   SizedBox(height: 32),
-                                  RingedCheckbox(
+                                  NoteCheckbox(
                                     value: true,
                                     onChanged: (x) {},
                                     tristate: true,
                                   ),
                                   SizedBox(height: 32),
-                                  RingedCheckbox(
+                                  NoteCheckbox(
                                     value: true,
                                     onChanged: (x) {},
                                     tristate: true,
                                   ),
                                   SizedBox(height: 32),
-                                  RingedCheckbox(
+                                  NoteCheckbox(
                                     value: true,
                                     onChanged: (x) {},
                                     tristate: true,
                                   ),
                                   SizedBox(height: 32),
-                                  RingedCheckbox(
+                                  NoteCheckbox(
                                     value: true,
                                     onChanged: (x) {},
                                     tristate: true,

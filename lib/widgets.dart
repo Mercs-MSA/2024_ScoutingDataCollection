@@ -474,8 +474,8 @@ class DataCard extends StatelessWidget {
   }
 }
 
-class RingedCheckbox extends StatelessWidget {
-  const RingedCheckbox({
+class NoteCheckbox extends StatelessWidget {
+  const NoteCheckbox({
     super.key,
     required this.value,
     required this.onChanged,
