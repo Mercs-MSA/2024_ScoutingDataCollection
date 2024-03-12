@@ -5,6 +5,7 @@ import 'package:flutter_form_elements/widgets.dart';
 class FieldAutonForm extends StatefulWidget {
   final bool teamNumberPresent;
   final Alliances allianceColor;
+  final int robotPosition;
 
   final Function(bool?) onAutonExistsChanged;
   final bool autonExists;
@@ -28,6 +29,7 @@ class FieldAutonForm extends StatefulWidget {
       {super.key,
       required this.teamNumberPresent,
       required this.allianceColor,
+      required this.robotPosition,
       required this.onAutonExistsChanged,
       required this.autonExists,
       required this.onLeaveChanged,

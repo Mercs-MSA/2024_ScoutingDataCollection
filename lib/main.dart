@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
@@ -81,6 +82,9 @@ class _FormAppPageState extends State<FormAppPage> {
   int? pitTeamNumber;
 
   int? fieldMatchNumber;
+
+  Alliances fieldAlliance = Alliances.blue;
+  int fieldRobotPosition = 1;
 
   String? fieldPosition = "red 1";
 
@@ -260,11 +264,14 @@ class _FormAppPageState extends State<FormAppPage> {
           for (Map fieldTeam in jsonData["field"]) {
             if (fieldTeam.containsKey("teamNumber") &&
                 fieldTeam.containsKey("match") &&
-                fieldTeam.containsKey("alliance")) {
+                fieldTeam.containsKey("alliance") &&
+                fieldTeam.containsKey("position")) {
               newIncompleteFieldScoutingTasks.add(ScoutingTask(
-                  team: fieldTeam["teamNumber"],
-                  match: fieldTeam["match"],
-                  alliance: Alliances.values[fieldTeam["alliance"]]));
+                team: fieldTeam["teamNumber"],
+                match: fieldTeam["match"],
+                alliance: Alliances.values[fieldTeam["alliance"]],
+                position: fieldTeam["position"],
+              ));
             } else {
               if (!mounted) return;
               showDialog(
@@ -580,7 +587,6 @@ class _FormAppPageState extends State<FormAppPage> {
                       appMode = 0;
                       pitPageIndex = 0;
                       setAppModePref(appMode);
-                      cameraPauseCheck();
                     });
                   },
                   icon: const Icon(Icons.start))
@@ -645,7 +651,6 @@ class _FormAppPageState extends State<FormAppPage> {
               setState(() {
                 pitPageIndex = index;
               });
-              cameraPauseCheck();
             },
           ),
           body: IndexedStack(
@@ -996,10 +1001,13 @@ class _FormAppPageState extends State<FormAppPage> {
                               team: entry.team,
                               match: entry.match,
                               alliance: entry.alliance,
+                              position: entry.position,
                               onSelected: () {
                                 setState(() {
                                   fieldTeamNumber = entry.team;
                                   fieldMatchNumber = entry.match;
+                                  fieldAlliance = entry.alliance;
+                                  fieldRobotPosition = entry.position;
                                 });
                               },
                             )
@@ -1053,23 +1061,22 @@ class _FormAppPageState extends State<FormAppPage> {
                               ),
                             ),
                             const SizedBox(height: 8.0),
-                            // ChoiceInput(
-                            //   title: "Field Position",
-                            //   onChoiceUpdate: (value) {
-                            //     setState(() {
-                            //
-                            //     });
-                            //   },
-                            //   choice: ,
-                            //   options: const [
-                            //     "Red 1",
-                            //     "Red 2",
-                            //     "Red 3",
-                            //     "Blue 1",
-                            //     "Blue 2",
-                            //     "Blue 3"
-                            //   ],
-                            // ),
+                            ChoiceInput(
+                              title: "Field Position",
+                              onChoiceUpdate: (value) {
+                                setState(() {});
+                              },
+                              choice:
+                                  "${fieldAlliance.name.toString().capitalize} ${(fieldRobotPosition + 1).toString()}",
+                              options: const [
+                                "Red 1",
+                                "Red 2",
+                                "Red 3",
+                                "Blue 1",
+                                "Blue 2",
+                                "Blue 3"
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -1084,6 +1091,7 @@ class _FormAppPageState extends State<FormAppPage> {
                         ? false
                         : true,
                 allianceColor: Alliances.red,
+                robotPosition: 1,
                 autonExists: fieldAutonExists,
                 onAutonExistsChanged: (value) {
                   setState(() {
@@ -1695,9 +1703,11 @@ class _FormAppPageState extends State<FormAppPage> {
 
     for (var i = 0; i < 3; i++) {
       incompleteFieldScoutingTasks.add(ScoutingTask(
-          team: rng.nextInt(9999),
-          match: rng.nextInt(80),
-          alliance: Alliances.values[rng.nextInt(2)]));
+        team: rng.nextInt(9999),
+        match: rng.nextInt(80),
+        alliance: Alliances.values[rng.nextInt(2)],
+        position: rng.nextInt(2),
+      ));
     }
 
     updateTeamSaves();
@@ -1709,16 +1719,6 @@ class _FormAppPageState extends State<FormAppPage> {
     completeFieldScoutingTasks = [];
     completePitScoutingTasks = [];
     updateTeamSaves();
-  }
-
-  void cameraPauseCheck() {
-    // if (pitPageIndex == 2 && appMode == 1) {
-    //   futureCamController ??= cameraController!.initialize();
-    //
-    //   cameraController?.resumePreview();
-    // } else {
-    //   cameraController?.pausePreview();
-    // }
   }
 
   String convertTasksListToJsonString<T>(List<T> tasks) {

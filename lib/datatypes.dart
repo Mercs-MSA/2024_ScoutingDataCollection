@@ -6,16 +6,22 @@ class ScoutingTask {
   final int team;
   final int match;
   final Alliances alliance;
+  final int position;
 
   // Constructor
-  ScoutingTask(
-      {required this.team, required this.match, required this.alliance});
+  ScoutingTask({
+    required this.team,
+    required this.match,
+    required this.alliance,
+    required this.position,
+  });
 
   Map<String, dynamic> toJson() {
     return {
       'team': team,
       'match': match,
       'alliance': alliance.toString(), // Convert enum to string
+      'position': position
     };
   }
 
@@ -24,13 +30,14 @@ class ScoutingTask {
       team: json['team'],
       match: json['match'],
       alliance: Alliances.values.byName(json['alliance']),
+      position: json['position'],
     );
   }
 
   // toString method for easy printing
   @override
   String toString() {
-    return 'Team: $team, Match: $match, Alliance: $alliance';
+    return 'Team: $team, Match: $match, Alliance: $alliance, Position: $position';
   }
 }
 

@@ -10,11 +10,13 @@ class ScoutSelection extends StatelessWidget {
       required this.team,
       required this.match,
       required this.alliance,
+      required this.position,
       required this.onSelected});
 
   final int team;
   final int match;
   final Alliances alliance;
+  final int position;
   final Function() onSelected;
 
   @override
@@ -42,7 +44,7 @@ class ScoutSelection extends StatelessWidget {
             children: [
               Text("Team $team", style: const TextStyle(fontSize: 22)),
               Text("Match $match", style: const TextStyle(fontSize: 18)),
-              Text("${alliance.name.capitalize} Alliance",
+              Text("${alliance.name.capitalize} ${position + 1}",
                   style: const TextStyle(fontSize: 16)),
             ],
           ),
