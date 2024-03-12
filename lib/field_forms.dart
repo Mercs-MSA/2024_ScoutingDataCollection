@@ -27,23 +27,29 @@ class FieldAutonForm extends StatefulWidget {
   final Function(int) onAmpNotesMissedChanged;
   final int ampNotesMissed;
 
-  const FieldAutonForm(
-      {super.key,
-      required this.teamNumberPresent,
-      required this.allianceColor,
-      required this.robotPosition,
-      required this.onAutonExistsChanged,
-      required this.autonExists,
-      required this.onLeaveChanged,
-      required this.leave,
-      required this.onSpeakerNotesChanged,
-      required this.speakerNotes,
-      required this.onSpeakerNotesMissedChanged,
-      required this.speakerNotesMissed,
-      required this.onAmpNotesChanged,
-      required this.ampNotes,
-      required this.onAmpNotesMissedChanged,
-      required this.ampNotesMissed});
+  final Function(bool?) onPodiumNoteChanged;
+  final bool? podiumNote;
+
+  const FieldAutonForm({
+    super.key,
+    required this.teamNumberPresent,
+    required this.allianceColor,
+    required this.robotPosition,
+    required this.onAutonExistsChanged,
+    required this.autonExists,
+    required this.onLeaveChanged,
+    required this.leave,
+    required this.onSpeakerNotesChanged,
+    required this.speakerNotes,
+    required this.onSpeakerNotesMissedChanged,
+    required this.speakerNotesMissed,
+    required this.onAmpNotesChanged,
+    required this.ampNotes,
+    required this.onAmpNotesMissedChanged,
+    required this.ampNotesMissed,
+    required this.onPodiumNoteChanged,
+    required this.podiumNote,
+  });
 
   @override
   State<FieldAutonForm> createState() => _FieldAutonFormState();
@@ -59,6 +65,8 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
 
   int speakerNotesMissed = 0;
   int ampNotesMissed = 0;
+
+  bool? podiumNote = false;
 
   @override
   Widget build(BuildContext context) {
@@ -209,7 +217,15 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            RingedCheckbox(value: true, onChanged: (x) {}),
+                            // RingedCheckbox(
+                            //   tristate: true,
+                            //   value: widget.podiumNote,
+                            //   onChanged: () {
+                            //     setState(() {
+                            //       podiumNote = newValue;
+                            //     });
+                            //   },
+                            // ),
                             SizedBox(height: 32),
                             RingedCheckbox(value: true, onChanged: (x) {}),
                             SizedBox(height: 32),

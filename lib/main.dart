@@ -142,6 +142,8 @@ class _FormAppPageState extends State<FormAppPage> {
   int fieldAutonSpeakerNotesMissed = 0;
   int fieldAutonAmpNotesMissed = 0;
 
+  bool? fieldPodiumNote;
+
   bool saveDisabled = false;
   bool importerSaveCompletes = false;
 
@@ -1126,6 +1128,12 @@ class _FormAppPageState extends State<FormAppPage> {
                 onAmpNotesMissedChanged: (value) {
                   setState(() {
                     fieldAutonAmpNotesMissed = value;
+                  });
+                },
+                podiumNote: fieldPodiumNote,
+                onPodiumNoteChanged: (value) {
+                  setState(() {
+                    fieldPodiumNote = value;
                   });
                 },
               ),
