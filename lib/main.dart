@@ -77,6 +77,8 @@ class _FormAppPageState extends State<FormAppPage> {
   int appMode = 0;
 
   String eventId = "";
+  bool transposedExport = true;
+  bool exportHeaders = true;
 
   int? fieldTeamNumber;
   int? pitTeamNumber;
@@ -179,6 +181,9 @@ class _FormAppPageState extends State<FormAppPage> {
           (json) => ScoutingTask.fromJson(json));
 
       eventId = prefs.getString("eventId") ?? "";
+
+      transposedExport = prefs.getBool("transposedExport") ?? true;
+      exportHeaders = prefs.getBool("exportHeaders") ?? true;
 
       appMode = prefs.getInt('appMode') ?? 0;
     });
@@ -1222,6 +1227,17 @@ class _FormAppPageState extends State<FormAppPage> {
               child: Column(
                 children: [
                   Row(
+                    children: [
+                      Text("Team Lists"),
+                      Expanded(
+                        child: Container(
+                            margin: EdgeInsets.only(left: 10.0, right: 15.0),
+                            child: Divider()),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 4.0),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ElevatedButton(
@@ -1309,6 +1325,17 @@ class _FormAppPageState extends State<FormAppPage> {
                     ],
                   ),
                   const SizedBox(height: 8.0),
+                  Row(
+                    children: [
+                      Text("Export Options"),
+                      Expanded(
+                        child: Container(
+                            margin: EdgeInsets.only(left: 10.0, right: 15.0),
+                            child: Divider()),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12.0),
                   TextField(
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -1323,6 +1350,28 @@ class _FormAppPageState extends State<FormAppPage> {
                     },
                     controller: TextEditingController(text: eventId),
                   ),
+                  const SizedBox(height: 4.0),
+                  CheckboxListTile(
+                      value: transposedExport,
+                      title: Text("Transpose Exported Data"),
+                      subtitle: Text(
+                          "Transpose rows and colums in exported data (recommended)"),
+                      onChanged: (value) {
+                        setState(() {
+                          transposedExport = value!;
+                          attemptSaveTranspose();
+                        });
+                      }),
+                  CheckboxListTile(
+                      value: exportHeaders,
+                      title: Text("Export data headers"),
+                      subtitle: Text("Add header to csv data exports"),
+                      onChanged: (value) {
+                        setState(() {
+                          exportHeaders = value!;
+                          attemptSaveHeaders();
+                        });
+                      }),
                   Spacer(),
                   ElevatedButton(
                     onPressed: () {
@@ -1417,7 +1466,8 @@ class _FormAppPageState extends State<FormAppPage> {
     return transposedData;
   }
 
-  List<List> getPitKVFormattedData({bool transpose = false}) {
+  List<List> getPitKVFormattedData(
+      {bool transpose = false, bool header = true}) {
     var data = [
       ["FORMNAME", "pit"],
       ["teamNumber", pitTeamNumber],
@@ -1451,6 +1501,10 @@ class _FormAppPageState extends State<FormAppPage> {
       ['maneuverability', pitManeuverabilityScore],
       ['teleopStrat', pitTeleopStrat.replaceAll("\n", "*")],
     ];
+
+    if (!header) {
+      data = data.map((row) => row.sublist(1)).toList();
+    }
 
     if (!transpose) return data;
 
@@ -1515,8 +1569,8 @@ class _FormAppPageState extends State<FormAppPage> {
       return;
     }
 
-    final fileData =
-        const ListToCsvConverter().convert(getPitKVFormattedData());
+    final fileData = const ListToCsvConverter().convert(getPitKVFormattedData(
+        transpose: transposedExport, header: exportHeaders));
 
     setState(() {
       saveDisabled = true;
@@ -1761,5 +1815,17 @@ class _FormAppPageState extends State<FormAppPage> {
     final prefs = await SharedPreferences.getInstance();
 
     prefs.setString("eventId", eventId);
+  }
+
+  Future<void> attemptSaveTranspose() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.setBool("transposedExport", transposedExport);
+  }
+
+  Future<void> attemptSaveHeaders() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.setBool("exportHeaders", exportHeaders);
   }
 }
