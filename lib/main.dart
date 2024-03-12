@@ -975,16 +975,22 @@ class _FormAppPageState extends State<FormAppPage> {
                   ),
                 ],
               ),
-              ListView(
+              IndexedStack(
+                index: pitTeamNumber == null ? 0 : 1,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(32.0),
-                    child: QrImageView(
-                      data: getPitKVFormattedData(
-                              transpose: true, header: false)[0]
-                          .join("||"),
-                      backgroundColor: Colors.white,
-                    ),
+                  const Center(child: TeamNumberError()),
+                  ListView(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(32.0),
+                        child: QrImageView(
+                          data: getPitKVFormattedData(
+                                  transpose: true, header: false)[0]
+                              .join("||"),
+                          backgroundColor: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -1270,11 +1276,12 @@ class _FormAppPageState extends State<FormAppPage> {
                 children: [
                   Row(
                     children: [
-                      Text("Team Lists"),
+                      const Text("Team Lists"),
                       Expanded(
                         child: Container(
-                            margin: EdgeInsets.only(left: 10.0, right: 15.0),
-                            child: Divider()),
+                            margin:
+                                const EdgeInsets.only(left: 10.0, right: 15.0),
+                            child: const Divider()),
                       ),
                     ],
                   ),
