@@ -939,37 +939,44 @@ class _FormAppPageState extends State<FormAppPage> {
                 prefStart: pitPrefStart,
                 teleopStrat: pitTeleopStrat,
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              IndexedStack(
+                index: pitTeamNumber == null ? 0 : 1,
                 children: [
-                  const Icon(
-                    Icons.output_rounded,
-                    size: 180,
-                  ),
-                  Row(
+                  const Center(child: TeamNumberError()),
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            ElevatedButton.icon(
-                              onPressed:
-                                  saveDisabled == false ? onPitScoutSave : null,
-                              label: const Text("Export to Directory"),
-                              icon: const Icon(Icons.save),
+                      const Icon(
+                        Icons.output_rounded,
+                        size: 180,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                ElevatedButton.icon(
+                                  onPressed: saveDisabled == false
+                                      ? onPitScoutSave
+                                      : null,
+                                  label: const Text("Export to Directory"),
+                                  icon: const Icon(Icons.save),
+                                ),
+                                const SizedBox(
+                                  width: 8.0,
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    resetPit();
+                                  },
+                                  child: const Text("Reset Data"),
+                                ),
+                              ],
                             ),
-                            const SizedBox(
-                              width: 8.0,
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                resetPit();
-                              },
-                              child: const Text("Reset Data"),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -1212,16 +1219,7 @@ class _FormAppPageState extends State<FormAppPage> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            fieldTeamNumber = null;
-                            fieldMatchNumber = null;
-                            fieldAutonExists = false;
-                            fieldAutonSpeakerNotes = 0;
-                            fieldAutonAmpNotes = 0;
-                            fieldAutonSpeakerNotesMissed = 0;
-                            fieldAutonAmpNotesMissed = 0;
-                            setState(() {
-                              fieldPageIndex = 0;
-                            });
+                            resetField();
                           },
                           child: const Text("Reset Data"),
                         ),
