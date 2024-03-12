@@ -26,7 +26,7 @@ Future<void> main() async {
   ]);
 
   runApp(
-    ScoutingApp(),
+    const ScoutingApp(),
   );
 }
 
@@ -56,7 +56,7 @@ class ScoutingApp extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       themeMode: ThemeMode.system,
-      home: FormAppPage(),
+      home: const FormAppPage(),
     );
   }
 }
@@ -429,12 +429,11 @@ class _FormAppPageState extends State<FormAppPage> {
   }
 
   void _onBackPressed(bool x) {
-    print(x);
     showDialog(
       context: context,
-      builder: (context) => new AlertDialog(
-        title: new Text('Are you sure?'),
-        content: new Text('Do you want to exit the app?'),
+      builder: (context) => AlertDialog(
+        title: const Text('Are you sure?'),
+        content: const Text('Do you want to exit the app?'),
         actions: <Widget>[
           ElevatedButton(
             onPressed: () {
@@ -472,7 +471,7 @@ class _FormAppPageState extends State<FormAppPage> {
                         setAppModePref(appMode);
                       });
                     },
-                    icon: Icon(Icons.settings_outlined))
+                    icon: const Icon(Icons.settings_outlined))
               ],
             ),
             body: Padding(
@@ -547,7 +546,7 @@ class _FormAppPageState extends State<FormAppPage> {
                           ),
                         ),
                       ),
-                      child: Row(
+                      child: const Row(
                         children: [
                           Icon(
                             Icons.sports_rounded,
@@ -1376,11 +1375,12 @@ class _FormAppPageState extends State<FormAppPage> {
                   const SizedBox(height: 8.0),
                   Row(
                     children: [
-                      Text("Export Options"),
+                      const Text("Export Options"),
                       Expanded(
                         child: Container(
-                            margin: EdgeInsets.only(left: 10.0, right: 15.0),
-                            child: Divider()),
+                            margin:
+                                const EdgeInsets.only(left: 10.0, right: 15.0),
+                            child: const Divider()),
                       ),
                     ],
                   ),
@@ -1402,8 +1402,8 @@ class _FormAppPageState extends State<FormAppPage> {
                   const SizedBox(height: 4.0),
                   CheckboxListTile(
                       value: transposedExport,
-                      title: Text("Transpose Exported Data"),
-                      subtitle: Text(
+                      title: const Text("Transpose Exported Data"),
+                      subtitle: const Text(
                           "Transpose rows and colums in exported data (recommended)"),
                       onChanged: (value) {
                         setState(() {
@@ -1413,22 +1413,22 @@ class _FormAppPageState extends State<FormAppPage> {
                       }),
                   CheckboxListTile(
                       value: exportHeaders,
-                      title: Text("Export data headers"),
-                      subtitle: Text("Add header to csv data exports"),
+                      title: const Text("Export data headers"),
+                      subtitle: const Text("Add header to csv data exports"),
                       onChanged: (value) {
                         setState(() {
                           exportHeaders = value!;
                           attemptSaveHeaders();
                         });
                       }),
-                  Spacer(),
+                  const Spacer(),
                   ElevatedButton(
                     onPressed: () {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.warning_rounded,
                               size: 180,
                             ),
@@ -1632,7 +1632,6 @@ class _FormAppPageState extends State<FormAppPage> {
               "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_pit.csv"))
           .create(recursive: true)
           .onError((e, s) {
-        print(e);
         throw Error;
       }).then((File file) {
         file.writeAsBytes(Uint8List.fromList(fileData.codeUnits));

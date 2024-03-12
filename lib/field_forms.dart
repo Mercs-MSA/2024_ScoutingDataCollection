@@ -109,7 +109,7 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("SPEAKER"),
+                              const Text("SPEAKER"),
                               NumberInput(
                                 title: "Speaker Notes",
                                 miniStyle: true,
@@ -163,7 +163,7 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text("AMP"),
+                              const Text("AMP"),
                               NumberInput(
                                 title: "Amp Notes",
                                 miniStyle: true,
@@ -214,12 +214,12 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                               ),
                             ],
                           ),
-                          VerticalDivider(
+                          const VerticalDivider(
                             color: Colors.white,
                             width: 4,
                             thickness: 4,
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -230,7 +230,7 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                                 },
                                 tristate: true,
                               ),
-                              SizedBox(height: 32),
+                              const SizedBox(height: 32),
                               NoteCheckbox(
                                 value: widget.wingNotes[1],
                                 onChanged: (x) {
@@ -238,7 +238,7 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                                 },
                                 tristate: true,
                               ),
-                              SizedBox(height: 32),
+                              const SizedBox(height: 32),
                               NoteCheckbox(
                                 value: widget.wingNotes[2],
                                 onChanged: (x) {
@@ -246,10 +246,10 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                                 },
                                 tristate: true,
                               ),
-                              SizedBox(height: 48),
+                              const SizedBox(height: 48),
                             ],
                           ),
-                          Spacer(),
+                          const Spacer(),
                           RotatedTriangle(
                             rotationAngle:
                                 widget.allianceColor == Alliances.blue
@@ -268,11 +268,11 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                             width: 4,
                             thickness: 4,
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Stack(
                             alignment: AlignmentDirectional.center,
                             children: [
-                              VerticalDivider(
+                              const VerticalDivider(
                                 color: Colors.white,
                                 width: 4,
                                 thickness: 4,
@@ -286,25 +286,25 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                                     onChanged: (x) {},
                                     tristate: true,
                                   ),
-                                  SizedBox(height: 32),
+                                  const SizedBox(height: 32),
                                   NoteCheckbox(
                                     value: true,
                                     onChanged: (x) {},
                                     tristate: true,
                                   ),
-                                  SizedBox(height: 32),
+                                  const SizedBox(height: 32),
                                   NoteCheckbox(
                                     value: true,
                                     onChanged: (x) {},
                                     tristate: true,
                                   ),
-                                  SizedBox(height: 32),
+                                  const SizedBox(height: 32),
                                   NoteCheckbox(
                                     value: true,
                                     onChanged: (x) {},
                                     tristate: true,
                                   ),
-                                  SizedBox(height: 32),
+                                  const SizedBox(height: 32),
                                   NoteCheckbox(
                                     value: true,
                                     onChanged: (x) {},

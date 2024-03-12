@@ -275,7 +275,7 @@ class NumberInput extends StatelessWidget {
 
   final NumberInputStyle style;
 
-  NumberInput(
+  const NumberInput(
       {super.key,
       required this.title,
       required this.value,
@@ -376,7 +376,7 @@ class NumberInput extends StatelessWidget {
                                 brightness: Brightness.dark,
                               ).onPrimary),
                             )
-                          : ButtonStyle(),
+                          : const ButtonStyle(),
               icon: const Icon(Icons.add),
             ),
             const SizedBox(width: 8.0),
@@ -431,7 +431,7 @@ class NumberInput extends StatelessWidget {
                                 brightness: Brightness.dark,
                               ).onPrimary),
                             )
-                          : ButtonStyle(),
+                          : const ButtonStyle(),
               icon: const Icon(Icons.remove),
             ),
           ],
@@ -534,8 +534,8 @@ class RotatedTriangle extends StatelessWidget {
   final Color borderColor;
   final double borderWidth;
 
-  RotatedTriangle(
-      {required this.rotationAngle,
+  const RotatedTriangle(
+      {super.key, required this.rotationAngle,
       required this.color,
       required this.borderColor,
       required this.borderWidth});
@@ -546,7 +546,7 @@ class RotatedTriangle extends StatelessWidget {
       angle: rotationAngle,
       alignment: Alignment.center,
       child: CustomPaint(
-        size: Size(100, 100), // Change the size as needed
+        size: const Size(100, 100), // Change the size as needed
         painter: RotatedTrianglePainter(
             color: color, borderColor: borderColor, borderWidth: borderWidth),
       ),
