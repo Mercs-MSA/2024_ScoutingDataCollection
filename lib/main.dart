@@ -12,6 +12,7 @@ import 'package:flutter_form_elements/datatypes.dart';
 import 'package:flutter_form_elements/field_forms.dart';
 import 'package:flutter_form_elements/pit_form.dart';
 import 'package:path/path.dart' as path;
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'widgets.dart';
@@ -608,8 +609,12 @@ class _FormAppPageState extends State<FormAppPage> {
                 label: 'Data',
               ),
               NavigationDestination(
-                icon: Icon(Icons.outbox),
-                label: 'Output',
+                icon: Icon(Icons.line_style_rounded),
+                label: 'CSV',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.qr_code_rounded),
+                label: 'QR',
               )
             ],
             selectedIndex: pitPageIndex,
@@ -967,6 +972,19 @@ class _FormAppPageState extends State<FormAppPage> {
                         ),
                       ),
                     ],
+                  ),
+                ],
+              ),
+              ListView(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(32.0),
+                    child: QrImageView(
+                      data: getPitKVFormattedData(
+                              transpose: true, header: false)[0]
+                          .join("||"),
+                      backgroundColor: Colors.white,
+                    ),
                   ),
                 ],
               ),
