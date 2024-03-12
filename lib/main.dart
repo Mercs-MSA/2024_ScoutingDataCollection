@@ -667,7 +667,6 @@ class _FormAppPageState extends State<FormAppPage> {
             children: [
               ListView(
                 children: [
-                  // TODO: Use real data from data import
                   ExpansionTile(
                     title: const Text("To Be Scouted"),
                     initiallyExpanded: true,
@@ -1026,7 +1025,6 @@ class _FormAppPageState extends State<FormAppPage> {
                 children: [
                   Column(
                     children: [
-                      // TODO: Use real data from data import
                       ExpansionTile(
                         title: const Text("To Be Scouted"),
                         initiallyExpanded: true,
