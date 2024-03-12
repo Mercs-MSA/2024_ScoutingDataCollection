@@ -145,7 +145,7 @@ class _FormAppPageState extends State<FormAppPage> {
   int fieldAutonSpeakerNotesMissed = 0;
   int fieldAutonAmpNotesMissed = 0;
 
-  bool? fieldPodiumNote;
+  List<bool?> fieldWingNotes = [false, false, false];
 
   bool saveDisabled = false;
   bool importerSaveCompletes = false;
@@ -1174,10 +1174,10 @@ class _FormAppPageState extends State<FormAppPage> {
                     fieldAutonAmpNotesMissed = value;
                   });
                 },
-                podiumNote: fieldPodiumNote,
-                onPodiumNoteChanged: (value) {
+                wingNotes: fieldWingNotes,
+                onWingNotesChanged: (index, value) {
                   setState(() {
-                    fieldPodiumNote = value;
+                    fieldWingNotes[index] = value;
                   });
                 },
               ),

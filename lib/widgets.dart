@@ -482,7 +482,7 @@ class RingedCheckbox extends StatelessWidget {
     this.tristate = false,
   });
 
-  final bool value;
+  final bool? value;
   final Function(bool?) onChanged;
   final bool tristate;
 
