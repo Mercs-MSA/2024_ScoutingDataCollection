@@ -118,357 +118,383 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                         thumbIcon: thumbIcon,
                         value: widget.autonExists,
                         onChanged: widget.onAutonExistsChanged),
-                    IndexedStack(index: widget.autonExists ? 0 : 1, children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context).dividerColor,
-                            width: 1,
-                          ),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(4.0)),
-                        ),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 8.0),
-                            SwitchListTile(
-                              title: const Text(
-                                  'Did they leave the starting zone?'),
-                              thumbIcon: thumbIcon,
-                              value: widget.leave,
-                              onChanged: (bool? newValue) {
-                                setState(() {
-                                  widget.onLeaveChanged(newValue!);
-                                });
-                              },
+                    IndexedStack(
+                      index: widget.autonExists ? 0 : 1,
+                      children: [
+                        if (widget.autonExists)
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Theme.of(context).dividerColor,
+                                width: 1,
+                              ),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(4.0)),
                             ),
-                            const SizedBox(height: 8.0),
-                            SwitchListTile(
-                              title:
-                                  const Text("Did they cross the center line?"),
-                              thumbIcon: thumbIcon,
-                              subtitle:
-                                  const Text("(this isn't a good thing btw)"),
-                              value: widget.crossLine,
-                              onChanged: (bool? newValue) {
-                                setState(() {
-                                  widget.onCrossLineChanged(newValue!);
-                                });
-                              },
-                            ),
-                            SwitchListTile(
-                              title: const Text("Did they A-Stop?"),
-                              thumbIcon: thumbIcon,
-                              subtitle:
-                                  const Text("(this isn't a good thing btw)"),
-                              value: widget.aStop,
-                              onChanged: (bool? newValue) {
-                                setState(() {
-                                  widget.onAStopChanged(newValue!);
-                                });
-                              },
-                            ),
-                            const SizedBox(height: 8.0),
-                            SizedBox(
-                              height: 400,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  textDirection:
-                                      widget.allianceColor == Alliances.red
-                                          ? TextDirection.ltr
-                                          : TextDirection.rtl,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                            child: Column(
+                              children: [
+                                const SizedBox(height: 8.0),
+                                SwitchListTile(
+                                  title: const Text(
+                                      'Did they leave the starting zone?'),
+                                  thumbIcon: thumbIcon,
+                                  value: widget.leave,
+                                  onChanged: (bool? newValue) {
+                                    setState(() {
+                                      widget.onLeaveChanged(newValue!);
+                                    });
+                                  },
+                                ),
+                                const SizedBox(height: 8.0),
+                                SwitchListTile(
+                                  title: const Text(
+                                      "Did they cross the center line?"),
+                                  thumbIcon: thumbIcon,
+                                  subtitle: const Text(
+                                      "(this isn't a good thing btw)"),
+                                  value: widget.crossLine,
+                                  onChanged: (bool? newValue) {
+                                    setState(() {
+                                      widget.onCrossLineChanged(newValue!);
+                                    });
+                                  },
+                                ),
+                                SwitchListTile(
+                                  title: const Text("Did they A-Stop?"),
+                                  thumbIcon: thumbIcon,
+                                  subtitle: const Text(
+                                      "(this isn't a good thing btw)"),
+                                  value: widget.aStop,
+                                  onChanged: (bool? newValue) {
+                                    setState(() {
+                                      widget.onAStopChanged(newValue!);
+                                    });
+                                  },
+                                ),
+                                const SizedBox(height: 8.0),
+                                SizedBox(
+                                  height: 400,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      textDirection:
+                                          widget.allianceColor == Alliances.red
+                                              ? TextDirection.ltr
+                                              : TextDirection.rtl,
                                       children: [
-                                        const Text("PRELOAD"),
-                                        const SizedBox(height: 24.0),
-                                        Transform.scale(
-                                          scale: 2.0,
-                                          child: Checkbox(
-                                              value: widget.preload,
-                                              onChanged: (x) {
-                                                widget.onPreloadChanged(x);
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            const Text("PRELOAD"),
+                                            const SizedBox(height: 24.0),
+                                            Transform.scale(
+                                              scale: 2.0,
+                                              child: Checkbox(
+                                                  value: widget.preload,
+                                                  onChanged: (x) {
+                                                    widget.onPreloadChanged(x);
+                                                  },
+                                                  tristate: true,
+                                                  activeColor: widget.preload ==
+                                                          true
+                                                      ? ColorScheme.fromSeed(
+                                                          seedColor:
+                                                              Colors.green,
+                                                          brightness:
+                                                              Brightness.dark,
+                                                        ).primary
+                                                      : ColorScheme.fromSeed(
+                                                          seedColor: Colors.red,
+                                                          brightness:
+                                                              Brightness.dark,
+                                                        ).primary,
+                                                  checkColor: widget.preload ==
+                                                          true
+                                                      ? ColorScheme.fromSeed(
+                                                          seedColor:
+                                                              Colors.green,
+                                                          brightness:
+                                                              Brightness.dark,
+                                                        ).onPrimary
+                                                      : ColorScheme.fromSeed(
+                                                          seedColor: Colors.red,
+                                                          brightness:
+                                                              Brightness.dark,
+                                                        ).onPrimary),
+                                            ),
+                                            const Spacer(),
+                                            const Text("SPEAKER"),
+                                            NumberInput(
+                                              title: "Speaker Notes",
+                                              miniStyle: true,
+                                              style: NumberInputStyle.green,
+                                              value: widget.speakerNotes,
+                                              onValueAdd: () {
+                                                setState(() {
+                                                  if (widget.speakerNotes <
+                                                      10) {
+                                                    speakerNotes =
+                                                        widget.speakerNotes + 1;
+                                                  }
+                                                  widget.onSpeakerNotesChanged(
+                                                      speakerNotes);
+                                                });
                                               },
-                                              tristate: true,
-                                              activeColor: widget.preload ==
-                                                      true
-                                                  ? ColorScheme.fromSeed(
-                                                      seedColor: Colors.green,
-                                                      brightness:
-                                                          Brightness.dark,
-                                                    ).primary
-                                                  : ColorScheme.fromSeed(
-                                                      seedColor: Colors.red,
-                                                      brightness:
-                                                          Brightness.dark,
-                                                    ).primary,
-                                              checkColor: widget.preload == true
-                                                  ? ColorScheme.fromSeed(
-                                                      seedColor: Colors.green,
-                                                      brightness:
-                                                          Brightness.dark,
-                                                    ).onPrimary
-                                                  : ColorScheme.fromSeed(
-                                                      seedColor: Colors.red,
-                                                      brightness:
-                                                          Brightness.dark,
-                                                    ).onPrimary),
-                                        ),
-                                        const Spacer(),
-                                        const Text("SPEAKER"),
-                                        NumberInput(
-                                          title: "Speaker Notes",
-                                          miniStyle: true,
-                                          style: NumberInputStyle.green,
-                                          value: widget.speakerNotes,
-                                          onValueAdd: () {
-                                            setState(() {
-                                              if (widget.speakerNotes < 10) {
-                                                speakerNotes =
-                                                    widget.speakerNotes + 1;
-                                              }
-                                              widget.onSpeakerNotesChanged(
-                                                  speakerNotes);
-                                            });
-                                          },
-                                          onValueSubtract: () {
-                                            setState(() {
-                                              if (widget.speakerNotes > 0) {
-                                                speakerNotes =
-                                                    widget.speakerNotes - 1;
-                                              }
-                                              widget.onSpeakerNotesChanged(
-                                                  speakerNotes);
-                                            });
-                                          },
-                                        ),
-                                        NumberInput(
-                                          title: "Speaker Notes Missed",
-                                          miniStyle: true,
-                                          style: NumberInputStyle.red,
-                                          value: widget.speakerNotesMissed,
-                                          onValueAdd: () {
-                                            setState(() {
-                                              if (widget.speakerNotesMissed <
-                                                  10) {
-                                                speakerNotesMissed =
-                                                    widget.speakerNotesMissed +
+                                              onValueSubtract: () {
+                                                setState(() {
+                                                  if (widget.speakerNotes > 0) {
+                                                    speakerNotes =
+                                                        widget.speakerNotes - 1;
+                                                  }
+                                                  widget.onSpeakerNotesChanged(
+                                                      speakerNotes);
+                                                });
+                                              },
+                                            ),
+                                            NumberInput(
+                                              title: "Speaker Notes Missed",
+                                              miniStyle: true,
+                                              style: NumberInputStyle.red,
+                                              value: widget.speakerNotesMissed,
+                                              onValueAdd: () {
+                                                setState(() {
+                                                  if (widget
+                                                          .speakerNotesMissed <
+                                                      10) {
+                                                    speakerNotesMissed = widget
+                                                            .speakerNotesMissed +
                                                         1;
-                                              }
-                                              widget
-                                                  .onSpeakerNotesMissedChanged(
-                                                      speakerNotesMissed);
-                                            });
-                                          },
-                                          onValueSubtract: () {
-                                            setState(() {
-                                              if (widget.speakerNotesMissed >
-                                                  0) {
-                                                speakerNotesMissed =
-                                                    widget.speakerNotesMissed -
+                                                  }
+                                                  widget
+                                                      .onSpeakerNotesMissedChanged(
+                                                          speakerNotesMissed);
+                                                });
+                                              },
+                                              onValueSubtract: () {
+                                                setState(() {
+                                                  if (widget
+                                                          .speakerNotesMissed >
+                                                      0) {
+                                                    speakerNotesMissed = widget
+                                                            .speakerNotesMissed -
                                                         1;
-                                              }
-                                              widget
-                                                  .onSpeakerNotesMissedChanged(
-                                                      speakerNotesMissed);
-                                            });
-                                          },
+                                                  }
+                                                  widget
+                                                      .onSpeakerNotesMissedChanged(
+                                                          speakerNotesMissed);
+                                                });
+                                              },
+                                            ),
+                                            const Spacer(),
+                                          ],
                                         ),
-                                        const Spacer(),
-                                      ],
-                                    ),
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        const Text("AMP"),
-                                        NumberInput(
-                                          title: "Amp Notes",
-                                          miniStyle: true,
-                                          style: NumberInputStyle.green,
-                                          value: widget.ampNotes,
-                                          onValueAdd: () {
-                                            setState(() {
-                                              if (widget.ampNotes < 10) {
-                                                ampNotes = widget.ampNotes + 1;
-                                              }
-                                              widget
-                                                  .onAmpNotesChanged(ampNotes);
-                                            });
-                                          },
-                                          onValueSubtract: () {
-                                            setState(() {
-                                              if (widget.ampNotes > 0) {
-                                                ampNotes = widget.ampNotes - 1;
-                                              }
-                                              widget
-                                                  .onAmpNotesChanged(ampNotes);
-                                            });
-                                          },
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            const Text("AMP"),
+                                            NumberInput(
+                                              title: "Amp Notes",
+                                              miniStyle: true,
+                                              style: NumberInputStyle.green,
+                                              value: widget.ampNotes,
+                                              onValueAdd: () {
+                                                setState(() {
+                                                  if (widget.ampNotes < 10) {
+                                                    ampNotes =
+                                                        widget.ampNotes + 1;
+                                                  }
+                                                  widget.onAmpNotesChanged(
+                                                      ampNotes);
+                                                });
+                                              },
+                                              onValueSubtract: () {
+                                                setState(() {
+                                                  if (widget.ampNotes > 0) {
+                                                    ampNotes =
+                                                        widget.ampNotes - 1;
+                                                  }
+                                                  widget.onAmpNotesChanged(
+                                                      ampNotes);
+                                                });
+                                              },
+                                            ),
+                                            NumberInput(
+                                              title: "Amp Notes Missed",
+                                              miniStyle: true,
+                                              style: NumberInputStyle.red,
+                                              value: widget.ampNotesMissed,
+                                              onValueAdd: () {
+                                                setState(() {
+                                                  if (widget.ampNotesMissed <
+                                                      10) {
+                                                    ampNotesMissed =
+                                                        widget.ampNotesMissed +
+                                                            1;
+                                                  }
+                                                  widget
+                                                      .onAmpNotesMissedChanged(
+                                                          ampNotesMissed);
+                                                });
+                                              },
+                                              onValueSubtract: () {
+                                                setState(() {
+                                                  if (widget.ampNotesMissed >
+                                                      0) {
+                                                    ampNotesMissed =
+                                                        widget.ampNotesMissed -
+                                                            1;
+                                                  }
+                                                  widget
+                                                      .onAmpNotesMissedChanged(
+                                                          ampNotesMissed);
+                                                });
+                                              },
+                                            ),
+                                          ],
                                         ),
-                                        NumberInput(
-                                          title: "Amp Notes Missed",
-                                          miniStyle: true,
-                                          style: NumberInputStyle.red,
-                                          value: widget.ampNotesMissed,
-                                          onValueAdd: () {
-                                            setState(() {
-                                              if (widget.ampNotesMissed < 10) {
-                                                ampNotesMissed =
-                                                    widget.ampNotesMissed + 1;
-                                              }
-                                              widget.onAmpNotesMissedChanged(
-                                                  ampNotesMissed);
-                                            });
-                                          },
-                                          onValueSubtract: () {
-                                            setState(() {
-                                              if (widget.ampNotesMissed > 0) {
-                                                ampNotesMissed =
-                                                    widget.ampNotesMissed - 1;
-                                              }
-                                              widget.onAmpNotesMissedChanged(
-                                                  ampNotesMissed);
-                                            });
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                    const VerticalDivider(
-                                      color: Colors.white,
-                                      width: 4,
-                                      thickness: 4,
-                                    ),
-                                    const Spacer(),
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        NoteCheckbox(
-                                          value: widget.wingNotes[0],
-                                          onChanged: (x) {
-                                            widget.onWingNotesChanged(0, x);
-                                          },
-                                          tristate: true,
-                                        ),
-                                        const SizedBox(height: 32),
-                                        NoteCheckbox(
-                                          value: widget.wingNotes[1],
-                                          onChanged: (x) {
-                                            widget.onWingNotesChanged(1, x);
-                                          },
-                                          tristate: true,
-                                        ),
-                                        const SizedBox(height: 32),
-                                        NoteCheckbox(
-                                          value: widget.wingNotes[2],
-                                          onChanged: (x) {
-                                            widget.onWingNotesChanged(2, x);
-                                          },
-                                          tristate: true,
-                                        ),
-                                        const SizedBox(height: 48),
-                                      ],
-                                    ),
-                                    const Spacer(),
-                                    RotatedTriangle(
-                                      rotationAngle:
-                                          widget.allianceColor == Alliances.blue
-                                              ? pi / 2
-                                              : -pi / 2, // radians
-                                      color: Colors.transparent,
-                                      borderColor:
-                                          widget.allianceColor == Alliances.blue
-                                              ? Colors.blue
-                                              : Colors.red,
-                                      borderWidth: 5.0,
-                                    ),
-                                    VerticalDivider(
-                                      color:
-                                          widget.allianceColor == Alliances.blue
-                                              ? Colors.blue
-                                              : Colors.red,
-                                      width: 4,
-                                      thickness: 4,
-                                    ),
-                                    const Spacer(),
-                                    Stack(
-                                      alignment: AlignmentDirectional.center,
-                                      children: [
                                         const VerticalDivider(
                                           color: Colors.white,
                                           width: 4,
                                           thickness: 4,
                                         ),
+                                        const Spacer(),
                                         Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                              MainAxisAlignment.end,
                                           children: [
                                             NoteCheckbox(
-                                              value: widget.centerNotes[0],
+                                              value: widget.wingNotes[0],
                                               onChanged: (x) {
-                                                widget.onCenterNotesChanged(
-                                                    0, x);
+                                                widget.onWingNotesChanged(0, x);
                                               },
                                               tristate: true,
                                             ),
                                             const SizedBox(height: 32),
                                             NoteCheckbox(
-                                              value: widget.centerNotes[1],
+                                              value: widget.wingNotes[1],
                                               onChanged: (x) {
-                                                widget.onCenterNotesChanged(
-                                                    1, x);
+                                                widget.onWingNotesChanged(1, x);
                                               },
                                               tristate: true,
                                             ),
                                             const SizedBox(height: 32),
                                             NoteCheckbox(
-                                              value: widget.centerNotes[2],
+                                              value: widget.wingNotes[2],
                                               onChanged: (x) {
-                                                widget.onCenterNotesChanged(
-                                                    2, x);
+                                                widget.onWingNotesChanged(2, x);
                                               },
                                               tristate: true,
                                             ),
-                                            const SizedBox(height: 32),
-                                            NoteCheckbox(
-                                              value: widget.centerNotes[3],
-                                              onChanged: (x) {
-                                                widget.onCenterNotesChanged(
-                                                    3, x);
-                                              },
-                                              tristate: true,
+                                            const SizedBox(height: 48),
+                                          ],
+                                        ),
+                                        const Spacer(),
+                                        RotatedTriangle(
+                                          rotationAngle: widget.allianceColor ==
+                                                  Alliances.blue
+                                              ? pi / 2
+                                              : -pi / 2, // radians
+                                          color: Colors.transparent,
+                                          borderColor: widget.allianceColor ==
+                                                  Alliances.blue
+                                              ? Colors.blue
+                                              : Colors.red,
+                                          borderWidth: 5.0,
+                                        ),
+                                        VerticalDivider(
+                                          color: widget.allianceColor ==
+                                                  Alliances.blue
+                                              ? Colors.blue
+                                              : Colors.red,
+                                          width: 4,
+                                          thickness: 4,
+                                        ),
+                                        const Spacer(),
+                                        Stack(
+                                          alignment:
+                                              AlignmentDirectional.center,
+                                          children: [
+                                            const VerticalDivider(
+                                              color: Colors.white,
+                                              width: 4,
+                                              thickness: 4,
                                             ),
-                                            const SizedBox(height: 32),
-                                            NoteCheckbox(
-                                              value: widget.centerNotes[4],
-                                              onChanged: (x) {
-                                                widget.onCenterNotesChanged(
-                                                    4, x);
-                                              },
-                                              tristate: true,
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                NoteCheckbox(
+                                                  value: widget.centerNotes[0],
+                                                  onChanged: (x) {
+                                                    widget.onCenterNotesChanged(
+                                                        0, x);
+                                                  },
+                                                  tristate: true,
+                                                ),
+                                                const SizedBox(height: 32),
+                                                NoteCheckbox(
+                                                  value: widget.centerNotes[1],
+                                                  onChanged: (x) {
+                                                    widget.onCenterNotesChanged(
+                                                        1, x);
+                                                  },
+                                                  tristate: true,
+                                                ),
+                                                const SizedBox(height: 32),
+                                                NoteCheckbox(
+                                                  value: widget.centerNotes[2],
+                                                  onChanged: (x) {
+                                                    widget.onCenterNotesChanged(
+                                                        2, x);
+                                                  },
+                                                  tristate: true,
+                                                ),
+                                                const SizedBox(height: 32),
+                                                NoteCheckbox(
+                                                  value: widget.centerNotes[3],
+                                                  onChanged: (x) {
+                                                    widget.onCenterNotesChanged(
+                                                        3, x);
+                                                  },
+                                                  tristate: true,
+                                                ),
+                                                const SizedBox(height: 32),
+                                                NoteCheckbox(
+                                                  value: widget.centerNotes[4],
+                                                  onChanged: (x) {
+                                                    widget.onCenterNotesChanged(
+                                                        4, x);
+                                                  },
+                                                  tristate: true,
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
                                       ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
-                      const Center(
-                        child: Icon(
-                          Icons.sentiment_very_dissatisfied_rounded,
-                          size: 240,
-                        ),
-                      ),
-                    ]),
+                          )
+                        else
+                          const SizedBox(),
+                        if (!widget.autonExists)
+                          const Center(
+                            child: Icon(
+                              Icons.sentiment_very_dissatisfied_rounded,
+                              size: 240,
+                            ),
+                          )
+                        else
+                          const SizedBox(),
+                      ],
+                    ),
                   ],
                 ),
               ),

@@ -1025,101 +1025,107 @@ class _FormAppPageState extends State<FormAppPage> {
                   IndexedStack(
                     index: pitTeamNumber == null ? 0 : 1,
                     children: [
-                      const Center(child: TeamNumberError()),
-                      Column(
-                        children: [
-                          const Spacer(),
-                          Padding(
-                            padding: const EdgeInsets.all(32.0),
-                            child: IndexedStack(
-                              index: pitCurrentQrChunk,
+                      if (pitTeamNumber == null)
+                        const Center(child: TeamNumberError())
+                      else
+                        const SizedBox(),
+                      if (pitTeamNumber != null)
+                        Column(
+                          children: [
+                            const Spacer(),
+                            Padding(
+                              padding: const EdgeInsets.all(32.0),
+                              child: IndexedStack(
+                                index: pitCurrentQrChunk,
+                                children: [
+                                  for (final (index, chunk)
+                                      in pitQrChunks.indexed)
+                                    if (index == pitCurrentQrChunk)
+                                      QrImageView(
+                                        data: chunk,
+                                        backgroundColor: Colors.white,
+                                      )
+                                    else
+                                      const SizedBox(),
+                                ],
+                              ),
+                            ),
+                            const Spacer(),
+                            const Divider(),
+                            Row(
                               children: [
-                                for (final (index, chunk)
-                                    in pitQrChunks.indexed)
-                                  if (index == pitCurrentQrChunk)
-                                    QrImageView(
-                                      data: chunk,
-                                      backgroundColor: Colors.white,
-                                    )
-                                  else
-                                    const SizedBox(),
+                                const SizedBox(width: 8.0),
+                                ElevatedButton(
+                                  onPressed: pitQrChunkNavBackEnabled
+                                      ? () {
+                                          setState(() {
+                                            if (pitCurrentQrChunk > 0) {
+                                              pitCurrentQrChunk -= 1;
+                                            }
+                                            if (pitCurrentQrChunk ==
+                                                pitQrChunks.length) {
+                                              pitQrChunkNavNextEnabled = false;
+                                              pitQrChunkNavBackEnabled = true;
+                                            } else if (pitCurrentQrChunk == 0) {
+                                              pitQrChunkNavNextEnabled = true;
+                                              pitQrChunkNavBackEnabled = false;
+                                            } else {
+                                              pitQrChunkNavNextEnabled = true;
+                                              pitQrChunkNavBackEnabled = true;
+                                            }
+                                          });
+                                        }
+                                      : null,
+                                  child: const Row(
+                                    children: [
+                                      Icon(Icons.arrow_back),
+                                      SizedBox(width: 8.0),
+                                      Text("Back"),
+                                    ],
+                                  ),
+                                ),
+                                const Spacer(),
+                                Text(
+                                    "${pitCurrentQrChunk + 1}/${pitQrChunks.length}"),
+                                const Spacer(),
+                                ElevatedButton(
+                                  onPressed: pitQrChunkNavNextEnabled
+                                      ? () {
+                                          setState(() {
+                                            if (pitCurrentQrChunk <
+                                                pitQrChunks.length - 1) {
+                                              pitCurrentQrChunk += 1;
+                                            }
+                                            if (pitCurrentQrChunk ==
+                                                pitQrChunks.length - 1) {
+                                              pitQrChunkNavNextEnabled = false;
+                                              pitQrChunkNavBackEnabled = true;
+                                            } else if (pitCurrentQrChunk == 0) {
+                                              pitQrChunkNavNextEnabled = true;
+                                              pitQrChunkNavBackEnabled = false;
+                                            } else {
+                                              pitQrChunkNavNextEnabled = true;
+                                              pitQrChunkNavBackEnabled = true;
+                                            }
+                                          });
+                                        }
+                                      : null,
+                                  child: const Row(
+                                    children: [
+                                      Text("Next"),
+                                      SizedBox(width: 8.0),
+                                      Icon(Icons.arrow_forward),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 8.0),
                               ],
                             ),
-                          ),
-                          const Spacer(),
-                          const Divider(),
-                          Row(
-                            children: [
-                              const SizedBox(width: 8.0),
-                              ElevatedButton(
-                                onPressed: pitQrChunkNavBackEnabled
-                                    ? () {
-                                        setState(() {
-                                          if (pitCurrentQrChunk > 0) {
-                                            pitCurrentQrChunk -= 1;
-                                          }
-                                          if (pitCurrentQrChunk ==
-                                              pitQrChunks.length) {
-                                            pitQrChunkNavNextEnabled = false;
-                                            pitQrChunkNavBackEnabled = true;
-                                          } else if (pitCurrentQrChunk == 0) {
-                                            pitQrChunkNavNextEnabled = true;
-                                            pitQrChunkNavBackEnabled = false;
-                                          } else {
-                                            pitQrChunkNavNextEnabled = true;
-                                            pitQrChunkNavBackEnabled = true;
-                                          }
-                                        });
-                                      }
-                                    : null,
-                                child: const Row(
-                                  children: [
-                                    Icon(Icons.arrow_back),
-                                    SizedBox(width: 8.0),
-                                    Text("Back"),
-                                  ],
-                                ),
-                              ),
-                              const Spacer(),
-                              Text(
-                                  "${pitCurrentQrChunk + 1}/${pitQrChunks.length}"),
-                              const Spacer(),
-                              ElevatedButton(
-                                onPressed: pitQrChunkNavNextEnabled
-                                    ? () {
-                                        setState(() {
-                                          if (pitCurrentQrChunk <
-                                              pitQrChunks.length - 1) {
-                                            pitCurrentQrChunk += 1;
-                                          }
-                                          if (pitCurrentQrChunk ==
-                                              pitQrChunks.length - 1) {
-                                            pitQrChunkNavNextEnabled = false;
-                                            pitQrChunkNavBackEnabled = true;
-                                          } else if (pitCurrentQrChunk == 0) {
-                                            pitQrChunkNavNextEnabled = true;
-                                            pitQrChunkNavBackEnabled = false;
-                                          } else {
-                                            pitQrChunkNavNextEnabled = true;
-                                            pitQrChunkNavBackEnabled = true;
-                                          }
-                                        });
-                                      }
-                                    : null,
-                                child: const Row(
-                                  children: [
-                                    Text("Next"),
-                                    SizedBox(width: 8.0),
-                                    Icon(Icons.arrow_forward),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(width: 8.0),
-                            ],
-                          ),
-                          const SizedBox(height: 8.0),
-                        ],
-                      ),
+                            const SizedBox(height: 8.0),
+                          ],
+                        )
+                      else
+                        const SizedBox(),
                     ],
                   )
                 else

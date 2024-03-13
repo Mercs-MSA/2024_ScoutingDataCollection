@@ -287,9 +287,8 @@ class _PitFormState extends State<PitForm> {
                     options: const ["Swerve", "Tank", "Other"],
                   ),
                   const SizedBox(height: 8.0),
-                  Visibility(
-                    visible: widget.drivebase == 'Other',
-                    child: Column(
+                  if (widget.drivebase == 'Other')
+                    Column(
                       children: [
                         TextField(
                           decoration: const InputDecoration(
@@ -310,7 +309,6 @@ class _PitFormState extends State<PitForm> {
                         const SizedBox(height: 8.0),
                       ],
                     ),
-                  ),
                   ChoiceInput(
                     title: "Climber Type",
                     onChoiceUpdate: (value) {
@@ -329,9 +327,8 @@ class _PitFormState extends State<PitForm> {
                     ],
                   ),
                   const SizedBox(height: 8.0),
-                  Visibility(
-                    visible: widget.climberType == 'Other',
-                    child: Column(
+                  if (widget.climberType == 'Other')
+                    Column(
                       children: [
                         TextField(
                           decoration: const InputDecoration(
@@ -352,7 +349,6 @@ class _PitFormState extends State<PitForm> {
                         const SizedBox(height: 8.0),
                       ],
                     ),
-                  ),
                   const Divider(),
                   SwitchListTile(
                     title: const Text('Is Kitbot?'),
@@ -644,6 +640,7 @@ class _PitFormState extends State<PitForm> {
                               const SizedBox(height: 8.0),
                               NumberInput(
                                 title: "Speaker Notes",
+                                enableSpacer: true,
                                 value: widget.autonSpeakerNotes,
                                 onValueAdd: () {
                                   setState(() {
@@ -669,6 +666,7 @@ class _PitFormState extends State<PitForm> {
                               const SizedBox(height: 8.0),
                               NumberInput(
                                 title: "Amp Notes",
+                                enableSpacer: true,
                                 value: widget.autonAmpNotes,
                                 onValueAdd: () {
                                   setState(() {
@@ -692,6 +690,7 @@ class _PitFormState extends State<PitForm> {
                               const SizedBox(height: 8.0),
                               NumberInput(
                                 title: "Auto Routes",
+                                enableSpacer: true,
                                 value: widget.autonRoutes,
                                 onValueAdd: () {
                                   setState(() {
