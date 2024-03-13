@@ -1444,251 +1444,255 @@ class _FormAppPageState extends State<FormAppPage> {
           )
         else
           const SizedBox(),
-        Scaffold(
-          appBar: AppBar(
-              title: const Text('Application Setup'),
-              leading: IconButton(
-                onPressed: () {
-                  setState(() {
-                    appMode = 0;
-                    setAppModePref(appMode);
-                  });
-                },
-                icon: const Icon(Icons.arrow_back),
-              )),
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Center(
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      const Text("Team Lists"),
-                      Expanded(
-                        child: Container(
-                            margin:
-                                const EdgeInsets.only(left: 10.0, right: 15.0),
-                            child: const Divider()),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 4.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        onPressed: importTeamList,
-                        child: const Text("Import team list"),
-                      ),
-                      const SizedBox(width: 8.0),
-                      ElevatedButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text("Are you sure?"),
-                                icon: const Icon(
-                                  Icons.error_rounded,
-                                  size: 72,
-                                ),
-                                content: const Text(
-                                    "Are you ABSOLUTELY SURE you want to remove ALL saved team lists"),
-                                actionsOverflowButtonSpacing: 20,
-                                actions: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text("No"),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text("No"),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      resetAllTeams();
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text("Yes"),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        child: const Text("RESET ALL TEAMS"),
-                      ),
-                      const SizedBox(width: 8.0),
-                      ElevatedButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text("Are you sure?"),
-                                icon: const Icon(
-                                  Icons.error_rounded,
-                                  size: 72,
-                                ),
-                                content: const Text(
-                                    "Are you ABSOLUTELY SURE you want to add 3 nonsense teams to each list"),
-                                actionsOverflowButtonSpacing: 20,
-                                actions: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text("No"),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      loadTestTeams();
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text("Yes"),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        child: const Text("Load debug teams"),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8.0),
-                  Row(
-                    children: [
-                      const Text("Export Options"),
-                      Expanded(
-                        child: Container(
-                            margin:
-                                const EdgeInsets.only(left: 10.0, right: 15.0),
-                            child: const Divider()),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12.0),
-                  TextField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Event ID',
+        if (appMode == 3)
+          Scaffold(
+            appBar: AppBar(
+                title: const Text('Application Setup'),
+                leading: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      appMode = 0;
+                      setAppModePref(appMode);
+                    });
+                  },
+                  icon: const Icon(Icons.arrow_back),
+                )),
+            body: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        const Text("Team Lists"),
+                        Expanded(
+                          child: Container(
+                              margin: const EdgeInsets.only(
+                                  left: 10.0, right: 15.0),
+                              child: const Divider()),
+                        ),
+                      ],
                     ),
-                    inputFormatters: <TextInputFormatter>[
-                      LengthLimitingTextInputFormatter(15),
-                    ],
-                    onChanged: (value) {
-                      eventId = value;
-                      attemptSaveEventId();
-                    },
-                    controller: TextEditingController(text: eventId),
-                  ),
-                  const SizedBox(height: 4.0),
-                  CheckboxListTile(
-                      value: transposedExport,
-                      title: const Text("Transpose Exported Data"),
-                      subtitle: const Text(
-                          "Transpose rows and colums in exported data (recommended)"),
+                    const SizedBox(height: 4.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: importTeamList,
+                          child: const Text("Import team list"),
+                        ),
+                        const SizedBox(width: 8.0),
+                        ElevatedButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text("Are you sure?"),
+                                  icon: const Icon(
+                                    Icons.error_rounded,
+                                    size: 72,
+                                  ),
+                                  content: const Text(
+                                      "Are you ABSOLUTELY SURE you want to remove ALL saved team lists"),
+                                  actionsOverflowButtonSpacing: 20,
+                                  actions: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text("No"),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text("No"),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        resetAllTeams();
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text("Yes"),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: const Text("RESET ALL TEAMS"),
+                        ),
+                        const SizedBox(width: 8.0),
+                        ElevatedButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text("Are you sure?"),
+                                  icon: const Icon(
+                                    Icons.error_rounded,
+                                    size: 72,
+                                  ),
+                                  content: const Text(
+                                      "Are you ABSOLUTELY SURE you want to add 3 nonsense teams to each list"),
+                                  actionsOverflowButtonSpacing: 20,
+                                  actions: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text("No"),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        loadTestTeams();
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text("Yes"),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: const Text("Load debug teams"),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8.0),
+                    Row(
+                      children: [
+                        const Text("Export Options"),
+                        Expanded(
+                          child: Container(
+                              margin: const EdgeInsets.only(
+                                  left: 10.0, right: 15.0),
+                              child: const Divider()),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12.0),
+                    TextField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Event ID',
+                      ),
+                      inputFormatters: <TextInputFormatter>[
+                        LengthLimitingTextInputFormatter(15),
+                      ],
                       onChanged: (value) {
-                        setState(() {
-                          transposedExport = value!;
-                          attemptSaveTranspose();
-                        });
-                      }),
-                  CheckboxListTile(
-                      value: exportHeaders,
-                      title: const Text("Export data headers"),
-                      subtitle: const Text("Add header to csv data exports"),
+                        eventId = value;
+                        attemptSaveEventId();
+                      },
+                      controller: TextEditingController(text: eventId),
+                    ),
+                    const SizedBox(height: 4.0),
+                    CheckboxListTile(
+                        value: transposedExport,
+                        title: const Text("Transpose Exported Data"),
+                        subtitle: const Text(
+                            "Transpose rows and colums in exported data (recommended)"),
+                        onChanged: (value) {
+                          setState(() {
+                            transposedExport = value!;
+                            attemptSaveTranspose();
+                          });
+                        }),
+                    CheckboxListTile(
+                        value: exportHeaders,
+                        title: const Text("Export data headers"),
+                        subtitle: const Text("Add header to csv data exports"),
+                        onChanged: (value) {
+                          setState(() {
+                            exportHeaders = value!;
+                            attemptSaveHeaders();
+                          });
+                        }),
+                    TextField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'QR Code Max Chars',
+                        suffixText: "Chars",
+                      ),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(4),
+                      ],
                       onChanged: (value) {
-                        setState(() {
-                          exportHeaders = value!;
-                          attemptSaveHeaders();
-                        });
-                      }),
-                  TextField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'QR Code Max Chars',
-                      suffixText: "Chars",
+                        qrMaxChars = int.tryParse(value)!;
+                        attemptSaveQrMaxChars();
+                      },
+                      controller: TextEditingController(
+                        text: qrMaxChars.toString(),
+                      ),
                     ),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly,
-                      LengthLimitingTextInputFormatter(4),
-                    ],
-                    onChanged: (value) {
-                      qrMaxChars = int.tryParse(value)!;
-                      attemptSaveQrMaxChars();
-                    },
-                    controller: TextEditingController(
-                      text: qrMaxChars.toString(),
-                    ),
-                  ),
-                  const Spacer(),
-                  ElevatedButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            icon: const Icon(
-                              Icons.warning_rounded,
-                              size: 180,
-                            ),
-                            title: const Text("Are you sure?"),
-                            content: const Text(
-                                "Do you want to reset all information on the app?"),
-                            actions: [
-                              TextButton(
-                                child: const Text('Reset'),
-                                onPressed: () {
-                                  resetAll();
-                                  resetPrefs();
-                                  Navigator.of(context).pop();
-                                },
+                    const Spacer(),
+                    ElevatedButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              icon: const Icon(
+                                Icons.warning_rounded,
+                                size: 180,
                               ),
-                              TextButton(
-                                child: const Text('Cancel'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    style: ButtonStyle(
-                      minimumSize:
-                          MaterialStateProperty.all(const Size.fromHeight(100)),
-                      maximumSize:
-                          MaterialStateProperty.all(const Size.fromHeight(200)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
+                              title: const Text("Are you sure?"),
+                              content: const Text(
+                                  "Do you want to reset all information on the app?"),
+                              actions: [
+                                TextButton(
+                                  child: const Text('Reset'),
+                                  onPressed: () {
+                                    resetAll();
+                                    resetPrefs();
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: const Text('Cancel'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all(
+                            const Size.fromHeight(100)),
+                        maximumSize: MaterialStateProperty.all(
+                            const Size.fromHeight(200)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                      ),
+                      child: const FittedBox(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Reset App", style: TextStyle(fontSize: 24)),
+                            Text("Resets all stored information")
+                          ],
                         ),
                       ),
                     ),
-                    child: const FittedBox(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Reset App", style: TextStyle(fontSize: 24)),
-                          Text("Resets all stored information")
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        )
+          )
+        else
+          const SizedBox()
       ],
     );
   }
