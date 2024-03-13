@@ -169,631 +169,640 @@ class _PitFormState extends State<PitForm> {
     return IndexedStack(
       index: widget.teamNumberPresent == true ? 1 : 0,
       children: [
-        const Center(child: TeamNumberError()),
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: ListView(
-              children: <Widget>[
-                const SizedBox(height: 8.0),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Width',
-                          suffixText: "in",
-                        ),
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(2),
-                        ],
-                        onChanged: (value) {
-                          widget.onWidthChanged(int.tryParse(value));
-                        },
-                        controller: TextEditingController(
-                          text: widget.width == null
-                              ? ''
-                              : widget.width.toString(),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8.0),
-                    Expanded(
-                      child: TextField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Length',
-                          suffixText: 'in',
-                        ),
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(2),
-                        ],
-                        onChanged: (value) {
-                          widget.onLengthChanged(int.tryParse(value));
-                        },
-                        controller: TextEditingController(
-                          text: widget.length == null
-                              ? ''
-                              : widget.length.toString(),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8.0),
-                    Expanded(
-                      child: TextField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Height',
-                          suffixText: 'in',
-                        ),
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(2),
-                        ],
-                        onChanged: (value) {
-                          widget.onHeightChanged(int.tryParse(value));
-                        },
-                        controller: TextEditingController(
-                          text: widget.height == null
-                              ? ''
-                              : widget.height.toString(),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8.0),
-                    Expanded(
-                      child: TextField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Weight',
-                          suffixText: 'lbs',
-                        ),
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(3),
-                        ],
-                        onChanged: (value) {
-                          widget.onWeightChanged(int.tryParse(value));
-                        },
-                        controller: TextEditingController(
-                          text: widget.weight == null
-                              ? ''
-                              : widget.weight.toString(),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8.0),
-                ChoiceInput(
-                  title: "Drivebase",
-                  onChoiceUpdate: (value) {
-                    setState(() {
-                      widget.onDrivebaseChanged(value!);
-                    });
-                  },
-                  choice: widget.drivebase,
-                  options: const ["Swerve", "Tank", "Other"],
-                ),
-                const SizedBox(height: 8.0),
-                Visibility(
-                  visible: widget.drivebase == 'Other',
-                  child: Column(
+        if (!widget.teamNumberPresent)
+          const Center(child: TeamNumberError())
+        else
+          const SizedBox(),
+        if (widget.teamNumberPresent)
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: ListView(
+                children: <Widget>[
+                  const SizedBox(height: 8.0),
+                  Row(
                     children: [
-                      TextField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Alternate Drivebase Type',
-                        ),
-                        inputFormatters: <TextInputFormatter>[
-                          LengthLimitingTextInputFormatter(15),
-                          FilteringTextInputFormatter(RegExp(r'[a-zA-Z]|-| '),
-                              allow: true)
-                        ],
-                        controller: TextEditingController(
-                          text: widget.altDrivebase == null
-                              ? ''
-                              : widget.altDrivebase.toString(),
-                        ),
-                      ),
-                      const SizedBox(height: 8.0),
-                    ],
-                  ),
-                ),
-                ChoiceInput(
-                  title: "Climber Type",
-                  onChoiceUpdate: (value) {
-                    setState(() {
-                      widget.onClimberTypeChanged(value!);
-                    });
-                  },
-                  choice: widget.climberType,
-                  options: const [
-                    "No Climber",
-                    "Tube-in-Tube",
-                    "Lead Screw",
-                    "Hook and Winch",
-                    "Elevator",
-                    "Other"
-                  ],
-                ),
-                const SizedBox(height: 8.0),
-                Visibility(
-                  visible: widget.climberType == 'Other',
-                  child: Column(
-                    children: [
-                      TextField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Alternate Climber Type',
-                        ),
-                        inputFormatters: <TextInputFormatter>[
-                          LengthLimitingTextInputFormatter(15),
-                          FilteringTextInputFormatter(RegExp(r'[a-zA-Z]|-| '),
-                              allow: true)
-                        ],
-                        controller: TextEditingController(
-                          text: widget.altClimberType == null
-                              ? ''
-                              : widget.altClimberType.toString(),
-                        ),
-                      ),
-                      const SizedBox(height: 8.0),
-                    ],
-                  ),
-                ),
-                const Divider(),
-                SwitchListTile(
-                  title: const Text('Is Kitbot?'),
-                  value: widget.isKitbot,
-                  onChanged: (bool? newValue) {
-                    setState(() {
-                      widget.onIsKitbotChanged(newValue!);
-                    });
-                  },
-                  thumbIcon: thumbIcon,
-                ),
-                const Divider(),
-                SwitchListTile(
-                  title: const Text('Inside Bumper Intake?'),
-                  value: widget.intakeInBumper,
-                  onChanged: (bool? newValue) {
-                    setState(() {
-                      widget.onIntakeInBumperChanged(newValue!);
-                    });
-                  },
-                  thumbIcon: thumbIcon,
-                ),
-                const Divider(),
-                const Text(
-                    "Can their robot pick up from the ground, source or both?"),
-                Row(
-                  children: [
-                    Expanded(
-                      child: CheckboxListTile(
-                        title: const Text('Ground'),
-                        value: widget.doesGroundPickup,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            widget.onDoesGroundPickupChanged(newValue!);
-                          });
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: CheckboxListTile(
-                        title: const Text('Source'),
-                        value: widget.doesSourcePickup,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            widget.onDoesSourcePickupChanged(newValue!);
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                const Divider(),
-                const Text("Can they score speaker, amp or both?"),
-                Row(
-                  children: [
-                    Expanded(
-                      child: CheckboxListTile(
-                        title: const Text('Speaker'),
-                        value: widget.doesSpeaker,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            widget.onDoesSpeakerChanged(newValue!);
-                          });
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: CheckboxListTile(
-                        title: const Text('Amp'),
-                        value: widget.doesAmp,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            widget.onDoesAmpChanged(newValue!);
-                          });
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: CheckboxListTile(
-                        title: const Text('Trap'),
-                        value: widget.doesTrap,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            widget.onDoesTrapChanged(newValue!);
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                const Divider(),
-                const Text(
-                    "Does their shooter have any of these special functions?"),
-                Row(
-                  children: [
-                    Expanded(
-                      child: CheckboxListTile(
-                        title: const Text('Turret'),
-                        value: widget.doesTurretShoot,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            widget.onDoesTurretShootChanged(newValue!);
-                          });
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: CheckboxListTile(
-                        title: const Text('Extend'),
-                        value: widget.doesExtendShoot,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            widget.onDoesExtendShootChanged(newValue!);
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                const Divider(),
-                const Text(
-                    "Where is their human player most comfortable? (if they don't care check both boxes)"),
-                Row(
-                  children: [
-                    Expanded(
-                      child: CheckboxListTile(
-                        title: const Text('Amp'),
-                        value: widget.playerPreferAmp,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            widget.onPlayerPreferAmpChanged(newValue!);
-                          });
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: CheckboxListTile(
-                        title: const Text('Source'),
-                        value: widget.playerPreferSource,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            widget.onPlayerPreferSourceChanged(newValue!);
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                const Divider(),
-                const Text(
-                    "How long has each member of the drive team been in their role?"),
-                const SizedBox(height: 8.0),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Driver',
-                          suffixText: "Years",
-                        ),
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(1),
-                        ],
-                        onChanged: (value) {
-                          widget.onDriverYearsChanged(int.tryParse(value));
-                        },
-                        controller: TextEditingController(
-                          text: widget.driverYears == null
-                              ? ''
-                              : widget.driverYears.toString(),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8.0),
-                    Expanded(
-                      child: TextField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Operator',
-                          suffixText: "Years",
-                        ),
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(1),
-                        ],
-                        onChanged: (value) {
-                          widget.onOperatorYearsChanged(int.tryParse(value));
-                        },
-                        controller: TextEditingController(
-                          text: widget.operatorYears == null
-                              ? ''
-                              : widget.operatorYears.toString(),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8.0),
-                    Expanded(
-                      child: TextField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Coach',
-                          suffixText: "Years",
-                        ),
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(2),
-                        ],
-                        onChanged: (value) {
-                          widget.onCoachYearsChanged(int.tryParse(value));
-                        },
-                        controller: TextEditingController(
-                          text: widget.coachYears == null
-                              ? ''
-                              : widget.coachYears.toString(),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const Divider(),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Theme.of(context).dividerColor,
-                    ),
-                    borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-                  ),
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      CheckboxListTile(
-                        title: const Text('Has Auton'),
-                        value: widget.autonExists,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            widget.onAutonExistsChanged(newValue!);
-                          });
-                        },
-                      ),
-                      Visibility(
-                        visible: widget.autonExists,
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 8.0),
-                            const Text(
-                                "What is their prefered auton start position?"),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: RadioListTile<StartPositions>(
-                                    title: const Text('Left'),
-                                    value: StartPositions.left,
-                                    groupValue: widget.prefStart,
-                                    onChanged: (StartPositions? value) {
-                                      widget.onPrefStartChanged(
-                                          value ?? StartPositions.middle);
-                                    },
-                                  ),
-                                ),
-                                Expanded(
-                                  child: RadioListTile<StartPositions>(
-                                    title: const Text('Mid'),
-                                    value: StartPositions.middle,
-                                    groupValue: widget.prefStart,
-                                    onChanged: (StartPositions? value) {
-                                      widget.onPrefStartChanged(
-                                          value ?? StartPositions.middle);
-                                    },
-                                  ),
-                                ),
-                                Expanded(
-                                  child: RadioListTile<StartPositions>(
-                                    title: const Text('Right'),
-                                    value: StartPositions.right,
-                                    groupValue: widget.prefStart,
-                                    onChanged: (StartPositions? value) {
-                                      widget.onPrefStartChanged(
-                                          value ?? StartPositions.middle);
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8.0),
-                            NumberInput(
-                              title: "Speaker Notes",
-                              value: widget.autonSpeakerNotes,
-                              onValueAdd: () {
-                                setState(() {
-                                  if (widget.autonSpeakerNotes < 10) {
-                                    autonSpeakerNotes =
-                                        widget.autonSpeakerNotes + 1;
-                                  }
-                                  widget.onAutonSpeakerNotesChanged(
-                                      autonSpeakerNotes);
-                                });
-                              },
-                              onValueSubtract: () {
-                                setState(() {
-                                  if (widget.autonSpeakerNotes > 0) {
-                                    autonSpeakerNotes =
-                                        widget.autonSpeakerNotes - 1;
-                                  }
-                                  widget.onAutonSpeakerNotesChanged(
-                                      autonSpeakerNotes);
-                                });
-                              },
-                            ),
-                            const SizedBox(height: 8.0),
-                            NumberInput(
-                              title: "Amp Notes",
-                              value: widget.autonAmpNotes,
-                              onValueAdd: () {
-                                setState(() {
-                                  if (widget.autonAmpNotes < 10) {
-                                    autonAmpNotes = widget.autonAmpNotes + 1;
-                                  }
-                                  widget.onAutonAmpNotesChanged(autonAmpNotes);
-                                });
-                              },
-                              onValueSubtract: () {
-                                setState(() {
-                                  if (widget.autonAmpNotes > 0) {
-                                    autonAmpNotes = widget.autonAmpNotes - 1;
-                                  }
-                                  widget.onAutonAmpNotesChanged(autonAmpNotes);
-                                });
-                              },
-                            ),
-                            const SizedBox(height: 8.0),
-                            NumberInput(
-                              title: "Auto Routes",
-                              value: widget.autonRoutes,
-                              onValueAdd: () {
-                                setState(() {
-                                  if (widget.autonRoutes < 10) {
-                                    autonRoutes = widget.autonRoutes + 1;
-                                  }
-                                  widget.onAutonRoutesChanged(autonRoutes);
-                                });
-                              },
-                              onValueSubtract: () {
-                                setState(() {
-                                  if (widget.autonRoutes > 0) {
-                                    autonRoutes = widget.autonRoutes - 1;
-                                  }
-                                  widget.onAutonRoutesChanged(autonRoutes);
-                                });
-                              },
-                            ),
-                            const SizedBox(height: 8.0),
-                            RatingInput(
-                              title: "Auto Consistency",
-                              onRatingUpdate: (value) {
-                                widget.onAutonConsistencyChanged(value);
-                              },
-                              initialRating: widget.autonConsistency,
-                              itemCount: 4,
-                            ),
-                            const SizedBox(height: 8.0),
-                            RatingInput(
-                              title: "Auto Versatility",
-                              onRatingUpdate: (value) {
-                                widget.onAutonVersatilityChanged(value);
-                              },
-                              initialRating: widget.autonVersatility,
-                              itemCount: 4,
-                            ),
-                            const SizedBox(height: 8.0),
-                            TextField(
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Auton Strategy',
-                              ),
-                              maxLines: 5,
-                              inputFormatters: <TextInputFormatter>[
-                                LengthLimitingTextInputFormatter(500),
-                                FilteringTextInputFormatter(
-                                  RegExp(r'[a-zA-Z]|-| |\n'),
-                                  allow: true,
-                                )
-                              ],
-                              onChanged: (value) {
-                                widget.onAutonStratChanged(value);
-                              },
-                              controller: TextEditingController(
-                                text: widget.autonStrat,
-                              ),
-                            ),
+                      Expanded(
+                        child: TextField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Width',
+                            suffixText: "in",
+                          ),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(2),
                           ],
+                          onChanged: (value) {
+                            widget.onWidthChanged(int.tryParse(value));
+                          },
+                          controller: TextEditingController(
+                            text: widget.width == null
+                                ? ''
+                                : widget.width.toString(),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8.0),
+                      Expanded(
+                        child: TextField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Length',
+                            suffixText: 'in',
+                          ),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(2),
+                          ],
+                          onChanged: (value) {
+                            widget.onLengthChanged(int.tryParse(value));
+                          },
+                          controller: TextEditingController(
+                            text: widget.length == null
+                                ? ''
+                                : widget.length.toString(),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8.0),
+                      Expanded(
+                        child: TextField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Height',
+                            suffixText: 'in',
+                          ),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(2),
+                          ],
+                          onChanged: (value) {
+                            widget.onHeightChanged(int.tryParse(value));
+                          },
+                          controller: TextEditingController(
+                            text: widget.height == null
+                                ? ''
+                                : widget.height.toString(),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8.0),
+                      Expanded(
+                        child: TextField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Weight',
+                            suffixText: 'lbs',
+                          ),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(3),
+                          ],
+                          onChanged: (value) {
+                            widget.onWeightChanged(int.tryParse(value));
+                          },
+                          controller: TextEditingController(
+                            text: widget.weight == null
+                                ? ''
+                                : widget.weight.toString(),
+                          ),
                         ),
                       ),
                     ],
                   ),
-                ),
-                const Divider(),
-                RatingInput(
-                  title: 'Repairability',
-                  onRatingUpdate: (rating) {
-                    setState(() {
-                      widget.onRepairabilityChanged(rating);
-                    });
-                  },
-                  initialRating: widget.repairability,
-                ),
-                const Divider(),
-                RatingInput(
-                  title: 'Maneuverability',
-                  onRatingUpdate: (rating) {
-                    setState(() {
-                      widget.onManeuverabilityChanged(rating);
-                    });
-                  },
-                  initialRating: widget.maneuverability,
-                ),
-                const SizedBox(height: 8.0),
-                TextField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Teleop Strategy',
+                  const SizedBox(height: 8.0),
+                  ChoiceInput(
+                    title: "Drivebase",
+                    onChoiceUpdate: (value) {
+                      setState(() {
+                        widget.onDrivebaseChanged(value!);
+                      });
+                    },
+                    choice: widget.drivebase,
+                    options: const ["Swerve", "Tank", "Other"],
                   ),
-                  maxLines: 5,
-                  inputFormatters: <TextInputFormatter>[
-                    LengthLimitingTextInputFormatter(500),
-                    FilteringTextInputFormatter(
-                      RegExp(r'[a-zA-Z]|-| |\n'),
-                      allow: true,
+                  const SizedBox(height: 8.0),
+                  Visibility(
+                    visible: widget.drivebase == 'Other',
+                    child: Column(
+                      children: [
+                        TextField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Alternate Drivebase Type',
+                          ),
+                          inputFormatters: <TextInputFormatter>[
+                            LengthLimitingTextInputFormatter(15),
+                            FilteringTextInputFormatter(RegExp(r'[a-zA-Z]|-| '),
+                                allow: true)
+                          ],
+                          controller: TextEditingController(
+                            text: widget.altDrivebase == null
+                                ? ''
+                                : widget.altDrivebase.toString(),
+                          ),
+                        ),
+                        const SizedBox(height: 8.0),
+                      ],
                     ),
-                  ],
-                  onChanged: (value) {
-                    widget.onTeleopStratChnaged(value);
-                  },
-                  controller: TextEditingController(
-                    text: widget.teleopStrat,
                   ),
-                )
-              ],
+                  ChoiceInput(
+                    title: "Climber Type",
+                    onChoiceUpdate: (value) {
+                      setState(() {
+                        widget.onClimberTypeChanged(value!);
+                      });
+                    },
+                    choice: widget.climberType,
+                    options: const [
+                      "No Climber",
+                      "Tube-in-Tube",
+                      "Lead Screw",
+                      "Hook and Winch",
+                      "Elevator",
+                      "Other"
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
+                  Visibility(
+                    visible: widget.climberType == 'Other',
+                    child: Column(
+                      children: [
+                        TextField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Alternate Climber Type',
+                          ),
+                          inputFormatters: <TextInputFormatter>[
+                            LengthLimitingTextInputFormatter(15),
+                            FilteringTextInputFormatter(RegExp(r'[a-zA-Z]|-| '),
+                                allow: true)
+                          ],
+                          controller: TextEditingController(
+                            text: widget.altClimberType == null
+                                ? ''
+                                : widget.altClimberType.toString(),
+                          ),
+                        ),
+                        const SizedBox(height: 8.0),
+                      ],
+                    ),
+                  ),
+                  const Divider(),
+                  SwitchListTile(
+                    title: const Text('Is Kitbot?'),
+                    value: widget.isKitbot,
+                    onChanged: (bool? newValue) {
+                      setState(() {
+                        widget.onIsKitbotChanged(newValue!);
+                      });
+                    },
+                    thumbIcon: thumbIcon,
+                  ),
+                  const Divider(),
+                  SwitchListTile(
+                    title: const Text('Inside Bumper Intake?'),
+                    value: widget.intakeInBumper,
+                    onChanged: (bool? newValue) {
+                      setState(() {
+                        widget.onIntakeInBumperChanged(newValue!);
+                      });
+                    },
+                    thumbIcon: thumbIcon,
+                  ),
+                  const Divider(),
+                  const Text(
+                      "Can their robot pick up from the ground, source or both?"),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: const Text('Ground'),
+                          value: widget.doesGroundPickup,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              widget.onDoesGroundPickupChanged(newValue!);
+                            });
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: const Text('Source'),
+                          value: widget.doesSourcePickup,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              widget.onDoesSourcePickupChanged(newValue!);
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Divider(),
+                  const Text("Can they score speaker, amp or both?"),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: const Text('Speaker'),
+                          value: widget.doesSpeaker,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              widget.onDoesSpeakerChanged(newValue!);
+                            });
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: const Text('Amp'),
+                          value: widget.doesAmp,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              widget.onDoesAmpChanged(newValue!);
+                            });
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: const Text('Trap'),
+                          value: widget.doesTrap,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              widget.onDoesTrapChanged(newValue!);
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Divider(),
+                  const Text(
+                      "Does their shooter have any of these special functions?"),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: const Text('Turret'),
+                          value: widget.doesTurretShoot,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              widget.onDoesTurretShootChanged(newValue!);
+                            });
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: const Text('Extend'),
+                          value: widget.doesExtendShoot,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              widget.onDoesExtendShootChanged(newValue!);
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Divider(),
+                  const Text(
+                      "Where is their human player most comfortable? (if they don't care check both boxes)"),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: const Text('Amp'),
+                          value: widget.playerPreferAmp,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              widget.onPlayerPreferAmpChanged(newValue!);
+                            });
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: const Text('Source'),
+                          value: widget.playerPreferSource,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              widget.onPlayerPreferSourceChanged(newValue!);
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Divider(),
+                  const Text(
+                      "How long has each member of the drive team been in their role?"),
+                  const SizedBox(height: 8.0),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Driver',
+                            suffixText: "Years",
+                          ),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(1),
+                          ],
+                          onChanged: (value) {
+                            widget.onDriverYearsChanged(int.tryParse(value));
+                          },
+                          controller: TextEditingController(
+                            text: widget.driverYears == null
+                                ? ''
+                                : widget.driverYears.toString(),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8.0),
+                      Expanded(
+                        child: TextField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Operator',
+                            suffixText: "Years",
+                          ),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(1),
+                          ],
+                          onChanged: (value) {
+                            widget.onOperatorYearsChanged(int.tryParse(value));
+                          },
+                          controller: TextEditingController(
+                            text: widget.operatorYears == null
+                                ? ''
+                                : widget.operatorYears.toString(),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8.0),
+                      Expanded(
+                        child: TextField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Coach',
+                            suffixText: "Years",
+                          ),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(2),
+                          ],
+                          onChanged: (value) {
+                            widget.onCoachYearsChanged(int.tryParse(value));
+                          },
+                          controller: TextEditingController(
+                            text: widget.coachYears == null
+                                ? ''
+                                : widget.coachYears.toString(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Divider(),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Theme.of(context).dividerColor,
+                      ),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(4.0)),
+                    ),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        CheckboxListTile(
+                          title: const Text('Has Auton'),
+                          value: widget.autonExists,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              widget.onAutonExistsChanged(newValue!);
+                            });
+                          },
+                        ),
+                        Visibility(
+                          visible: widget.autonExists,
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 8.0),
+                              const Text(
+                                  "What is their prefered auton start position?"),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: RadioListTile<StartPositions>(
+                                      title: const Text('Left'),
+                                      value: StartPositions.left,
+                                      groupValue: widget.prefStart,
+                                      onChanged: (StartPositions? value) {
+                                        widget.onPrefStartChanged(
+                                            value ?? StartPositions.middle);
+                                      },
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: RadioListTile<StartPositions>(
+                                      title: const Text('Mid'),
+                                      value: StartPositions.middle,
+                                      groupValue: widget.prefStart,
+                                      onChanged: (StartPositions? value) {
+                                        widget.onPrefStartChanged(
+                                            value ?? StartPositions.middle);
+                                      },
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: RadioListTile<StartPositions>(
+                                      title: const Text('Right'),
+                                      value: StartPositions.right,
+                                      groupValue: widget.prefStart,
+                                      onChanged: (StartPositions? value) {
+                                        widget.onPrefStartChanged(
+                                            value ?? StartPositions.middle);
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8.0),
+                              NumberInput(
+                                title: "Speaker Notes",
+                                value: widget.autonSpeakerNotes,
+                                onValueAdd: () {
+                                  setState(() {
+                                    if (widget.autonSpeakerNotes < 10) {
+                                      autonSpeakerNotes =
+                                          widget.autonSpeakerNotes + 1;
+                                    }
+                                    widget.onAutonSpeakerNotesChanged(
+                                        autonSpeakerNotes);
+                                  });
+                                },
+                                onValueSubtract: () {
+                                  setState(() {
+                                    if (widget.autonSpeakerNotes > 0) {
+                                      autonSpeakerNotes =
+                                          widget.autonSpeakerNotes - 1;
+                                    }
+                                    widget.onAutonSpeakerNotesChanged(
+                                        autonSpeakerNotes);
+                                  });
+                                },
+                              ),
+                              const SizedBox(height: 8.0),
+                              NumberInput(
+                                title: "Amp Notes",
+                                value: widget.autonAmpNotes,
+                                onValueAdd: () {
+                                  setState(() {
+                                    if (widget.autonAmpNotes < 10) {
+                                      autonAmpNotes = widget.autonAmpNotes + 1;
+                                    }
+                                    widget
+                                        .onAutonAmpNotesChanged(autonAmpNotes);
+                                  });
+                                },
+                                onValueSubtract: () {
+                                  setState(() {
+                                    if (widget.autonAmpNotes > 0) {
+                                      autonAmpNotes = widget.autonAmpNotes - 1;
+                                    }
+                                    widget
+                                        .onAutonAmpNotesChanged(autonAmpNotes);
+                                  });
+                                },
+                              ),
+                              const SizedBox(height: 8.0),
+                              NumberInput(
+                                title: "Auto Routes",
+                                value: widget.autonRoutes,
+                                onValueAdd: () {
+                                  setState(() {
+                                    if (widget.autonRoutes < 10) {
+                                      autonRoutes = widget.autonRoutes + 1;
+                                    }
+                                    widget.onAutonRoutesChanged(autonRoutes);
+                                  });
+                                },
+                                onValueSubtract: () {
+                                  setState(() {
+                                    if (widget.autonRoutes > 0) {
+                                      autonRoutes = widget.autonRoutes - 1;
+                                    }
+                                    widget.onAutonRoutesChanged(autonRoutes);
+                                  });
+                                },
+                              ),
+                              const SizedBox(height: 8.0),
+                              RatingInput(
+                                title: "Auto Consistency",
+                                onRatingUpdate: (value) {
+                                  widget.onAutonConsistencyChanged(value);
+                                },
+                                initialRating: widget.autonConsistency,
+                                itemCount: 4,
+                              ),
+                              const SizedBox(height: 8.0),
+                              RatingInput(
+                                title: "Auto Versatility",
+                                onRatingUpdate: (value) {
+                                  widget.onAutonVersatilityChanged(value);
+                                },
+                                initialRating: widget.autonVersatility,
+                                itemCount: 4,
+                              ),
+                              const SizedBox(height: 8.0),
+                              TextField(
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Auton Strategy',
+                                ),
+                                maxLines: 5,
+                                inputFormatters: <TextInputFormatter>[
+                                  LengthLimitingTextInputFormatter(500),
+                                  FilteringTextInputFormatter(
+                                    RegExp(r'[a-zA-Z]|-| |\n'),
+                                    allow: true,
+                                  )
+                                ],
+                                onChanged: (value) {
+                                  widget.onAutonStratChanged(value);
+                                },
+                                controller: TextEditingController(
+                                  text: widget.autonStrat,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(),
+                  RatingInput(
+                    title: 'Repairability',
+                    onRatingUpdate: (rating) {
+                      setState(() {
+                        widget.onRepairabilityChanged(rating);
+                      });
+                    },
+                    initialRating: widget.repairability,
+                  ),
+                  const Divider(),
+                  RatingInput(
+                    title: 'Maneuverability',
+                    onRatingUpdate: (rating) {
+                      setState(() {
+                        widget.onManeuverabilityChanged(rating);
+                      });
+                    },
+                    initialRating: widget.maneuverability,
+                  ),
+                  const SizedBox(height: 8.0),
+                  TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Teleop Strategy',
+                    ),
+                    maxLines: 5,
+                    inputFormatters: <TextInputFormatter>[
+                      LengthLimitingTextInputFormatter(500),
+                      FilteringTextInputFormatter(
+                        RegExp(r'[a-zA-Z]|-| |\n'),
+                        allow: true,
+                      ),
+                    ],
+                    onChanged: (value) {
+                      widget.onTeleopStratChnaged(value);
+                    },
+                    controller: TextEditingController(
+                      text: widget.teleopStrat,
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-        ),
+          )
+        else
+          const SizedBox(),
       ],
     );
   }
