@@ -1459,6 +1459,51 @@ class _FormAppPageState extends State<FormAppPage> {
                   setState(() {
                     fieldPageIndex = index;
                   });
+                  if ((fieldTeamNumber != null) &&
+                      (fieldMatchNumber != null) &&
+                      ((index == 1) || (index == 2) || (index == 3)) &&
+                      !(incompleteFieldScoutingTasks.any((entry) =>
+                          entry.team == fieldTeamNumber &&
+                          entry.match == fieldMatchNumber &&
+                          entry.alliance == fieldAlliance &&
+                          entry.position == fieldRobotPosition))) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text("Warning"),
+                          icon: const Icon(
+                            Icons.warning_rounded,
+                            size: 72,
+                          ),
+                          content: const Text(
+                              "You are selecting a team, match number, or starting position that you are not assigned to scout. Are you sure you want to continue?"),
+                          actionsOverflowButtonSpacing: 20,
+                          actions: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                setState(() {
+                                  fieldPageIndex = 0;
+                                  fieldTeamNumber = null;
+                                  fieldMatchNumber = null;
+                                  fieldAlliance = Alliances.red;
+                                  fieldRobotPosition = 0;
+                                });
+                              },
+                              child: const Text("Go Back"),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text("Yes, I'm Sure"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
                 }
               },
               destinations: const [
