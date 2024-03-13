@@ -80,6 +80,7 @@ class _FormAppPageState extends State<FormAppPage> {
   String eventId = "";
   bool transposedExport = true;
   bool exportHeaders = true;
+  int qrMaxChars = 100;
 
   int? fieldTeamNumber;
   int? pitTeamNumber;
@@ -163,6 +164,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
   bool saveDisabled = false;
   bool importerSaveCompletes = false;
+  List<String> pitQrChunks = [];
 
   List<ScoutingTask> incompleteFieldScoutingTasks = [];
 
@@ -200,6 +202,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
     transposedExport = prefs.getBool("transposedExport") ?? true;
     exportHeaders = prefs.getBool("exportHeaders") ?? true;
+    qrMaxChars = prefs.getInt("qrMaxChars") ?? 100;
 
     setState(() {
       appMode = prefs.getInt('appMode') ?? 0;
@@ -468,6 +471,12 @@ class _FormAppPageState extends State<FormAppPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (appMode == 1) {
+      // dont waste resources
+      pitQrChunks = splitStringByLength(
+          getPitKVFormattedData(transpose: true, header: false)[0].join("||"),
+          qrMaxChars);
+    }
     return IndexedStack(
       index: appMode,
       children: [
@@ -998,17 +1007,18 @@ class _FormAppPageState extends State<FormAppPage> {
                 index: pitTeamNumber == null ? 0 : 1,
                 children: [
                   const Center(child: TeamNumberError()),
-                  ListView(
+                  Column(
                     children: [
+                      const Spacer(),
                       Padding(
                         padding: const EdgeInsets.all(32.0),
                         child: QrImageView(
-                          data: getPitKVFormattedData(
-                                  transpose: true, header: false)[0]
-                              .join("||"),
+                          data: pitQrChunks[0],
                           backgroundColor: Colors.white,
                         ),
                       ),
+                      const Spacer(),
+                      // TODO: Navigate between all of the qr code chunks
                     ],
                   ),
                 ],
@@ -1511,6 +1521,25 @@ class _FormAppPageState extends State<FormAppPage> {
                           attemptSaveHeaders();
                         });
                       }),
+                  TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'QR Code Max Chars',
+                      suffixText: "Chars",
+                    ),
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(4),
+                    ],
+                    onChanged: (value) {
+                      qrMaxChars = int.tryParse(value)!;
+                      attemptSaveQrMaxChars();
+                    },
+                    controller: TextEditingController(
+                      text: qrMaxChars.toString(),
+                    ),
+                  ),
                   const Spacer(),
                   ElevatedButton(
                     onPressed: () {
@@ -1961,6 +1990,18 @@ class _FormAppPageState extends State<FormAppPage> {
     prefs.setString("jsonCompletePitTasks", jsonCompletePitTasks);
   }
 
+  List<String> splitStringByLength(String input, int chunkSize) {
+    List<String> chunks = [];
+    for (int i = 0; i < input.length; i += chunkSize) {
+      if (i + chunkSize <= input.length) {
+        chunks.add(input.substring(i, i + chunkSize));
+      } else {
+        chunks.add(input.substring(i));
+      }
+    }
+    return chunks;
+  }
+
   Future<void> attemptSaveEventId() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -1977,5 +2018,11 @@ class _FormAppPageState extends State<FormAppPage> {
     final prefs = await SharedPreferences.getInstance();
 
     prefs.setBool("exportHeaders", exportHeaders);
+  }
+
+  Future<void> attemptSaveQrMaxChars() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.setInt("qrMaxChars", qrMaxChars);
   }
 }

@@ -275,7 +275,7 @@ class NumberInput extends StatelessWidget {
 
   final NumberInputStyle style;
 
-  final enableSpacer;
+  final bool enableSpacer;
 
   const NumberInput({
     super.key,
