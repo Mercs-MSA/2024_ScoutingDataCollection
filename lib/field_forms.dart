@@ -716,7 +716,6 @@ class _FieldTeleopFormState extends State<FieldTeleopForm> {
                   });
                 },
               ),
-              const Spacer(),
             ],
           ),
         ),
