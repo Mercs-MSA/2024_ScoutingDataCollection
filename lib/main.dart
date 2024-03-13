@@ -106,6 +106,7 @@ class _FormAppPageState extends State<FormAppPage> {
   String? pitAltClimberType;
 
   bool fieldLeave = false;
+  bool fieldCrossLine = false;
 
   bool fieldAutonExists = false;
   bool pitAutonExists = false;
@@ -142,6 +143,18 @@ class _FormAppPageState extends State<FormAppPage> {
 
   int fieldAutonSpeakerNotesMissed = 0;
   int fieldAutonAmpNotesMissed = 0;
+
+  bool fieldPickupFloor = false;
+  bool fieldPickupSource = false;
+
+  int fieldTeleopAmpNotesScored = 0;
+  int fieldTeleopAmpNotesMissed = 0;
+
+  int fieldTeleopSpeakerNotesScored = 0;
+  int fieldTeleopSpeakerNotesMissed = 0;
+
+  int fieldTeleopDroppedNotes = 0;
+  int fieldTeleopNotesFed = 0;
 
   List<bool?> fieldWingNotes = [false, false, false];
   List<bool?> fieldCenterNotes = [false, false, false, false, false];
@@ -1158,6 +1171,12 @@ class _FormAppPageState extends State<FormAppPage> {
                   });
                 },
                 leave: fieldLeave,
+                crossLine: fieldCrossLine,
+                onCrossLineChanged: (value) {
+                  setState(() {
+                    fieldCrossLine = value;
+                  });
+                },
                 speakerNotes: fieldAutonSpeakerNotes,
                 onSpeakerNotesChanged: (value) {
                   setState(() {
@@ -1201,7 +1220,63 @@ class _FormAppPageState extends State<FormAppPage> {
                   });
                 },
               ),
-              const Placeholder(),
+              FieldTeleopForm(
+                teamNumberPresent: fieldTeamNumber == null
+                    ? false
+                    : true && fieldMatchNumber == null
+                        ? false
+                        : true,
+                allianceColor: fieldAlliance,
+                robotPosition: fieldRobotPosition,
+                pickupFloor: fieldPickupFloor,
+                onPickupFloorChanged: (value) {
+                  setState(() {
+                    fieldPickupFloor = value;
+                  });
+                },
+                pickupSource: fieldPickupSource,
+                onPickupSourceChanged: (value) {
+                  setState(() {
+                    fieldPickupSource = value;
+                  });
+                },
+                ampNotesScored: fieldTeleopAmpNotesScored,
+                onAmpNotesScoredChanged: (value) {
+                  setState(() {
+                    fieldTeleopAmpNotesScored = value;
+                  });
+                },
+                ampNotesMissed: fieldTeleopAmpNotesMissed,
+                onAmpNotesMissedChanged: (value) {
+                  setState(() {
+                    fieldTeleopAmpNotesMissed = value;
+                  });
+                },
+                speakerNotesScored: fieldTeleopSpeakerNotesScored,
+                onSpeakerNotesScoredChanged: (value) {
+                  setState(() {
+                    fieldTeleopSpeakerNotesScored = value;
+                  });
+                },
+                speakerNotesMissed: fieldTeleopSpeakerNotesMissed,
+                onSpeakerNotesMissedChanged: (value) {
+                  setState(() {
+                    fieldTeleopSpeakerNotesMissed = value;
+                  });
+                },
+                droppedNotes: fieldTeleopDroppedNotes,
+                onDroppedNotesChanged: (value) {
+                  setState(() {
+                    fieldTeleopDroppedNotes = value;
+                  });
+                },
+                notesFed: fieldTeleopNotesFed,
+                onNotesFedChanged: (value) {
+                  setState(() {
+                    fieldTeleopNotesFed = value;
+                  });
+                },
+              ),
               const Placeholder(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

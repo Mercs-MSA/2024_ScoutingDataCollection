@@ -16,6 +16,9 @@ class FieldAutonForm extends StatefulWidget {
   final Function(bool) onLeaveChanged;
   final bool leave;
 
+  final Function(bool) onCrossLineChanged;
+  final bool crossLine;
+
   final Function(int) onSpeakerNotesChanged;
   final int speakerNotes;
 
@@ -46,6 +49,8 @@ class FieldAutonForm extends StatefulWidget {
     required this.autonExists,
     required this.onLeaveChanged,
     required this.leave,
+    required this.onCrossLineChanged,
+    required this.crossLine,
     required this.onSpeakerNotesChanged,
     required this.speakerNotes,
     required this.onSpeakerNotesMissedChanged,
@@ -77,6 +82,8 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
   int speakerNotesMissed = 0;
   int ampNotesMissed = 0;
 
+  bool crossLine = false;
+
   @override
   Widget build(BuildContext context) {
     return IndexedStack(
@@ -89,6 +96,7 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
             child: Center(
               child: ListView(
                 children: <Widget>[
+                  const Divider(),
                   CheckboxListTile(
                       title: const Text("Has Auton"),
                       value: widget.autonExists,
@@ -97,11 +105,25 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                   Visibility(
                     visible: widget.autonExists,
                     child: CheckboxListTile(
-                      title: const Text('Did they leave wing?'),
+                      title: const Text('Did they leave alliance wall?'),
                       value: widget.leave,
                       onChanged: (bool? newValue) {
                         setState(() {
                           widget.onLeaveChanged(newValue!);
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  Visibility(
+                    visible: widget.autonExists,
+                    child: CheckboxListTile(
+                      title: const Text(
+                          "Did they cross the center line? (this isn't a good thing btw)"),
+                      value: widget.crossLine,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          widget.onCrossLineChanged(newValue!);
                         });
                       },
                     ),
@@ -389,5 +411,305 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
     final RenderBox renderBox =
         imageKey.currentContext?.findRenderObject() as RenderBox;
     return renderBox.size.width;
+  }
+}
+
+class FieldTeleopForm extends StatefulWidget {
+  final bool teamNumberPresent;
+  final Alliances allianceColor;
+  final int robotPosition;
+
+  final Function(bool) onPickupFloorChanged;
+  final bool pickupFloor;
+
+  final Function(bool) onPickupSourceChanged;
+  final bool pickupSource;
+
+  final Function(int) onAmpNotesScoredChanged;
+  final int ampNotesScored;
+
+  final Function(int) onAmpNotesMissedChanged;
+  final int ampNotesMissed;
+
+  final Function(int) onSpeakerNotesScoredChanged;
+  final int speakerNotesScored;
+
+  final Function(int) onSpeakerNotesMissedChanged;
+  final int speakerNotesMissed;
+
+  final Function(int) onDroppedNotesChanged;
+  final int droppedNotes;
+
+  final Function(int) onNotesFedChanged;
+  final int notesFed;
+
+  const FieldTeleopForm({
+    super.key,
+    required this.teamNumberPresent,
+    required this.allianceColor,
+    required this.robotPosition,
+    required this.onPickupFloorChanged,
+    required this.pickupFloor,
+    required this.onPickupSourceChanged,
+    required this.pickupSource,
+    required this.onAmpNotesScoredChanged,
+    required this.ampNotesScored,
+    required this.onAmpNotesMissedChanged,
+    required this.ampNotesMissed,
+    required this.onSpeakerNotesScoredChanged,
+    required this.speakerNotesScored,
+    required this.onSpeakerNotesMissedChanged,
+    required this.speakerNotesMissed,
+    required this.onDroppedNotesChanged,
+    required this.droppedNotes,
+    required this.onNotesFedChanged,
+    required this.notesFed,
+  });
+
+  @override
+  State<FieldTeleopForm> createState() => _FieldTeleopFormState();
+}
+
+class _FieldTeleopFormState extends State<FieldTeleopForm> {
+  bool pickupFloor = false;
+  bool pickupSource = false;
+
+  int ampNotesScored = 0;
+  int ampNotesMissed = 0;
+
+  int speakerNotesScored = 0;
+  int speakerNotesMissed = 0;
+
+  int droppedNotes = 0;
+  int notesFed = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return IndexedStack(
+      index: widget.teamNumberPresent ? 1 : 0,
+      children: [
+        const Center(child: TeamNumberError()),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: ListView(
+            children: <Widget>[
+              const Divider(),
+              //Floor or Source intake
+              Row(
+                children: [
+                  Expanded(
+                    child: CheckboxListTile(
+                      title: const Text('Picks up from floor'),
+                      value: widget.pickupFloor,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          widget.onPickupFloorChanged(newValue!);
+                        });
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: CheckboxListTile(
+                      title: const Text('Picks up from source'),
+                      value: widget.pickupSource,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          widget.onPickupSourceChanged(newValue!);
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              const Divider(),
+              //Amp Score
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Row(
+                      children: [
+                        const Text("AMP"),
+                        NumberInput(
+                          title: "Amp Notes",
+                          miniStyle: true,
+                          style: NumberInputStyle.green,
+                          value: widget.ampNotesScored,
+                          onValueAdd: () {
+                            setState(() {
+                              if (widget.ampNotesScored < 50) {
+                                ampNotesScored = widget.ampNotesScored + 1;
+                              }
+                              widget.onAmpNotesScoredChanged(ampNotesScored);
+                            });
+                          },
+                          onValueSubtract: () {
+                            setState(() {
+                              if (widget.ampNotesScored > 0) {
+                                ampNotesScored = widget.ampNotesScored - 1;
+                              }
+                              widget.onAmpNotesScoredChanged(ampNotesScored);
+                            });
+                          },
+                        ),
+                        NumberInput(
+                          title: "Amp Notes Missed",
+                          miniStyle: true,
+                          style: NumberInputStyle.red,
+                          value: widget.ampNotesMissed,
+                          onValueAdd: () {
+                            setState(() {
+                              if (widget.ampNotesMissed < 50) {
+                                ampNotesMissed = widget.ampNotesMissed + 1;
+                              }
+                              widget.onAmpNotesMissedChanged(ampNotesMissed);
+                            });
+                          },
+                          onValueSubtract: () {
+                            setState(() {
+                              if (widget.ampNotesMissed > 0) {
+                                ampNotesMissed = widget.ampNotesMissed - 1;
+                              }
+                              widget.onAmpNotesMissedChanged(ampNotesMissed);
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  //Speaker Score
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("SPEAKER"),
+                        NumberInput(
+                          title: "Speaker Notes",
+                          miniStyle: true,
+                          style: NumberInputStyle.green,
+                          value: widget.speakerNotesScored,
+                          onValueAdd: () {
+                            setState(() {
+                              if (widget.speakerNotesScored < 50) {
+                                speakerNotesScored =
+                                    widget.speakerNotesScored + 1;
+                              }
+                              widget.onSpeakerNotesScoredChanged(
+                                  speakerNotesScored);
+                            });
+                          },
+                          onValueSubtract: () {
+                            setState(() {
+                              if (widget.speakerNotesScored > 0) {
+                                speakerNotesScored =
+                                    widget.speakerNotesScored - 1;
+                              }
+                              widget.onSpeakerNotesScoredChanged(
+                                  speakerNotesScored);
+                            });
+                          },
+                        ),
+                        NumberInput(
+                          title: "Speaker Notes Missed",
+                          miniStyle: true,
+                          style: NumberInputStyle.red,
+                          value: widget.speakerNotesMissed,
+                          onValueAdd: () {
+                            setState(() {
+                              if (widget.speakerNotesMissed < 50) {
+                                speakerNotesMissed =
+                                    widget.speakerNotesMissed + 1;
+                              }
+                              widget.onSpeakerNotesMissedChanged(
+                                  speakerNotesMissed);
+                            });
+                          },
+                          onValueSubtract: () {
+                            setState(() {
+                              if (widget.speakerNotesMissed > 0) {
+                                speakerNotesMissed =
+                                    widget.speakerNotesMissed - 1;
+                              }
+                              widget.onSpeakerNotesMissedChanged(
+                                  speakerNotesMissed);
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Row(
+                      children: [
+                        const Text("Dropped Notes"),
+                        NumberInput(
+                          title: "Dropped Notes",
+                          miniStyle: true,
+                          style: NumberInputStyle.red,
+                          value: widget.droppedNotes,
+                          onValueAdd: () {
+                            setState(() {
+                              if (widget.droppedNotes < 50) {
+                                droppedNotes = widget.droppedNotes + 1;
+                              }
+                              widget.onDroppedNotesChanged(droppedNotes);
+                            });
+                          },
+                          onValueSubtract: () {
+                            setState(() {
+                              if (widget.droppedNotes > 0) {
+                                droppedNotes = widget.droppedNotes - 1;
+                              }
+                              widget.onDroppedNotesChanged(droppedNotes);
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  //Notes Fed
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("Notes Fed"),
+                        NumberInput(
+                          title: "Notes Fed",
+                          miniStyle: true,
+                          style: NumberInputStyle.green,
+                          value: widget.notesFed,
+                          onValueAdd: () {
+                            setState(() {
+                              if (widget.notesFed < 50) {
+                                notesFed = widget.notesFed + 1;
+                              }
+                              widget.onNotesFedChanged(notesFed);
+                            });
+                          },
+                          onValueSubtract: () {
+                            setState(() {
+                              if (widget.notesFed > 0) {
+                                notesFed = widget.notesFed - 1;
+                              }
+                              widget.onNotesFedChanged(notesFed);
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }
