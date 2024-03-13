@@ -293,7 +293,7 @@ class _PitFormState extends State<PitForm> {
                           labelText: 'Alternate Drivebase Type',
                         ),
                         inputFormatters: <TextInputFormatter>[
-                          LengthLimitingTextInputFormatter(100),
+                          LengthLimitingTextInputFormatter(15),
                           FilteringTextInputFormatter(RegExp(r'[a-zA-Z]|-| '),
                               allow: true)
                         ],
@@ -335,7 +335,7 @@ class _PitFormState extends State<PitForm> {
                           labelText: 'Alternate Climber Type',
                         ),
                         inputFormatters: <TextInputFormatter>[
-                          LengthLimitingTextInputFormatter(100),
+                          LengthLimitingTextInputFormatter(15),
                           FilteringTextInputFormatter(RegExp(r'[a-zA-Z]|-| '),
                               allow: true)
                         ],
