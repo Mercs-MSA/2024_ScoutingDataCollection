@@ -1164,48 +1164,68 @@ class _FormAppPageState extends State<FormAppPage> {
                     children: [
                       Column(
                         children: [
-                          ExpansionTile(
-                            title: const Text("To Be Scouted"),
-                            initiallyExpanded: true,
-                            children: [
-                              for (final entry in incompleteFieldScoutingTasks)
-                                ScoutSelection(
-                                  team: entry.team,
-                                  match: entry.match,
-                                  alliance: entry.alliance,
-                                  position: entry.position,
-                                  onSelected: () {
-                                    setState(() {
-                                      fieldTeamNumber = entry.team;
-                                      fieldMatchNumber = entry.match;
-                                      fieldAlliance = entry.alliance;
-                                      fieldRobotPosition = entry.position;
-                                    });
-                                  },
+                          if (!playoffMode)
+                            Column(
+                              children: [
+                                ExpansionTile(
+                                  title: const Text("To Be Scouted"),
+                                  initiallyExpanded: true,
+                                  children: [
+                                    for (final entry
+                                        in incompleteFieldScoutingTasks)
+                                      ScoutSelection(
+                                        team: entry.team,
+                                        match: entry.match,
+                                        alliance: entry.alliance,
+                                        position: entry.position,
+                                        onSelected: () {
+                                          setState(() {
+                                            fieldTeamNumber = entry.team;
+                                            fieldMatchNumber = entry.match;
+                                            fieldAlliance = entry.alliance;
+                                            fieldRobotPosition = entry.position;
+                                          });
+                                        },
+                                      )
+                                  ],
+                                ),
+                                ExpansionTile(
+                                  title: const Text("Scouted"),
+                                  initiallyExpanded: false,
+                                  children: [
+                                    for (final entry
+                                        in completeFieldScoutingTasks)
+                                      ScoutSelection(
+                                        team: entry.team,
+                                        match: entry.match,
+                                        alliance: entry.alliance,
+                                        position: entry.position,
+                                        onSelected: () {
+                                          setState(() {
+                                            fieldTeamNumber = entry.team;
+                                            fieldMatchNumber = entry.match;
+                                            fieldAlliance = entry.alliance;
+                                            fieldRobotPosition = entry.position;
+                                          });
+                                        },
+                                      )
+                                  ],
+                                ),
+                              ],
+                            )
+                          else
+                            const Column(
+                              children: [
+                                Icon(
+                                  Icons.info_rounded,
+                                  size: 180,
+                                ),
+                                Text(
+                                  "Team Assignments are not available in playoff mode",
+                                  style: TextStyle(fontSize: 18),
                                 )
-                            ],
-                          ),
-                          ExpansionTile(
-                            title: const Text("Scouted"),
-                            initiallyExpanded: false,
-                            children: [
-                              for (final entry in completeFieldScoutingTasks)
-                                ScoutSelection(
-                                  team: entry.team,
-                                  match: entry.match,
-                                  alliance: entry.alliance,
-                                  position: entry.position,
-                                  onSelected: () {
-                                    setState(() {
-                                      fieldTeamNumber = entry.team;
-                                      fieldMatchNumber = entry.match;
-                                      fieldAlliance = entry.alliance;
-                                      fieldRobotPosition = entry.position;
-                                    });
-                                  },
-                                )
-                            ],
-                          ),
+                              ],
+                            ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
@@ -1483,7 +1503,8 @@ class _FormAppPageState extends State<FormAppPage> {
                   setState(() {
                     fieldPageIndex = index;
                   });
-                  if ((fieldTeamNumber != null) &&
+                  if ((!playoffMode) &&
+                      (fieldTeamNumber != null) &&
                       (fieldMatchNumber != null) &&
                       ((index == 1) || (index == 2) || (index == 3)) &&
                       !(incompleteFieldScoutingTasks.any((entry) =>
