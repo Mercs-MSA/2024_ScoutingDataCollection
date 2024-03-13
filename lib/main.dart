@@ -82,6 +82,8 @@ class _FormAppPageState extends State<FormAppPage> {
   bool exportHeaders = true;
   int qrMaxChars = 100;
 
+  bool playoffMode = false;
+
   int? fieldTeamNumber;
   int? pitTeamNumber;
 
@@ -202,6 +204,7 @@ class _FormAppPageState extends State<FormAppPage> {
         (json) => ScoutingTask.fromJson(json));
 
     eventId = prefs.getString("eventId") ?? "";
+    playoffMode = prefs.getBool("playoffMode") ?? false;
 
     transposedExport = prefs.getBool("transposedExport") ?? true;
     exportHeaders = prefs.getBool("exportHeaders") ?? true;
@@ -1683,40 +1686,24 @@ class _FormAppPageState extends State<FormAppPage> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 12.0),
-                    TextField(
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Event ID',
-                      ),
-                      inputFormatters: <TextInputFormatter>[
-                        LengthLimitingTextInputFormatter(15),
-                      ],
-                      onChanged: (value) {
-                        eventId = value;
-                        attemptSaveEventId();
-                      },
-                      controller: TextEditingController(text: eventId),
-                    ),
-                    const SizedBox(height: 4.0),
-                    CheckboxListTile(
+                    SwitchListTile(
                         value: transposedExport,
                         title: const Text("Transpose Exported Data"),
                         subtitle: const Text(
                             "Transpose rows and colums in exported data (recommended)"),
                         onChanged: (value) {
                           setState(() {
-                            transposedExport = value!;
+                            transposedExport = value;
                             attemptSaveTranspose();
                           });
                         }),
-                    CheckboxListTile(
+                    SwitchListTile(
                         value: exportHeaders,
                         title: const Text("Export data headers"),
                         subtitle: const Text("Add header to csv data exports"),
                         onChanged: (value) {
                           setState(() {
-                            exportHeaders = value!;
+                            exportHeaders = value;
                             attemptSaveHeaders();
                           });
                         }),
@@ -1739,6 +1726,46 @@ class _FormAppPageState extends State<FormAppPage> {
                         text: qrMaxChars.toString(),
                       ),
                     ),
+                    Row(
+                      children: [
+                        const Text("Game Options"),
+                        Expanded(
+                          child: Container(
+                              margin: const EdgeInsets.only(
+                                  left: 10.0, right: 15.0),
+                              child: const Divider()),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8.0),
+                    TextField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Event ID',
+                      ),
+                      inputFormatters: <TextInputFormatter>[
+                        LengthLimitingTextInputFormatter(15),
+                      ],
+                      onChanged: (value) {
+                        eventId = value;
+                        attemptSaveEventId();
+                      },
+                      controller: TextEditingController(text: eventId),
+                    ),
+                    const SizedBox(height: 8.0),
+                    SwitchListTile(
+                        value: playoffMode,
+                        title: const Text("Playoff Mode"),
+                        subtitle: const Text(
+                            "Switch from qualification to playoff match mode"),
+                        onChanged: (value) {
+                          setState(() {
+                            playoffMode = value;
+                            attemptSavePlayoff();
+                          });
+                        }),
+                    const SizedBox(height: 4.0),
+                    const SizedBox(height: 12.0),
                     const Spacer(),
                     ElevatedButton(
                       onPressed: () {
@@ -1796,6 +1823,7 @@ class _FormAppPageState extends State<FormAppPage> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 12.0),
                   ],
                 ),
               ),
@@ -1810,7 +1838,7 @@ class _FormAppPageState extends State<FormAppPage> {
   List<List> getFieldKVFormattedData(
       {bool transpose = false, bool header = true}) {
     var data = [
-      ["FORMNAME", "field"],
+      ["gameType", playoffMode ? "playoff" : "qual"],
       ["teamNumber", fieldTeamNumber],
       ["matchNumber", fieldMatchNumber],
       ["hasAuton", fieldAutonExists],
@@ -2070,7 +2098,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
     if (dirPath != null) {
       File(path.join(dirPath,
-              "${eventId}_frc${fieldTeamNumber}_qual/${eventId}_frc${fieldTeamNumber}_qual.csv"))
+              "${eventId}_frc_${fieldTeamNumber}_${playoffMode ? "playoff" : "qual"}/${eventId}_frc${fieldTeamNumber}_${playoffMode ? "playoff" : "qual"}.csv"))
           .create(recursive: true)
           .onError((e, s) {
         throw Error;
@@ -2080,49 +2108,57 @@ class _FormAppPageState extends State<FormAppPage> {
     }
 
     if (!mounted) return;
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Completed?"),
-          icon: const Icon(
-            Icons.question_mark_rounded,
-            size: 72,
-          ),
-          content: const Text("Do you want to mark the task as complete?"),
-          actionsOverflowButtonSpacing: 20,
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("No"),
+    if (!playoffMode) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Completed?"),
+            icon: const Icon(
+              Icons.question_mark_rounded,
+              size: 72,
             ),
-            ElevatedButton(
-              onPressed: () {
-                completeFieldScoutingTasks.add(ScoutingTask(
-                    team: fieldTeamNumber!,
-                    match: fieldMatchNumber!,
-                    alliance: fieldAlliance,
-                    position: fieldRobotPosition));
-                incompleteFieldScoutingTasks.removeWhere((task) =>
-                    (task.team == fieldTeamNumber &&
-                        task.match == fieldMatchNumber! &&
-                        task.alliance == fieldAlliance &&
-                        task.position == fieldRobotPosition));
-                setState(() {
-                  pitPageIndex = 0;
-                });
-                updateTeamSaves();
-                resetField();
-                Navigator.of(context).pop();
-              },
-              child: const Text("Yes"),
-            ),
-          ],
-        );
-      },
-    );
+            content: const Text("Do you want to mark the task as complete?"),
+            actionsOverflowButtonSpacing: 20,
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("No"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  completeFieldScoutingTasks.add(ScoutingTask(
+                      team: fieldTeamNumber!,
+                      match: fieldMatchNumber!,
+                      alliance: fieldAlliance,
+                      position: fieldRobotPosition));
+                  incompleteFieldScoutingTasks.removeWhere((task) =>
+                      (task.team == fieldTeamNumber &&
+                          task.match == fieldMatchNumber! &&
+                          task.alliance == fieldAlliance &&
+                          task.position == fieldRobotPosition));
+                  setState(() {
+                    pitPageIndex = 0;
+                  });
+                  updateTeamSaves();
+                  resetField();
+                  Navigator.of(context).pop();
+                },
+                child: const Text("Yes"),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      setState(() {
+        pitPageIndex = 0;
+      });
+      updateTeamSaves();
+      resetField();
+    }
   }
 
   Future<void> saveFileMobile(Uint8List data, String fileName) async {
@@ -2331,5 +2367,11 @@ class _FormAppPageState extends State<FormAppPage> {
     final prefs = await SharedPreferences.getInstance();
 
     prefs.setInt("qrMaxChars", qrMaxChars);
+  }
+
+  Future<void> attemptSavePlayoff() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.setBool("playoffMode", playoffMode);
   }
 }
