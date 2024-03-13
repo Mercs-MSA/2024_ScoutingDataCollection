@@ -171,6 +171,11 @@ class _FormAppPageState extends State<FormAppPage> {
   bool pitQrChunkNavNextEnabled = true;
   bool pitQrChunkNavBackEnabled = true;
 
+  List<String> fieldQrChunks = [];
+  int fieldCurrentQrChunk = 0;
+  bool fieldQrChunkNavNextEnabled = true;
+  bool fieldQrChunkNavBackEnabled = true;
+
   List<ScoutingTask> incompleteFieldScoutingTasks = [];
 
   List<PitScoutingTask> incompletePitScoutingTasks = [];
@@ -481,6 +486,11 @@ class _FormAppPageState extends State<FormAppPage> {
       // dont waste resources
       pitQrChunks = splitStringByLength(
           getPitKVFormattedData(transpose: true, header: false)[0].join("||"),
+          qrMaxChars);
+    } else if (appMode == 2) {
+      // dont waste resources
+      fieldQrChunks = splitStringByLength(
+          getFieldKVFormattedData(transpose: true, header: false)[0].join("||"),
           qrMaxChars);
     }
     return IndexedStack(
@@ -1475,7 +1485,7 @@ class _FormAppPageState extends State<FormAppPage> {
                               onPressed: saveDisabled == false
                                   ? onFieldScoutSave
                                   : null,
-                              label: const Text("Export Directory"),
+                              label: const Text("Export to Directory"),
                               icon: const Icon(Icons.save),
                             ),
                             const SizedBox(
@@ -1490,6 +1500,103 @@ class _FormAppPageState extends State<FormAppPage> {
                           ],
                         ),
                       ),
+                    ],
+                  )
+                else
+                  const SizedBox(),
+                if (fieldPageIndex == 5)
+                  Column(
+                    children: [
+                      const Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.all(32.0),
+                        child: IndexedStack(
+                          index: fieldCurrentQrChunk,
+                          children: [
+                            for (final (index, chunk) in fieldQrChunks.indexed)
+                              if (index == fieldCurrentQrChunk)
+                                QrImageView(
+                                  data: chunk,
+                                  backgroundColor: Colors.white,
+                                )
+                              else
+                                const SizedBox()
+                          ],
+                        ),
+                      ),
+                      const Spacer(),
+                      const Divider(),
+                      Row(
+                        children: [
+                          const SizedBox(width: 8.0),
+                          ElevatedButton(
+                            onPressed: fieldQrChunkNavBackEnabled
+                                ? () {
+                                    setState(() {
+                                      if (fieldCurrentQrChunk > 0) {
+                                        fieldCurrentQrChunk -= 1;
+                                      }
+                                      if (fieldCurrentQrChunk ==
+                                          fieldQrChunks.length) {
+                                        fieldQrChunkNavNextEnabled = false;
+                                        fieldQrChunkNavBackEnabled = true;
+                                      } else if (fieldCurrentQrChunk == 0) {
+                                        fieldQrChunkNavNextEnabled = true;
+                                        fieldQrChunkNavBackEnabled = false;
+                                      } else {
+                                        fieldQrChunkNavNextEnabled = true;
+                                        fieldQrChunkNavBackEnabled = true;
+                                      }
+                                    });
+                                  }
+                                : null,
+                            child: const Row(
+                              children: [
+                                Icon(Icons.arrow_back),
+                                SizedBox(width: 8.0),
+                                Text("Back"),
+                              ],
+                            ),
+                          ),
+                          const Spacer(),
+                          Text(
+                              "${fieldCurrentQrChunk + 1}/${fieldQrChunks.length}"),
+                          const Spacer(),
+                          ElevatedButton(
+                            onPressed: fieldQrChunkNavNextEnabled
+                                ? () {
+                                    setState(() {
+                                      if (fieldCurrentQrChunk <
+                                          fieldQrChunks.length - 1) {
+                                        fieldCurrentQrChunk += 1;
+                                        print(fieldCurrentQrChunk);
+                                      }
+                                      if (fieldCurrentQrChunk ==
+                                          fieldQrChunks.length - 1) {
+                                        fieldQrChunkNavNextEnabled = false;
+                                        fieldQrChunkNavBackEnabled = true;
+                                      } else if (fieldCurrentQrChunk == 0) {
+                                        fieldQrChunkNavNextEnabled = true;
+                                        fieldQrChunkNavBackEnabled = false;
+                                      } else {
+                                        fieldQrChunkNavNextEnabled = true;
+                                        fieldQrChunkNavBackEnabled = true;
+                                      }
+                                    });
+                                  }
+                                : null,
+                            child: const Row(
+                              children: [
+                                Text("Next"),
+                                SizedBox(width: 8.0),
+                                Icon(Icons.arrow_forward),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 8.0),
+                        ],
+                      ),
+                      const SizedBox(height: 8.0),
                     ],
                   )
                 else
@@ -1571,6 +1678,10 @@ class _FormAppPageState extends State<FormAppPage> {
                 NavigationDestination(
                   icon: Icon(Icons.line_style_rounded),
                   label: 'CSV',
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.qr_code_rounded),
+                  label: 'QR',
                 )
               ],
             ),
@@ -1928,7 +2039,6 @@ class _FormAppPageState extends State<FormAppPage> {
   List<List> getPitKVFormattedData(
       {bool transpose = false, bool header = true}) {
     var data = [
-      ["FORMNAME", "pit"],
       ["teamNumber", pitTeamNumber],
       ['botLength', pitLengthData],
       ['botWidth', pitWidthData],
