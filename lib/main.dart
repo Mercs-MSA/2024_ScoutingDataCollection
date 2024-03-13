@@ -1182,9 +1182,26 @@ class _FormAppPageState extends State<FormAppPage> {
                                 )
                             ],
                           ),
-                          const ExpansionTile(
-                            title: Text("Scouted"),
+                          ExpansionTile(
+                            title: const Text("Scouted"),
                             initiallyExpanded: false,
+                            children: [
+                              for (final entry in completeFieldScoutingTasks)
+                                ScoutSelection(
+                                  team: entry.team,
+                                  match: entry.match,
+                                  alliance: entry.alliance,
+                                  position: entry.position,
+                                  onSelected: () {
+                                    setState(() {
+                                      fieldTeamNumber = entry.team;
+                                      fieldMatchNumber = entry.match;
+                                      fieldAlliance = entry.alliance;
+                                      fieldRobotPosition = entry.position;
+                                    });
+                                  },
+                                )
+                            ],
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -1419,19 +1436,23 @@ class _FormAppPageState extends State<FormAppPage> {
                 else
                   const SizedBox(),
                 if (fieldPageIndex == 4)
-                  Row(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      const Icon(
+                        Icons.output_rounded,
+                        size: 180,
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             ElevatedButton.icon(
                               onPressed: saveDisabled == false
                                   ? onFieldScoutSave
                                   : null,
-                              label: const Text("Export CSV"),
+                              label: const Text("Export Directory"),
                               icon: const Icon(Icons.save),
                             ),
                             const SizedBox(
@@ -1524,8 +1545,8 @@ class _FormAppPageState extends State<FormAppPage> {
                   icon: Icon(Icons.sports_score),
                 ),
                 NavigationDestination(
-                  icon: Icon(Icons.outbox),
-                  label: 'Output',
+                  icon: Icon(Icons.line_style_rounded),
+                  label: 'CSV',
                 )
               ],
             ),
@@ -1786,7 +1807,8 @@ class _FormAppPageState extends State<FormAppPage> {
     );
   }
 
-  List<List> getFieldKVFormattedData({bool transpose = false}) {
+  List<List> getFieldKVFormattedData(
+      {bool transpose = false, bool header = true}) {
     var data = [
       ["FORMNAME", "field"],
       ["teamNumber", fieldTeamNumber],
@@ -1806,6 +1828,10 @@ class _FormAppPageState extends State<FormAppPage> {
         fieldAutonExists ? fieldAutonAmpNotesMissed : "null"
       ],
     ];
+
+    if (!header) {
+      data = data.map((row) => row.sublist(1)).toList();
+    }
 
     if (!transpose) return data;
 
@@ -1979,24 +2005,124 @@ class _FormAppPageState extends State<FormAppPage> {
   }
 
   void onFieldScoutSave() async {
-    final fileData =
-        const ListToCsvConverter().convert(getFieldKVFormattedData());
+    if (fieldTeamNumber == null || fieldMatchNumber == null) {
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Team and Match Number Required"),
+            icon: const Icon(
+              Icons.numbers_rounded,
+              size: 72,
+            ),
+            content: const Text("Save operation cancelled"),
+            actionsOverflowButtonSpacing: 20,
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
+    if (eventId == "") {
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Event ID Required"),
+            icon: const Icon(
+              Icons.abc_rounded,
+              size: 72,
+            ),
+            content: const Text("Save operation cancelled"),
+            actionsOverflowButtonSpacing: 20,
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
+    final fileData = const ListToCsvConverter().convert(getFieldKVFormattedData(
+        transpose: transposedExport, header: exportHeaders));
 
     setState(() {
       saveDisabled = true;
     });
 
-    if (Platform.isAndroid | Platform.isIOS) {
-      await saveFileMobile(Uint8List.fromList(fileData.codeUnits), "field.csv");
-    } else if (Platform.isLinux | Platform.isMacOS | Platform.isWindows) {
-      await saveFileDesktop(
-          Uint8List.fromList(fileData.codeUnits), "field.csv");
-    } else {
-      return;
+    final dirPath = await grabDir();
+
+    if (dirPath != null) {
+      File(path.join(dirPath,
+              "${eventId}_frc${fieldTeamNumber}_qual/${eventId}_frc${fieldTeamNumber}_qual.csv"))
+          .create(recursive: true)
+          .onError((e, s) {
+        throw Error;
+      }).then((File file) {
+        file.writeAsBytes(Uint8List.fromList(fileData.codeUnits));
+      });
     }
 
-    // resetPit();
-    updateTeamSaves();
+    if (!mounted) return;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Completed?"),
+          icon: const Icon(
+            Icons.question_mark_rounded,
+            size: 72,
+          ),
+          content: const Text("Do you want to mark the task as complete?"),
+          actionsOverflowButtonSpacing: 20,
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("No"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                completeFieldScoutingTasks.add(ScoutingTask(
+                    team: fieldTeamNumber!,
+                    match: fieldMatchNumber!,
+                    alliance: fieldAlliance,
+                    position: fieldRobotPosition));
+                incompleteFieldScoutingTasks.removeWhere((task) =>
+                    (task.team == fieldTeamNumber &&
+                        task.match == fieldMatchNumber! &&
+                        task.alliance == fieldAlliance &&
+                        task.position == fieldRobotPosition));
+                setState(() {
+                  pitPageIndex = 0;
+                });
+                updateTeamSaves();
+                resetField();
+                Navigator.of(context).pop();
+              },
+              child: const Text("Yes"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<void> saveFileMobile(Uint8List data, String fileName) async {
