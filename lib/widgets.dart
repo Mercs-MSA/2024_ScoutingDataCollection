@@ -300,20 +300,13 @@ class NumberInput extends StatelessWidget {
           children: [
             Visibility(
               visible: !miniStyle,
-              child: Expanded(
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        title,
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    const Spacer(),
-                  ],
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
               ),
             ),
@@ -535,7 +528,8 @@ class RotatedTriangle extends StatelessWidget {
   final double borderWidth;
 
   const RotatedTriangle(
-      {super.key, required this.rotationAngle,
+      {super.key,
+      required this.rotationAngle,
       required this.color,
       required this.borderColor,
       required this.borderWidth});

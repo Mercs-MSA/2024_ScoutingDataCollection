@@ -19,6 +19,9 @@ class FieldAutonForm extends StatefulWidget {
   final Function(bool) onCrossLineChanged;
   final bool crossLine;
 
+  final Function(bool) onAStopChanged;
+  final bool aStop;
+
   final Function(int) onSpeakerNotesChanged;
   final int speakerNotes;
 
@@ -51,6 +54,8 @@ class FieldAutonForm extends StatefulWidget {
     required this.leave,
     required this.onCrossLineChanged,
     required this.crossLine,
+    required this.onAStopChanged,
+    required this.aStop,
     required this.onSpeakerNotesChanged,
     required this.speakerNotes,
     required this.onSpeakerNotesMissedChanged,
@@ -105,7 +110,7 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                   Visibility(
                     visible: widget.autonExists,
                     child: CheckboxListTile(
-                      title: const Text('Did they leave alliance wall?'),
+                      title: const Text('Did they leave the starting zone?'),
                       value: widget.leave,
                       onChanged: (bool? newValue) {
                         setState(() {
@@ -118,12 +123,25 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                   Visibility(
                     visible: widget.autonExists,
                     child: CheckboxListTile(
-                      title: const Text(
-                          "Did they cross the center line? (this isn't a good thing btw)"),
+                      title: const Text("Did they cross the center line?"),
+                      subtitle: const Text("(this isn't a good thing btw)"),
                       value: widget.crossLine,
                       onChanged: (bool? newValue) {
                         setState(() {
                           widget.onCrossLineChanged(newValue!);
+                        });
+                      },
+                    ),
+                  ),
+                  Visibility(
+                    visible: widget.autonExists,
+                    child: CheckboxListTile(
+                      title: const Text("Did they A-Stop?"),
+                      subtitle: const Text("(this isn't a good thing btw)"),
+                      value: widget.aStop,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          widget.onAStopChanged(newValue!);
                         });
                       },
                     ),
@@ -499,7 +517,7 @@ class _FieldTeleopFormState extends State<FieldTeleopForm> {
                 children: [
                   Expanded(
                     child: CheckboxListTile(
-                      title: const Text('Picks up from floor'),
+                      title: const Text('Floor Pickup'),
                       value: widget.pickupFloor,
                       onChanged: (bool? newValue) {
                         setState(() {
@@ -510,7 +528,7 @@ class _FieldTeleopFormState extends State<FieldTeleopForm> {
                   ),
                   Expanded(
                     child: CheckboxListTile(
-                      title: const Text('Picks up from source'),
+                      title: const Text('Source Pickup'),
                       value: widget.pickupSource,
                       onChanged: (bool? newValue) {
                         setState(() {
@@ -526,184 +544,154 @@ class _FieldTeleopFormState extends State<FieldTeleopForm> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Row(
-                      children: [
-                        const Text("AMP"),
-                        NumberInput(
-                          title: "Amp Notes",
-                          miniStyle: true,
-                          style: NumberInputStyle.green,
-                          value: widget.ampNotesScored,
-                          onValueAdd: () {
-                            setState(() {
-                              if (widget.ampNotesScored < 50) {
-                                ampNotesScored = widget.ampNotesScored + 1;
-                              }
-                              widget.onAmpNotesScoredChanged(ampNotesScored);
-                            });
-                          },
-                          onValueSubtract: () {
-                            setState(() {
-                              if (widget.ampNotesScored > 0) {
-                                ampNotesScored = widget.ampNotesScored - 1;
-                              }
-                              widget.onAmpNotesScoredChanged(ampNotesScored);
-                            });
-                          },
-                        ),
-                        NumberInput(
-                          title: "Amp Notes Missed",
-                          miniStyle: true,
-                          style: NumberInputStyle.red,
-                          value: widget.ampNotesMissed,
-                          onValueAdd: () {
-                            setState(() {
-                              if (widget.ampNotesMissed < 50) {
-                                ampNotesMissed = widget.ampNotesMissed + 1;
-                              }
-                              widget.onAmpNotesMissedChanged(ampNotesMissed);
-                            });
-                          },
-                          onValueSubtract: () {
-                            setState(() {
-                              if (widget.ampNotesMissed > 0) {
-                                ampNotesMissed = widget.ampNotesMissed - 1;
-                              }
-                              widget.onAmpNotesMissedChanged(ampNotesMissed);
-                            });
-                          },
-                        ),
-                      ],
-                    ),
+                  const Spacer(),
+                  const Text("AMP"),
+                  NumberInput(
+                    title: "Amp Notes",
+                    miniStyle: true,
+                    style: NumberInputStyle.green,
+                    value: widget.ampNotesScored,
+                    onValueAdd: () {
+                      setState(() {
+                        if (widget.ampNotesScored < 50) {
+                          ampNotesScored = widget.ampNotesScored + 1;
+                        }
+                        widget.onAmpNotesScoredChanged(ampNotesScored);
+                      });
+                    },
+                    onValueSubtract: () {
+                      setState(() {
+                        if (widget.ampNotesScored > 0) {
+                          ampNotesScored = widget.ampNotesScored - 1;
+                        }
+                        widget.onAmpNotesScoredChanged(ampNotesScored);
+                      });
+                    },
                   ),
+                  NumberInput(
+                    title: "Amp Notes Missed",
+                    miniStyle: true,
+                    style: NumberInputStyle.red,
+                    value: widget.ampNotesMissed,
+                    onValueAdd: () {
+                      setState(() {
+                        if (widget.ampNotesMissed < 50) {
+                          ampNotesMissed = widget.ampNotesMissed + 1;
+                        }
+                        widget.onAmpNotesMissedChanged(ampNotesMissed);
+                      });
+                    },
+                    onValueSubtract: () {
+                      setState(() {
+                        if (widget.ampNotesMissed > 0) {
+                          ampNotesMissed = widget.ampNotesMissed - 1;
+                        }
+                        widget.onAmpNotesMissedChanged(ampNotesMissed);
+                      });
+                    },
+                  ),
+                  const Spacer(),
                   //Speaker Score
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text("SPEAKER"),
-                        NumberInput(
-                          title: "Speaker Notes",
-                          miniStyle: true,
-                          style: NumberInputStyle.green,
-                          value: widget.speakerNotesScored,
-                          onValueAdd: () {
-                            setState(() {
-                              if (widget.speakerNotesScored < 50) {
-                                speakerNotesScored =
-                                    widget.speakerNotesScored + 1;
-                              }
-                              widget.onSpeakerNotesScoredChanged(
-                                  speakerNotesScored);
-                            });
-                          },
-                          onValueSubtract: () {
-                            setState(() {
-                              if (widget.speakerNotesScored > 0) {
-                                speakerNotesScored =
-                                    widget.speakerNotesScored - 1;
-                              }
-                              widget.onSpeakerNotesScoredChanged(
-                                  speakerNotesScored);
-                            });
-                          },
-                        ),
-                        NumberInput(
-                          title: "Speaker Notes Missed",
-                          miniStyle: true,
-                          style: NumberInputStyle.red,
-                          value: widget.speakerNotesMissed,
-                          onValueAdd: () {
-                            setState(() {
-                              if (widget.speakerNotesMissed < 50) {
-                                speakerNotesMissed =
-                                    widget.speakerNotesMissed + 1;
-                              }
-                              widget.onSpeakerNotesMissedChanged(
-                                  speakerNotesMissed);
-                            });
-                          },
-                          onValueSubtract: () {
-                            setState(() {
-                              if (widget.speakerNotesMissed > 0) {
-                                speakerNotesMissed =
-                                    widget.speakerNotesMissed - 1;
-                              }
-                              widget.onSpeakerNotesMissedChanged(
-                                  speakerNotesMissed);
-                            });
-                          },
-                        ),
-                      ],
-                    ),
+                  const Text("SPEAKER"),
+                  NumberInput(
+                    title: "Speaker Notes",
+                    miniStyle: true,
+                    style: NumberInputStyle.green,
+                    value: widget.speakerNotesScored,
+                    onValueAdd: () {
+                      setState(() {
+                        if (widget.speakerNotesScored < 50) {
+                          speakerNotesScored = widget.speakerNotesScored + 1;
+                        }
+                        widget.onSpeakerNotesScoredChanged(speakerNotesScored);
+                      });
+                    },
+                    onValueSubtract: () {
+                      setState(() {
+                        if (widget.speakerNotesScored > 0) {
+                          speakerNotesScored = widget.speakerNotesScored - 1;
+                        }
+                        widget.onSpeakerNotesScoredChanged(speakerNotesScored);
+                      });
+                    },
                   ),
+                  NumberInput(
+                    title: "Speaker Notes Missed",
+                    miniStyle: true,
+                    style: NumberInputStyle.red,
+                    value: widget.speakerNotesMissed,
+                    onValueAdd: () {
+                      setState(() {
+                        if (widget.speakerNotesMissed < 50) {
+                          speakerNotesMissed = widget.speakerNotesMissed + 1;
+                        }
+                        widget.onSpeakerNotesMissedChanged(speakerNotesMissed);
+                      });
+                    },
+                    onValueSubtract: () {
+                      setState(() {
+                        if (widget.speakerNotesMissed > 0) {
+                          speakerNotesMissed = widget.speakerNotesMissed - 1;
+                        }
+                        widget.onSpeakerNotesMissedChanged(speakerNotesMissed);
+                      });
+                    },
+                  ),
+                  const Spacer(),
                 ],
               ),
               const Divider(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Row(
-                      children: [
-                        const Text("Dropped Notes"),
-                        NumberInput(
-                          title: "Dropped Notes",
-                          miniStyle: true,
-                          style: NumberInputStyle.red,
-                          value: widget.droppedNotes,
-                          onValueAdd: () {
-                            setState(() {
-                              if (widget.droppedNotes < 50) {
-                                droppedNotes = widget.droppedNotes + 1;
-                              }
-                              widget.onDroppedNotesChanged(droppedNotes);
-                            });
-                          },
-                          onValueSubtract: () {
-                            setState(() {
-                              if (widget.droppedNotes > 0) {
-                                droppedNotes = widget.droppedNotes - 1;
-                              }
-                              widget.onDroppedNotesChanged(droppedNotes);
-                            });
-                          },
-                        ),
-                      ],
-                    ),
+                  const Spacer(),
+                  NumberInput(
+                    title: "Dropped Notes",
+                    miniStyle: false,
+                    style: NumberInputStyle.red,
+                    value: widget.droppedNotes,
+                    onValueAdd: () {
+                      setState(() {
+                        if (widget.droppedNotes < 50) {
+                          droppedNotes = widget.droppedNotes + 1;
+                        }
+                        widget.onDroppedNotesChanged(droppedNotes);
+                      });
+                    },
+                    onValueSubtract: () {
+                      setState(() {
+                        if (widget.droppedNotes > 0) {
+                          droppedNotes = widget.droppedNotes - 1;
+                        }
+                        widget.onDroppedNotesChanged(droppedNotes);
+                      });
+                    },
                   ),
+                  const Spacer(),
                   //Notes Fed
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text("Notes Fed"),
-                        NumberInput(
-                          title: "Notes Fed",
-                          miniStyle: true,
-                          style: NumberInputStyle.green,
-                          value: widget.notesFed,
-                          onValueAdd: () {
-                            setState(() {
-                              if (widget.notesFed < 50) {
-                                notesFed = widget.notesFed + 1;
-                              }
-                              widget.onNotesFedChanged(notesFed);
-                            });
-                          },
-                          onValueSubtract: () {
-                            setState(() {
-                              if (widget.notesFed > 0) {
-                                notesFed = widget.notesFed - 1;
-                              }
-                              widget.onNotesFedChanged(notesFed);
-                            });
-                          },
-                        ),
-                      ],
-                    ),
+                  NumberInput(
+                    title: "Notes Fed",
+                    miniStyle: false,
+                    style: NumberInputStyle.multi,
+                    value: widget.notesFed,
+                    onValueAdd: () {
+                      setState(() {
+                        if (widget.notesFed < 50) {
+                          notesFed = widget.notesFed + 1;
+                        }
+                        widget.onNotesFedChanged(notesFed);
+                      });
+                    },
+                    onValueSubtract: () {
+                      setState(() {
+                        if (widget.notesFed > 0) {
+                          notesFed = widget.notesFed - 1;
+                        }
+                        widget.onNotesFedChanged(notesFed);
+                      });
+                    },
                   ),
+                  const Spacer(),
                 ],
               ),
             ],

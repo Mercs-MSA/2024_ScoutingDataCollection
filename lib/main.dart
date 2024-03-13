@@ -107,6 +107,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
   bool fieldLeave = false;
   bool fieldCrossLine = false;
+  bool fieldAStop = false;
 
   bool fieldAutonExists = false;
   bool pitAutonExists = false;
@@ -1177,6 +1178,12 @@ class _FormAppPageState extends State<FormAppPage> {
                     fieldCrossLine = value;
                   });
                 },
+                aStop: fieldAStop,
+                onAStopChanged: (value) {
+                  setState(() {
+                    fieldAStop = value;
+                  });
+                },
                 speakerNotes: fieldAutonSpeakerNotes,
                 onSpeakerNotesChanged: (value) {
                   setState(() {
@@ -1876,6 +1883,9 @@ class _FormAppPageState extends State<FormAppPage> {
     fieldAlliance = Alliances.red;
     fieldRobotPosition = 0;
     fieldAutonExists = false;
+    fieldLeave = false;
+    fieldCrossLine = false;
+    fieldAStop = false;
     fieldAutonSpeakerNotes = 0;
     fieldAutonAmpNotes = 0;
     fieldAutonSpeakerNotesMissed = 0;
