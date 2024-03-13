@@ -564,9 +564,6 @@ class FieldTeleopForm extends StatefulWidget {
 }
 
 class _FieldTeleopFormState extends State<FieldTeleopForm> {
-  bool pickupFloor = false;
-  bool pickupSource = false;
-
   int ampNotesScored = 0;
   int ampNotesMissed = 0;
 
@@ -781,5 +778,19 @@ class _FieldTeleopFormState extends State<FieldTeleopForm> {
           const SizedBox(),
       ],
     );
+  }
+}
+
+class PostMatchForm extends StatefulWidget {
+  const PostMatchForm({super.key});
+
+  @override
+  State<PostMatchForm> createState() => _PostMatchFormState();
+}
+
+class _PostMatchFormState extends State<PostMatchForm> {
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }
