@@ -1862,20 +1862,47 @@ class _FormAppPageState extends State<FormAppPage> {
       ["gameType", playoffMode ? "playoff" : "qual"],
       ["teamNumber", fieldTeamNumber],
       ["matchNumber", fieldMatchNumber],
+      ["startingPosition", "${fieldAlliance.name}$fieldRobotPosition"],
       ["hasAuton", fieldAutonExists],
+      ["autonLeave", fieldLeave],
+      ["autonCrossCenter", fieldCrossLine],
+      ["autonAStop", fieldAStop],
       [
-        "autonSpeakerNotesScored",
-        fieldAutonExists ? fieldAutonSpeakerNotes : "null"
+        "autonPreload",
+        fieldPreload == true
+            ? "yes"
+            : fieldPreload == false
+                ? "no"
+                : "missed"
+      ],
+      ["autonSpeakerNotesScored", fieldAutonSpeakerNotes],
+      ["autonSpeakerNotesMissed", fieldAutonSpeakerNotesMissed],
+      ["autonAmpNotesScored", fieldAutonAmpNotes],
+      ["autonAmpNotesMissed", fieldAutonAmpNotesMissed],
+      [
+        "autonWingNotes",
+        fieldWingNotes.map((element) {
+          if (element == true) {
+            return "yes";
+          } else if (element == false) {
+            return "no";
+          } else {
+            return "missed";
+          }
+        }).join(",")
       ],
       [
-        "autonSpeakerNotesMissed",
-        fieldAutonExists ? fieldAutonSpeakerNotesMissed : "null"
-      ],
-      ["autonAmpNotesScored", fieldAutonExists ? fieldAutonAmpNotes : "null"],
-      [
-        "autonAmpNotesMissed",
-        fieldAutonExists ? fieldAutonAmpNotesMissed : "null"
-      ],
+        "autonCenterNotes",
+        fieldCenterNotes.map((element) {
+          if (element == true) {
+            return "yes";
+          } else if (element == false) {
+            return "no";
+          } else {
+            return "missed";
+          }
+        }).join(",")
+      ]
     ];
 
     if (!header) {
