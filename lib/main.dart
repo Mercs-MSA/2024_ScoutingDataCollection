@@ -1902,7 +1902,15 @@ class _FormAppPageState extends State<FormAppPage> {
             return "missed";
           }
         }).join(",")
-      ]
+      ],
+      ["teleopFloorPickup", fieldPickupFloor],
+      ["teleopSourcePickup", fieldPickupSource],
+      ["teleopAmpScored", fieldTeleopAmpNotesScored],
+      ["teleopAmpMissed", fieldTeleopAmpNotesMissed],
+      ["teleopSpeakerScored", fieldTeleopSpeakerNotesScored],
+      ["teleopSpeakerMissed", fieldTeleopSpeakerNotesMissed],
+      ["teleopDroppedNotes", fieldTeleopDroppedNotes],
+      ["teleopFedNotes", fieldTeleopNotesFed]
     ];
 
     if (!header) {
@@ -2314,6 +2322,14 @@ class _FormAppPageState extends State<FormAppPage> {
     fieldCenterNotes = [false, false, false, false, false];
     fieldWingNotes = [false, false, false];
     fieldPreload = true;
+    fieldTeleopAmpNotesScored = 0;
+    fieldTeleopAmpNotesMissed = 0;
+    fieldTeleopSpeakerNotesScored = 0;
+    fieldTeleopAmpNotesMissed = 0;
+    fieldPickupFloor = false;
+    fieldPickupSource = false;
+    fieldTeleopDroppedNotes = 0;
+    fieldTeleopNotesFed = 0;
     setState(() {
       fieldPageIndex = 0;
     });
