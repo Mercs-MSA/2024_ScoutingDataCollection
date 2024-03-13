@@ -77,7 +77,15 @@ class FieldAutonForm extends StatefulWidget {
 }
 
 class _FieldAutonFormState extends State<FieldAutonForm> {
-  final GlobalKey imageKey = GlobalKey();
+  final MaterialStateProperty<Icon?> thumbIcon =
+      MaterialStateProperty.resolveWith<Icon?>(
+    (Set<MaterialState> states) {
+      if (states.contains(MaterialState.selected)) {
+        return const Icon(Icons.check);
+      }
+      return const Icon(Icons.close);
+    },
+  );
 
   bool leave = false;
 
@@ -101,8 +109,9 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
             child: Center(
               child: ListView(
                 children: <Widget>[
-                  CheckboxListTile(
+                  SwitchListTile(
                       title: const Text("Has Auton"),
+                      thumbIcon: thumbIcon,
                       value: widget.autonExists,
                       onChanged: widget.onAutonExistsChanged),
                   IndexedStack(index: widget.autonExists ? 0 : 1, children: [
@@ -117,9 +126,11 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                       ),
                       child: Column(
                         children: [
-                          CheckboxListTile(
+                          const SizedBox(height: 8.0),
+                          SwitchListTile(
                             title:
                                 const Text('Did they leave the starting zone?'),
+                            thumbIcon: thumbIcon,
                             value: widget.leave,
                             onChanged: (bool? newValue) {
                               setState(() {
@@ -128,9 +139,10 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                             },
                           ),
                           const SizedBox(height: 8.0),
-                          CheckboxListTile(
+                          SwitchListTile(
                             title:
                                 const Text("Did they cross the center line?"),
+                            thumbIcon: thumbIcon,
                             subtitle:
                                 const Text("(this isn't a good thing btw)"),
                             value: widget.crossLine,
@@ -140,8 +152,9 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                               });
                             },
                           ),
-                          CheckboxListTile(
+                          SwitchListTile(
                             title: const Text("Did they A-Stop?"),
+                            thumbIcon: thumbIcon,
                             subtitle:
                                 const Text("(this isn't a good thing btw)"),
                             value: widget.aStop,
@@ -441,18 +454,6 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
         ),
       ],
     );
-  }
-
-  double getImageHeight(BuildContext context) {
-    final RenderBox renderBox =
-        imageKey.currentContext?.findRenderObject() as RenderBox;
-    return renderBox.size.height;
-  }
-
-  double getImageWidth(BuildContext context) {
-    final RenderBox renderBox =
-        imageKey.currentContext?.findRenderObject() as RenderBox;
-    return renderBox.size.width;
   }
 }
 
