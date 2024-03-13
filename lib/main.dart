@@ -483,131 +483,134 @@ class _FormAppPageState extends State<FormAppPage> {
     return IndexedStack(
       index: appMode,
       children: [
-        PopScope(
-          canPop: false,
-          onPopInvoked: _onBackPressed,
-          child: Scaffold(
-            appBar: AppBar(
-              title: const Text("Welcome!"),
-              actions: [
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        appMode = 3;
-                        setAppModePref(appMode);
-                      });
-                    },
-                    icon: const Icon(Icons.settings_outlined))
-              ],
-            ),
-            body: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Flexible(
-                    fit: FlexFit.tight,
-                    flex: 2,
-                    child: FilledButton(
+        if (appMode == 0)
+          PopScope(
+            canPop: false,
+            onPopInvoked: _onBackPressed,
+            child: Scaffold(
+              appBar: AppBar(
+                title: const Text("Welcome!"),
+                actions: [
+                  IconButton(
                       onPressed: () {
                         setState(() {
-                          appMode = 1;
+                          appMode = 3;
                           setAppModePref(appMode);
                         });
                       },
-                      style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all(
-                            const Size.fromHeight(150)),
-                        maximumSize: MaterialStateProperty.all(
-                            const Size.fromHeight(200)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                        ),
-                      ),
-                      child: const Row(
-                        children: [
-                          Icon(
-                            Icons.smart_toy_outlined,
-                            size: 72,
-                          ),
-                          Spacer(),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Pit Scouting",
-                                style: TextStyle(fontSize: 24),
-                              ),
-                              Text("Enter pit scouting mode.")
-                            ],
-                          ),
-                          Spacer(),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8.0),
-                  Flexible(
-                    fit: FlexFit.tight,
-                    flex: 2,
-                    child: FilledButton(
-                      onPressed: () {
-                        setState(() {
-                          appMode = 2;
-                          setAppModePref(appMode);
-                        });
-                      },
-                      style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all(
-                            const Size.fromHeight(150)),
-                        maximumSize: MaterialStateProperty.all(
-                            const Size.fromHeight(200)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                        ),
-                      ),
-                      child: const Row(
-                        children: [
-                          Icon(
-                            Icons.sports_rounded,
-                            size: 72,
-                          ),
-                          Spacer(),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Match Scouting",
-                                style: TextStyle(fontSize: 24),
-                              ),
-                              Text("Enter match scouting mode.")
-                            ],
-                          ),
-                          Spacer(),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const Spacer(),
-                  const Image(
-                    image: AssetImage('images/mercs.png'),
-                    fit: BoxFit.scaleDown,
-                    width: 380,
-                    isAntiAlias: true,
-                  ),
-                  const Spacer(),
+                      icon: const Icon(Icons.settings_outlined))
                 ],
               ),
+              body: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Flexible(
+                      fit: FlexFit.tight,
+                      flex: 2,
+                      child: FilledButton(
+                        onPressed: () {
+                          setState(() {
+                            appMode = 1;
+                            setAppModePref(appMode);
+                          });
+                        },
+                        style: ButtonStyle(
+                          minimumSize: MaterialStateProperty.all(
+                              const Size.fromHeight(150)),
+                          maximumSize: MaterialStateProperty.all(
+                              const Size.fromHeight(200)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16.0),
+                            ),
+                          ),
+                        ),
+                        child: const Row(
+                          children: [
+                            Icon(
+                              Icons.smart_toy_outlined,
+                              size: 72,
+                            ),
+                            Spacer(),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Pit Scouting",
+                                  style: TextStyle(fontSize: 24),
+                                ),
+                                Text("Enter pit scouting mode.")
+                              ],
+                            ),
+                            Spacer(),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8.0),
+                    Flexible(
+                      fit: FlexFit.tight,
+                      flex: 2,
+                      child: FilledButton(
+                        onPressed: () {
+                          setState(() {
+                            appMode = 2;
+                            setAppModePref(appMode);
+                          });
+                        },
+                        style: ButtonStyle(
+                          minimumSize: MaterialStateProperty.all(
+                              const Size.fromHeight(150)),
+                          maximumSize: MaterialStateProperty.all(
+                              const Size.fromHeight(200)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16.0),
+                            ),
+                          ),
+                        ),
+                        child: const Row(
+                          children: [
+                            Icon(
+                              Icons.sports_rounded,
+                              size: 72,
+                            ),
+                            Spacer(),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Match Scouting",
+                                  style: TextStyle(fontSize: 24),
+                                ),
+                                Text("Enter match scouting mode.")
+                              ],
+                            ),
+                            Spacer(),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
+                    const Image(
+                      image: AssetImage('images/mercs.png'),
+                      fit: BoxFit.scaleDown,
+                      width: 380,
+                      isAntiAlias: true,
+                    ),
+                    const Spacer(),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ),
+          )
+        else
+          const SizedBox(),
         if (appMode == 1)
           Scaffold(
             appBar: AppBar(
@@ -1108,336 +1111,339 @@ class _FormAppPageState extends State<FormAppPage> {
           )
         else
           const SizedBox(),
-        Scaffold(
-          appBar: AppBar(
-            title: const Text('Field Data Collection'),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    appMode = 0;
-                    fieldPageIndex = 0;
-                    setAppModePref(appMode);
-                  });
-                },
-                icon: const Icon(Icons.start),
-              )
-            ],
-          ),
-          body: IndexedStack(
-            index: fieldPageIndex,
-            children: [
-              ListView(
-                children: [
-                  Column(
-                    children: [
-                      ExpansionTile(
-                        title: const Text("To Be Scouted"),
-                        initiallyExpanded: true,
-                        children: [
-                          for (final entry in incompleteFieldScoutingTasks)
-                            ScoutSelection(
-                              team: entry.team,
-                              match: entry.match,
-                              alliance: entry.alliance,
-                              position: entry.position,
-                              onSelected: () {
-                                setState(() {
-                                  fieldTeamNumber = entry.team;
-                                  fieldMatchNumber = entry.match;
-                                  fieldAlliance = entry.alliance;
-                                  fieldRobotPosition = entry.position;
-                                });
-                              },
-                            )
-                        ],
-                      ),
-                      const ExpansionTile(
-                        title: Text("Scouted"),
-                        initiallyExpanded: false,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
+        if (appMode == 2)
+          Scaffold(
+            appBar: AppBar(
+              title: const Text('Field Data Collection'),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      appMode = 0;
+                      fieldPageIndex = 0;
+                      setAppModePref(appMode);
+                    });
+                  },
+                  icon: const Icon(Icons.start),
+                )
+              ],
+            ),
+            body: IndexedStack(
+              index: fieldPageIndex,
+              children: [
+                ListView(
+                  children: [
+                    Column(
+                      children: [
+                        ExpansionTile(
+                          title: const Text("To Be Scouted"),
+                          initiallyExpanded: true,
                           children: [
-                            TextField(
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Team Number',
-                              ),
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly,
-                                LengthLimitingTextInputFormatter(4),
-                              ],
-                              onChanged: (value) {
-                                fieldTeamNumber = int.tryParse(value);
-                              },
-                              controller: TextEditingController(
-                                text: fieldTeamNumber == null
-                                    ? ''
-                                    : fieldTeamNumber.toString(),
-                              ),
-                            ),
-                            const SizedBox(height: 8.0),
-                            TextField(
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Match Number',
-                              ),
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly,
-                                LengthLimitingTextInputFormatter(2),
-                              ],
-                              onChanged: (value) {
-                                fieldMatchNumber = int.tryParse(value);
-                              },
-                              controller: TextEditingController(
-                                text: fieldMatchNumber == null
-                                    ? ''
-                                    : fieldMatchNumber.toString(),
-                              ),
-                            ),
-                            const SizedBox(height: 8.0),
-                            ChoiceInput(
-                              title: "Field Position",
-                              onChoiceUpdate: (value) {
-                                setState(() {
-                                  switch (value) {
-                                    case "Red 1":
-                                      fieldAlliance = Alliances.red;
-                                      fieldRobotPosition = 0;
-                                    case "Red 2":
-                                      fieldAlliance = Alliances.red;
-                                      fieldRobotPosition = 1;
-                                    case "Red 3":
-                                      fieldAlliance = Alliances.red;
-                                      fieldRobotPosition = 2;
-                                    case "Blue 1":
-                                      fieldAlliance = Alliances.blue;
-                                      fieldRobotPosition = 0;
-                                    case "Blue 2":
-                                      fieldAlliance = Alliances.blue;
-                                      fieldRobotPosition = 1;
-                                    case "Blue 3":
-                                      fieldAlliance = Alliances.blue;
-                                      fieldRobotPosition = 2;
-                                  }
-                                });
-                              },
-                              choice:
-                                  "${fieldAlliance.name.toString().capitalize} ${(fieldRobotPosition + 1).toString()}",
-                              options: const [
-                                "Red 1",
-                                "Red 2",
-                                "Red 3",
-                                "Blue 1",
-                                "Blue 2",
-                                "Blue 3"
-                              ],
-                            ),
+                            for (final entry in incompleteFieldScoutingTasks)
+                              ScoutSelection(
+                                team: entry.team,
+                                match: entry.match,
+                                alliance: entry.alliance,
+                                position: entry.position,
+                                onSelected: () {
+                                  setState(() {
+                                    fieldTeamNumber = entry.team;
+                                    fieldMatchNumber = entry.match;
+                                    fieldAlliance = entry.alliance;
+                                    fieldRobotPosition = entry.position;
+                                  });
+                                },
+                              )
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              FieldAutonForm(
-                teamNumberPresent: fieldTeamNumber == null
-                    ? false
-                    : true && fieldMatchNumber == null
-                        ? false
-                        : true,
-                allianceColor: fieldAlliance,
-                robotPosition: fieldRobotPosition,
-                autonExists: fieldAutonExists,
-                onAutonExistsChanged: (value) {
-                  setState(() {
-                    fieldAutonExists = value!;
-                  });
-                },
-                onLeaveChanged: (value) {
-                  setState(() {
-                    fieldLeave = value;
-                  });
-                },
-                leave: fieldLeave,
-                crossLine: fieldCrossLine,
-                onCrossLineChanged: (value) {
-                  setState(() {
-                    fieldCrossLine = value;
-                  });
-                },
-                aStop: fieldAStop,
-                onAStopChanged: (value) {
-                  setState(() {
-                    fieldAStop = value;
-                  });
-                },
-                speakerNotes: fieldAutonSpeakerNotes,
-                onSpeakerNotesChanged: (value) {
-                  setState(() {
-                    fieldAutonSpeakerNotes = value;
-                  });
-                },
-                speakerNotesMissed: fieldAutonSpeakerNotesMissed,
-                onSpeakerNotesMissedChanged: (value) {
-                  setState(() {
-                    fieldAutonSpeakerNotesMissed = value;
-                  });
-                },
-                ampNotes: fieldAutonAmpNotes,
-                onAmpNotesChanged: (value) {
-                  setState(() {
-                    fieldAutonAmpNotes = value;
-                  });
-                },
-                ampNotesMissed: fieldAutonAmpNotesMissed,
-                onAmpNotesMissedChanged: (value) {
-                  setState(() {
-                    fieldAutonAmpNotesMissed = value;
-                  });
-                },
-                wingNotes: fieldWingNotes,
-                onWingNotesChanged: (index, value) {
-                  setState(() {
-                    fieldWingNotes[index] = value;
-                  });
-                },
-                centerNotes: fieldCenterNotes,
-                onCenterNotesChanged: (index, value) {
-                  setState(() {
-                    fieldCenterNotes[index] = value;
-                  });
-                },
-                preload: fieldPreload,
-                onPreloadChanged: (value) {
-                  setState(() {
-                    fieldPreload = value;
-                  });
-                },
-              ),
-              FieldTeleopForm(
-                teamNumberPresent: fieldTeamNumber == null
-                    ? false
-                    : true && fieldMatchNumber == null
-                        ? false
-                        : true,
-                allianceColor: fieldAlliance,
-                robotPosition: fieldRobotPosition,
-                pickupFloor: fieldPickupFloor,
-                onPickupFloorChanged: (value) {
-                  setState(() {
-                    fieldPickupFloor = value;
-                  });
-                },
-                pickupSource: fieldPickupSource,
-                onPickupSourceChanged: (value) {
-                  setState(() {
-                    fieldPickupSource = value;
-                  });
-                },
-                ampNotesScored: fieldTeleopAmpNotesScored,
-                onAmpNotesScoredChanged: (value) {
-                  setState(() {
-                    fieldTeleopAmpNotesScored = value;
-                  });
-                },
-                ampNotesMissed: fieldTeleopAmpNotesMissed,
-                onAmpNotesMissedChanged: (value) {
-                  setState(() {
-                    fieldTeleopAmpNotesMissed = value;
-                  });
-                },
-                speakerNotesScored: fieldTeleopSpeakerNotesScored,
-                onSpeakerNotesScoredChanged: (value) {
-                  setState(() {
-                    fieldTeleopSpeakerNotesScored = value;
-                  });
-                },
-                speakerNotesMissed: fieldTeleopSpeakerNotesMissed,
-                onSpeakerNotesMissedChanged: (value) {
-                  setState(() {
-                    fieldTeleopSpeakerNotesMissed = value;
-                  });
-                },
-                droppedNotes: fieldTeleopDroppedNotes,
-                onDroppedNotesChanged: (value) {
-                  setState(() {
-                    fieldTeleopDroppedNotes = value;
-                  });
-                },
-                notesFed: fieldTeleopNotesFed,
-                onNotesFedChanged: (value) {
-                  setState(() {
-                    fieldTeleopNotesFed = value;
-                  });
-                },
-              ),
-              const Placeholder(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        ElevatedButton.icon(
-                          onPressed:
-                              saveDisabled == false ? onFieldScoutSave : null,
-                          label: const Text("Export CSV"),
-                          icon: const Icon(Icons.save),
+                        const ExpansionTile(
+                          title: Text("Scouted"),
+                          initiallyExpanded: false,
                         ),
-                        const SizedBox(
-                          width: 8.0,
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            resetField();
-                          },
-                          child: const Text("Reset Data"),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              TextField(
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Team Number',
+                                ),
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  LengthLimitingTextInputFormatter(4),
+                                ],
+                                onChanged: (value) {
+                                  fieldTeamNumber = int.tryParse(value);
+                                },
+                                controller: TextEditingController(
+                                  text: fieldTeamNumber == null
+                                      ? ''
+                                      : fieldTeamNumber.toString(),
+                                ),
+                              ),
+                              const SizedBox(height: 8.0),
+                              TextField(
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Match Number',
+                                ),
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  LengthLimitingTextInputFormatter(2),
+                                ],
+                                onChanged: (value) {
+                                  fieldMatchNumber = int.tryParse(value);
+                                },
+                                controller: TextEditingController(
+                                  text: fieldMatchNumber == null
+                                      ? ''
+                                      : fieldMatchNumber.toString(),
+                                ),
+                              ),
+                              const SizedBox(height: 8.0),
+                              ChoiceInput(
+                                title: "Field Position",
+                                onChoiceUpdate: (value) {
+                                  setState(() {
+                                    switch (value) {
+                                      case "Red 1":
+                                        fieldAlliance = Alliances.red;
+                                        fieldRobotPosition = 0;
+                                      case "Red 2":
+                                        fieldAlliance = Alliances.red;
+                                        fieldRobotPosition = 1;
+                                      case "Red 3":
+                                        fieldAlliance = Alliances.red;
+                                        fieldRobotPosition = 2;
+                                      case "Blue 1":
+                                        fieldAlliance = Alliances.blue;
+                                        fieldRobotPosition = 0;
+                                      case "Blue 2":
+                                        fieldAlliance = Alliances.blue;
+                                        fieldRobotPosition = 1;
+                                      case "Blue 3":
+                                        fieldAlliance = Alliances.blue;
+                                        fieldRobotPosition = 2;
+                                    }
+                                  });
+                                },
+                                choice:
+                                    "${fieldAlliance.name.toString().capitalize} ${(fieldRobotPosition + 1).toString()}",
+                                options: const [
+                                  "Red 1",
+                                  "Red 2",
+                                  "Red 3",
+                                  "Blue 1",
+                                  "Blue 2",
+                                  "Blue 3"
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          bottomNavigationBar: NavigationBar(
-            selectedIndex: fieldPageIndex,
-            onDestinationSelected: (index) {
-              setState(() {
-                fieldPageIndex = index;
-              });
-            },
-            destinations: const [
-              NavigationDestination(
-                label: "Start",
-                icon: Icon(Icons.flag),
-              ),
-              NavigationDestination(
-                label: "Auton",
-                icon: Icon(Icons.smart_toy),
-              ),
-              NavigationDestination(
-                label: "Teleop",
-                icon: Icon(Icons.sports_esports),
-              ),
-              NavigationDestination(
-                label: "Post",
-                icon: Icon(Icons.sports_score),
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.outbox),
-                label: 'Output',
-              )
-            ],
-          ),
-        ),
+                  ],
+                ),
+                FieldAutonForm(
+                  teamNumberPresent: fieldTeamNumber == null
+                      ? false
+                      : true && fieldMatchNumber == null
+                          ? false
+                          : true,
+                  allianceColor: fieldAlliance,
+                  robotPosition: fieldRobotPosition,
+                  autonExists: fieldAutonExists,
+                  onAutonExistsChanged: (value) {
+                    setState(() {
+                      fieldAutonExists = value!;
+                    });
+                  },
+                  onLeaveChanged: (value) {
+                    setState(() {
+                      fieldLeave = value;
+                    });
+                  },
+                  leave: fieldLeave,
+                  crossLine: fieldCrossLine,
+                  onCrossLineChanged: (value) {
+                    setState(() {
+                      fieldCrossLine = value;
+                    });
+                  },
+                  aStop: fieldAStop,
+                  onAStopChanged: (value) {
+                    setState(() {
+                      fieldAStop = value;
+                    });
+                  },
+                  speakerNotes: fieldAutonSpeakerNotes,
+                  onSpeakerNotesChanged: (value) {
+                    setState(() {
+                      fieldAutonSpeakerNotes = value;
+                    });
+                  },
+                  speakerNotesMissed: fieldAutonSpeakerNotesMissed,
+                  onSpeakerNotesMissedChanged: (value) {
+                    setState(() {
+                      fieldAutonSpeakerNotesMissed = value;
+                    });
+                  },
+                  ampNotes: fieldAutonAmpNotes,
+                  onAmpNotesChanged: (value) {
+                    setState(() {
+                      fieldAutonAmpNotes = value;
+                    });
+                  },
+                  ampNotesMissed: fieldAutonAmpNotesMissed,
+                  onAmpNotesMissedChanged: (value) {
+                    setState(() {
+                      fieldAutonAmpNotesMissed = value;
+                    });
+                  },
+                  wingNotes: fieldWingNotes,
+                  onWingNotesChanged: (index, value) {
+                    setState(() {
+                      fieldWingNotes[index] = value;
+                    });
+                  },
+                  centerNotes: fieldCenterNotes,
+                  onCenterNotesChanged: (index, value) {
+                    setState(() {
+                      fieldCenterNotes[index] = value;
+                    });
+                  },
+                  preload: fieldPreload,
+                  onPreloadChanged: (value) {
+                    setState(() {
+                      fieldPreload = value;
+                    });
+                  },
+                ),
+                FieldTeleopForm(
+                  teamNumberPresent: fieldTeamNumber == null
+                      ? false
+                      : true && fieldMatchNumber == null
+                          ? false
+                          : true,
+                  allianceColor: fieldAlliance,
+                  robotPosition: fieldRobotPosition,
+                  pickupFloor: fieldPickupFloor,
+                  onPickupFloorChanged: (value) {
+                    setState(() {
+                      fieldPickupFloor = value;
+                    });
+                  },
+                  pickupSource: fieldPickupSource,
+                  onPickupSourceChanged: (value) {
+                    setState(() {
+                      fieldPickupSource = value;
+                    });
+                  },
+                  ampNotesScored: fieldTeleopAmpNotesScored,
+                  onAmpNotesScoredChanged: (value) {
+                    setState(() {
+                      fieldTeleopAmpNotesScored = value;
+                    });
+                  },
+                  ampNotesMissed: fieldTeleopAmpNotesMissed,
+                  onAmpNotesMissedChanged: (value) {
+                    setState(() {
+                      fieldTeleopAmpNotesMissed = value;
+                    });
+                  },
+                  speakerNotesScored: fieldTeleopSpeakerNotesScored,
+                  onSpeakerNotesScoredChanged: (value) {
+                    setState(() {
+                      fieldTeleopSpeakerNotesScored = value;
+                    });
+                  },
+                  speakerNotesMissed: fieldTeleopSpeakerNotesMissed,
+                  onSpeakerNotesMissedChanged: (value) {
+                    setState(() {
+                      fieldTeleopSpeakerNotesMissed = value;
+                    });
+                  },
+                  droppedNotes: fieldTeleopDroppedNotes,
+                  onDroppedNotesChanged: (value) {
+                    setState(() {
+                      fieldTeleopDroppedNotes = value;
+                    });
+                  },
+                  notesFed: fieldTeleopNotesFed,
+                  onNotesFedChanged: (value) {
+                    setState(() {
+                      fieldTeleopNotesFed = value;
+                    });
+                  },
+                ),
+                const Placeholder(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          ElevatedButton.icon(
+                            onPressed:
+                                saveDisabled == false ? onFieldScoutSave : null,
+                            label: const Text("Export CSV"),
+                            icon: const Icon(Icons.save),
+                          ),
+                          const SizedBox(
+                            width: 8.0,
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              resetField();
+                            },
+                            child: const Text("Reset Data"),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            bottomNavigationBar: NavigationBar(
+              selectedIndex: fieldPageIndex,
+              onDestinationSelected: (index) {
+                setState(() {
+                  fieldPageIndex = index;
+                });
+              },
+              destinations: const [
+                NavigationDestination(
+                  label: "Start",
+                  icon: Icon(Icons.flag),
+                ),
+                NavigationDestination(
+                  label: "Auton",
+                  icon: Icon(Icons.smart_toy),
+                ),
+                NavigationDestination(
+                  label: "Teleop",
+                  icon: Icon(Icons.sports_esports),
+                ),
+                NavigationDestination(
+                  label: "Post",
+                  icon: Icon(Icons.sports_score),
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.outbox),
+                  label: 'Output',
+                )
+              ],
+            ),
+          )
+        else
+          const SizedBox(),
         Scaffold(
           appBar: AppBar(
               title: const Text('Application Setup'),
