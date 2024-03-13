@@ -105,9 +105,8 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                       title: const Text("Has Auton"),
                       value: widget.autonExists,
                       onChanged: widget.onAutonExistsChanged),
-                  Visibility(
-                    visible: widget.autonExists,
-                    child: Container(
+                  IndexedStack(index: widget.autonExists ? 0 : 1, children: [
+                    Container(
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Theme.of(context).dividerColor,
@@ -428,7 +427,13 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                         ],
                       ),
                     ),
-                  ),
+                    const Center(
+                      child: Icon(
+                        Icons.sentiment_very_dissatisfied_rounded,
+                        size: 240,
+                      ),
+                    ),
+                  ]),
                 ],
               ),
             ),
