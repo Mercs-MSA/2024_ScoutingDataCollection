@@ -598,9 +598,8 @@ class _PitFormState extends State<PitForm> {
                             });
                           },
                         ),
-                        Visibility(
-                          visible: widget.autonExists,
-                          child: Column(
+                        if (widget.autonExists)
+                          Column(
                             children: [
                               const SizedBox(height: 8.0),
                               const Text(
@@ -752,7 +751,6 @@ class _PitFormState extends State<PitForm> {
                               ),
                             ],
                           ),
-                        ),
                       ],
                     ),
                   ),

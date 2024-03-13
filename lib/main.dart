@@ -1034,11 +1034,15 @@ class _FormAppPageState extends State<FormAppPage> {
                             child: IndexedStack(
                               index: pitCurrentQrChunk,
                               children: [
-                                for (var chunk in pitQrChunks)
-                                  QrImageView(
-                                    data: chunk,
-                                    backgroundColor: Colors.white,
-                                  ),
+                                for (final (index, chunk)
+                                    in pitQrChunks.indexed)
+                                  if (index == pitCurrentQrChunk)
+                                    QrImageView(
+                                      data: chunk,
+                                      backgroundColor: Colors.white,
+                                    )
+                                  else
+                                    const SizedBox(),
                               ],
                             ),
                           ),
