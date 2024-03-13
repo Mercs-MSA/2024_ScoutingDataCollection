@@ -159,7 +159,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
   List<bool?> fieldWingNotes = [false, false, false];
   List<bool?> fieldCenterNotes = [false, false, false, false, false];
-  bool? fieldPreload = false;
+  bool? fieldPreload = true;
 
   bool saveDisabled = false;
   bool importerSaveCompletes = false;
@@ -1893,7 +1893,7 @@ class _FormAppPageState extends State<FormAppPage> {
     fieldLeave = false;
     fieldCenterNotes = [false, false, false, false, false];
     fieldWingNotes = [false, false, false];
-    fieldPreload = false;
+    fieldPreload = true;
     setState(() {
       fieldPageIndex = 0;
     });
