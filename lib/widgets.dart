@@ -275,14 +275,18 @@ class NumberInput extends StatelessWidget {
 
   final NumberInputStyle style;
 
-  const NumberInput(
-      {super.key,
-      required this.title,
-      required this.value,
-      required this.onValueAdd,
-      required this.onValueSubtract,
-      this.miniStyle = false,
-      this.style = NumberInputStyle.multi});
+  final enableSpacer;
+
+  const NumberInput({
+    super.key,
+    required this.title,
+    required this.value,
+    required this.onValueAdd,
+    required this.onValueSubtract,
+    this.miniStyle = false,
+    this.style = NumberInputStyle.multi,
+    this.enableSpacer = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -310,6 +314,7 @@ class NumberInput extends StatelessWidget {
                 ),
               ),
             ),
+            enableSpacer ? const Spacer() : const SizedBox(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(

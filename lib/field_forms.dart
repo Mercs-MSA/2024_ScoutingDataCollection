@@ -563,7 +563,7 @@ class _FieldTeleopFormState extends State<FieldTeleopForm> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const Spacer(),
-                  const SizedBox(width: 120, child: Text("AMP")),
+                  const SizedBox(width: 80, child: Text("AMP")),
                   NumberInput(
                     title: "Amp Notes",
                     miniStyle: true,
@@ -615,7 +615,7 @@ class _FieldTeleopFormState extends State<FieldTeleopForm> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const Spacer(),
-                  const SizedBox(width: 120, child: Text("SPEAKER")),
+                  const SizedBox(width: 80, child: Text("SPEAKER")),
                   NumberInput(
                     title: "Speaker Notes",
                     miniStyle: true,
@@ -664,59 +664,53 @@ class _FieldTeleopFormState extends State<FieldTeleopForm> {
                 ],
               ),
               const Divider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Spacer(),
-                  NumberInput(
-                    title: "Dropped Notes",
-                    miniStyle: false,
-                    style: NumberInputStyle.red,
-                    value: widget.droppedNotes,
-                    onValueAdd: () {
-                      setState(() {
-                        if (widget.droppedNotes < 50) {
-                          droppedNotes = widget.droppedNotes + 1;
-                        }
-                        widget.onDroppedNotesChanged(droppedNotes);
-                      });
-                    },
-                    onValueSubtract: () {
-                      setState(() {
-                        if (widget.droppedNotes > 0) {
-                          droppedNotes = widget.droppedNotes - 1;
-                        }
-                        widget.onDroppedNotesChanged(droppedNotes);
-                      });
-                    },
-                  ),
-                  const Spacer(),
-                  //Notes Fed
-                  NumberInput(
-                    title: "Notes Fed",
-                    miniStyle: false,
-                    style: NumberInputStyle.multi,
-                    value: widget.notesFed,
-                    onValueAdd: () {
-                      setState(() {
-                        if (widget.notesFed < 50) {
-                          notesFed = widget.notesFed + 1;
-                        }
-                        widget.onNotesFedChanged(notesFed);
-                      });
-                    },
-                    onValueSubtract: () {
-                      setState(() {
-                        if (widget.notesFed > 0) {
-                          notesFed = widget.notesFed - 1;
-                        }
-                        widget.onNotesFedChanged(notesFed);
-                      });
-                    },
-                  ),
-                  const Spacer(),
-                ],
+              NumberInput(
+                title: "Dropped Notes",
+                miniStyle: false,
+                style: NumberInputStyle.red,
+                enableSpacer: true,
+                value: widget.droppedNotes,
+                onValueAdd: () {
+                  setState(() {
+                    if (widget.droppedNotes < 50) {
+                      droppedNotes = widget.droppedNotes + 1;
+                    }
+                    widget.onDroppedNotesChanged(droppedNotes);
+                  });
+                },
+                onValueSubtract: () {
+                  setState(() {
+                    if (widget.droppedNotes > 0) {
+                      droppedNotes = widget.droppedNotes - 1;
+                    }
+                    widget.onDroppedNotesChanged(droppedNotes);
+                  });
+                },
               ),
+              NumberInput(
+                title: "Notes Fed",
+                miniStyle: false,
+                style: NumberInputStyle.multi,
+                enableSpacer: true,
+                value: widget.notesFed,
+                onValueAdd: () {
+                  setState(() {
+                    if (widget.notesFed < 50) {
+                      notesFed = widget.notesFed + 1;
+                    }
+                    widget.onNotesFedChanged(notesFed);
+                  });
+                },
+                onValueSubtract: () {
+                  setState(() {
+                    if (widget.notesFed > 0) {
+                      notesFed = widget.notesFed - 1;
+                    }
+                    widget.onNotesFedChanged(notesFed);
+                  });
+                },
+              ),
+              const Spacer(),
             ],
           ),
         ),
