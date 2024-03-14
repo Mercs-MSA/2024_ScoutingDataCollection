@@ -1146,6 +1146,14 @@ class _FormAppPageState extends State<FormAppPage> {
                               ],
                             ),
                             const SizedBox(height: 8.0),
+                            ElevatedButton(
+                                onPressed: !pitQrChunkNavNextEnabled
+                                    ? () {
+                                        resetPit();
+                                      }
+                                    : null,
+                                child: const Text("Reset Data")),
+                            const SizedBox(height: 8.0),
                           ],
                         )
                       else
@@ -1657,9 +1665,11 @@ class _FormAppPageState extends State<FormAppPage> {
                       ),
                       const SizedBox(height: 8.0),
                       ElevatedButton(
-                          onPressed: () {
-                            resetField();
-                          },
+                          onPressed: !fieldQrChunkNavNextEnabled
+                              ? () {
+                                  resetField();
+                                }
+                              : null,
                           child: const Text("Reset Data")),
                       const SizedBox(height: 8.0),
                     ],
