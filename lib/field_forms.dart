@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'datatypes.dart';
 import 'widgets.dart';
@@ -782,15 +783,214 @@ class _FieldTeleopFormState extends State<FieldTeleopForm> {
 }
 
 class PostMatchForm extends StatefulWidget {
-  const PostMatchForm({super.key});
+  final bool teamNumberPresent;
+  final Alliances allianceColor;
+  final int robotPosition;
+
+  final Function(String) onHowClimbUpdate;
+  final String howClimb;
+
+  final Function(String) onTrapUpdate;
+  final String trap;
+
+  final Function(String) onHarmonyChanged;
+  final String harmony;
+
+  final Function(double) onDriverRatingChanged;
+  final double driverRating;
+
+  final Function(String) onCardChanged;
+  final String card;
+
+  final Function(String) onNoShowChanged;
+  final String noShow;
+
+  final Function(String) onCommentsChanged;
+  final String comments;
+
+  const PostMatchForm({
+    super.key,
+    required this.teamNumberPresent,
+    required this.allianceColor,
+    required this.robotPosition,
+    required this.onHowClimbUpdate,
+    required this.howClimb,
+    required this.onTrapUpdate,
+    required this.trap,
+    required this.onHarmonyChanged,
+    required this.harmony,
+    required this.onDriverRatingChanged,
+    required this.driverRating,
+    required this.onCardChanged,
+    required this.card,
+    required this.onNoShowChanged,
+    required this.noShow,
+    required this.onCommentsChanged,
+    required this.comments,
+  });
 
   @override
   State<PostMatchForm> createState() => _PostMatchFormState();
 }
 
 class _PostMatchFormState extends State<PostMatchForm> {
+  String howClimb = "No Climb, No Park";
+  String trap = "Did Not Trap";
+  String harmony = "Did Not Harmony";
+
+  double driverRating = 0;
+
+  String card = "No Card";
+  String noShow = "They Showed Up";
+
+  String comments = "";
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return IndexedStack(
+      index: widget.teamNumberPresent ? 1 : 0,
+      children: [
+        if (!widget.teamNumberPresent)
+          const Center(child: TeamNumberError())
+        else
+          const SizedBox(),
+        if (widget.teamNumberPresent)
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: ListView(
+              children: <Widget>[
+                Expanded(
+                  child: ChoiceInput(
+                      title: "(How) Did they climb?",
+                      onChoiceUpdate: (value) {
+                        setState(() {
+                          widget.onHowClimbUpdate(value!);
+                        });
+                      },
+                      choice: howClimb,
+                      options: [
+                        "Fast Climb",
+                        "Normal Climb",
+                        "Slow Climb",
+                        "Failed",
+                        "Parked, No Climb",
+                        "No Climb, No Park"
+                      ]),
+                ),
+                SizedBox(
+                  height: 8.0,
+                ),
+                Expanded(
+                  child: ChoiceInput(
+                      title: "Did they trap?",
+                      onChoiceUpdate: (value) {
+                        setState(() {
+                          widget.onTrapUpdate(value!);
+                        });
+                      },
+                      choice: widget.trap,
+                      options: [
+                        "Fast Trap",
+                        "Normal Trap",
+                        "Slow Trap",
+                        "Failed Trap",
+                        "Did Not Trap"
+                      ]),
+                ),
+                SizedBox(
+                  height: 8.0,
+                ),
+                Expanded(
+                  child: ChoiceInput(
+                      title: "Did they do harmony?",
+                      onChoiceUpdate: (value) {
+                        setState(() {
+                          widget.onHarmonyChanged(value!);
+                        });
+                      },
+                      choice: widget.harmony,
+                      options: [
+                        "Double Harmony",
+                        "Single Harmony",
+                        "Failed",
+                        "Did Not Harmony"
+                      ]),
+                ),
+                SizedBox(
+                  height: 8.0,
+                ),
+                Expanded(
+                  child: RatingInput(
+                    itemCount: 10,
+                    title: 'Driver Rating',
+                    onRatingUpdate: (rating) {
+                      setState(() {
+                        widget.onDriverRatingChanged(rating);
+                      });
+                    },
+                    initialRating: widget.driverRating,
+                  ),
+                ),
+                SizedBox(
+                  height: 8.0,
+                ),
+                Expanded(
+                  child: ChoiceInput(
+                      title: "Did they get a card?",
+                      onChoiceUpdate: (value) {
+                        setState(() {
+                          widget.onCardChanged(value!);
+                        });
+                      },
+                      choice: widget.card,
+                      options: ["No Card", "Yellow Card", "Red Card"]),
+                ),
+                SizedBox(
+                  height: 8.0,
+                ),
+                Expanded(
+                  child: ChoiceInput(
+                      title: "Did they no show?",
+                      onChoiceUpdate: (value) {
+                        setState(() {
+                          widget.onNoShowChanged(value!);
+                        });
+                      },
+                      choice: widget.noShow,
+                      options: [
+                        "No Show :(",
+                        "No Show w/Representatives",
+                        "They Showed Up"
+                      ]),
+                ),
+                SizedBox(
+                  height: 8.0,
+                ),
+                Expanded(
+                    child: TextField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Comments',
+                  ),
+                  maxLines: 5,
+                  inputFormatters: <TextInputFormatter>[
+                    LengthLimitingTextInputFormatter(500),
+                    FilteringTextInputFormatter(
+                      RegExp(r'[a-zA-Z]|-| |\n'),
+                      allow: true,
+                    ),
+                  ],
+                  onChanged: (value) {
+                    widget.onCommentsChanged(value);
+                  },
+                  controller: TextEditingController(
+                    text: widget.comments,
+                  ),
+                ))
+              ],
+            ),
+          ),
+      ],
+    );
   }
 }
