@@ -1656,6 +1656,12 @@ class _FormAppPageState extends State<FormAppPage> {
                         ],
                       ),
                       const SizedBox(height: 8.0),
+                      ElevatedButton(
+                          onPressed: () {
+                            resetField();
+                          },
+                          child: const Text("Reset Data")),
+                      const SizedBox(height: 8.0),
                     ],
                   )
                 else
