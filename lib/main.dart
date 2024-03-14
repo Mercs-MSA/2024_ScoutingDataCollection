@@ -1522,9 +1522,7 @@ class _FormAppPageState extends State<FormAppPage> {
                     },
                     comments: fieldComments,
                     onCommentsChanged: (value) {
-                      setState(() {
-                        fieldComments = value;
-                      });
+                      fieldComments = value;
                     },
                   )
                 else
