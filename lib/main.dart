@@ -1644,7 +1644,6 @@ class _FormAppPageState extends State<FormAppPage> {
                                       if (fieldCurrentQrChunk <
                                           fieldQrChunks.length - 1) {
                                         fieldCurrentQrChunk += 1;
-                                        print(fieldCurrentQrChunk);
                                       }
                                       if (fieldCurrentQrChunk ==
                                           fieldQrChunks.length - 1) {

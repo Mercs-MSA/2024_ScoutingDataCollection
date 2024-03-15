@@ -875,7 +875,7 @@ class _PostMatchFormState extends State<PostMatchForm> {
                         });
                       },
                       choice: howClimb,
-                      options: [
+                      options: const [
                         "Fast Climb",
                         "Normal Climb",
                         "Slow Climb",
@@ -884,7 +884,7 @@ class _PostMatchFormState extends State<PostMatchForm> {
                         "No Climb, No Park"
                       ]),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8.0,
                 ),
                 Expanded(
@@ -896,7 +896,7 @@ class _PostMatchFormState extends State<PostMatchForm> {
                         });
                       },
                       choice: widget.trap,
-                      options: [
+                      options: const [
                         "Fast Trap",
                         "Normal Trap",
                         "Slow Trap",
@@ -904,7 +904,7 @@ class _PostMatchFormState extends State<PostMatchForm> {
                         "Did Not Trap"
                       ]),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8.0,
                 ),
                 Expanded(
@@ -916,19 +916,19 @@ class _PostMatchFormState extends State<PostMatchForm> {
                         });
                       },
                       choice: widget.harmony,
-                      options: [
+                      options: const [
                         "Double Harmony",
                         "Single Harmony",
                         "Failed",
                         "Did Not Harmony"
                       ]),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8.0,
                 ),
                 Expanded(
                   child: CheckboxListTile(
-                    title: Text('Defense Bot?'),
+                    title: const Text('Defense Bot?'),
                     value: widget.defenseBot,
                     onChanged: (bool? newValue) {
                       setState(() {
@@ -937,7 +937,7 @@ class _PostMatchFormState extends State<PostMatchForm> {
                     },
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 Expanded(
                   child: RatingInput(
                     itemCount: 10,
@@ -950,7 +950,7 @@ class _PostMatchFormState extends State<PostMatchForm> {
                     initialRating: widget.driverRating,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8.0,
                 ),
                 Expanded(
@@ -962,9 +962,9 @@ class _PostMatchFormState extends State<PostMatchForm> {
                         });
                       },
                       choice: widget.card,
-                      options: ["No Card", "Yellow Card", "Red Card"]),
+                      options: const ["No Card", "Yellow Card", "Red Card"]),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8.0,
                 ),
                 Expanded(
@@ -976,13 +976,13 @@ class _PostMatchFormState extends State<PostMatchForm> {
                         });
                       },
                       choice: widget.noShow,
-                      options: [
+                      options: const [
                         "No Show :(",
                         "No Show w/Representatives",
                         "They Showed Up"
                       ]),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8.0,
                 ),
                 Expanded(
