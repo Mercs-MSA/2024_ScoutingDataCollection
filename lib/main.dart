@@ -175,6 +175,8 @@ class _FormAppPageState extends State<FormAppPage> {
   String fieldTrap = "Did Not Trap";
   String fieldHarmony = "Did Not Harmony";
 
+  bool fieldDefenseBot = false;
+
   double fieldDriverRating = 0;
 
   String fieldCard = "No Card";
@@ -1510,6 +1512,12 @@ class _FormAppPageState extends State<FormAppPage> {
                         fieldHarmony = value;
                       });
                     },
+                    defenseBot: fieldDefenseBot,
+                    onDefenseBotChanged: (value) {
+                      setState(() {
+                        fieldDefenseBot = value;
+                      });
+                    },
                     driverRating: fieldDriverRating,
                     onDriverRatingChanged: (value) {
                       setState(() {
@@ -2100,7 +2108,8 @@ class _FormAppPageState extends State<FormAppPage> {
       ["endgameDidTheyClimb", fieldHowClimb],
       ["endgameDidTheyTrap", fieldTrap],
       ["endgameDidTheyHarmony", fieldHarmony],
-      ["endgameDriverRating", fieldDriverRating],
+      ["postgameDefenseBot", fieldDefenseBot],
+      ["postgameDriverRating", fieldDriverRating],
       ["postgameDidTheyGetACard", fieldCard],
       ["postgameDidTheyNoShow", fieldNoShow],
       ["postgameComments", fieldComments]
@@ -2528,6 +2537,7 @@ class _FormAppPageState extends State<FormAppPage> {
     fieldHowClimb = "Did Not Climb";
     fieldTrap = "Did Not Trap";
     fieldHarmony = "Did Not Harmony";
+    fieldDefenseBot = false;
     fieldDriverRating = 0;
     fieldCard = "No Card";
     fieldNoShow = "They Showed Up";

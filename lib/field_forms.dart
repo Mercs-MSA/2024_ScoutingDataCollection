@@ -808,6 +808,9 @@ class PostMatchForm extends StatefulWidget {
   final Function(String) onCommentsChanged;
   final String comments;
 
+  final Function(bool) onDefenseBotChanged;
+  final bool defenseBot;
+
   const PostMatchForm({
     super.key,
     required this.teamNumberPresent,
@@ -827,6 +830,8 @@ class PostMatchForm extends StatefulWidget {
     required this.noShow,
     required this.onCommentsChanged,
     required this.comments,
+    required this.onDefenseBotChanged,
+    required this.defenseBot,
   });
 
   @override
@@ -837,6 +842,8 @@ class _PostMatchFormState extends State<PostMatchForm> {
   String howClimb = "No Climb, No Park";
   String trap = "Did Not Trap";
   String harmony = "Did Not Harmony";
+
+  bool defenseBot = false;
 
   double driverRating = 0;
 
@@ -919,6 +926,18 @@ class _PostMatchFormState extends State<PostMatchForm> {
                 SizedBox(
                   height: 8.0,
                 ),
+                Expanded(
+                  child: CheckboxListTile(
+                    title: Text('Defense Bot?'),
+                    value: widget.defenseBot,
+                    onChanged: (bool? newValue) {
+                      setState(() {
+                        widget.onDefenseBotChanged(newValue!);
+                      });
+                    },
+                  ),
+                ),
+                Divider(),
                 Expanded(
                   child: RatingInput(
                     itemCount: 10,
