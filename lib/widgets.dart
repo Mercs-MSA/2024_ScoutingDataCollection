@@ -324,61 +324,6 @@ class NumberInput extends StatelessWidget {
               ),
             ),
             IconButton(
-              onPressed: onValueAdd,
-              style: style == NumberInputStyle.multi
-                  ? ButtonStyle(
-                      fixedSize: MaterialStateProperty.all(
-                          Size.square(miniStyle ? 42 : 56)),
-                      padding: MaterialStateProperty.all(EdgeInsets.zero),
-                      backgroundColor:
-                          MaterialStateProperty.all(ColorScheme.fromSeed(
-                        seedColor: Colors.green,
-                        brightness: Brightness.dark,
-                      ).primary),
-                      foregroundColor:
-                          MaterialStateProperty.all(ColorScheme.fromSeed(
-                        seedColor: Colors.green,
-                        brightness: Brightness.dark,
-                      ).onPrimary),
-                    )
-                  : style == NumberInputStyle.red
-                      ? ButtonStyle(
-                          fixedSize: MaterialStateProperty.all(
-                              Size.square(miniStyle ? 42 : 56)),
-                          padding: MaterialStateProperty.all(EdgeInsets.zero),
-                          backgroundColor:
-                              MaterialStateProperty.all(ColorScheme.fromSeed(
-                            seedColor: Colors.red,
-                            brightness: Brightness.dark,
-                          ).primary),
-                          foregroundColor:
-                              MaterialStateProperty.all(ColorScheme.fromSeed(
-                            seedColor: Colors.red,
-                            brightness: Brightness.dark,
-                          ).onPrimary),
-                        )
-                      : style == NumberInputStyle.green
-                          ? ButtonStyle(
-                              fixedSize: MaterialStateProperty.all(
-                                  Size.square(miniStyle ? 42 : 56)),
-                              padding:
-                                  MaterialStateProperty.all(EdgeInsets.zero),
-                              backgroundColor: MaterialStateProperty.all(
-                                  ColorScheme.fromSeed(
-                                seedColor: Colors.green,
-                                brightness: Brightness.dark,
-                              ).primary),
-                              foregroundColor: MaterialStateProperty.all(
-                                  ColorScheme.fromSeed(
-                                seedColor: Colors.green,
-                                brightness: Brightness.dark,
-                              ).onPrimary),
-                            )
-                          : const ButtonStyle(),
-              icon: const Icon(Icons.add),
-            ),
-            const SizedBox(width: 8.0),
-            IconButton(
               onPressed: onValueSubtract,
               style: style == NumberInputStyle.multi
                   ? ButtonStyle(
@@ -431,6 +376,61 @@ class NumberInput extends StatelessWidget {
                             )
                           : const ButtonStyle(),
               icon: const Icon(Icons.remove),
+            ),
+            const SizedBox(width: 8.0),
+            IconButton(
+              onPressed: onValueAdd,
+              style: style == NumberInputStyle.multi
+                  ? ButtonStyle(
+                      fixedSize: MaterialStateProperty.all(
+                          Size.square(miniStyle ? 42 : 56)),
+                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                      backgroundColor:
+                          MaterialStateProperty.all(ColorScheme.fromSeed(
+                        seedColor: Colors.green,
+                        brightness: Brightness.dark,
+                      ).primary),
+                      foregroundColor:
+                          MaterialStateProperty.all(ColorScheme.fromSeed(
+                        seedColor: Colors.green,
+                        brightness: Brightness.dark,
+                      ).onPrimary),
+                    )
+                  : style == NumberInputStyle.red
+                      ? ButtonStyle(
+                          fixedSize: MaterialStateProperty.all(
+                              Size.square(miniStyle ? 42 : 56)),
+                          padding: MaterialStateProperty.all(EdgeInsets.zero),
+                          backgroundColor:
+                              MaterialStateProperty.all(ColorScheme.fromSeed(
+                            seedColor: Colors.red,
+                            brightness: Brightness.dark,
+                          ).primary),
+                          foregroundColor:
+                              MaterialStateProperty.all(ColorScheme.fromSeed(
+                            seedColor: Colors.red,
+                            brightness: Brightness.dark,
+                          ).onPrimary),
+                        )
+                      : style == NumberInputStyle.green
+                          ? ButtonStyle(
+                              fixedSize: MaterialStateProperty.all(
+                                  Size.square(miniStyle ? 42 : 56)),
+                              padding:
+                                  MaterialStateProperty.all(EdgeInsets.zero),
+                              backgroundColor: MaterialStateProperty.all(
+                                  ColorScheme.fromSeed(
+                                seedColor: Colors.green,
+                                brightness: Brightness.dark,
+                              ).primary),
+                              foregroundColor: MaterialStateProperty.all(
+                                  ColorScheme.fromSeed(
+                                seedColor: Colors.green,
+                                brightness: Brightness.dark,
+                              ).onPrimary),
+                            )
+                          : const ButtonStyle(),
+              icon: const Icon(Icons.add),
             ),
           ],
         ),
