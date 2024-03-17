@@ -941,6 +941,7 @@ class _PostMatchFormState extends State<PostMatchForm> {
                 Expanded(
                   child: RatingInput(
                     itemCount: 10,
+                    enableHalves: false,
                     title: 'Driver Rating',
                     onRatingUpdate: (rating) {
                       setState(() {
