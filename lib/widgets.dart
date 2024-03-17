@@ -302,9 +302,8 @@ class NumberInput extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Visibility(
-              visible: !miniStyle,
-              child: Padding(
+            if (!miniStyle)
+              Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   title,
@@ -313,7 +312,6 @@ class NumberInput extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
             enableSpacer ? const Spacer() : const SizedBox(),
             Padding(
               padding: const EdgeInsets.all(8.0),
