@@ -716,7 +716,7 @@ class _PitFormState extends State<PitForm> {
                                   widget.onAutonConsistencyChanged(value);
                                 },
                                 initialRating: widget.autonConsistency,
-                                itemCount: 4,
+                                enableHalves: false,
                               ),
                               const SizedBox(height: 8.0),
                               RatingInput(
@@ -725,7 +725,7 @@ class _PitFormState extends State<PitForm> {
                                   widget.onAutonVersatilityChanged(value);
                                 },
                                 initialRating: widget.autonVersatility,
-                                itemCount: 4,
+                                enableHalves: false,
                               ),
                               const SizedBox(height: 8.0),
                               TextField(
@@ -762,6 +762,7 @@ class _PitFormState extends State<PitForm> {
                       });
                     },
                     initialRating: widget.repairability,
+                    enableHalves: false,
                   ),
                   const Divider(),
                   RatingInput(
@@ -772,6 +773,7 @@ class _PitFormState extends State<PitForm> {
                       });
                     },
                     initialRating: widget.maneuverability,
+                    enableHalves: false,
                   ),
                   const SizedBox(height: 8.0),
                   TextField(
