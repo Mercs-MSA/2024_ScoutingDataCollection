@@ -1023,7 +1023,8 @@ class _FormAppPageState extends State<FormAppPage> {
                                         onPressed: saveDisabled == false
                                             ? onPitScoutSave
                                             : null,
-                                        label: const Text("Export to Directory"),
+                                        label:
+                                            const Text("Export to Directory"),
                                         icon: const Icon(Icons.save),
                                       ),
                                       const SizedBox(
@@ -1089,11 +1090,14 @@ class _FormAppPageState extends State<FormAppPage> {
                                               }
                                               if (pitCurrentQrChunk ==
                                                   pitQrChunks.length) {
-                                                pitQrChunkNavNextEnabled = false;
+                                                pitQrChunkNavNextEnabled =
+                                                    false;
                                                 pitQrChunkNavBackEnabled = true;
-                                              } else if (pitCurrentQrChunk == 0) {
+                                              } else if (pitCurrentQrChunk ==
+                                                  0) {
                                                 pitQrChunkNavNextEnabled = true;
-                                                pitQrChunkNavBackEnabled = false;
+                                                pitQrChunkNavBackEnabled =
+                                                    false;
                                               } else {
                                                 pitQrChunkNavNextEnabled = true;
                                                 pitQrChunkNavBackEnabled = true;
@@ -1123,11 +1127,14 @@ class _FormAppPageState extends State<FormAppPage> {
                                               }
                                               if (pitCurrentQrChunk ==
                                                   pitQrChunks.length - 1) {
-                                                pitQrChunkNavNextEnabled = false;
+                                                pitQrChunkNavNextEnabled =
+                                                    false;
                                                 pitQrChunkNavBackEnabled = true;
-                                              } else if (pitCurrentQrChunk == 0) {
+                                              } else if (pitCurrentQrChunk ==
+                                                  0) {
                                                 pitQrChunkNavNextEnabled = true;
-                                                pitQrChunkNavBackEnabled = false;
+                                                pitQrChunkNavBackEnabled =
+                                                    false;
                                               } else {
                                                 pitQrChunkNavNextEnabled = true;
                                                 pitQrChunkNavBackEnabled = true;
@@ -1213,7 +1220,8 @@ class _FormAppPageState extends State<FormAppPage> {
                                               fieldTeamNumber = entry.team;
                                               fieldMatchNumber = entry.match;
                                               fieldAlliance = entry.alliance;
-                                              fieldRobotPosition = entry.position;
+                                              fieldRobotPosition =
+                                                  entry.position;
                                             });
                                           },
                                         )
@@ -1235,7 +1243,8 @@ class _FormAppPageState extends State<FormAppPage> {
                                               fieldTeamNumber = entry.team;
                                               fieldMatchNumber = entry.match;
                                               fieldAlliance = entry.alliance;
-                                              fieldRobotPosition = entry.position;
+                                              fieldRobotPosition =
+                                                  entry.position;
                                             });
                                           },
                                         )
@@ -1587,7 +1596,8 @@ class _FormAppPageState extends State<FormAppPage> {
                           child: IndexedStack(
                             index: fieldCurrentQrChunk,
                             children: [
-                              for (final (index, chunk) in fieldQrChunks.indexed)
+                              for (final (index, chunk)
+                                  in fieldQrChunks.indexed)
                                 if (index == fieldCurrentQrChunk)
                                   QrImageView(
                                     data: chunk,
@@ -1913,7 +1923,8 @@ class _FormAppPageState extends State<FormAppPage> {
                       SwitchListTile(
                           value: exportHeaders,
                           title: const Text("Export data headers"),
-                          subtitle: const Text("Add header to csv data exports"),
+                          subtitle:
+                              const Text("Add header to csv data exports"),
                           onChanged: (value) {
                             setState(() {
                               exportHeaders = value;
@@ -1977,66 +1988,6 @@ class _FormAppPageState extends State<FormAppPage> {
                               attemptSavePlayoff();
                             });
                           }),
-                      const SizedBox(height: 4.0),
-                      const SizedBox(height: 12.0),
-                      const Spacer(),
-                      ElevatedButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                icon: const Icon(
-                                  Icons.warning_rounded,
-                                  size: 180,
-                                ),
-                                title: const Text("Are you sure?"),
-                                content: const Text(
-                                    "Do you want to reset all information on the app?"),
-                                actions: [
-                                  TextButton(
-                                    child: const Text('Reset'),
-                                    onPressed: () {
-                                      resetAll();
-                                      resetPrefs();
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                  TextButton(
-                                    child: const Text('Cancel'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        style: ButtonStyle(
-                          minimumSize: MaterialStateProperty.all(
-                              const Size.fromHeight(100)),
-                          maximumSize: MaterialStateProperty.all(
-                              const Size.fromHeight(200)),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                          ),
-                        ),
-                        child: const FittedBox(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Reset App", style: TextStyle(fontSize: 24)),
-                              Text("Resets all stored information")
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12.0),
                     ],
                   ),
                 ),
