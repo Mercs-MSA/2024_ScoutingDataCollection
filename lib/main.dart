@@ -677,6 +677,9 @@ class _FormAppPageState extends State<FormAppPage> {
                 ],
                 selectedIndex: pitPageIndex,
                 onDestinationSelected: (int index) {
+                  if (index == 3) {
+                    pitCurrentQrChunk = 0;
+                  }
                   if ((pitTeamNumber != null) &&
                       (pitPageIndex == 0) &&
                       (index == 1) &&
@@ -1682,6 +1685,10 @@ class _FormAppPageState extends State<FormAppPage> {
                 selectedIndex: fieldPageIndex,
                 onDestinationSelected: (index) {
                   if (index != fieldPageIndex) {
+                    if (index == 5) {
+                      fieldCurrentQrChunk = 0;
+                    }
+
                     setState(() {
                       fieldPageIndex = index;
                     });
