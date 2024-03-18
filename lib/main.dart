@@ -199,6 +199,8 @@ class _FormAppPageState extends State<FormAppPage> {
 
   List<PitScoutingTask> completePitScoutingTasks = [];
 
+  Map teamNameMap = {};
+
   @override
   void initState() {
     super.initState();
@@ -222,6 +224,8 @@ class _FormAppPageState extends State<FormAppPage> {
     completeFieldScoutingTasks = convertJsonStringToTasksList(
         prefs.getString("jsonCompleteFieldTasks") ?? "",
         (json) => ScoutingTask.fromJson(json));
+
+    teamNameMap = json.decode(prefs.getString("teamNamesMap") ?? "{}");
 
     eventId = prefs.getString("eventId") ?? "";
     playoffMode = prefs.getBool("playoffMode") ?? false;
@@ -278,6 +282,7 @@ class _FormAppPageState extends State<FormAppPage> {
         if (jsonData is Map &&
             jsonData.containsKey("pit") &&
             jsonData.containsKey("field") &&
+            jsonData.containsKey("teamnames") &&
             jsonData["pit"] is List &&
             jsonData["field"] is List) {
           for (Map pitTeam in jsonData["pit"]) {
@@ -351,6 +356,10 @@ class _FormAppPageState extends State<FormAppPage> {
               return;
             }
           }
+          teamNameMap = jsonData["teamnames"].reduce((a, b) {
+            a.addAll(b);
+            return a;
+          });
         } else {
           if (!mounted) return;
           showDialog(
@@ -378,6 +387,7 @@ class _FormAppPageState extends State<FormAppPage> {
           );
           return;
         }
+        updateTeamSaves();
       }
     } catch (e) {
       if (!mounted) return;
@@ -742,6 +752,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                     pitTeamNumber = entry.team;
                                   });
                                 },
+                                teamNames: teamNameMap,
                               )
                           ],
                         ),
@@ -789,6 +800,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                     pitTeamNumber = entry.team;
                                   });
                                 },
+                                teamNames: teamNameMap,
                                 completed: true,
                               )
                           ],
@@ -1211,6 +1223,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                                   entry.position;
                                             });
                                           },
+                                          teamNames: teamNameMap,
                                         )
                                     ],
                                   ),
@@ -1234,6 +1247,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                                   entry.position;
                                             });
                                           },
+                                          teamNames: teamNameMap,
                                         )
                                     ],
                                   ),
@@ -2549,10 +2563,13 @@ class _FormAppPageState extends State<FormAppPage> {
     String jsonCompletePitTasks =
         convertTasksListToJsonString(completePitScoutingTasks);
 
+    String jsonTeamNames = json.encode(teamNameMap);
+
     prefs.setString("jsonIncompleteFieldTasks", jsonIncompleteFieldTasks);
     prefs.setString("jsonCompleteFieldTasks", jsonCompleteFieldTasks);
     prefs.setString("jsonIncompletePitTasks", jsonIncompletePitTasks);
     prefs.setString("jsonCompletePitTasks", jsonCompletePitTasks);
+    prefs.setString("teamNamesMap", jsonTeamNames);
   }
 
   List<String> splitStringByLength(String input, int chunkSize) {

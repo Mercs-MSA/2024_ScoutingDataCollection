@@ -13,13 +13,15 @@ class ScoutSelection extends StatelessWidget {
       required this.match,
       required this.alliance,
       required this.position,
-      required this.onSelected});
+      required this.onSelected,
+      required this.teamNames});
 
   final int team;
   final int match;
   final Alliances alliance;
   final int position;
   final Function() onSelected;
+  final Map teamNames;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,9 @@ class ScoutSelection extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Team $team", style: const TextStyle(fontSize: 22)),
+              Text(
+                  "Team $team - ${teamNames[team.toString()] ?? "Unknown Team"}",
+                  style: const TextStyle(fontSize: 22)),
               Text("Match $match", style: const TextStyle(fontSize: 18)),
               Text("${alliance.name.capitalize} ${position + 1}",
                   style: const TextStyle(fontSize: 16)),
@@ -61,12 +65,14 @@ class PitScoutSelection extends StatelessWidget {
     super.key,
     required this.team,
     required this.onSelected,
+    required this.teamNames,
     this.completed = false,
   });
 
   final int team;
   final Function() onSelected;
   final bool completed;
+  final Map teamNames;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +98,9 @@ class PitScoutSelection extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Team $team", style: const TextStyle(fontSize: 22)),
+              Text(
+                  "Team $team - ${teamNames[team.toString()] ?? "Unknown Team"}",
+                  style: const TextStyle(fontSize: 22)),
             ],
           ),
         ),
