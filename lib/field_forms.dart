@@ -940,7 +940,7 @@ class _PostMatchFormState extends State<PostMatchForm> {
                 const Divider(),
                 Expanded(
                   child: RatingInput(
-                    itemCount: 10,
+                    itemCount: 5,
                     enableHalves: false,
                     title: 'Driver Rating',
                     onRatingUpdate: (rating) {
