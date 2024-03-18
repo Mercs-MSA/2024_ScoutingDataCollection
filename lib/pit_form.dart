@@ -26,6 +26,7 @@ class PitForm extends StatefulWidget {
       required this.onDoesSourcePickupChanged,
       required this.onDoesGroundPickupChanged,
       required this.onDoesExtendShootChanged,
+      required this.onDoesBlockChanged,
       required this.onDoesTurretShootChanged,
       required this.onAutonExistsChanged,
       required this.onAutonSpeakerNotesChanged,
@@ -59,6 +60,7 @@ class PitForm extends StatefulWidget {
       required this.doesSourcePickup,
       required this.doesGroundPickup,
       required this.doesExtendShoot,
+      required this.doesBlock,
       required this.doesTurretShoot,
       required this.autonExists,
       required this.autonSpeakerNotes,
@@ -95,6 +97,7 @@ class PitForm extends StatefulWidget {
   final Function(bool) onDoesSourcePickupChanged;
   final Function(bool) onDoesGroundPickupChanged;
   final Function(bool) onDoesExtendShootChanged;
+  final Function(bool) onDoesBlockChanged;
   final Function(bool) onDoesTurretShootChanged;
   final Function(bool) onAutonExistsChanged;
   final Function(int) onAutonSpeakerNotesChanged;
@@ -129,6 +132,7 @@ class PitForm extends StatefulWidget {
   final bool doesSourcePickup;
   final bool doesGroundPickup;
   final bool doesExtendShoot;
+  final bool doesBlock;
   final bool doesTurretShoot;
   final bool autonExists;
   final int autonSpeakerNotes;
@@ -473,6 +477,17 @@ class _PitFormState extends State<PitForm> {
                           onChanged: (bool? newValue) {
                             setState(() {
                               widget.onDoesExtendShootChanged(newValue!);
+                            });
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: const Text('Block'),
+                          value: widget.doesBlock,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              widget.onDoesBlockChanged(newValue!);
                             });
                           },
                         ),
