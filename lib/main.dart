@@ -160,6 +160,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
   int fieldTeleopDroppedNotes = 0;
   int fieldTeleopNotesFed = 0;
+  int fieldTeleopAmps = 0;
 
   List<bool?> fieldWingNotes = [false, false, false];
   List<bool?> fieldCenterNotes = [false, false, false, false, false];
@@ -1498,6 +1499,12 @@ class _FormAppPageState extends State<FormAppPage> {
                           fieldTeleopNotesFed = value;
                         });
                       },
+                      amps: fieldTeleopAmps,
+                      onAmpsChanged: (value) {
+                        setState(() {
+                          fieldTeleopAmps = value;
+                        });
+                      },
                     )
                   else
                     const SizedBox(),
@@ -2069,6 +2076,7 @@ class _FormAppPageState extends State<FormAppPage> {
       ["teleopSpeakerMissed", fieldTeleopSpeakerNotesMissed],
       ["teleopDroppedNotes", fieldTeleopDroppedNotes],
       ["teleopFedNotes", fieldTeleopNotesFed],
+      ["teleopAmps", fieldTeleopAmps],
       ["endgameDidTheyClimb", fieldHowClimb],
       ["endgameDidTheyTrap", fieldTrap],
       ["endgameDidTheyHarmony", fieldHarmony],
@@ -2498,9 +2506,7 @@ class _FormAppPageState extends State<FormAppPage> {
     fieldPickupSource = false;
     fieldTeleopDroppedNotes = 0;
     fieldTeleopNotesFed = 0;
-    setState(() {
-      fieldPageIndex = 0;
-    });
+    fieldTeleopAmps = 0;
     fieldHowClimb = "Did Not Climb";
     fieldTrap = "Did Not Trap";
     fieldHarmony = "Did Not Harmonize";
@@ -2510,6 +2516,9 @@ class _FormAppPageState extends State<FormAppPage> {
     fieldCard = "No Card";
     fieldNoShow = "They Showed Up";
     fieldComments = "";
+    setState(() {
+      fieldPageIndex = 0;
+    });
   }
 
   void loadTestTeams() {

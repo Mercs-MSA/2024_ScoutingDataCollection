@@ -537,6 +537,9 @@ class FieldTeleopForm extends StatefulWidget {
   final Function(int) onNotesFedChanged;
   final int notesFed;
 
+  final Function(int) onAmpsChanged;
+  final int amps;
+
   const FieldTeleopForm({
     super.key,
     required this.teamNumberPresent,
@@ -558,6 +561,8 @@ class FieldTeleopForm extends StatefulWidget {
     required this.droppedNotes,
     required this.onNotesFedChanged,
     required this.notesFed,
+    required this.onAmpsChanged,
+    required this.amps,
   });
 
   @override
@@ -573,6 +578,7 @@ class _FieldTeleopFormState extends State<FieldTeleopForm> {
 
   int droppedNotes = 0;
   int notesFed = 0;
+  int amps = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -769,6 +775,29 @@ class _FieldTeleopFormState extends State<FieldTeleopForm> {
                         notesFed = widget.notesFed - 1;
                       }
                       widget.onNotesFedChanged(notesFed);
+                    });
+                  },
+                ),
+                NumberInput(
+                  title: "Amplifications",
+                  miniStyle: false,
+                  style: NumberInputStyle.multi,
+                  enableSpacer: true,
+                  value: widget.amps,
+                  onValueAdd: () {
+                    setState(() {
+                      if (widget.amps < 50) {
+                        amps = widget.amps + 1;
+                      }
+                      widget.onAmpsChanged(amps);
+                    });
+                  },
+                  onValueSubtract: () {
+                    setState(() {
+                      if (widget.amps > 0) {
+                        amps = widget.amps - 1;
+                      }
+                      widget.onAmpsChanged(amps);
                     });
                   },
                 ),
