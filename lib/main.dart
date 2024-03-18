@@ -166,13 +166,6 @@ class _FormAppPageState extends State<FormAppPage> {
   List<bool?> fieldCenterNotes = [false, false, false, false, false];
   bool? fieldPreload = true;
 
-  bool saveDisabled = false;
-  bool importerSaveCompletes = false;
-  List<String> pitQrChunks = [];
-  int pitCurrentQrChunk = 0;
-  bool pitQrChunkNavNextEnabled = true;
-  bool pitQrChunkNavBackEnabled = true;
-
   String fieldHowClimb = "No Climb, No Park";
   String fieldTrap = "Did Not Trap";
   String fieldHarmony = "Did Not Harmonize";
@@ -182,15 +175,21 @@ class _FormAppPageState extends State<FormAppPage> {
   double fieldDriverRating = 0;
   double fieldDefenseRating = 0;
 
+  bool? fieldHighnote = false;
+
   String fieldCard = "No Card";
   String fieldNoShow = "They Showed Up";
 
   String fieldComments = "";
 
+  bool saveDisabled = false;
+
   List<String> fieldQrChunks = [];
   int fieldCurrentQrChunk = 0;
-  bool fieldQrChunkNavNextEnabled = true;
-  bool fieldQrChunkNavBackEnabled = true;
+
+  bool importerSaveCompletes = false;
+  List<String> pitQrChunks = [];
+  int pitCurrentQrChunk = 0;
 
   List<ScoutingTask> incompleteFieldScoutingTasks = [];
 
@@ -1087,84 +1086,60 @@ class _FormAppPageState extends State<FormAppPage> {
                               ),
                               const Spacer(),
                               const Divider(),
-                              Row(
-                                children: [
-                                  const SizedBox(width: 8.0),
-                                  ElevatedButton(
-                                    onPressed: pitQrChunkNavBackEnabled
-                                        ? () {
-                                            setState(() {
-                                              if (pitCurrentQrChunk > 0) {
-                                                pitCurrentQrChunk -= 1;
-                                              }
-                                              if (pitCurrentQrChunk ==
-                                                  pitQrChunks.length) {
-                                                pitQrChunkNavNextEnabled =
-                                                    false;
-                                                pitQrChunkNavBackEnabled = true;
-                                              } else if (pitCurrentQrChunk ==
-                                                  0) {
-                                                pitQrChunkNavNextEnabled = true;
-                                                pitQrChunkNavBackEnabled =
-                                                    false;
-                                              } else {
-                                                pitQrChunkNavNextEnabled = true;
-                                                pitQrChunkNavBackEnabled = true;
-                                              }
-                                            });
-                                          }
-                                        : null,
-                                    child: const Row(
-                                      children: [
-                                        Icon(Icons.arrow_back),
-                                        SizedBox(width: 8.0),
-                                        Text("Back"),
-                                      ],
+                              if (pitQrChunks.length > 1)
+                                Row(
+                                  children: [
+                                    const SizedBox(width: 8.0),
+                                    ElevatedButton(
+                                      onPressed: pitCurrentQrChunk > 0
+                                          ? () {
+                                              setState(() {
+                                                if (pitCurrentQrChunk > 0) {
+                                                  pitCurrentQrChunk -= 1;
+                                                }
+                                              });
+                                            }
+                                          : null,
+                                      child: const Row(
+                                        children: [
+                                          Icon(Icons.arrow_back),
+                                          SizedBox(width: 8.0),
+                                          Text("Back"),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  const Spacer(),
-                                  Text(
-                                      "${pitCurrentQrChunk + 1}/${pitQrChunks.length}"),
-                                  const Spacer(),
-                                  ElevatedButton(
-                                    onPressed: pitQrChunkNavNextEnabled
-                                        ? () {
-                                            setState(() {
-                                              if (pitCurrentQrChunk <
-                                                  pitQrChunks.length - 1) {
-                                                pitCurrentQrChunk += 1;
-                                              }
-                                              if (pitCurrentQrChunk ==
-                                                  pitQrChunks.length - 1) {
-                                                pitQrChunkNavNextEnabled =
-                                                    false;
-                                                pitQrChunkNavBackEnabled = true;
-                                              } else if (pitCurrentQrChunk ==
-                                                  0) {
-                                                pitQrChunkNavNextEnabled = true;
-                                                pitQrChunkNavBackEnabled =
-                                                    false;
-                                              } else {
-                                                pitQrChunkNavNextEnabled = true;
-                                                pitQrChunkNavBackEnabled = true;
-                                              }
-                                            });
-                                          }
-                                        : null,
-                                    child: const Row(
-                                      children: [
-                                        Text("Next"),
-                                        SizedBox(width: 8.0),
-                                        Icon(Icons.arrow_forward),
-                                      ],
+                                    const Spacer(),
+                                    Text(
+                                        "${pitCurrentQrChunk + 1}/${pitQrChunks.length}"),
+                                    const Spacer(),
+                                    ElevatedButton(
+                                      onPressed: pitCurrentQrChunk <
+                                              pitQrChunks.length - 1
+                                          ? () {
+                                              setState(() {
+                                                if (pitCurrentQrChunk <
+                                                    pitQrChunks.length - 1) {
+                                                  pitCurrentQrChunk += 1;
+                                                }
+                                              });
+                                            }
+                                          : null,
+                                      child: const Row(
+                                        children: [
+                                          Text("Next"),
+                                          SizedBox(width: 8.0),
+                                          Icon(Icons.arrow_forward),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(width: 8.0),
-                                ],
-                              ),
+                                    const SizedBox(width: 8.0),
+                                  ],
+                                ),
                               const SizedBox(height: 8.0),
                               ElevatedButton(
-                                  onPressed: !pitQrChunkNavNextEnabled
+                                  onPressed: !(pitCurrentQrChunk <
+                                              pitQrChunks.length - 1) ||
+                                          pitQrChunks.length == 1
                                       ? () {
                                           resetPit();
                                         }
@@ -1553,6 +1528,12 @@ class _FormAppPageState extends State<FormAppPage> {
                           fieldDefenseRating = value;
                         });
                       },
+                      highnote: fieldHighnote,
+                      onHighnoteChanged: (value) {
+                        setState(() {
+                          fieldHighnote = value;
+                        });
+                      },
                       card: fieldCard,
                       onCardChanged: (value) {
                         setState(() {
@@ -1631,78 +1612,60 @@ class _FormAppPageState extends State<FormAppPage> {
                         ),
                         const Spacer(),
                         const Divider(),
-                        Row(
-                          children: [
-                            const SizedBox(width: 8.0),
-                            ElevatedButton(
-                              onPressed: fieldQrChunkNavBackEnabled
-                                  ? () {
-                                      setState(() {
-                                        if (fieldCurrentQrChunk > 0) {
-                                          fieldCurrentQrChunk -= 1;
-                                        }
-                                        if (fieldCurrentQrChunk ==
-                                            fieldQrChunks.length) {
-                                          fieldQrChunkNavNextEnabled = false;
-                                          fieldQrChunkNavBackEnabled = true;
-                                        } else if (fieldCurrentQrChunk == 0) {
-                                          fieldQrChunkNavNextEnabled = true;
-                                          fieldQrChunkNavBackEnabled = false;
-                                        } else {
-                                          fieldQrChunkNavNextEnabled = true;
-                                          fieldQrChunkNavBackEnabled = true;
-                                        }
-                                      });
-                                    }
-                                  : null,
-                              child: const Row(
-                                children: [
-                                  Icon(Icons.arrow_back),
-                                  SizedBox(width: 8.0),
-                                  Text("Back"),
-                                ],
+                        if (fieldQrChunks.length > 1)
+                          Row(
+                            children: [
+                              const SizedBox(width: 8.0),
+                              ElevatedButton(
+                                onPressed: fieldCurrentQrChunk > 0
+                                    ? () {
+                                        setState(() {
+                                          if (fieldCurrentQrChunk > 0) {
+                                            fieldCurrentQrChunk -= 1;
+                                          }
+                                        });
+                                      }
+                                    : null,
+                                child: const Row(
+                                  children: [
+                                    Icon(Icons.arrow_back),
+                                    SizedBox(width: 8.0),
+                                    Text("Back"),
+                                  ],
+                                ),
                               ),
-                            ),
-                            const Spacer(),
-                            Text(
-                                "${fieldCurrentQrChunk + 1}/${fieldQrChunks.length}"),
-                            const Spacer(),
-                            ElevatedButton(
-                              onPressed: fieldQrChunkNavNextEnabled
-                                  ? () {
-                                      setState(() {
-                                        if (fieldCurrentQrChunk <
-                                            fieldQrChunks.length - 1) {
-                                          fieldCurrentQrChunk += 1;
-                                        }
-                                        if (fieldCurrentQrChunk ==
-                                            fieldQrChunks.length - 1) {
-                                          fieldQrChunkNavNextEnabled = false;
-                                          fieldQrChunkNavBackEnabled = true;
-                                        } else if (fieldCurrentQrChunk == 0) {
-                                          fieldQrChunkNavNextEnabled = true;
-                                          fieldQrChunkNavBackEnabled = false;
-                                        } else {
-                                          fieldQrChunkNavNextEnabled = true;
-                                          fieldQrChunkNavBackEnabled = true;
-                                        }
-                                      });
-                                    }
-                                  : null,
-                              child: const Row(
-                                children: [
-                                  Text("Next"),
-                                  SizedBox(width: 8.0),
-                                  Icon(Icons.arrow_forward),
-                                ],
+                              const Spacer(),
+                              Text(
+                                  "${fieldCurrentQrChunk + 1}/${fieldQrChunks.length}"),
+                              const Spacer(),
+                              ElevatedButton(
+                                onPressed: fieldCurrentQrChunk <
+                                        fieldQrChunks.length - 1
+                                    ? () {
+                                        setState(() {
+                                          if (fieldCurrentQrChunk <
+                                              fieldQrChunks.length - 1) {
+                                            fieldCurrentQrChunk += 1;
+                                          }
+                                        });
+                                      }
+                                    : null,
+                                child: const Row(
+                                  children: [
+                                    Text("Next"),
+                                    SizedBox(width: 8.0),
+                                    Icon(Icons.arrow_forward),
+                                  ],
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: 8.0),
-                          ],
-                        ),
+                              const SizedBox(width: 8.0),
+                            ],
+                          ),
                         const SizedBox(height: 8.0),
                         ElevatedButton(
-                            onPressed: !fieldQrChunkNavNextEnabled
+                            onPressed: !(fieldCurrentQrChunk <
+                                        fieldQrChunks.length - 1) ||
+                                    fieldQrChunks.length == 1
                                 ? () {
                                     resetField();
                                   }
@@ -2083,6 +2046,7 @@ class _FormAppPageState extends State<FormAppPage> {
       ["endgameDefenseBot", fieldDefenseBot],
       ["endgameDriverRating", fieldDriverRating],
       ["endgameDefenseRating", fieldDefenseRating],
+      ["endgameHighnote", fieldHighnote],
       ["endgameDidTheyGetACard", fieldCard],
       ["endgameDidTheyNoShow", fieldNoShow],
       ["endgameComments", fieldComments]
@@ -2507,12 +2471,13 @@ class _FormAppPageState extends State<FormAppPage> {
     fieldTeleopDroppedNotes = 0;
     fieldTeleopNotesFed = 0;
     fieldTeleopAmps = 0;
-    fieldHowClimb = "Did Not Climb";
+    fieldHowClimb = "Failed";
     fieldTrap = "Did Not Trap";
     fieldHarmony = "Did Not Harmonize";
     fieldDefenseBot = false;
     fieldDriverRating = 0;
     fieldDefenseRating = 0;
+    fieldHighnote = false;
     fieldCard = "No Card";
     fieldNoShow = "They Showed Up";
     fieldComments = "";

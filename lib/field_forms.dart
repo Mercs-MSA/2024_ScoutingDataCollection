@@ -812,6 +812,16 @@ class _FieldTeleopFormState extends State<FieldTeleopForm> {
 }
 
 class PostMatchForm extends StatefulWidget {
+  final MaterialStateProperty<Icon?> thumbIcon =
+      MaterialStateProperty.resolveWith<Icon?>(
+    (Set<MaterialState> states) {
+      if (states.contains(MaterialState.selected)) {
+        return const Icon(Icons.check);
+      }
+      return const Icon(Icons.close);
+    },
+  );
+
   final bool teamNumberPresent;
   final Alliances allianceColor;
   final int robotPosition;
@@ -831,6 +841,9 @@ class PostMatchForm extends StatefulWidget {
   final Function(double) onDefenseRatingChanged;
   final double defenseRating;
 
+  final Function(bool?) onHighnoteChanged;
+  final bool? highnote;
+
   final Function(String) onCardChanged;
   final String card;
 
@@ -843,7 +856,7 @@ class PostMatchForm extends StatefulWidget {
   final Function(bool) onDefenseBotChanged;
   final bool defenseBot;
 
-  const PostMatchForm({
+  PostMatchForm({
     super.key,
     required this.teamNumberPresent,
     required this.allianceColor,
@@ -858,6 +871,8 @@ class PostMatchForm extends StatefulWidget {
     required this.driverRating,
     required this.onDefenseRatingChanged,
     required this.defenseRating,
+    required this.onHighnoteChanged,
+    required this.highnote,
     required this.onCardChanged,
     required this.card,
     required this.onNoShowChanged,
@@ -899,9 +914,9 @@ class _PostMatchFormState extends State<PostMatchForm> {
                       "Fast Climb",
                       "Normal Climb",
                       "Slow Climb",
-                      "Failed",
                       "Parked, No Climb",
-                      "No Climb, No Park"
+                      "No Climb, No Park",
+                      "Failed",
                     ]),
                 const SizedBox(
                   height: 8.0,
@@ -941,9 +956,10 @@ class _PostMatchFormState extends State<PostMatchForm> {
                 const SizedBox(
                   height: 8.0,
                 ),
-                CheckboxListTile(
+                SwitchListTile(
                   title: const Text('Defense Bot?'),
                   value: widget.defenseBot,
+                  thumbIcon: widget.thumbIcon,
                   onChanged: (bool? newValue) {
                     setState(() {
                       widget.onDefenseBotChanged(newValue!);
@@ -974,9 +990,33 @@ class _PostMatchFormState extends State<PostMatchForm> {
                   },
                   initialRating: widget.defenseRating,
                 ),
-                const SizedBox(
-                  height: 8.0,
-                ),
+                const Divider(),
+                CheckboxListTile(
+                    value: widget.highnote,
+                    title: const Text("Highnote"),
+                    onChanged: (x) {
+                      widget.onHighnoteChanged(x);
+                    },
+                    tristate: true,
+                    activeColor: widget.highnote == true
+                        ? ColorScheme.fromSeed(
+                            seedColor: Colors.green,
+                            brightness: Brightness.dark,
+                          ).primary
+                        : ColorScheme.fromSeed(
+                            seedColor: Colors.red,
+                            brightness: Brightness.dark,
+                          ).primary,
+                    checkColor: widget.highnote == true
+                        ? ColorScheme.fromSeed(
+                            seedColor: Colors.green,
+                            brightness: Brightness.dark,
+                          ).onPrimary
+                        : ColorScheme.fromSeed(
+                            seedColor: Colors.red,
+                            brightness: Brightness.dark,
+                          ).onPrimary),
+                const Divider(),
                 ChoiceInput(
                     title: "Did they get a card?",
                     onChoiceUpdate: (value) {
