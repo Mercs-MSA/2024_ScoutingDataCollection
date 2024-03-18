@@ -2,6 +2,8 @@ enum Alliances { red, blue }
 
 enum StartPositions { left, middle, right }
 
+enum KitBotTypes { not, modded, kitbot }
+
 class ScoutingTask {
   final int team;
   final int match;

@@ -17,7 +17,7 @@ class PitForm extends StatefulWidget {
       required this.onHeightChanged,
       required this.onWeightChanged,
       required this.onIntakeInBumperChanged,
-      required this.onIsKitbotChanged,
+      required this.onKitbotChanged,
       required this.onClimberTypeChanged,
       required this.onAltClimberTypeChanged,
       required this.onDoesSpeakerChanged,
@@ -50,7 +50,7 @@ class PitForm extends StatefulWidget {
       required this.height,
       required this.weight,
       required this.intakeInBumper,
-      required this.isKitbot,
+      required this.kitbot,
       required this.climberType,
       required this.altClimberType,
       required this.doesSpeaker,
@@ -86,7 +86,7 @@ class PitForm extends StatefulWidget {
   final Function(int?) onHeightChanged;
   final Function(int?) onWeightChanged;
   final Function(bool) onIntakeInBumperChanged;
-  final Function(bool) onIsKitbotChanged;
+  final Function(KitBotTypes) onKitbotChanged;
   final Function(String) onClimberTypeChanged;
   final Function(String) onAltClimberTypeChanged;
   final Function(bool) onDoesSpeakerChanged;
@@ -119,7 +119,7 @@ class PitForm extends StatefulWidget {
   final int? width;
   final int? height;
   final int? weight;
-  final bool isKitbot;
+  final KitBotTypes kitbot;
   final bool intakeInBumper;
   final String climberType;
   final String? altClimberType;
@@ -350,16 +350,27 @@ class _PitFormState extends State<PitForm> {
                       ],
                     ),
                   const Divider(),
-                  SwitchListTile(
-                    title: const Text('Is Kitbot?'),
-                    value: widget.isKitbot,
-                    onChanged: (bool? newValue) {
-                      setState(() {
-                        widget.onIsKitbotChanged(newValue!);
-                      });
-                    },
-                    thumbIcon: thumbIcon,
-                  ),
+                  SegmentedButton<KitBotTypes>(
+                      segments: const <ButtonSegment<KitBotTypes>>[
+                        ButtonSegment<KitBotTypes>(
+                            value: KitBotTypes.not,
+                            label: Text('Non-KitBot'),
+                            icon: Icon(Icons.auto_awesome)),
+                        ButtonSegment<KitBotTypes>(
+                            value: KitBotTypes.modded,
+                            label: Text('Modded KitBot'),
+                            icon: Icon(Icons.construction)),
+                        ButtonSegment<KitBotTypes>(
+                            value: KitBotTypes.kitbot,
+                            label: Text('KitBot'),
+                            icon: Icon(Icons.pallet)),
+                      ],
+                      selected: {
+                        widget.kitbot
+                      },
+                      onSelectionChanged: (newSelection) {
+                        widget.onKitbotChanged(newSelection.first);
+                      }),
                   const Divider(),
                   SwitchListTile(
                     title: const Text('Inside Bumper Intake?'),
