@@ -173,11 +173,12 @@ class _FormAppPageState extends State<FormAppPage> {
 
   String fieldHowClimb = "No Climb, No Park";
   String fieldTrap = "Did Not Trap";
-  String fieldHarmony = "Did Not Harmony";
+  String fieldHarmony = "Did Not Harmonize";
 
   bool fieldDefenseBot = false;
 
   double fieldDriverRating = 0;
+  double fieldDefenseRating = 0;
 
   String fieldCard = "No Card";
   String fieldNoShow = "They Showed Up";
@@ -1532,6 +1533,12 @@ class _FormAppPageState extends State<FormAppPage> {
                           fieldDriverRating = value;
                         });
                       },
+                      defenseRating: fieldDefenseRating,
+                      onDefenseRatingChanged: (value) {
+                        setState(() {
+                          fieldDefenseRating = value;
+                        });
+                      },
                       card: fieldCard,
                       onCardChanged: (value) {
                         setState(() {
@@ -2058,11 +2065,12 @@ class _FormAppPageState extends State<FormAppPage> {
       ["endgameDidTheyClimb", fieldHowClimb],
       ["endgameDidTheyTrap", fieldTrap],
       ["endgameDidTheyHarmony", fieldHarmony],
-      ["postgameDefenseBot", fieldDefenseBot],
-      ["postgameDriverRating", fieldDriverRating],
-      ["postgameDidTheyGetACard", fieldCard],
-      ["postgameDidTheyNoShow", fieldNoShow],
-      ["postgameComments", fieldComments]
+      ["endgameDefenseBot", fieldDefenseBot],
+      ["endgameDriverRating", fieldDriverRating],
+      ["endgameDefenseRating", fieldDefenseRating],
+      ["endgameDidTheyGetACard", fieldCard],
+      ["endgameDidTheyNoShow", fieldNoShow],
+      ["endgameComments", fieldComments]
     ];
 
     if (!header) {
@@ -2486,9 +2494,10 @@ class _FormAppPageState extends State<FormAppPage> {
     });
     fieldHowClimb = "Did Not Climb";
     fieldTrap = "Did Not Trap";
-    fieldHarmony = "Did Not Harmony";
+    fieldHarmony = "Did Not Harmonize";
     fieldDefenseBot = false;
     fieldDriverRating = 0;
+    fieldDefenseRating = 0;
     fieldCard = "No Card";
     fieldNoShow = "They Showed Up";
     fieldComments = "";

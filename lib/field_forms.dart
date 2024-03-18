@@ -799,6 +799,9 @@ class PostMatchForm extends StatefulWidget {
   final Function(double) onDriverRatingChanged;
   final double driverRating;
 
+  final Function(double) onDefenseRatingChanged;
+  final double defenseRating;
+
   final Function(String) onCardChanged;
   final String card;
 
@@ -824,6 +827,8 @@ class PostMatchForm extends StatefulWidget {
     required this.harmony,
     required this.onDriverRatingChanged,
     required this.driverRating,
+    required this.onDefenseRatingChanged,
+    required this.defenseRating,
     required this.onCardChanged,
     required this.card,
     required this.onNoShowChanged,
@@ -839,19 +844,6 @@ class PostMatchForm extends StatefulWidget {
 }
 
 class _PostMatchFormState extends State<PostMatchForm> {
-  String howClimb = "No Climb, No Park";
-  String trap = "Did Not Trap";
-  String harmony = "Did Not Harmony";
-
-  bool defenseBot = false;
-
-  double driverRating = 0;
-
-  String card = "No Card";
-  String noShow = "They Showed Up";
-
-  String comments = "";
-
   @override
   Widget build(BuildContext context) {
     return IndexedStack(
@@ -866,128 +858,125 @@ class _PostMatchFormState extends State<PostMatchForm> {
             padding: const EdgeInsets.all(12.0),
             child: ListView(
               children: <Widget>[
-                Expanded(
-                  child: ChoiceInput(
-                      title: "(How) Did they climb?",
-                      onChoiceUpdate: (value) {
-                        setState(() {
-                          widget.onHowClimbUpdate(value!);
-                        });
-                      },
-                      choice: howClimb,
-                      options: const [
-                        "Fast Climb",
-                        "Normal Climb",
-                        "Slow Climb",
-                        "Failed",
-                        "Parked, No Climb",
-                        "No Climb, No Park"
-                      ]),
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                Expanded(
-                  child: ChoiceInput(
-                      title: "Did they trap?",
-                      onChoiceUpdate: (value) {
-                        setState(() {
-                          widget.onTrapUpdate(value!);
-                        });
-                      },
-                      choice: widget.trap,
-                      options: const [
-                        "Fast Trap",
-                        "Normal Trap",
-                        "Slow Trap",
-                        "Failed Trap",
-                        "Did Not Trap"
-                      ]),
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                Expanded(
-                  child: ChoiceInput(
-                      title: "Did they do harmonize?",
-                      onChoiceUpdate: (value) {
-                        setState(() {
-                          widget.onHarmonyChanged(value!);
-                        });
-                      },
-                      choice: widget.harmony,
-                      options: const [
-                        "Double Harmony",
-                        "Single Harmony",
-                        "Failed",
-                        "Did Not Harmonize"
-                      ]),
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                Expanded(
-                  child: CheckboxListTile(
-                    title: const Text('Defense Bot?'),
-                    value: widget.defenseBot,
-                    onChanged: (bool? newValue) {
+                ChoiceInput(
+                    title: "(How) Did they climb?",
+                    onChoiceUpdate: (value) {
                       setState(() {
-                        widget.onDefenseBotChanged(newValue!);
+                        widget.onHowClimbUpdate(value!);
                       });
                     },
-                  ),
+                    choice: widget.howClimb,
+                    options: const [
+                      "Fast Climb",
+                      "Normal Climb",
+                      "Slow Climb",
+                      "Failed",
+                      "Parked, No Climb",
+                      "No Climb, No Park"
+                    ]),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                ChoiceInput(
+                    title: "Did they trap?",
+                    onChoiceUpdate: (value) {
+                      setState(() {
+                        widget.onTrapUpdate(value!);
+                      });
+                    },
+                    choice: widget.trap,
+                    options: const [
+                      "Fast Trap",
+                      "Normal Trap",
+                      "Slow Trap",
+                      "Failed Trap",
+                      "Did Not Trap"
+                    ]),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                ChoiceInput(
+                    title: "Did they do harmonize?",
+                    onChoiceUpdate: (value) {
+                      setState(() {
+                        widget.onHarmonyChanged(value!);
+                      });
+                    },
+                    choice: widget.harmony,
+                    options: const [
+                      "Double Harmony",
+                      "Single Harmony",
+                      "Failed",
+                      "Did Not Harmonize"
+                    ]),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                CheckboxListTile(
+                  title: const Text('Defense Bot?'),
+                  value: widget.defenseBot,
+                  onChanged: (bool? newValue) {
+                    setState(() {
+                      widget.onDefenseBotChanged(newValue!);
+                    });
+                  },
                 ),
                 const Divider(),
-                Expanded(
-                  child: RatingInput(
-                    itemCount: 5,
-                    enableHalves: false,
-                    title: 'Driver Rating',
-                    onRatingUpdate: (rating) {
+                RatingInput(
+                  enableHalves: false,
+                  title: 'Driver Rating',
+                  onRatingUpdate: (rating) {
+                    setState(() {
+                      widget.onDriverRatingChanged(rating);
+                    });
+                  },
+                  initialRating: widget.driverRating,
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                RatingInput(
+                  enableHalves: false,
+                  title: 'Defense Rating',
+                  onRatingUpdate: (rating) {
+                    setState(() {
+                      widget.onDefenseRatingChanged(rating);
+                    });
+                  },
+                  initialRating: widget.defenseRating,
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                ChoiceInput(
+                    title: "Did they get a card?",
+                    onChoiceUpdate: (value) {
                       setState(() {
-                        widget.onDriverRatingChanged(rating);
+                        widget.onCardChanged(value!);
                       });
                     },
-                    initialRating: widget.driverRating,
-                  ),
-                ),
+                    choice: widget.card,
+                    options: const ["No Card", "Yellow Card", "Red Card"]),
                 const SizedBox(
                   height: 8.0,
                 ),
-                Expanded(
-                  child: ChoiceInput(
-                      title: "Did they get a card?",
-                      onChoiceUpdate: (value) {
-                        setState(() {
-                          widget.onCardChanged(value!);
-                        });
-                      },
-                      choice: widget.card,
-                      options: const ["No Card", "Yellow Card", "Red Card"]),
-                ),
+                ChoiceInput(
+                    title: "Did they no show?",
+                    onChoiceUpdate: (value) {
+                      setState(() {
+                        widget.onNoShowChanged(value!);
+                      });
+                    },
+                    choice: widget.noShow,
+                    options: const [
+                      "No Show :(",
+                      "No Show w/Representatives",
+                      "They Showed Up"
+                    ]),
                 const SizedBox(
                   height: 8.0,
                 ),
-                Expanded(
-                  child: ChoiceInput(
-                      title: "Did they no show?",
-                      onChoiceUpdate: (value) {
-                        setState(() {
-                          widget.onNoShowChanged(value!);
-                        });
-                      },
-                      choice: widget.noShow,
-                      options: const [
-                        "No Show :(",
-                        "No Show w/Representatives",
-                        "They Showed Up"
-                      ]),
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                Expanded(
-                    child: TextField(
+                TextField(
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Comments',
@@ -1006,7 +995,7 @@ class _PostMatchFormState extends State<PostMatchForm> {
                   controller: TextEditingController(
                     text: widget.comments,
                   ),
-                ))
+                )
               ],
             ),
           ),
