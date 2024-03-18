@@ -909,7 +909,7 @@ class _PostMatchFormState extends State<PostMatchForm> {
                 ),
                 Expanded(
                   child: ChoiceInput(
-                      title: "Did they do harmony?",
+                      title: "Did they do harmonize?",
                       onChoiceUpdate: (value) {
                         setState(() {
                           widget.onHarmonyChanged(value!);
@@ -920,7 +920,7 @@ class _PostMatchFormState extends State<PostMatchForm> {
                         "Double Harmony",
                         "Single Harmony",
                         "Failed",
-                        "Did Not Harmony"
+                        "Did Not Harmonize"
                       ]),
                 ),
                 const SizedBox(
@@ -994,7 +994,7 @@ class _PostMatchFormState extends State<PostMatchForm> {
                   ),
                   maxLines: 5,
                   inputFormatters: <TextInputFormatter>[
-                    LengthLimitingTextInputFormatter(500),
+                    LengthLimitingTextInputFormatter(100),
                     FilteringTextInputFormatter(
                       RegExp(r'[a-zA-Z]|-| |\n'),
                       allow: true,

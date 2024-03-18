@@ -1763,7 +1763,7 @@ class _FormAppPageState extends State<FormAppPage> {
                     icon: Icon(Icons.sports_esports),
                   ),
                   NavigationDestination(
-                    label: "Post",
+                    label: "End",
                     icon: Icon(Icons.sports_score),
                   ),
                   NavigationDestination(
