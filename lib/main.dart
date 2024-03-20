@@ -176,6 +176,7 @@ class _FormAppPageState extends State<FormAppPage> {
   double fieldDefenseRating = 0;
 
   bool? fieldHighnote = false;
+  bool? fieldCoOp = false;
 
   String fieldCard = "No Card";
   String fieldNoShow = "They Showed Up";
@@ -1551,6 +1552,12 @@ class _FormAppPageState extends State<FormAppPage> {
                           fieldHighnote = value;
                         });
                       },
+                      coOp: fieldCoOp,
+                      onCoOpChanged: (value) {
+                        setState(() {
+                          fieldCoOp = value;
+                        });
+                      },
                       card: fieldCard,
                       onCardChanged: (value) {
                         setState(() {
@@ -2008,7 +2015,7 @@ class _FormAppPageState extends State<FormAppPage> {
   List<List> getFieldKVFormattedData(
       {bool transpose = false, bool header = true}) {
     var data = [
-      ["gameType", playoffMode ? "playoff" : "qual"],
+      ["form", playoffMode ? "playoff" : "qual"],
       ["teamNumber", fieldTeamNumber],
       ["matchNumber", fieldMatchNumber],
       ["startingPosition", "${fieldAlliance.name}$fieldRobotPosition"],
@@ -2068,6 +2075,14 @@ class _FormAppPageState extends State<FormAppPage> {
       ["endgameDriverRating", fieldDriverRating],
       ["endgameDefenseRating", fieldDefenseRating],
       ["endgameHighnote", fieldHighnote],
+      [
+        "endgameCoOp",
+        fieldCoOp == true
+            ? "yes"
+            : fieldCoOp == false
+                ? "no"
+                : "failed"
+      ],
       ["endgameDidTheyGetACard", fieldCard],
       ["endgameDidTheyNoShow", fieldNoShow],
       ["endgameComments", fieldComments]
@@ -2088,6 +2103,7 @@ class _FormAppPageState extends State<FormAppPage> {
   List<List> getPitKVFormattedData(
       {bool transpose = false, bool header = true}) {
     var data = [
+      ["form", "pit"],
       ["teamNumber", pitTeamNumber],
       ['botLength', pitLengthData],
       ['botWidth', pitWidthData],
@@ -2499,6 +2515,7 @@ class _FormAppPageState extends State<FormAppPage> {
     fieldDriverRating = 0;
     fieldDefenseRating = 0;
     fieldHighnote = false;
+    fieldCoOp = false;
     fieldCard = "No Card";
     fieldNoShow = "They Showed Up";
     fieldComments = "";

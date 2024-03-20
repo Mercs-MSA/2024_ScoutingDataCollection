@@ -844,6 +844,9 @@ class PostMatchForm extends StatefulWidget {
   final Function(bool?) onHighnoteChanged;
   final bool? highnote;
 
+  final Function(bool?) onCoOpChanged;
+  final bool? coOp;
+
   final Function(String) onCardChanged;
   final String card;
 
@@ -873,6 +876,8 @@ class PostMatchForm extends StatefulWidget {
     required this.defenseRating,
     required this.onHighnoteChanged,
     required this.highnote,
+    required this.onCoOpChanged,
+    required this.coOp,
     required this.onCardChanged,
     required this.card,
     required this.onNoShowChanged,
@@ -999,6 +1004,31 @@ class _PostMatchFormState extends State<PostMatchForm> {
                     },
                     tristate: true,
                     activeColor: widget.highnote == true
+                        ? ColorScheme.fromSeed(
+                            seedColor: Colors.green,
+                            brightness: Brightness.dark,
+                          ).primary
+                        : ColorScheme.fromSeed(
+                            seedColor: Colors.red,
+                            brightness: Brightness.dark,
+                          ).primary,
+                    checkColor: widget.highnote == true
+                        ? ColorScheme.fromSeed(
+                            seedColor: Colors.green,
+                            brightness: Brightness.dark,
+                          ).onPrimary
+                        : ColorScheme.fromSeed(
+                            seedColor: Colors.red,
+                            brightness: Brightness.dark,
+                          ).onPrimary),
+                CheckboxListTile(
+                    value: widget.coOp,
+                    title: const Text("Co-op"),
+                    onChanged: (x) {
+                      widget.onCoOpChanged(x);
+                    },
+                    tristate: true,
+                    activeColor: widget.coOp == true
                         ? ColorScheme.fromSeed(
                             seedColor: Colors.green,
                             brightness: Brightness.dark,
