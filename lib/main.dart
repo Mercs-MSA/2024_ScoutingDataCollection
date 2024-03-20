@@ -2068,9 +2068,9 @@ class _FormAppPageState extends State<FormAppPage> {
       ["teleopDroppedNotes", fieldTeleopDroppedNotes],
       ["teleopFedNotes", fieldTeleopNotesFed],
       ["teleopAmps", fieldTeleopAmps],
-      ["endgameDidTheyClimb", fieldHowClimb],
-      ["endgameDidTheyTrap", fieldTrap],
-      ["endgameDidTheyHarmony", fieldHarmony],
+      ["endgameDidTheyClimb", climbMap[fieldHowClimb]],
+      ["endgameDidTheyTrap", trapMap[fieldTrap]],
+      ["endgameDidTheyHarmony", harmMap[fieldHarmony]],
       ["endgameDefenseBot", fieldDefenseBot],
       ["endgameDriverRating", fieldDriverRating],
       ["endgameDefenseRating", fieldDefenseRating],
@@ -2083,8 +2083,8 @@ class _FormAppPageState extends State<FormAppPage> {
                 ? "no"
                 : "failed"
       ],
-      ["endgameDidTheyGetACard", fieldCard],
-      ["endgameDidTheyNoShow", fieldNoShow],
+      ["endgameDidTheyGetACard", cardMap[fieldCard]],
+      ["endgameDidTheyNoShow", showMap[fieldNoShow]],
       ["endgameComments", fieldComments]
     ];
 
@@ -2111,7 +2111,7 @@ class _FormAppPageState extends State<FormAppPage> {
       ['botWeight', pitWeightData],
       ['drivebase', pitDrivebaseType],
       ['drivebaseAlt', pitAltDrivebaseType],
-      ['climber', pitClimberType],
+      ['climber', CLIMBER_MAP[pitClimberType]],
       ['climberAlt', pitAltClimberType],
       ['isKitbot', pitIsKitbot.name],
       ['intakeInBumper', pitIntakeInBumper],

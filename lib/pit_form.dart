@@ -4,6 +4,15 @@ import 'package:flutter/services.dart';
 import 'datatypes.dart';
 import 'widgets.dart';
 
+Map CLIMBER_MAP = {
+  "No Climber": "no",
+  "Tube-in-Tube": "tt",
+  "Lead Screw": "ls",
+  "Hook and Winch": "hw",
+  "Elevator": "e",
+  "Other": "o"
+};
+
 class PitForm extends StatefulWidget {
   const PitForm(
       {super.key,

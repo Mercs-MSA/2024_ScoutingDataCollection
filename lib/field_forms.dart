@@ -6,6 +6,42 @@ import 'package:flutter/services.dart';
 import 'datatypes.dart';
 import 'widgets.dart';
 
+Map climbMap = {
+  "Fast Climb": "fc",
+  "Normal Climb": "nc",
+  "Slow Climb": "sc",
+  "Parked, No Climb": "p",
+  "No Climb, No Park": "no",
+  "Failed": "f",
+};
+
+Map trapMap = {
+  "Fast Trap": "ft",
+  "Normal Trap": "nt",
+  "Slow Trap": "st",
+  "Failed Trap": "f",
+  "Did Not Trap": "no",
+};
+
+Map harmMap = {
+  "Double Harmony": "dh",
+  "Single Harmony": "sh",
+  "Failed": "f",
+  "Did Not Harmonize": "no"
+};
+
+Map cardMap = {
+  "No Card": "no",
+  "Yellow Card": "y",
+  "Red Card": "r",
+};
+
+Map showMap = {
+  "No Show :(": "ns",
+  "No Show w/Representatives": "nr",
+  "They Showed Up": "s",
+};
+
 class FieldAutonForm extends StatefulWidget {
   final bool teamNumberPresent;
   final Alliances allianceColor;
