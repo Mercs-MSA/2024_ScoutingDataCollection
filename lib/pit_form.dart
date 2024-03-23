@@ -167,6 +167,9 @@ class _PitFormState extends State<PitForm> {
   int autonAmpNotes = 0;
   int autonRoutes = 0;
 
+  String teleopStrat = "";
+  String autonStrat = "";
+
   final MaterialStateProperty<Icon?> thumbIcon =
       MaterialStateProperty.resolveWith<Icon?>(
     (Set<MaterialState> states) {
@@ -313,6 +316,9 @@ class _PitFormState extends State<PitForm> {
                             FilteringTextInputFormatter(RegExp(r'[a-zA-Z]|-| '),
                                 allow: true)
                           ],
+                          onChanged: (value) {
+                            widget.onAltDrivebaseChanged(value);
+                          },
                           controller: TextEditingController(
                             text: widget.altDrivebase == null
                                 ? ''
@@ -353,6 +359,9 @@ class _PitFormState extends State<PitForm> {
                             FilteringTextInputFormatter(RegExp(r'[a-zA-Z]|-| '),
                                 allow: true)
                           ],
+                          onChanged: (value) {
+                            widget.onAltClimberTypeChanged(value);
+                          },
                           controller: TextEditingController(
                             text: widget.altClimberType == null
                                 ? ''
@@ -777,12 +786,22 @@ class _PitFormState extends State<PitForm> {
                                   )
                                 ],
                                 onChanged: (value) {
-                                  widget.onAutonStratChanged(value);
+                                  autonStrat = value;
                                 },
                                 controller: TextEditingController(
-                                  text: widget.autonStrat,
+                                  text: autonStrat,
                                 ),
                               ),
+                              const SizedBox(height: 8.0),
+                              ElevatedButton(
+                                onPressed: () {
+                                  widget.onAutonStratChanged(autonStrat);
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.all(18.0),
+                                  child: Text("Save"),
+                                ),
+                              )
                             ],
                           ),
                       ],
@@ -825,10 +844,20 @@ class _PitFormState extends State<PitForm> {
                       ),
                     ],
                     onChanged: (value) {
-                      widget.onTeleopStratChnaged(value);
+                      teleopStrat = value;
                     },
                     controller: TextEditingController(
-                      text: widget.teleopStrat,
+                      text: teleopStrat,
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  ElevatedButton(
+                    onPressed: () {
+                      widget.onTeleopStratChnaged(teleopStrat);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: const Text("Save"),
                     ),
                   )
                 ],

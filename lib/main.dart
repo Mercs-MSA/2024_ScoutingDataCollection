@@ -77,10 +77,10 @@ class _FormAppPageState extends State<FormAppPage> {
   int fieldPageIndex = 0;
   int appMode = 0;
 
-  String eventId = "";
+  String eventId = "2024txama";
   bool transposedExport = true;
   bool exportHeaders = true;
-  int qrMaxChars = 100;
+  int qrMaxChars = 9999;
 
   bool playoffMode = false;
 
@@ -210,26 +210,40 @@ class _FormAppPageState extends State<FormAppPage> {
   }
 
   Future<void> loadPrefs() async {
+    print("bahh");
     final prefs = await SharedPreferences.getInstance();
 
+    print("bahh");
+
     incompletePitScoutingTasks = convertJsonStringToTasksList(
-        prefs.getString("jsonIncompletePitTasks") ?? "",
+        prefs.getString("jsonIncompletePitTasks"),
         (json) => PitScoutingTask.fromJson(json));
+
+    print("bahh");
     completePitScoutingTasks = convertJsonStringToTasksList(
         prefs.getString("jsonCompletePitTasks") ?? "",
         (json) => PitScoutingTask.fromJson(json));
 
+    print("bahh");
     incompleteFieldScoutingTasks = convertJsonStringToTasksList(
-        prefs.getString("jsonIncompleteFieldTasks") ?? "",
+        prefs.getString("jsonIncompleteFieldTasks"),
         (json) => ScoutingTask.fromJson(json));
+
+    print("bahh");
     completeFieldScoutingTasks = convertJsonStringToTasksList(
-        prefs.getString("jsonCompleteFieldTasks") ?? "",
+        prefs.getString("jsonCompleteFieldTasks"),
         (json) => ScoutingTask.fromJson(json));
+
+    print("bahh");
 
     teamNameMap = json.decode(prefs.getString("teamNamesMap") ?? "{}");
 
+    print("bahh");
+
     eventId = prefs.getString("eventId") ?? "";
     playoffMode = prefs.getBool("playoffMode") ?? false;
+    print(eventId);
+    print("bahh");
 
     transposedExport = prefs.getBool("transposedExport") ?? true;
     exportHeaders = prefs.getBool("exportHeaders") ?? true;
@@ -863,9 +877,7 @@ class _FormAppPageState extends State<FormAppPage> {
                         });
                       },
                       onAltDrivebaseChanged: (value) {
-                        setState(() {
-                          pitAltDrivebaseType = value;
-                        });
+                        pitAltDrivebaseType = value;
                       },
                       onKitbotChanged: (value) {
                         setState(() {
@@ -883,9 +895,7 @@ class _FormAppPageState extends State<FormAppPage> {
                         });
                       },
                       onAltClimberTypeChanged: (value) {
-                        setState(() {
-                          pitAltClimberType = value;
-                        });
+                        pitAltClimberType = value;
                       },
                       onDoesSpeakerChanged: (value) {
                         setState(() {
@@ -1984,6 +1994,7 @@ class _FormAppPageState extends State<FormAppPage> {
                         ],
                         onChanged: (value) {
                           eventId = value;
+                          print(eventId);
                           attemptSaveEventId();
                         },
                         controller: TextEditingController(text: eventId),
@@ -2561,9 +2572,12 @@ class _FormAppPageState extends State<FormAppPage> {
   }
 
   List<T> convertJsonStringToTasksList<T>(
-      String jsonString, T Function(Map<String, dynamic>) fromJson) {
-    List jsonList = json.decode(jsonString);
-    return jsonList.map((json) => fromJson(json)).toList();
+      String? jsonString, T Function(Map<String, dynamic>) fromJson) {
+    if (jsonString != null) {
+      List jsonList = json.decode(jsonString);
+      return jsonList.map((json) => fromJson(json)).toList();
+    }
+    return [];
   }
 
   Future<void> updateTeamSaves() async {
@@ -2581,11 +2595,11 @@ class _FormAppPageState extends State<FormAppPage> {
 
     String jsonTeamNames = json.encode(teamNameMap);
 
-    prefs.setString("jsonIncompleteFieldTasks", jsonIncompleteFieldTasks);
-    prefs.setString("jsonCompleteFieldTasks", jsonCompleteFieldTasks);
-    prefs.setString("jsonIncompletePitTasks", jsonIncompletePitTasks);
-    prefs.setString("jsonCompletePitTasks", jsonCompletePitTasks);
-    prefs.setString("teamNamesMap", jsonTeamNames);
+    await prefs.setString("jsonIncompleteFieldTasks", jsonIncompleteFieldTasks);
+    await prefs.setString("jsonCompleteFieldTasks", jsonCompleteFieldTasks);
+    await prefs.setString("jsonIncompletePitTasks", jsonIncompletePitTasks);
+    await prefs.setString("jsonCompletePitTasks", jsonCompletePitTasks);
+    await prefs.setString("teamNamesMap", jsonTeamNames);
   }
 
   List<String> splitStringByLength(String input, int chunkSize) {
@@ -2603,30 +2617,31 @@ class _FormAppPageState extends State<FormAppPage> {
   Future<void> attemptSaveEventId() async {
     final prefs = await SharedPreferences.getInstance();
 
-    prefs.setString("eventId", eventId);
+    await prefs.setString("eventId", eventId);
+    print(prefs.getString("eventId"));
   }
 
   Future<void> attemptSaveTranspose() async {
     final prefs = await SharedPreferences.getInstance();
 
-    prefs.setBool("transposedExport", transposedExport);
+    await prefs.setBool("transposedExport", transposedExport);
   }
 
   Future<void> attemptSaveHeaders() async {
     final prefs = await SharedPreferences.getInstance();
 
-    prefs.setBool("exportHeaders", exportHeaders);
+    await prefs.setBool("exportHeaders", exportHeaders);
   }
 
   Future<void> attemptSaveQrMaxChars() async {
     final prefs = await SharedPreferences.getInstance();
 
-    prefs.setInt("qrMaxChars", qrMaxChars);
+    await prefs.setInt("qrMaxChars", qrMaxChars);
   }
 
   Future<void> attemptSavePlayoff() async {
     final prefs = await SharedPreferences.getInstance();
 
-    prefs.setBool("playoffMode", playoffMode);
+    await prefs.setBool("playoffMode", playoffMode);
   }
 }
