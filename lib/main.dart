@@ -214,6 +214,7 @@ class _FormAppPageState extends State<FormAppPage> {
     final prefs = await SharedPreferences.getInstance();
 
     print("bahh");
+    print(prefs.getString("jsonIncompletePitTasks"));
 
     incompletePitScoutingTasks = convertJsonStringToTasksList(
         prefs.getString("jsonIncompletePitTasks"),
@@ -221,7 +222,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
     print("bahh");
     completePitScoutingTasks = convertJsonStringToTasksList(
-        prefs.getString("jsonCompletePitTasks") ?? "",
+        prefs.getString("jsonCompletePitTasks"),
         (json) => PitScoutingTask.fromJson(json));
 
     print("bahh");
@@ -240,7 +241,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
     print("bahh");
 
-    eventId = prefs.getString("eventId") ?? "";
+    eventId = prefs.getString("eventId") ?? "unknown";
     playoffMode = prefs.getBool("playoffMode") ?? false;
     print(eventId);
     print("bahh");
@@ -2573,11 +2574,14 @@ class _FormAppPageState extends State<FormAppPage> {
 
   List<T> convertJsonStringToTasksList<T>(
       String? jsonString, T Function(Map<String, dynamic>) fromJson) {
+    print(jsonString);
     if (jsonString != null) {
+      print("here");
       List jsonList = json.decode(jsonString);
       return jsonList.map((json) => fromJson(json)).toList();
+    } else {
+      return [];
     }
-    return [];
   }
 
   Future<void> updateTeamSaves() async {
