@@ -2131,7 +2131,6 @@ class _FormAppPageState extends State<FormAppPage> {
       ['autonRoutes', pitAutonRoutes],
       ['autonPrefStart', pitPrefStart.name],
       ['autonStrat', pitAutonStrat.replaceAll("\n", "*")],
-      ['hasAuton', pitAutonExists],
       ['repairability', pitRepairabilityScore],
       ['maneuverability', pitManeuverabilityScore],
       ['teleopStrat', pitTeleopStrat.replaceAll("\n", "*")],
