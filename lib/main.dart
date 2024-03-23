@@ -210,41 +210,28 @@ class _FormAppPageState extends State<FormAppPage> {
   }
 
   Future<void> loadPrefs() async {
-    print("bahh");
     final prefs = await SharedPreferences.getInstance();
-
-    print("bahh");
-    print(prefs.getString("jsonIncompletePitTasks"));
 
     incompletePitScoutingTasks = convertJsonStringToTasksList(
         prefs.getString("jsonIncompletePitTasks"),
         (json) => PitScoutingTask.fromJson(json));
 
-    print("bahh");
     completePitScoutingTasks = convertJsonStringToTasksList(
         prefs.getString("jsonCompletePitTasks"),
         (json) => PitScoutingTask.fromJson(json));
 
-    print("bahh");
     incompleteFieldScoutingTasks = convertJsonStringToTasksList(
         prefs.getString("jsonIncompleteFieldTasks"),
         (json) => ScoutingTask.fromJson(json));
 
-    print("bahh");
     completeFieldScoutingTasks = convertJsonStringToTasksList(
         prefs.getString("jsonCompleteFieldTasks"),
         (json) => ScoutingTask.fromJson(json));
 
-    print("bahh");
-
     teamNameMap = json.decode(prefs.getString("teamNamesMap") ?? "{}");
-
-    print("bahh");
 
     eventId = prefs.getString("eventId") ?? "unknown";
     playoffMode = prefs.getBool("playoffMode") ?? false;
-    print(eventId);
-    print("bahh");
 
     transposedExport = prefs.getBool("transposedExport") ?? true;
     exportHeaders = prefs.getBool("exportHeaders") ?? true;
@@ -1995,7 +1982,6 @@ class _FormAppPageState extends State<FormAppPage> {
                         ],
                         onChanged: (value) {
                           eventId = value;
-                          print(eventId);
                           attemptSaveEventId();
                         },
                         controller: TextEditingController(text: eventId),
@@ -2574,9 +2560,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
   List<T> convertJsonStringToTasksList<T>(
       String? jsonString, T Function(Map<String, dynamic>) fromJson) {
-    print(jsonString);
     if (jsonString != null) {
-      print("here");
       List jsonList = json.decode(jsonString);
       return jsonList.map((json) => fromJson(json)).toList();
     } else {
@@ -2622,7 +2606,6 @@ class _FormAppPageState extends State<FormAppPage> {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setString("eventId", eventId);
-    print(prefs.getString("eventId"));
   }
 
   Future<void> attemptSaveTranspose() async {
