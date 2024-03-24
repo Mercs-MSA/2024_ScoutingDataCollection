@@ -799,7 +799,7 @@ class _PitFormState extends State<PitForm> {
                                 },
                                 child: const Padding(
                                   padding: EdgeInsets.all(18.0),
-                                  child: Text("Save"),
+                                  child: Text("Force Save"),
                                 ),
                               )
                             ],
@@ -855,9 +855,9 @@ class _PitFormState extends State<PitForm> {
                     onPressed: () {
                       widget.onTeleopStratChnaged(teleopStrat);
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: const Text("Save"),
+                    child: const Padding(
+                      padding: EdgeInsets.all(18.0),
+                      child: Text("Force Save"),
                     ),
                   )
                 ],
