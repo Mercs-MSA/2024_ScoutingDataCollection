@@ -36,6 +36,7 @@ class PitForm extends StatefulWidget {
       required this.onDoesGroundPickupChanged,
       required this.onDoesExtendShootChanged,
       required this.onDoesBlockChanged,
+      required this.onAutoAimChanged,
       required this.onDoesTurretShootChanged,
       required this.onAutonExistsChanged,
       required this.onAutonSpeakerNotesChanged,
@@ -70,6 +71,7 @@ class PitForm extends StatefulWidget {
       required this.doesGroundPickup,
       required this.doesExtendShoot,
       required this.doesBlock,
+      required this.doesAutoAim,
       required this.doesTurretShoot,
       required this.autonExists,
       required this.autonSpeakerNotes,
@@ -107,6 +109,7 @@ class PitForm extends StatefulWidget {
   final Function(bool) onDoesGroundPickupChanged;
   final Function(bool) onDoesExtendShootChanged;
   final Function(bool) onDoesBlockChanged;
+  final Function(bool) onAutoAimChanged;
   final Function(bool) onDoesTurretShootChanged;
   final Function(bool) onAutonExistsChanged;
   final Function(int) onAutonSpeakerNotesChanged;
@@ -142,6 +145,7 @@ class PitForm extends StatefulWidget {
   final bool doesGroundPickup;
   final bool doesExtendShoot;
   final bool doesBlock;
+  final bool doesAutoAim;
   final bool doesTurretShoot;
   final bool autonExists;
   final int autonSpeakerNotes;
@@ -499,6 +503,10 @@ class _PitFormState extends State<PitForm> {
                           },
                         ),
                       ),
+                    ],
+                  ),
+                  Row(
+                    children: [
                       Expanded(
                         child: CheckboxListTile(
                           title: const Text('Block'),
@@ -506,6 +514,17 @@ class _PitFormState extends State<PitForm> {
                           onChanged: (bool? newValue) {
                             setState(() {
                               widget.onDoesBlockChanged(newValue!);
+                            });
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: const Text('Auto-Aim'),
+                          value: widget.doesAutoAim,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              widget.onAutoAimChanged(newValue!);
                             });
                           },
                         ),

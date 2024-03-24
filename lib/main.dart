@@ -131,6 +131,7 @@ class _FormAppPageState extends State<FormAppPage> {
   bool pitDoesTurretShoot = false;
   bool pitDoesExtendShoot = true;
   bool pitDoesBlock = false;
+  bool pitDoesAutoAim = false;
 
   bool pitPlayerPreferAmp = false;
   bool pitPlayerPreferSource = false;
@@ -925,6 +926,11 @@ class _FormAppPageState extends State<FormAppPage> {
                           pitDoesBlock = value;
                         });
                       },
+                      onAutoAimChanged: (value) {
+                        setState(() {
+                          pitDoesAutoAim = value;
+                        });
+                      },
                       onAutonExistsChanged: (value) {
                         setState(() {
                           pitAutonExists = value;
@@ -1005,6 +1011,7 @@ class _FormAppPageState extends State<FormAppPage> {
                       doesExtendShoot: pitDoesExtendShoot,
                       doesTurretShoot: pitDoesTurretShoot,
                       doesBlock: pitDoesBlock,
+                      doesAutoAim: pitDoesAutoAim,
                       autonExists: pitAutonExists,
                       autonSpeakerNotes: pitAutonSpeakerNotes,
                       autonAmpNotes: pitAutonAmpNotes,
@@ -2121,6 +2128,7 @@ class _FormAppPageState extends State<FormAppPage> {
       ['turretShoot', pitDoesTurretShoot],
       ['extendShoot', pitDoesExtendShoot],
       ['hasBlocker', pitDoesBlock],
+      ['hasAutoAim', pitDoesAutoAim],
       ['hasAuton', pitAutonExists],
       ['autonSpeakerNotes', pitAutonSpeakerNotes],
       ['autonAmpNotes', pitAutonAmpNotes],
@@ -2467,6 +2475,7 @@ class _FormAppPageState extends State<FormAppPage> {
     pitDoesTurretShoot = false;
     pitDoesExtendShoot = true;
     pitDoesBlock = false;
+    pitDoesAutoAim = false;
     pitPlayerPreferAmp = false;
     pitPlayerPreferSource = false;
     pitDriverYears = null;
