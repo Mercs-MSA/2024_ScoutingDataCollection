@@ -15,6 +15,14 @@ Map climbMap = {
   "Failed": "f",
 };
 
+Map<String, String> climbPos = {
+  "None": "no",
+  "Parked": "p",
+  "StageLeft": "sl",
+  "StageRight": "sr",
+  "CenterStage": "cs",
+};
+
 Map trapMap = {
   "Fast Trap": "ft",
   "Normal Trap": "nt",
@@ -865,6 +873,9 @@ class PostMatchForm extends StatefulWidget {
   final Function(String) onHowClimbUpdate;
   final String howClimb;
 
+  final Function(String) onClimbPosUpdate;
+  final String climbPos;
+
   final Function(String) onTrapUpdate;
   final String trap;
 
@@ -902,6 +913,8 @@ class PostMatchForm extends StatefulWidget {
     required this.robotPosition,
     required this.onHowClimbUpdate,
     required this.howClimb,
+    required this.climbPos,
+    required this.onClimbPosUpdate,
     required this.onTrapUpdate,
     required this.trap,
     required this.onHarmonyChanged,
@@ -963,6 +976,18 @@ class _PostMatchFormState extends State<PostMatchForm> {
                   height: 8.0,
                 ),
                 ChoiceInput(
+                    title: "Climb Position",
+                    onChoiceUpdate: (value) {
+                      setState(() {
+                        widget.onClimbPosUpdate(value!);
+                      });
+                    },
+                    choice: widget.climbPos,
+                    options: List.from(climbPos.keys)),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                ChoiceInput(
                     title: "Did they trap?",
                     onChoiceUpdate: (value) {
                       setState(() {
@@ -1017,9 +1042,6 @@ class _PostMatchFormState extends State<PostMatchForm> {
                     });
                   },
                   initialRating: widget.driverRating,
-                ),
-                const SizedBox(
-                  height: 8.0,
                 ),
                 RatingInput(
                   enableHalves: false,

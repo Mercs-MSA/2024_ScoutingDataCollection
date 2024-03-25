@@ -168,6 +168,7 @@ class _FormAppPageState extends State<FormAppPage> {
   bool? fieldPreload = true;
 
   String fieldHowClimb = "No Climb, No Park";
+  String fieldClimbPos = "None";
   String fieldTrap = "Did Not Trap";
   String fieldHarmony = "Did Not Harmonize";
 
@@ -1521,6 +1522,12 @@ class _FormAppPageState extends State<FormAppPage> {
                           fieldHowClimb = value;
                         });
                       },
+                      climbPos: fieldClimbPos,
+                      onClimbPosUpdate: (value) {
+                        setState(() {
+                          fieldClimbPos = value;
+                        });
+                      },
                       trap: fieldTrap,
                       onTrapUpdate: (value) {
                         setState(() {
@@ -2075,6 +2082,7 @@ class _FormAppPageState extends State<FormAppPage> {
       ["teleopFedNotes", fieldTeleopNotesFed],
       ["teleopAmps", fieldTeleopAmps],
       ["endgameDidTheyClimb", climbMap[fieldHowClimb]],
+      ["endgameClimbPos", climbPos[fieldClimbPos]],
       ["endgameDidTheyTrap", trapMap[fieldTrap]],
       ["endgameDidTheyHarmony", harmMap[fieldHarmony]],
       ["endgameDefenseBot", fieldDefenseBot],
@@ -2517,6 +2525,7 @@ class _FormAppPageState extends State<FormAppPage> {
     fieldTeleopNotesFed = 0;
     fieldTeleopAmps = 0;
     fieldHowClimb = "Failed";
+    fieldClimbPos = "None";
     fieldTrap = "Did Not Trap";
     fieldHarmony = "Did Not Harmonize";
     fieldDefenseBot = false;
