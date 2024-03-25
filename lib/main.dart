@@ -2021,7 +2021,8 @@ class _FormAppPageState extends State<FormAppPage> {
       {bool transpose = false, bool header = true}) {
     var data = [
       ["form", playoffMode ? "playoff" : "qual"],
-      ["teamNumber", fieldTeamNumber],
+      ["event", eventId],
+      ["teamNumber", "frc$fieldTeamNumber"],
       ["matchNumber", fieldMatchNumber],
       ["startingPosition", "${fieldAlliance.name}$fieldRobotPosition"],
       ["hasAuton", fieldAutonExists],
@@ -2109,7 +2110,8 @@ class _FormAppPageState extends State<FormAppPage> {
       {bool transpose = false, bool header = true}) {
     var data = [
       ["form", "pit"],
-      ["teamNumber", pitTeamNumber],
+      ["event", eventId],
+      ["teamNumber", "frc$pitTeamNumber"],
       ['botLength', pitLengthData],
       ['botWidth', pitWidthData],
       ['botHeight', pitLengthData],
