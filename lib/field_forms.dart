@@ -12,7 +12,7 @@ Map climbMap = {
   "Slow Climb": "sc",
   "Parked, No Climb": "p",
   "No Climb, No Park": "no",
-  "Failed": "f",
+  "Climb Attempt Failed": "f",
 };
 
 Map<String, String> climbPos = {
@@ -24,9 +24,7 @@ Map<String, String> climbPos = {
 };
 
 Map trapMap = {
-  "Fast Trap": "ft",
-  "Normal Trap": "nt",
-  "Slow Trap": "st",
+  "Trapped": "t",
   "Failed Trap": "f",
   "Did Not Trap": "no",
 };
@@ -240,7 +238,7 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                                                   onChanged: (x) {
                                                     widget.onPreloadChanged(x);
                                                   },
-                                                  tristate: true,
+                                                  tristate: false,
                                                   activeColor: widget.preload ==
                                                           true
                                                       ? ColorScheme.fromSeed(
@@ -970,7 +968,7 @@ class _PostMatchFormState extends State<PostMatchForm> {
                       "Slow Climb",
                       "Parked, No Climb",
                       "No Climb, No Park",
-                      "Failed",
+                      "Climb Attempt Failed",
                     ]),
                 const SizedBox(
                   height: 8.0,
@@ -996,11 +994,9 @@ class _PostMatchFormState extends State<PostMatchForm> {
                     },
                     choice: widget.trap,
                     options: const [
-                      "Fast Trap",
-                      "Normal Trap",
-                      "Slow Trap",
+                      "Trapped",
                       "Failed Trap",
-                      "Did Not Trap"
+                      "Did Not Trap",
                     ]),
                 const SizedBox(
                   height: 8.0,
@@ -1019,9 +1015,7 @@ class _PostMatchFormState extends State<PostMatchForm> {
                       "Failed",
                       "Did Not Harmonize"
                     ]),
-                const SizedBox(
-                  height: 8.0,
-                ),
+                const SizedBox(height: 8.0),
                 SwitchListTile(
                   title: const Text('Defense Bot?'),
                   value: widget.defenseBot,
@@ -1033,34 +1027,13 @@ class _PostMatchFormState extends State<PostMatchForm> {
                   },
                 ),
                 const Divider(),
-                RatingInput(
-                  enableHalves: false,
-                  title: 'Driver Rating',
-                  onRatingUpdate: (rating) {
-                    setState(() {
-                      widget.onDriverRatingChanged(rating);
-                    });
-                  },
-                  initialRating: widget.driverRating,
-                ),
-                RatingInput(
-                  enableHalves: false,
-                  title: 'Defense Rating',
-                  onRatingUpdate: (rating) {
-                    setState(() {
-                      widget.onDefenseRatingChanged(rating);
-                    });
-                  },
-                  initialRating: widget.defenseRating,
-                ),
-                const Divider(),
                 CheckboxListTile(
                     value: widget.highnote,
                     title: const Text("Highnote"),
                     onChanged: (x) {
                       widget.onHighnoteChanged(x);
                     },
-                    tristate: true,
+                    tristate: false,
                     activeColor: widget.highnote == true
                         ? ColorScheme.fromSeed(
                             seedColor: Colors.green,
@@ -1105,6 +1078,27 @@ class _PostMatchFormState extends State<PostMatchForm> {
                             brightness: Brightness.dark,
                           ).onPrimary),
                 const Divider(),
+                RatingInput(
+                  enableHalves: false,
+                  title: 'Driver Rating',
+                  onRatingUpdate: (rating) {
+                    setState(() {
+                      widget.onDriverRatingChanged(rating);
+                    });
+                  },
+                  initialRating: widget.driverRating,
+                ),
+                RatingInput(
+                  enableHalves: false,
+                  title: 'Defense Rating',
+                  onRatingUpdate: (rating) {
+                    setState(() {
+                      widget.onDefenseRatingChanged(rating);
+                    });
+                  },
+                  initialRating: widget.defenseRating,
+                ),
+                const Divider(),
                 ChoiceInput(
                     title: "Did they get a card?",
                     onChoiceUpdate: (value) {
@@ -1142,7 +1136,7 @@ class _PostMatchFormState extends State<PostMatchForm> {
                   inputFormatters: <TextInputFormatter>[
                     LengthLimitingTextInputFormatter(100),
                     FilteringTextInputFormatter(
-                      RegExp(r'[a-zA-Z]|-| |\n'),
+                      RegExp(r'[0-9]|[a-zA-Z]|-| |\n'),
                       allow: true,
                     ),
                   ],

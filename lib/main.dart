@@ -1062,6 +1062,16 @@ class _FormAppPageState extends State<FormAppPage> {
                                       ),
                                       ElevatedButton(
                                         onPressed: () {
+                                          completePitScoutingTasks.add(
+                                              PitScoutingTask(
+                                                  team: pitTeamNumber!));
+                                          incompletePitScoutingTasks
+                                              .removeWhere((task) =>
+                                                  task.team == pitTeamNumber);
+                                          setState(() {
+                                            pitPageIndex = 0;
+                                          });
+                                          updateTeamSaves();
                                           resetPit();
                                         },
                                         child: const Text("Reset Data"),
@@ -1163,6 +1173,16 @@ class _FormAppPageState extends State<FormAppPage> {
                                               pitQrChunks.length - 1) ||
                                           pitQrChunks.length == 1
                                       ? () {
+                                          completePitScoutingTasks.add(
+                                              PitScoutingTask(
+                                                  team: pitTeamNumber!));
+                                          incompletePitScoutingTasks
+                                              .removeWhere((task) =>
+                                                  task.team == pitTeamNumber);
+                                          setState(() {
+                                            pitPageIndex = 0;
+                                          });
+                                          updateTeamSaves();
                                           resetPit();
                                         }
                                       : null,
@@ -1614,6 +1634,16 @@ class _FormAppPageState extends State<FormAppPage> {
                               ),
                               ElevatedButton(
                                 onPressed: () {
+                                  completeFieldScoutingTasks.add(ScoutingTask(
+                                      team: fieldTeamNumber!,
+                                      match: fieldMatchNumber!,
+                                      alliance: fieldAlliance,
+                                      position: fieldRobotPosition));
+                                  incompleteFieldScoutingTasks.removeWhere(
+                                      (task) => (task.team == fieldTeamNumber &&
+                                          task.match == fieldMatchNumber! &&
+                                          task.alliance == fieldAlliance &&
+                                          task.position == fieldRobotPosition));
                                   resetField();
                                 },
                                 child: const Text("Reset Data"),
@@ -1703,6 +1733,18 @@ class _FormAppPageState extends State<FormAppPage> {
                                         fieldQrChunks.length - 1) ||
                                     fieldQrChunks.length == 1
                                 ? () {
+                                    completeFieldScoutingTasks.add(ScoutingTask(
+                                        team: fieldTeamNumber!,
+                                        match: fieldMatchNumber!,
+                                        alliance: fieldAlliance,
+                                        position: fieldRobotPosition));
+                                    incompleteFieldScoutingTasks.removeWhere(
+                                        (task) => (task.team ==
+                                                fieldTeamNumber &&
+                                            task.match == fieldMatchNumber! &&
+                                            task.alliance == fieldAlliance &&
+                                            task.position ==
+                                                fieldRobotPosition));
                                     resetField();
                                   }
                                 : null,
@@ -2524,7 +2566,7 @@ class _FormAppPageState extends State<FormAppPage> {
     fieldTeleopDroppedNotes = 0;
     fieldTeleopNotesFed = 0;
     fieldTeleopAmps = 0;
-    fieldHowClimb = "Failed";
+    fieldHowClimb = "Climb Attempt Failed";
     fieldClimbPos = "None";
     fieldTrap = "Did Not Trap";
     fieldHarmony = "Did Not Harmonize";
