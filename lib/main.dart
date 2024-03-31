@@ -8,6 +8,7 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path/path.dart' as path;
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,7 +21,6 @@ import 'widgets.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
@@ -198,11 +198,27 @@ class _FormAppPageState extends State<FormAppPage> {
 
   Map teamNameMap = {};
 
+  PackageInfo _packageInfo = PackageInfo(
+    appName: 'Unknown',
+    packageName: 'Unknown',
+    version: 'Unknown',
+    buildNumber: 'Unknown',
+    buildSignature: 'Unknown',
+    installerStore: 'Unknown',
+  );
+
   @override
   void initState() {
     super.initState();
-
+    _initPackageInfo();
     loadPrefs();
+  }
+
+  Future<void> _initPackageInfo() async {
+    final info = await PackageInfo.fromPlatform();
+    setState(() {
+      _packageInfo = info;
+    });
   }
 
   Future<void> loadPrefs() async {
@@ -524,7 +540,15 @@ class _FormAppPageState extends State<FormAppPage> {
                           setAppModePref(appMode);
                         });
                       },
-                      icon: const Icon(Icons.settings_outlined))
+                      icon: const Icon(Icons.settings_outlined)),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          appMode = 4;
+                          setAppModePref(appMode);
+                        });
+                      },
+                      icon: const Icon(Icons.info_outline_rounded))
                 ],
               ),
               body: Padding(
@@ -1884,7 +1908,43 @@ class _FormAppPageState extends State<FormAppPage> {
               ),
             )
           else
-            const SizedBox()
+            const SizedBox(),
+          if (appMode == 4)
+            Scaffold(
+              appBar: AppBar(
+                title: const Text("About"),
+                leading: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        appMode = 0;
+                        setAppModePref(appMode);
+                      });
+                    },
+                    icon: const Icon(Icons.arrow_back)),
+              ),
+              body: ListView(
+                children: [
+                  const Image(
+                    image: AssetImage('images/mercs.png'),
+                    width: 380,
+                    height: 380,
+                    isAntiAlias: true,
+                  ),
+                  const Text(
+                    "Mercs Scouting App",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 32),
+                  ),
+                  Text(
+                    "Version: ${_packageInfo.version}",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 24),
+                  ),
+                ],
+              ),
+            )
+          else
+            const SizedBox(),
         ],
       ),
     );
