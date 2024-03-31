@@ -1104,12 +1104,35 @@ class _FormAppPageState extends State<FormAppPage> {
                               const Spacer(),
                               Padding(
                                   padding: const EdgeInsets.all(32.0),
-                                  child: QrImageView(
-                                    data: getPitKVFormattedData(
-                                            transpose: true, header: false)[0]
-                                        .join("||"),
-                                    backgroundColor: Colors.white,
-                                  )),
+                                  child: validatePitData()
+                                      ? QrImageView(
+                                          data: getPitKVFormattedData(
+                                                  transpose: true,
+                                                  header: false)[0]
+                                              .join("||"),
+                                          backgroundColor: Colors.white,
+                                        )
+                                      : const Card(
+                                          child: Padding(
+                                            padding: EdgeInsets.all(32.0),
+                                            child: Column(
+                                              children: [
+                                                Icon(
+                                                  Icons.error,
+                                                  size: 84,
+                                                ),
+                                                Text(
+                                                  "You're missing data!",
+                                                  style:
+                                                      TextStyle(fontSize: 18),
+                                                ),
+                                                SizedBox(height: 8.0),
+                                                Text(
+                                                    "Some form data is missing")
+                                              ],
+                                            ),
+                                          ),
+                                        )),
                               const Spacer(),
                               const Divider(),
                               const SizedBox(height: 8.0),
@@ -2038,6 +2061,20 @@ class _FormAppPageState extends State<FormAppPage> {
         data[0].length, (i) => List.generate(data.length, (j) => data[j][i]));
 
     return transposedData;
+  }
+
+  bool validatePitData() {
+    for (final value in [
+      pitLengthData,
+      pitWidthData,
+      pitLengthData,
+      pitWeightData
+    ]) {
+      if (value == null) {
+        return false;
+      }
+    }
+    return true;
   }
 
   List<List> getPitKVFormattedData(
