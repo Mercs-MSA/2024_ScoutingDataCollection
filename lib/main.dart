@@ -167,8 +167,8 @@ class _FormAppPageState extends State<FormAppPage> {
   List<bool?> fieldCenterNotes = [false, false, false, false, false];
   bool? fieldPreload = true;
 
-  String fieldHowClimb = "No Climb, No Park";
-  String fieldClimbPos = "None";
+  double fieldClimbSpeed = 2;
+  StagePositions fieldStagePos = StagePositions.none;
   String fieldTrap = "Did Not Trap";
   String fieldHarmony = "Did Not Harmonize";
 
@@ -177,7 +177,7 @@ class _FormAppPageState extends State<FormAppPage> {
   double fieldDriverRating = 0;
   double fieldDefenseRating = 0;
 
-  bool? fieldHighnote = false;
+  bool fieldHighnote = false;
   bool? fieldCoOp = false;
 
   String fieldCard = "No Card";
@@ -1536,16 +1536,16 @@ class _FormAppPageState extends State<FormAppPage> {
                               : true,
                       allianceColor: fieldAlliance,
                       robotPosition: fieldRobotPosition,
-                      howClimb: fieldHowClimb,
-                      onHowClimbUpdate: (value) {
+                      climbSpeed: fieldClimbSpeed,
+                      onClimbSpeedUpdate: (value) {
                         setState(() {
-                          fieldHowClimb = value;
+                          fieldClimbSpeed = value;
                         });
                       },
-                      climbPos: fieldClimbPos,
-                      onClimbPosUpdate: (value) {
+                      stagePos: fieldStagePos,
+                      onStagePosUpdate: (value) {
                         setState(() {
-                          fieldClimbPos = value;
+                          fieldStagePos = value;
                         });
                       },
                       trap: fieldTrap,
@@ -2123,8 +2123,8 @@ class _FormAppPageState extends State<FormAppPage> {
       ["teleopDroppedNotes", fieldTeleopDroppedNotes],
       ["teleopFedNotes", fieldTeleopNotesFed],
       ["teleopAmps", fieldTeleopAmps],
-      ["endgameDidTheyClimb", climbMap[fieldHowClimb]],
-      ["endgameClimbPos", climbPos[fieldClimbPos]],
+      ["endgameClimbSpeed", fieldClimbSpeed],
+      ["endgameClimbPos", climbPos[fieldStagePos]],
       ["endgameDidTheyTrap", trapMap[fieldTrap]],
       ["endgameDidTheyHarmony", harmMap[fieldHarmony]],
       ["endgameDefenseBot", fieldDefenseBot],
@@ -2566,8 +2566,8 @@ class _FormAppPageState extends State<FormAppPage> {
     fieldTeleopDroppedNotes = 0;
     fieldTeleopNotesFed = 0;
     fieldTeleopAmps = 0;
-    fieldHowClimb = "Climb Attempt Failed";
-    fieldClimbPos = "None";
+    fieldClimbSpeed = 1;
+    fieldStagePos = StagePositions.none;
     fieldTrap = "Did Not Trap";
     fieldHarmony = "Did Not Harmonize";
     fieldDefenseBot = false;

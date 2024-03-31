@@ -2,25 +2,18 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'datatypes.dart';
 import 'widgets.dart';
 
-Map climbMap = {
-  "Fast Climb": "fc",
-  "Normal Climb": "nc",
-  "Slow Climb": "sc",
-  "Parked, No Climb": "p",
-  "No Climb, No Park": "no",
-  "Climb Attempt Failed": "f",
-};
-
-Map<String, String> climbPos = {
-  "None": "no",
-  "Parked": "p",
-  "StageLeft": "sl",
-  "StageRight": "sr",
-  "CenterStage": "cs",
+Map<StagePositions, String> climbPos = {
+  StagePositions.none: "no",
+  StagePositions.park: "p",
+  StagePositions.fail: "f",
+  StagePositions.left: "sl",
+  StagePositions.right: "sr",
+  StagePositions.center: "cs",
 };
 
 Map trapMap = {
@@ -222,8 +215,8 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                                     child: Row(
                                       textDirection:
                                           widget.allianceColor == Alliances.red
-                                              ? TextDirection.ltr
-                                              : TextDirection.rtl,
+                                              ? TextDirection.rtl
+                                              : TextDirection.ltr,
                                       children: [
                                         Column(
                                           mainAxisAlignment:
@@ -334,7 +327,7 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                                         ),
                                         Column(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.end,
+                                              MainAxisAlignment.start,
                                           children: [
                                             const Text("AMP"),
                                             NumberInput(
@@ -430,15 +423,15 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                                               },
                                               tristate: true,
                                             ),
-                                            const SizedBox(height: 48),
+                                            const Spacer(),
                                           ],
                                         ),
                                         const Spacer(),
                                         RotatedTriangle(
                                           rotationAngle: widget.allianceColor ==
                                                   Alliances.blue
-                                              ? pi / 2
-                                              : -pi / 2, // radians
+                                              ? -pi / 2
+                                              : pi / 2, // radians
                                           color: Colors.transparent,
                                           borderColor: widget.allianceColor ==
                                                   Alliances.blue
@@ -858,9 +851,9 @@ class PostMatchForm extends StatefulWidget {
       MaterialStateProperty.resolveWith<Icon?>(
     (Set<MaterialState> states) {
       if (states.contains(MaterialState.selected)) {
-        return const Icon(Icons.check);
+        return const Icon(Icons.check_rounded);
       }
-      return const Icon(Icons.close);
+      return const Icon(Icons.close_rounded);
     },
   );
 
@@ -868,11 +861,11 @@ class PostMatchForm extends StatefulWidget {
   final Alliances allianceColor;
   final int robotPosition;
 
-  final Function(String) onHowClimbUpdate;
-  final String howClimb;
+  final Function(double) onClimbSpeedUpdate;
+  final double climbSpeed;
 
-  final Function(String) onClimbPosUpdate;
-  final String climbPos;
+  final Function(StagePositions) onStagePosUpdate;
+  final StagePositions stagePos;
 
   final Function(String) onTrapUpdate;
   final String trap;
@@ -886,8 +879,8 @@ class PostMatchForm extends StatefulWidget {
   final Function(double) onDefenseRatingChanged;
   final double defenseRating;
 
-  final Function(bool?) onHighnoteChanged;
-  final bool? highnote;
+  final Function(bool) onHighnoteChanged;
+  final bool highnote;
 
   final Function(bool?) onCoOpChanged;
   final bool? coOp;
@@ -909,10 +902,10 @@ class PostMatchForm extends StatefulWidget {
     required this.teamNumberPresent,
     required this.allianceColor,
     required this.robotPosition,
-    required this.onHowClimbUpdate,
-    required this.howClimb,
-    required this.climbPos,
-    required this.onClimbPosUpdate,
+    required this.onClimbSpeedUpdate,
+    required this.climbSpeed,
+    required this.stagePos,
+    required this.onStagePosUpdate,
     required this.onTrapUpdate,
     required this.trap,
     required this.onHarmonyChanged,
@@ -954,34 +947,156 @@ class _PostMatchFormState extends State<PostMatchForm> {
             padding: const EdgeInsets.all(12.0),
             child: ListView(
               children: <Widget>[
-                ChoiceInput(
-                    title: "(How) Did they climb?",
-                    onChoiceUpdate: (value) {
-                      setState(() {
-                        widget.onHowClimbUpdate(value!);
-                      });
-                    },
-                    choice: widget.howClimb,
-                    options: const [
-                      "Fast Climb",
-                      "Normal Climb",
-                      "Slow Climb",
-                      "Parked, No Climb",
-                      "No Climb, No Park",
-                      "Climb Attempt Failed",
-                    ]),
-                const SizedBox(
-                  height: 8.0,
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        const Text(
+                          "AMP",
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(
+                          height: 8.0,
+                        ),
+                        Row(
+                          textDirection: widget.allianceColor == Alliances.red
+                              ? TextDirection.ltr
+                              : TextDirection.rtl,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            if ([
+                              StagePositions.left,
+                              StagePositions.right,
+                              StagePositions.center
+                            ].contains(widget.stagePos))
+                              RatingBar.builder(
+                                initialRating: widget.climbSpeed,
+                                itemBuilder: (context, _) => Icon(
+                                  Icons.star_rounded,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                                onRatingUpdate: widget.onClimbSpeedUpdate,
+                                minRating: 1,
+                                direction: Axis.vertical,
+                                glow: false,
+                                itemCount: 3,
+                              ),
+                            const SizedBox(width: 8.0),
+                            Radio(
+                              value: StagePositions.center,
+                              groupValue: widget.stagePos,
+                              onChanged: (value) {
+                                if (value == null) {
+                                  widget.onStagePosUpdate(StagePositions.none);
+                                } else {
+                                  widget.onStagePosUpdate(value);
+                                }
+                              },
+                            ),
+                            const SizedBox(width: 16.0),
+                            Column(
+                              children: [
+                                Radio(
+                                  value: widget.allianceColor == Alliances.red
+                                      ? StagePositions.right
+                                      : StagePositions.left,
+                                  groupValue: widget.stagePos,
+                                  onChanged: (value) {
+                                    if (value == null) {
+                                      widget.onStagePosUpdate(
+                                          StagePositions.none);
+                                    } else {
+                                      widget.onStagePosUpdate(value);
+                                    }
+                                  },
+                                ),
+                                RotatedTriangle(
+                                  rotationAngle:
+                                      widget.allianceColor == Alliances.blue
+                                          ? -pi / 2
+                                          : pi / 2,
+                                  color: Colors.transparent,
+                                  borderColor:
+                                      widget.allianceColor == Alliances.blue
+                                          ? Colors.blue
+                                          : Colors.red,
+                                  borderWidth: 5,
+                                ),
+                                Radio(
+                                  value: widget.allianceColor == Alliances.red
+                                      ? StagePositions.left
+                                      : StagePositions.right,
+                                  groupValue: widget.stagePos,
+                                  onChanged: (value) {
+                                    if (value == null) {
+                                      widget.onStagePosUpdate(
+                                          StagePositions.none);
+                                    } else {
+                                      widget.onStagePosUpdate(value);
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                            const SizedBox(width: 8.0),
+                            IconButton(
+                              onPressed: () {
+                                widget.onStagePosUpdate(StagePositions.none);
+                              },
+                              icon: Icon(
+                                Icons.not_interested_rounded,
+                                color: widget.stagePos == StagePositions.none
+                                    ? Theme.of(context).colorScheme.primary
+                                    : null,
+                                size: 48,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                widget.onStagePosUpdate(StagePositions.park);
+                              },
+                              icon: Icon(
+                                Icons.local_parking_rounded,
+                                color: widget.stagePos == StagePositions.park
+                                    ? Theme.of(context).colorScheme.primary
+                                    : null,
+                                size: 48,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                widget.onStagePosUpdate(StagePositions.fail);
+                              },
+                              icon: Icon(
+                                Icons.disabled_by_default_rounded,
+                                color: widget.stagePos == StagePositions.fail
+                                    ? Theme.of(context).colorScheme.primary
+                                    : null,
+                                size: 48,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 8.0,
+                        ),
+                        const Text(
+                          "SOURCE",
+                          textAlign: TextAlign.center,
+                        ),
+                        SwitchListTile(
+                          value: widget.highnote,
+                          title: const Text("Spotlit"),
+                          thumbIcon: widget.thumbIcon,
+                          onChanged: (x) {
+                            widget.onHighnoteChanged(x);
+                          },
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-                ChoiceInput(
-                    title: "Climb Position",
-                    onChoiceUpdate: (value) {
-                      setState(() {
-                        widget.onClimbPosUpdate(value!);
-                      });
-                    },
-                    choice: widget.climbPos,
-                    options: List.from(climbPos.keys)),
                 const SizedBox(
                   height: 8.0,
                 ),
@@ -1027,31 +1142,6 @@ class _PostMatchFormState extends State<PostMatchForm> {
                   },
                 ),
                 const Divider(),
-                CheckboxListTile(
-                    value: widget.highnote,
-                    title: const Text("Highnote"),
-                    onChanged: (x) {
-                      widget.onHighnoteChanged(x);
-                    },
-                    tristate: false,
-                    activeColor: widget.highnote == true
-                        ? ColorScheme.fromSeed(
-                            seedColor: Colors.green,
-                            brightness: Brightness.dark,
-                          ).primary
-                        : ColorScheme.fromSeed(
-                            seedColor: Colors.red,
-                            brightness: Brightness.dark,
-                          ).primary,
-                    checkColor: widget.highnote == true
-                        ? ColorScheme.fromSeed(
-                            seedColor: Colors.green,
-                            brightness: Brightness.dark,
-                          ).onPrimary
-                        : ColorScheme.fromSeed(
-                            seedColor: Colors.red,
-                            brightness: Brightness.dark,
-                          ).onPrimary),
                 CheckboxListTile(
                     value: widget.coOp,
                     title: const Text("Co-op"),
