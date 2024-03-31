@@ -1723,92 +1723,88 @@ class _FormAppPageState extends State<FormAppPage> {
                         ],
                       ),
                       const SizedBox(height: 4.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                            onPressed: importTeamList,
-                            child: const Text("Import team list"),
-                          ),
-                          const SizedBox(width: 8.0),
-                          ElevatedButton(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text("Are you sure?"),
-                                    icon: const Icon(
-                                      Icons.error_rounded,
-                                      size: 72,
+                      ElevatedButton.icon(
+                          onPressed: importTeamList,
+                          label: const Text("Import team list"),
+                          icon: const Icon(Icons.upload)),
+                      const SizedBox(height: 8.0),
+                      ElevatedButton.icon(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text("Are you sure?"),
+                                  icon: const Icon(
+                                    Icons.error_rounded,
+                                    size: 72,
+                                  ),
+                                  content: const Text(
+                                      "Are you ABSOLUTELY SURE you want to remove ALL saved team lists"),
+                                  actionsOverflowButtonSpacing: 20,
+                                  actions: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text("No"),
                                     ),
-                                    content: const Text(
-                                        "Are you ABSOLUTELY SURE you want to remove ALL saved team lists"),
-                                    actionsOverflowButtonSpacing: 20,
-                                    actions: [
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text("No"),
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text("No"),
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          resetAllTeams();
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text("Yes"),
-                                      ),
-                                    ],
-                                  );
-                                },
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text("No"),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        resetAllTeams();
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text("Yes"),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          label: const Text("RESET ALL TEAMS"),
+                          icon: const Icon(Icons.delete_forever)),
+                      const SizedBox(height: 8.0),
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("Are you sure?"),
+                                icon: const Icon(
+                                  Icons.error_rounded,
+                                  size: 72,
+                                ),
+                                content: const Text(
+                                    "Are you ABSOLUTELY SURE you want to add 3 nonsense teams to each list"),
+                                actionsOverflowButtonSpacing: 20,
+                                actions: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("No"),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      loadTestTeams();
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("Yes"),
+                                  ),
+                                ],
                               );
                             },
-                            child: const Text("RESET ALL TEAMS"),
-                          ),
-                          const SizedBox(width: 8.0),
-                          ElevatedButton(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text("Are you sure?"),
-                                    icon: const Icon(
-                                      Icons.error_rounded,
-                                      size: 72,
-                                    ),
-                                    content: const Text(
-                                        "Are you ABSOLUTELY SURE you want to add 3 nonsense teams to each list"),
-                                    actionsOverflowButtonSpacing: 20,
-                                    actions: [
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text("No"),
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          loadTestTeams();
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text("Yes"),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
-                            child: const Text("Load debug teams"),
-                          ),
-                        ],
+                          );
+                        },
+                        label: const Text("Load debug teams"),
+                        icon: const Icon(Icons.bug_report),
                       ),
                       const SizedBox(height: 8.0),
                       Row(
