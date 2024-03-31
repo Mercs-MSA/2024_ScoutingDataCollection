@@ -80,7 +80,6 @@ class _FormAppPageState extends State<FormAppPage> {
   String eventId = "2024txama";
   bool transposedExport = true;
   bool exportHeaders = true;
-  int qrMaxChars = 9999;
 
   bool playoffMode = false;
 
@@ -187,12 +186,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
   bool saveDisabled = false;
 
-  List<String> fieldQrChunks = [];
-  int fieldCurrentQrChunk = 0;
-
   bool importerSaveCompletes = false;
-  List<String> pitQrChunks = [];
-  int pitCurrentQrChunk = 0;
 
   List<ScoutingTask> incompleteFieldScoutingTasks = [];
 
@@ -237,7 +231,6 @@ class _FormAppPageState extends State<FormAppPage> {
 
     transposedExport = prefs.getBool("transposedExport") ?? true;
     exportHeaders = prefs.getBool("exportHeaders") ?? true;
-    qrMaxChars = prefs.getInt("qrMaxChars") ?? 100;
 
     setState(() {
       appMode = prefs.getInt('appMode') ?? 0;
@@ -512,17 +505,6 @@ class _FormAppPageState extends State<FormAppPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (appMode == 1) {
-      // dont waste resources
-      pitQrChunks = splitStringByLength(
-          getPitKVFormattedData(transpose: true, header: false)[0].join("||"),
-          qrMaxChars);
-    } else if (appMode == 2) {
-      // dont waste resources
-      fieldQrChunks = splitStringByLength(
-          getFieldKVFormattedData(transpose: true, header: false)[0].join("||"),
-          qrMaxChars);
-    }
     return PopScope(
       canPop: false,
       onPopInvoked: _onBackPressed,
@@ -692,9 +674,6 @@ class _FormAppPageState extends State<FormAppPage> {
                 ],
                 selectedIndex: pitPageIndex,
                 onDestinationSelected: (int index) {
-                  if (index == 3) {
-                    pitCurrentQrChunk = 0;
-                  }
                   if ((pitTeamNumber != null) &&
                       (pitPageIndex == 0) &&
                       (index == 1) &&
@@ -1100,92 +1079,28 @@ class _FormAppPageState extends State<FormAppPage> {
                             children: [
                               const Spacer(),
                               Padding(
-                                padding: const EdgeInsets.all(32.0),
-                                child: IndexedStack(
-                                  index: pitCurrentQrChunk,
-                                  children: [
-                                    for (final (index, chunk)
-                                        in pitQrChunks.indexed)
-                                      if (index == pitCurrentQrChunk)
-                                        QrImageView(
-                                          data: chunk,
-                                          backgroundColor: Colors.white,
-                                        )
-                                      else
-                                        const SizedBox(),
-                                  ],
-                                ),
-                              ),
+                                  padding: const EdgeInsets.all(32.0),
+                                  child: QrImageView(
+                                    data: getPitKVFormattedData(
+                                            transpose: true, header: false)[0]
+                                        .join("||"),
+                                    backgroundColor: Colors.white,
+                                  )),
                               const Spacer(),
                               const Divider(),
-                              if (pitQrChunks.length > 1)
-                                Row(
-                                  children: [
-                                    const SizedBox(width: 8.0),
-                                    ElevatedButton(
-                                      onPressed: pitCurrentQrChunk > 0
-                                          ? () {
-                                              setState(() {
-                                                if (pitCurrentQrChunk > 0) {
-                                                  pitCurrentQrChunk -= 1;
-                                                }
-                                              });
-                                            }
-                                          : null,
-                                      child: const Row(
-                                        children: [
-                                          Icon(Icons.arrow_back),
-                                          SizedBox(width: 8.0),
-                                          Text("Back"),
-                                        ],
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    Text(
-                                        "${pitCurrentQrChunk + 1}/${pitQrChunks.length}"),
-                                    const Spacer(),
-                                    ElevatedButton(
-                                      onPressed: pitCurrentQrChunk <
-                                              pitQrChunks.length - 1
-                                          ? () {
-                                              setState(() {
-                                                if (pitCurrentQrChunk <
-                                                    pitQrChunks.length - 1) {
-                                                  pitCurrentQrChunk += 1;
-                                                }
-                                              });
-                                            }
-                                          : null,
-                                      child: const Row(
-                                        children: [
-                                          Text("Next"),
-                                          SizedBox(width: 8.0),
-                                          Icon(Icons.arrow_forward),
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(width: 8.0),
-                                  ],
-                                ),
                               const SizedBox(height: 8.0),
                               ElevatedButton(
-                                  onPressed: !(pitCurrentQrChunk <
-                                              pitQrChunks.length - 1) ||
-                                          pitQrChunks.length == 1
-                                      ? () {
-                                          completePitScoutingTasks.add(
-                                              PitScoutingTask(
-                                                  team: pitTeamNumber!));
-                                          incompletePitScoutingTasks
-                                              .removeWhere((task) =>
-                                                  task.team == pitTeamNumber);
-                                          setState(() {
-                                            pitPageIndex = 0;
-                                          });
-                                          updateTeamSaves();
-                                          resetPit();
-                                        }
-                                      : null,
+                                  onPressed: () {
+                                    completePitScoutingTasks.add(
+                                        PitScoutingTask(team: pitTeamNumber!));
+                                    incompletePitScoutingTasks.removeWhere(
+                                        (task) => task.team == pitTeamNumber);
+                                    setState(() {
+                                      pitPageIndex = 0;
+                                    });
+                                    updateTeamSaves();
+                                    resetPit();
+                                  },
                                   child: const Text("Reset Data")),
                               const SizedBox(height: 8.0),
                             ],
@@ -1660,94 +1575,30 @@ class _FormAppPageState extends State<FormAppPage> {
                       children: [
                         const Spacer(),
                         Padding(
-                          padding: const EdgeInsets.all(32.0),
-                          child: IndexedStack(
-                            index: fieldCurrentQrChunk,
-                            children: [
-                              for (final (index, chunk)
-                                  in fieldQrChunks.indexed)
-                                if (index == fieldCurrentQrChunk)
-                                  QrImageView(
-                                    data: chunk,
-                                    backgroundColor: Colors.white,
-                                  )
-                                else
-                                  const SizedBox()
-                            ],
-                          ),
-                        ),
+                            padding: const EdgeInsets.all(32.0),
+                            child: QrImageView(
+                              data: getFieldKVFormattedData(
+                                      transpose: true, header: false)[0]
+                                  .join("||"),
+                              backgroundColor: Colors.white,
+                            )),
                         const Spacer(),
                         const Divider(),
-                        if (fieldQrChunks.length > 1)
-                          Row(
-                            children: [
-                              const SizedBox(width: 8.0),
-                              ElevatedButton(
-                                onPressed: fieldCurrentQrChunk > 0
-                                    ? () {
-                                        setState(() {
-                                          if (fieldCurrentQrChunk > 0) {
-                                            fieldCurrentQrChunk -= 1;
-                                          }
-                                        });
-                                      }
-                                    : null,
-                                child: const Row(
-                                  children: [
-                                    Icon(Icons.arrow_back),
-                                    SizedBox(width: 8.0),
-                                    Text("Back"),
-                                  ],
-                                ),
-                              ),
-                              const Spacer(),
-                              Text(
-                                  "${fieldCurrentQrChunk + 1}/${fieldQrChunks.length}"),
-                              const Spacer(),
-                              ElevatedButton(
-                                onPressed: fieldCurrentQrChunk <
-                                        fieldQrChunks.length - 1
-                                    ? () {
-                                        setState(() {
-                                          if (fieldCurrentQrChunk <
-                                              fieldQrChunks.length - 1) {
-                                            fieldCurrentQrChunk += 1;
-                                          }
-                                        });
-                                      }
-                                    : null,
-                                child: const Row(
-                                  children: [
-                                    Text("Next"),
-                                    SizedBox(width: 8.0),
-                                    Icon(Icons.arrow_forward),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(width: 8.0),
-                            ],
-                          ),
                         const SizedBox(height: 8.0),
                         ElevatedButton(
-                            onPressed: !(fieldCurrentQrChunk <
-                                        fieldQrChunks.length - 1) ||
-                                    fieldQrChunks.length == 1
-                                ? () {
-                                    completeFieldScoutingTasks.add(ScoutingTask(
-                                        team: fieldTeamNumber!,
-                                        match: fieldMatchNumber!,
-                                        alliance: fieldAlliance,
-                                        position: fieldRobotPosition));
-                                    incompleteFieldScoutingTasks.removeWhere(
-                                        (task) => (task.team ==
-                                                fieldTeamNumber &&
-                                            task.match == fieldMatchNumber! &&
-                                            task.alliance == fieldAlliance &&
-                                            task.position ==
-                                                fieldRobotPosition));
-                                    resetField();
-                                  }
-                                : null,
+                            onPressed: () {
+                              completeFieldScoutingTasks.add(ScoutingTask(
+                                  team: fieldTeamNumber!,
+                                  match: fieldMatchNumber!,
+                                  alliance: fieldAlliance,
+                                  position: fieldRobotPosition));
+                              incompleteFieldScoutingTasks.removeWhere((task) =>
+                                  (task.team == fieldTeamNumber &&
+                                      task.match == fieldMatchNumber! &&
+                                      task.alliance == fieldAlliance &&
+                                      task.position == fieldRobotPosition));
+                              resetField();
+                            },
                             child: const Text("Reset Data")),
                         const SizedBox(height: 8.0),
                       ],
@@ -1760,10 +1611,6 @@ class _FormAppPageState extends State<FormAppPage> {
                 selectedIndex: fieldPageIndex,
                 onDestinationSelected: (index) {
                   if (index != fieldPageIndex) {
-                    if (index == 5) {
-                      fieldCurrentQrChunk = 0;
-                    }
-
                     setState(() {
                       fieldPageIndex = index;
                     });
@@ -1997,25 +1844,6 @@ class _FormAppPageState extends State<FormAppPage> {
                               attemptSaveHeaders();
                             });
                           }),
-                      TextField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'QR Code Max Chars',
-                          suffixText: "Chars",
-                        ),
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(4),
-                        ],
-                        onChanged: (value) {
-                          qrMaxChars = int.tryParse(value)!;
-                          attemptSaveQrMaxChars();
-                        },
-                        controller: TextEditingController(
-                          text: qrMaxChars.toString(),
-                        ),
-                      ),
                       Row(
                         children: [
                           const Text("Game Options"),
@@ -2652,18 +2480,6 @@ class _FormAppPageState extends State<FormAppPage> {
     await prefs.setString("teamNamesMap", jsonTeamNames);
   }
 
-  List<String> splitStringByLength(String input, int chunkSize) {
-    List<String> chunks = [];
-    for (int i = 0; i < input.length; i += chunkSize) {
-      if (i + chunkSize <= input.length) {
-        chunks.add(input.substring(i, i + chunkSize));
-      } else {
-        chunks.add(input.substring(i));
-      }
-    }
-    return chunks;
-  }
-
   Future<void> attemptSaveEventId() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -2680,12 +2496,6 @@ class _FormAppPageState extends State<FormAppPage> {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setBool("exportHeaders", exportHeaders);
-  }
-
-  Future<void> attemptSaveQrMaxChars() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    await prefs.setInt("qrMaxChars", qrMaxChars);
   }
 
   Future<void> attemptSavePlayoff() async {
