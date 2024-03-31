@@ -227,37 +227,22 @@ class _FieldAutonFormState extends State<FieldAutonForm> {
                                             Transform.scale(
                                               scale: 2.0,
                                               child: Checkbox(
-                                                  value: widget.preload,
-                                                  onChanged: (x) {
-                                                    widget.onPreloadChanged(x);
-                                                  },
-                                                  tristate: false,
-                                                  activeColor: widget.preload ==
-                                                          true
-                                                      ? ColorScheme.fromSeed(
-                                                          seedColor:
-                                                              Colors.green,
-                                                          brightness:
-                                                              Brightness.dark,
-                                                        ).primary
-                                                      : ColorScheme.fromSeed(
-                                                          seedColor: Colors.red,
-                                                          brightness:
-                                                              Brightness.dark,
-                                                        ).primary,
-                                                  checkColor: widget.preload ==
-                                                          true
-                                                      ? ColorScheme.fromSeed(
-                                                          seedColor:
-                                                              Colors.green,
-                                                          brightness:
-                                                              Brightness.dark,
-                                                        ).onPrimary
-                                                      : ColorScheme.fromSeed(
-                                                          seedColor: Colors.red,
-                                                          brightness:
-                                                              Brightness.dark,
-                                                        ).onPrimary),
+                                                value: widget.preload,
+                                                onChanged: (x) {
+                                                  widget.onPreloadChanged(x);
+                                                },
+                                                tristate: false,
+                                                activeColor:
+                                                    ColorScheme.fromSeed(
+                                                  seedColor: Colors.green,
+                                                  brightness: Brightness.dark,
+                                                ).primary,
+                                                checkColor:
+                                                    ColorScheme.fromSeed(
+                                                  seedColor: Colors.green,
+                                                  brightness: Brightness.dark,
+                                                ).onPrimary,
+                                              ),
                                             ),
                                             const Spacer(),
                                             const Text("SPEAKER"),

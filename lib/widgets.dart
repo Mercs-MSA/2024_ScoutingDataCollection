@@ -153,7 +153,7 @@ class RatingInput extends StatelessWidget {
       trailing: RatingBar.builder(
         initialRating: initialRating,
         itemBuilder: (context, _) => Icon(
-          Icons.star,
+          Icons.star_rounded,
           color: Theme.of(context).colorScheme.primary,
         ),
         onRatingUpdate: onRatingUpdate,
