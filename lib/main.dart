@@ -665,17 +665,15 @@ class _FormAppPageState extends State<FormAppPage> {
             Scaffold(
               appBar: AppBar(
                 title: const Text('Pit Data Collection'),
-                actions: [
-                  IconButton(
-                      onPressed: () {
-                        setState(() {
-                          appMode = 0;
-                          pitPageIndex = 0;
-                          setAppModePref(appMode);
-                        });
-                      },
-                      icon: const Icon(Icons.start))
-                ],
+                leading: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        appMode = 0;
+                        pitPageIndex = 0;
+                        setAppModePref(appMode);
+                      });
+                    },
+                    icon: const Icon(Icons.arrow_back)),
               ),
               bottomNavigationBar: NavigationBar(
                 destinations: const <NavigationDestination>[
@@ -1167,19 +1165,17 @@ class _FormAppPageState extends State<FormAppPage> {
             // Field Scouting
             Scaffold(
               appBar: AppBar(
-                title: const Text('Field Data Collection'),
-                actions: [
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        appMode = 0;
-                        fieldPageIndex = 0;
-                        setAppModePref(appMode);
-                      });
-                    },
-                    icon: const Icon(Icons.start),
-                  )
-                ],
+                title: const Text('Match Data Collection'),
+                leading: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      appMode = 0;
+                      fieldPageIndex = 0;
+                      setAppModePref(appMode);
+                    });
+                  },
+                  icon: const Icon(Icons.arrow_back),
+                ),
               ),
               body: IndexedStack(
                 index: fieldPageIndex,

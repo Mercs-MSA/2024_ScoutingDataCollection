@@ -752,7 +752,7 @@ class _PitFormState extends State<PitForm> {
                               ),
                               const SizedBox(height: 8.0),
                               NumberInput(
-                                title: "Auto Routes (how many routines)",
+                                title: "Auto Routines",
                                 enableSpacer: true,
                                 value: widget.autonRoutes,
                                 onValueAdd: () {
