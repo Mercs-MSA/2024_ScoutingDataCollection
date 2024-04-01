@@ -1037,6 +1037,16 @@ class _FormAppPageState extends State<FormAppPage> {
                             Column(
                               children: getPitWarningSnackbars(),
                             ),
+                            ElevatedButton.icon(
+                              onPressed: () {
+                                setState(() {});
+                              },
+                              label: const Text("Reload"),
+                              icon: const Icon(Icons.refresh_rounded),
+                            ),
+                            const SizedBox(
+                              height: 8.0,
+                            ),
                           ],
                         ),
                       ],
@@ -2528,7 +2538,7 @@ class _FormAppPageState extends State<FormAppPage> {
       pitDriverYears,
       pitOperatorYears,
       pitCoachYears,
-      pitAutonStrat,
+      pitAutonExists ? pitAutonStrat : false,
       pitTeleopStrat,
     ];
 

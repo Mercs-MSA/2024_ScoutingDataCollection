@@ -171,6 +171,9 @@ class _PitFormState extends State<PitForm> {
   int autonAmpNotes = 0;
   int autonRoutes = 0;
 
+  String teleopStrat = "";
+  String autonStrat = "";
+
   final MaterialStateProperty<Icon?> thumbIcon =
       MaterialStateProperty.resolveWith<Icon?>(
     (Set<MaterialState> states) {
@@ -802,22 +805,15 @@ class _PitFormState extends State<PitForm> {
                                   )
                                 ],
                                 onChanged: (value) {
+                                  autonStrat = value;
                                   widget.onAutonStratChanged(value);
                                 },
                                 controller: TextEditingController(
-                                  text: widget.autonStrat,
+                                  text: autonStrat == ""
+                                      ? widget.autonStrat
+                                      : autonStrat,
                                 ),
                               ),
-                              const SizedBox(height: 8.0),
-                              ElevatedButton(
-                                onPressed: () {
-                                  widget.onAutonStratChanged(widget.autonStrat);
-                                },
-                                child: const Padding(
-                                  padding: EdgeInsets.all(18.0),
-                                  child: Text("Force Save"),
-                                ),
-                              )
                             ],
                           ),
                       ],
@@ -860,22 +856,14 @@ class _PitFormState extends State<PitForm> {
                       ),
                     ],
                     onChanged: (value) {
+                      teleopStrat = value;
                       widget.onTeleopStratChnaged(value);
                     },
                     controller: TextEditingController(
-                      text: widget.teleopStrat,
+                      text:
+                          teleopStrat == "" ? widget.teleopStrat : teleopStrat,
                     ),
                   ),
-                  const SizedBox(height: 8.0),
-                  ElevatedButton(
-                    onPressed: () {
-                      widget.onTeleopStratChnaged(widget.teleopStrat);
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.all(18.0),
-                      child: Text("Force Save"),
-                    ),
-                  )
                 ],
               ),
             ),
