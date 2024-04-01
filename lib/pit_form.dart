@@ -171,9 +171,6 @@ class _PitFormState extends State<PitForm> {
   int autonAmpNotes = 0;
   int autonRoutes = 0;
 
-  String teleopStrat = "";
-  String autonStrat = "";
-
   final MaterialStateProperty<Icon?> thumbIcon =
       MaterialStateProperty.resolveWith<Icon?>(
     (Set<MaterialState> states) {
@@ -197,7 +194,7 @@ class _PitFormState extends State<PitForm> {
           Center(
             child: Padding(
               padding: const EdgeInsets.all(12.0),
-              child: ListView(
+              child: Column(
                 children: <Widget>[
                   const SizedBox(height: 8.0),
                   Row(
@@ -805,16 +802,16 @@ class _PitFormState extends State<PitForm> {
                                   )
                                 ],
                                 onChanged: (value) {
-                                  autonStrat = value;
+                                  widget.onAutonStratChanged(value);
                                 },
                                 controller: TextEditingController(
-                                  text: autonStrat,
+                                  text: widget.autonStrat,
                                 ),
                               ),
                               const SizedBox(height: 8.0),
                               ElevatedButton(
                                 onPressed: () {
-                                  widget.onAutonStratChanged(autonStrat);
+                                  widget.onAutonStratChanged(widget.autonStrat);
                                 },
                                 child: const Padding(
                                   padding: EdgeInsets.all(18.0),
@@ -863,16 +860,16 @@ class _PitFormState extends State<PitForm> {
                       ),
                     ],
                     onChanged: (value) {
-                      teleopStrat = value;
+                      widget.onTeleopStratChnaged(value);
                     },
                     controller: TextEditingController(
-                      text: teleopStrat,
+                      text: widget.teleopStrat,
                     ),
                   ),
                   const SizedBox(height: 8.0),
                   ElevatedButton(
                     onPressed: () {
-                      widget.onTeleopStratChnaged(teleopStrat);
+                      widget.onTeleopStratChnaged(widget.teleopStrat);
                     },
                     child: const Padding(
                       padding: EdgeInsets.all(18.0),
