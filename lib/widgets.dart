@@ -121,9 +121,13 @@ class TeamNumberError extends StatelessWidget {
           Icons.error,
           size: 180,
         ),
-        Text(
-          "Team and/or match number not set",
-          style: TextStyle(fontSize: 28),
+        Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text(
+            "Team, match number, or scouter names have not been set",
+            style: TextStyle(fontSize: 28),
+            textAlign: TextAlign.center,
+          ),
         )
       ],
     );

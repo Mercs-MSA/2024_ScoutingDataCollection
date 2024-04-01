@@ -85,6 +85,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
   int? fieldTeamNumber;
   int? pitTeamNumber;
+  List<String> pitScouters = ["", ""];
 
   int? fieldMatchNumber;
 
@@ -744,72 +745,80 @@ class _FormAppPageState extends State<FormAppPage> {
                 index: pitPageIndex,
                 children: [
                   if (pitPageIndex == 0)
-                    ListView(
+                    Column(
                       children: [
-                        ExpansionTile(
-                          title: const Text("To Be Scouted"),
-                          initiallyExpanded: true,
-                          children: [
-                            for (final entry in incompletePitScoutingTasks)
-                              PitScoutSelection(
-                                team: entry.team,
-                                onSelected: () {
-                                  setState(() {
-                                    pitTeamNumber = entry.team;
-                                  });
-                                },
-                                teamNames: teamNameMap,
-                              )
-                          ],
-                        ),
-                        ExpansionTile(
-                          title: const Text("Scouted"),
-                          initiallyExpanded: false,
-                          children: [
-                            for (final entry in completePitScoutingTasks)
-                              PitScoutSelection(
-                                team: entry.team,
-                                onSelected: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: const Text("Warning"),
-                                        icon: const Icon(
-                                          Icons.warning_rounded,
-                                          size: 72,
-                                        ),
-                                        content: const Text(
-                                            "You are selecting a team that has already been scouted. Do you want to re-scout this team?"),
-                                        actionsOverflowButtonSpacing: 20,
-                                        actions: [
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                              setState(() {
-                                                pitTeamNumber = null;
-                                              });
-                                            },
-                                            child: const Text("Go Back"),
-                                          ),
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: const Text("Yes, I'm Sure"),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                  setState(() {
-                                    pitTeamNumber = entry.team;
-                                  });
-                                },
-                                teamNames: teamNameMap,
-                                completed: true,
-                              )
-                          ],
+                        Expanded(
+                          child: ListView(
+                            children: [
+                              ExpansionTile(
+                                title: const Text("To Be Scouted"),
+                                initiallyExpanded: true,
+                                children: [
+                                  for (final entry
+                                      in incompletePitScoutingTasks)
+                                    PitScoutSelection(
+                                      team: entry.team,
+                                      onSelected: () {
+                                        setState(() {
+                                          pitTeamNumber = entry.team;
+                                        });
+                                      },
+                                      teamNames: teamNameMap,
+                                    )
+                                ],
+                              ),
+                              ExpansionTile(
+                                title: const Text("Scouted"),
+                                initiallyExpanded: false,
+                                children: [
+                                  for (final entry in completePitScoutingTasks)
+                                    PitScoutSelection(
+                                      team: entry.team,
+                                      onSelected: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: const Text("Warning"),
+                                              icon: const Icon(
+                                                Icons.warning_rounded,
+                                                size: 72,
+                                              ),
+                                              content: const Text(
+                                                  "You are selecting a team that has already been scouted. Do you want to re-scout this team?"),
+                                              actionsOverflowButtonSpacing: 20,
+                                              actions: [
+                                                ElevatedButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                    setState(() {
+                                                      pitTeamNumber = null;
+                                                    });
+                                                  },
+                                                  child: const Text("Go Back"),
+                                                ),
+                                                ElevatedButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: const Text(
+                                                      "Yes, I'm Sure"),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                        setState(() {
+                                          pitTeamNumber = entry.team;
+                                        });
+                                      },
+                                      teamNames: teamNameMap,
+                                      completed: true,
+                                    )
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -834,6 +843,56 @@ class _FormAppPageState extends State<FormAppPage> {
                                       : pitTeamNumber.toString(),
                                 ),
                               ),
+                              const SizedBox(height: 8.0),
+                              Row(
+                                children: [
+                                  Flexible(
+                                    child: TextField(
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: 'Scouter A',
+                                      ),
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        LengthLimitingTextInputFormatter(30),
+                                        FilteringTextInputFormatter(
+                                          RegExp(r'[a-zA-Z]'),
+                                          allow: true,
+                                        ),
+                                      ],
+                                      onChanged: (value) {
+                                        pitScouters[0] = value;
+                                      },
+                                      controller: TextEditingController(
+                                        text: pitScouters[0],
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8.0),
+                                  Flexible(
+                                    child: TextField(
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: 'Scouter B',
+                                      ),
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        LengthLimitingTextInputFormatter(30),
+                                        FilteringTextInputFormatter(
+                                          RegExp(r'[a-zA-Z]'),
+                                          allow: true,
+                                        ),
+                                      ],
+                                      onChanged: (value) {
+                                        pitScouters[1] = value;
+                                      },
+                                      controller: TextEditingController(
+                                        text: pitScouters[1],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
                             ],
                           ),
                         ),
@@ -848,7 +907,8 @@ class _FormAppPageState extends State<FormAppPage> {
                           children: [
                             PitForm(
                               teamNumberPresent:
-                                  pitTeamNumber == null ? false : true,
+                                  (pitTeamNumber == null ? false : true) &&
+                                      !pitScouters.contains(""),
                               onLengthChanged: (value) {
                                 pitLengthData = value;
                               },
@@ -1034,16 +1094,20 @@ class _FormAppPageState extends State<FormAppPage> {
                               prefStart: pitPrefStart,
                               teleopStrat: pitTeleopStrat,
                             ),
-                            Column(
-                              children: getPitWarningSnackbars(),
-                            ),
-                            ElevatedButton.icon(
-                              onPressed: () {
-                                setState(() {});
-                              },
-                              label: const Text("Reload"),
-                              icon: const Icon(Icons.refresh_rounded),
-                            ),
+                            if (!(pitTeamNumber == null ||
+                                pitScouters.contains("")))
+                              Column(
+                                children: getPitWarningCards(),
+                              ),
+                            if (!(pitTeamNumber == null ||
+                                pitScouters.contains("")))
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  setState(() {});
+                                },
+                                label: const Text("Reload"),
+                                icon: const Icon(Icons.refresh_rounded),
+                              ),
                             const SizedBox(
                               height: 8.0,
                             ),
@@ -1055,7 +1119,9 @@ class _FormAppPageState extends State<FormAppPage> {
                     const SizedBox(),
                   if (pitPageIndex == 2)
                     IndexedStack(
-                      index: pitTeamNumber == null ? 0 : 1,
+                      index: (pitTeamNumber == null || pitScouters.contains(""))
+                          ? 0
+                          : 1,
                       children: [
                         const Center(child: TeamNumberError()),
                         Column(
@@ -1112,9 +1178,11 @@ class _FormAppPageState extends State<FormAppPage> {
                     const SizedBox(),
                   if (pitPageIndex == 3)
                     IndexedStack(
-                      index: pitTeamNumber == null ? 0 : 1,
+                      index: (pitTeamNumber == null || pitScouters.contains(""))
+                          ? 0
+                          : 1,
                       children: [
-                        if (pitTeamNumber == null)
+                        if (pitTeamNumber == null || pitScouters.contains(""))
                           const Center(child: TeamNumberError())
                         else
                           const SizedBox(),
@@ -1122,7 +1190,7 @@ class _FormAppPageState extends State<FormAppPage> {
                           Column(
                             children: [
                               Column(
-                                children: getPitWarningSnackbars(),
+                                children: getPitWarningCards(),
                               ),
                               const Spacer(),
                               Padding(
@@ -2082,6 +2150,7 @@ class _FormAppPageState extends State<FormAppPage> {
       ["form", "pit"],
       ["event", eventId],
       ["teamNumber", "frc$pitTeamNumber"],
+      ["scouters", pitScouters.join(",")],
       ['botLength', pitLengthData],
       ['botWidth', pitWidthData],
       ['botHeight', pitLengthData],
@@ -2529,7 +2598,7 @@ class _FormAppPageState extends State<FormAppPage> {
     updateTeamSaves();
   }
 
-  List<Card> getPitWarningSnackbars() {
+  List<Card> getPitWarningCards() {
     final pitFields = [
       pitWidthData,
       pitLengthData,
@@ -2542,16 +2611,25 @@ class _FormAppPageState extends State<FormAppPage> {
       pitTeleopStrat,
     ];
 
-    final warnings = [];
+    final pitQuestionables = [
+      (pitWeightData != null ? (pitWeightData! > 150) : false),
+      (pitWeightData != null ? (pitWeightData! < 45) : false),
+    ];
+
+    List<String> warnings = [];
 
     if (pitFields.contains(null) || pitFields.contains("")) {
-      warnings.add(("m"));
+      warnings.add("m");
     }
 
-    List<Card> snackbars = [];
+    if (pitQuestionables.contains(true)) {
+      warnings.add("q");
+    }
+
+    List<Card> cards = [];
 
     for (final warning in warnings) {
-      var snackbar = Card(
+      var card = Card(
         color: Colors.yellow,
         child: ListTile(
           leading: warning == "q"
@@ -2585,10 +2663,10 @@ class _FormAppPageState extends State<FormAppPage> {
                 ),
         ),
       );
-      snackbars.add(snackbar);
+      cards.add(card);
     }
 
-    return snackbars;
+    return cards;
   }
 
   String convertTasksListToJsonString<T>(List<T> tasks) {
