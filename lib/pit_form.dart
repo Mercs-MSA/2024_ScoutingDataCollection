@@ -36,6 +36,7 @@ class PitForm extends StatefulWidget {
       required this.onDoesTrapChanged,
       required this.onDoesSourcePickupChanged,
       required this.onDoesGroundPickupChanged,
+      required this.onAlternateFunctionChanged,
       required this.onDoesExtendShootChanged,
       required this.onDoesBlockChanged,
       required this.onAutoAimChanged,
@@ -74,6 +75,7 @@ class PitForm extends StatefulWidget {
       required this.scoringPreference,
       required this.doesSourcePickup,
       required this.doesGroundPickup,
+      required this.alternateFunction,
       required this.doesExtendShoot,
       required this.doesBlock,
       required this.doesAutoAim,
@@ -115,6 +117,7 @@ class PitForm extends StatefulWidget {
   final Function(bool) onDoesTrapChanged;
   final Function(bool) onDoesSourcePickupChanged;
   final Function(bool) onDoesGroundPickupChanged;
+  final Function(String) onAlternateFunctionChanged;
   final Function(bool) onDoesExtendShootChanged;
   final Function(bool) onDoesBlockChanged;
   final Function(bool) onAutoAimChanged;
@@ -154,6 +157,7 @@ class PitForm extends StatefulWidget {
   final bool doesTrap;
   final bool doesSourcePickup;
   final bool doesGroundPickup;
+  final String alternateFunction;
   final bool doesExtendShoot;
   final bool doesBlock;
   final bool doesAutoAim;
@@ -180,6 +184,8 @@ class PitForm extends StatefulWidget {
 
 class _PitFormState extends State<PitForm> {
   String kitbotMods = "";
+
+  String alternateFunction = "";
 
   int autonSpeakerNotes = 0;
   int autonAmpNotes = 0;
@@ -476,6 +482,32 @@ class _PitFormState extends State<PitForm> {
                       ),
                     ],
                   ),
+                  if (!widget.doesGroundPickup && !widget.doesSourcePickup)
+                    const SizedBox(height: 8.0),
+                  if (!widget.doesGroundPickup && !widget.doesSourcePickup)
+                    TextField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'What is their alternate function?',
+                      ),
+                      maxLines: 3,
+                      inputFormatters: <TextInputFormatter>[
+                        LengthLimitingTextInputFormatter(100),
+                        FilteringTextInputFormatter(
+                          RegExp(r'[0-9]|[a-zA-Z]|-| |\n'),
+                          allow: true,
+                        )
+                      ],
+                      onChanged: (value) {
+                        alternateFunction = value;
+                        widget.onAlternateFunctionChanged(value);
+                      },
+                      controller: TextEditingController(
+                        text: alternateFunction == ""
+                            ? widget.alternateFunction
+                            : alternateFunction,
+                      ),
+                    ),
                   const Divider(),
                   const Text("Can they score speaker, amp or both?"),
                   Row(

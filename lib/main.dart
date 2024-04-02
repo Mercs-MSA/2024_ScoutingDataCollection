@@ -101,7 +101,6 @@ class _FormAppPageState extends State<FormAppPage> {
   int? pitLengthData;
   int? pitHeightData;
   int? pitWeightData;
-  bool pitCanPassStage = false;
 
   bool pitIntakeInBumper = false;
   KitBotTypes pitIsKitbot = KitBotTypes.not;
@@ -130,6 +129,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
   bool pitDoesGroundPickup = false;
   bool pitDoesSourcePickup = false;
+  String pitAlternateFunction = "";
 
   bool pitDoesTurretShoot = false;
   bool pitDoesExtendShoot = true;
@@ -989,6 +989,9 @@ class _FormAppPageState extends State<FormAppPage> {
                                   pitDoesSourcePickup = value;
                                 });
                               },
+                              onAlternateFunctionChanged: (value) {
+                                pitAlternateFunction = value;
+                              },
                               onDoesExtendShootChanged: (value) {
                                 setState(() {
                                   pitDoesExtendShoot = value;
@@ -1091,6 +1094,7 @@ class _FormAppPageState extends State<FormAppPage> {
                               scoringPreference: pitScoringPref,
                               doesSourcePickup: pitDoesSourcePickup,
                               doesGroundPickup: pitDoesGroundPickup,
+                              alternateFunction: pitAlternateFunction,
                               doesExtendShoot: pitDoesExtendShoot,
                               doesTurretShoot: pitDoesTurretShoot,
                               doesBlock: pitDoesBlock,
@@ -2191,6 +2195,12 @@ class _FormAppPageState extends State<FormAppPage> {
       ['trapScore', pitDoesTrap],
       ['groundPickup', pitDoesGroundPickup],
       ['sourcePickup', pitDoesSourcePickup],
+      [
+        'alternateFunction',
+        (!pitDoesSourcePickup && !pitDoesSourcePickup)
+            ? pitAlternateFunction
+            : ""
+      ],
       ['turretShoot', pitDoesTurretShoot],
       ['extendShoot', pitDoesExtendShoot],
       ['hasBlocker', pitDoesBlock],
@@ -2525,7 +2535,6 @@ class _FormAppPageState extends State<FormAppPage> {
     pitLengthData = null;
     pitHeightData = null;
     pitWeightData = null;
-    pitCanPassStage = false;
     pitIsKitbot = KitBotTypes.not;
     pitKitbotMods = "";
     pitIntakeInBumper = false;
@@ -2545,6 +2554,7 @@ class _FormAppPageState extends State<FormAppPage> {
     pitScoringPref = ScoringPreference.speaker;
     pitDoesGroundPickup = false;
     pitDoesSourcePickup = false;
+    pitAlternateFunction = "";
     pitDoesTurretShoot = false;
     pitDoesExtendShoot = true;
     pitDoesBlock = false;
