@@ -45,6 +45,7 @@ class PitForm extends StatefulWidget {
       required this.onAutonConsistencyChanged,
       required this.onAutonVersatilityChanged,
       required this.onAutonRoutesChanged,
+      required this.onAutonRouteDescriptionChanged,
       required this.onAutonStratChanged,
       required this.onPlayerPreferAmpChanged,
       required this.onPlayerPreferSourceChanged,
@@ -82,6 +83,7 @@ class PitForm extends StatefulWidget {
       required this.autonVersatility,
       required this.autonStrat,
       required this.autonRoutes,
+      required this.autonRouteDescription,
       required this.playerPreferAmp,
       required this.playerPreferSource,
       required this.driverYears,
@@ -121,6 +123,7 @@ class PitForm extends StatefulWidget {
   final Function(double) onAutonVersatilityChanged;
   final Function(int) onAutonRoutesChanged;
   final Function(String) onAutonStratChanged;
+  final Function(String) onAutonRouteDescriptionChanged;
   final Function(bool) onPlayerPreferAmpChanged;
   final Function(bool) onPlayerPreferSourceChanged;
   final Function(int?) onDriverYearsChanged;
@@ -157,6 +160,7 @@ class PitForm extends StatefulWidget {
   final double autonConsistency;
   final double autonVersatility;
   final int autonRoutes;
+  final String autonRouteDescription;
   final String autonStrat;
   final bool playerPreferAmp;
   final bool playerPreferSource;
@@ -177,6 +181,7 @@ class _PitFormState extends State<PitForm> {
 
   String teleopStrat = "";
   String autonStrat = "";
+  String autonRouteDescription = "";
 
   final MaterialStateProperty<Icon?> thumbIcon =
       MaterialStateProperty.resolveWith<Icon?>(
@@ -800,6 +805,33 @@ class _PitFormState extends State<PitForm> {
                                   });
                                 },
                               ),
+                              if (widget.autonRoutes > 3)
+                                const SizedBox(height: 8.0),
+                              if (widget.autonRoutes > 3)
+                                TextField(
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: 'Auton Route Descriptions',
+                                  ),
+                                  maxLines: 5,
+                                  inputFormatters: <TextInputFormatter>[
+                                    LengthLimitingTextInputFormatter(100),
+                                    FilteringTextInputFormatter(
+                                      RegExp(r'[0-9]|[a-zA-Z]|-| |\n'),
+                                      allow: true,
+                                    )
+                                  ],
+                                  onChanged: (value) {
+                                    autonRouteDescription = value;
+                                    widget
+                                        .onAutonRouteDescriptionChanged(value);
+                                  },
+                                  controller: TextEditingController(
+                                    text: autonRouteDescription == ""
+                                        ? widget.autonRouteDescription
+                                        : autonRouteDescription,
+                                  ),
+                                ),
                               const SizedBox(height: 8.0),
                               RatingInput(
                                 title: "Auto Consistency",
@@ -828,7 +860,7 @@ class _PitFormState extends State<PitForm> {
                                 inputFormatters: <TextInputFormatter>[
                                   LengthLimitingTextInputFormatter(100),
                                   FilteringTextInputFormatter(
-                                    RegExp(r'[a-zA-Z]|-| |\n'),
+                                    RegExp(r'[0-9]|[a-zA-Z]|-| |\n'),
                                     allow: true,
                                   )
                                 ],
@@ -879,7 +911,7 @@ class _PitFormState extends State<PitForm> {
                     inputFormatters: <TextInputFormatter>[
                       LengthLimitingTextInputFormatter(100),
                       FilteringTextInputFormatter(
-                        RegExp(r'[a-zA-Z]|-| |\n'),
+                        RegExp(r'[0-9]|[a-zA-Z]|-| |\n'),
                         allow: true,
                       ),
                     ],

@@ -119,6 +119,7 @@ class _FormAppPageState extends State<FormAppPage> {
   double pitAutonConsistency = 0.0;
   double pitAutonVersatility = 0.0;
   int pitAutonRoutes = 0;
+  String pitAutonRouteDescription = "";
   String pitAutonStrat = "";
 
   bool pitDoesSpeaker = true;
@@ -1034,6 +1035,9 @@ class _FormAppPageState extends State<FormAppPage> {
                                   pitAutonRoutes = value;
                                 });
                               },
+                              onAutonRouteDescriptionChanged: (value) {
+                                pitAutonRouteDescription = value;
+                              },
                               onAutonStratChanged: (value) {
                                 pitAutonStrat = value;
                               },
@@ -1092,6 +1096,7 @@ class _FormAppPageState extends State<FormAppPage> {
                               autonConsistency: pitAutonConsistency,
                               autonVersatility: pitAutonVersatility,
                               autonRoutes: pitAutonRoutes,
+                              autonRouteDescription: pitAutonRouteDescription,
                               autonStrat: pitAutonStrat,
                               playerPreferAmp: pitPlayerPreferAmp,
                               playerPreferSource: pitPlayerPreferSource,
@@ -2187,6 +2192,10 @@ class _FormAppPageState extends State<FormAppPage> {
       ['autonConsistency', pitAutonConsistency],
       ['autonVersatility', pitAutonVersatility],
       ['autonRoutes', pitAutonRoutes],
+      [
+        'autonRouteDescription',
+        pitAutonRoutes > 3 && pitAutonExists ? pitAutonRouteDescription : ""
+      ],
       ['autonPrefStart', pitPrefStart.name],
       ['autonStrat', pitAutonStrat.replaceAll("\n", "*")],
       ['repairability', pitRepairabilityScore],
@@ -2518,10 +2527,12 @@ class _FormAppPageState extends State<FormAppPage> {
     pitAutonConsistency = 0;
     pitAutonVersatility = 0;
     pitAutonRoutes = 0;
+    pitAutonRouteDescription = "";
     pitAutonStrat = "";
     pitDoesSpeaker = true;
     pitDoesAmp = true;
     pitDoesTrap = false;
+    pitScoringPref = ScoringPreference.speaker;
     pitDoesGroundPickup = false;
     pitDoesSourcePickup = false;
     pitDoesTurretShoot = false;
@@ -2620,13 +2631,14 @@ class _FormAppPageState extends State<FormAppPage> {
       pitCoachYears,
       pitAutonExists ? pitAutonStrat : false,
       pitTeleopStrat,
+      pitAutonRoutes < 4 || !pitAutonExists ? false : pitAutonRouteDescription
     ];
 
     final pitQuestionables = {
       "pitWeightData":
           (pitWeightData != null ? (pitWeightData! > 150) : false) ||
               (pitWeightData != null ? (pitWeightData! < 45) : false),
-      "pitDoesBlock": pitDoesBlock
+      "pitDoesBlock": pitDoesBlock,
     };
 
     List<String> warnings = [];
