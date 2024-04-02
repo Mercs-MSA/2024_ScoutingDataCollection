@@ -31,6 +31,7 @@ class PitForm extends StatefulWidget {
       required this.onAltClimberTypeChanged,
       required this.onDoesSpeakerChanged,
       required this.onDoesAmpChanged,
+      required this.onScoringPrefChanged,
       required this.onDoesTrapChanged,
       required this.onDoesSourcePickupChanged,
       required this.onDoesGroundPickupChanged,
@@ -67,6 +68,7 @@ class PitForm extends StatefulWidget {
       required this.doesSpeaker,
       required this.doesAmp,
       required this.doesTrap,
+      required this.scoringPreference,
       required this.doesSourcePickup,
       required this.doesGroundPickup,
       required this.doesExtendShoot,
@@ -104,6 +106,7 @@ class PitForm extends StatefulWidget {
   final Function(String) onAltClimberTypeChanged;
   final Function(bool) onDoesSpeakerChanged;
   final Function(bool) onDoesAmpChanged;
+  final Function(ScoringPreference) onScoringPrefChanged;
   final Function(bool) onDoesTrapChanged;
   final Function(bool) onDoesSourcePickupChanged;
   final Function(bool) onDoesGroundPickupChanged;
@@ -140,6 +143,7 @@ class PitForm extends StatefulWidget {
   final String? altClimberType;
   final bool doesSpeaker;
   final bool doesAmp;
+  final ScoringPreference scoringPreference;
   final bool doesTrap;
   final bool doesSourcePickup;
   final bool doesGroundPickup;
@@ -476,6 +480,30 @@ class _PitFormState extends State<PitForm> {
                       ),
                     ],
                   ),
+                  if (widget.doesSpeaker && widget.doesAmp)
+                    const SizedBox(height: 4.0),
+                  if (widget.doesSpeaker && widget.doesAmp)
+                    const Text("Scoring preference"),
+                  if (widget.doesSpeaker && widget.doesAmp)
+                    const SizedBox(height: 4.0),
+                  if (widget.doesSpeaker && widget.doesAmp)
+                    SegmentedButton<ScoringPreference>(
+                        segments: const <ButtonSegment<ScoringPreference>>[
+                          ButtonSegment<ScoringPreference>(
+                              value: ScoringPreference.speaker,
+                              label: Text('Speaker'),
+                              icon: Icon(Icons.volume_up)),
+                          ButtonSegment<ScoringPreference>(
+                              value: ScoringPreference.amp,
+                              label: Text('Amp'),
+                              icon: Icon(Icons.bolt)),
+                        ],
+                        selected: {
+                          widget.scoringPreference
+                        },
+                        onSelectionChanged: (newSelection) {
+                          widget.onScoringPrefChanged(newSelection.first);
+                        }),
                   const Divider(),
                   const Text(
                       "Does their shooter have any of these special functions?"),

@@ -124,6 +124,7 @@ class _FormAppPageState extends State<FormAppPage> {
   bool pitDoesSpeaker = true;
   bool pitDoesAmp = true;
   bool pitDoesTrap = false;
+  ScoringPreference pitScoringPref = ScoringPreference.speaker;
 
   bool pitDoesGroundPickup = false;
   bool pitDoesSourcePickup = false;
@@ -968,6 +969,11 @@ class _FormAppPageState extends State<FormAppPage> {
                                   pitDoesTrap = value;
                                 });
                               },
+                              onScoringPrefChanged: (value) {
+                                setState(() {
+                                  pitScoringPref = value;
+                                });
+                              },
                               onDoesGroundPickupChanged: (value) {
                                 setState(() {
                                   pitDoesGroundPickup = value;
@@ -1073,6 +1079,7 @@ class _FormAppPageState extends State<FormAppPage> {
                               doesSpeaker: pitDoesSpeaker,
                               doesAmp: pitDoesAmp,
                               doesTrap: pitDoesTrap,
+                              scoringPreference: pitScoringPref,
                               doesSourcePickup: pitDoesSourcePickup,
                               doesGroundPickup: pitDoesGroundPickup,
                               doesExtendShoot: pitDoesExtendShoot,
@@ -1105,8 +1112,8 @@ class _FormAppPageState extends State<FormAppPage> {
                                 onPressed: () {
                                   setState(() {});
                                 },
-                                label: const Text("Reload"),
-                                icon: const Icon(Icons.refresh_rounded),
+                                label: const Text("Check Data"),
+                                icon: const Icon(Icons.playlist_add_check),
                               ),
                             const SizedBox(
                               height: 8.0,
@@ -2163,6 +2170,10 @@ class _FormAppPageState extends State<FormAppPage> {
       ['intakeInBumper', pitIntakeInBumper],
       ['speakerScore', pitDoesSpeaker],
       ['ampScore', pitDoesAmp],
+      [
+        'scorePref',
+        (pitDoesAmp && pitDoesSpeaker) ? pitScoringPref.name : "none"
+      ],
       ['trapScore', pitDoesTrap],
       ['groundPickup', pitDoesGroundPickup],
       ['sourcePickup', pitDoesSourcePickup],
@@ -2611,10 +2622,11 @@ class _FormAppPageState extends State<FormAppPage> {
       pitTeleopStrat,
     ];
 
-    final pitQuestionables = [
-      (pitWeightData != null ? (pitWeightData! > 150) : false),
-      (pitWeightData != null ? (pitWeightData! < 45) : false),
-    ];
+    final pitQuestionables = {
+      "pitWeightData":
+          (pitWeightData != null ? (pitWeightData! > 150) : false) ||
+              (pitWeightData != null ? (pitWeightData! < 45) : false),
+    };
 
     List<String> warnings = [];
 
@@ -2622,7 +2634,7 @@ class _FormAppPageState extends State<FormAppPage> {
       warnings.add("m");
     }
 
-    if (pitQuestionables.contains(true)) {
+    if (pitQuestionables.values.contains(true)) {
       warnings.add("q");
     }
 
@@ -2631,42 +2643,63 @@ class _FormAppPageState extends State<FormAppPage> {
     for (final warning in warnings) {
       var card = Card(
         color: Colors.yellow,
-        child: ListTile(
-          leading: warning == "q"
-              ? const Icon(
-                  Icons.question_mark_rounded,
+        child: Column(
+          children: [
+            ListTile(
+              leading: warning == "q"
+                  ? const Icon(
+                      Icons.question_mark_rounded,
+                      color: Colors.black,
+                    )
+                  : const Icon(
+                      Icons.warning_rounded,
+                      color: Colors.black,
+                    ),
+              title: warning == "q"
+                  ? const Text(
+                      "Questionable Data Detected!",
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    )
+                  : const Text(
+                      "Missing Data Detected",
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+              subtitle: warning == "q"
+                  ? const Text(
+                      "Some data is out of a reasonable limit.",
+                      style: TextStyle(color: Colors.black),
+                    )
+                  : const Text(
+                      "Check for any missing or blank fields",
+                      style: TextStyle(color: Colors.black),
+                    ),
+            ),
+            if (warning == "q")
+              Text(
+                "Offending item: ${findFirstOccurrence(pitQuestionables, true)?.key}",
+                style: const TextStyle(
                   color: Colors.black,
-                )
-              : const Icon(
-                  Icons.warning_rounded,
-                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
                 ),
-          title: warning == "q"
-              ? const Text(
-                  "Questionable Data Detected!",
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
-                )
-              : const Text(
-                  "Missing Data Detected",
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
-                ),
-          subtitle: warning == "q"
-              ? const Text(
-                  "Some data is out of a reasonable limit.",
-                  style: TextStyle(color: Colors.black),
-                )
-              : const Text(
-                  "Check for any missing or blank fields",
-                  style: TextStyle(color: Colors.black),
-                ),
+              )
+          ],
         ),
       );
       cards.add(card);
     }
 
     return cards;
+  }
+
+  MapEntry<String, bool>? findFirstOccurrence(Map<String, bool> map, bool x) {
+    for (var entry in map.entries) {
+      if (entry.value == x) {
+        return entry;
+      }
+    }
+    return null;
   }
 
   String convertTasksListToJsonString<T>(List<T> tasks) {

@@ -6,6 +6,8 @@ enum StagePositions { center, left, right, park, fail, none }
 
 enum KitBotTypes { not, modded, kitbot }
 
+enum ScoringPreference { amp, speaker, none }
+
 class ScoutingTask {
   final int team;
   final int match;
