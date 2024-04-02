@@ -1276,161 +1276,173 @@ class _FormAppPageState extends State<FormAppPage> {
                 index: fieldPageIndex,
                 children: [
                   if (fieldPageIndex == 0)
-                    ListView(
+                    Column(
                       children: [
-                        Column(
-                          children: [
-                            if (!playoffMode)
+                        Flexible(
+                          child: ListView(
+                            children: [
                               Column(
                                 children: [
-                                  ExpansionTile(
-                                    title: const Text("To Be Scouted"),
-                                    initiallyExpanded: true,
-                                    children: [
-                                      for (final entry
-                                          in incompleteFieldScoutingTasks)
-                                        ScoutSelection(
-                                          team: entry.team,
-                                          match: entry.match,
-                                          alliance: entry.alliance,
-                                          position: entry.position,
-                                          onSelected: () {
-                                            setState(() {
-                                              fieldTeamNumber = entry.team;
-                                              fieldMatchNumber = entry.match;
-                                              fieldAlliance = entry.alliance;
-                                              fieldRobotPosition =
-                                                  entry.position;
-                                            });
-                                          },
-                                          teamNames: teamNameMap,
+                                  if (!playoffMode)
+                                    Column(
+                                      children: [
+                                        ExpansionTile(
+                                          title: const Text("To Be Scouted"),
+                                          initiallyExpanded: true,
+                                          children: [
+                                            for (final entry
+                                                in incompleteFieldScoutingTasks)
+                                              ScoutSelection(
+                                                team: entry.team,
+                                                match: entry.match,
+                                                alliance: entry.alliance,
+                                                position: entry.position,
+                                                onSelected: () {
+                                                  setState(() {
+                                                    fieldTeamNumber =
+                                                        entry.team;
+                                                    fieldMatchNumber =
+                                                        entry.match;
+                                                    fieldAlliance =
+                                                        entry.alliance;
+                                                    fieldRobotPosition =
+                                                        entry.position;
+                                                  });
+                                                },
+                                                teamNames: teamNameMap,
+                                              )
+                                          ],
+                                        ),
+                                        ExpansionTile(
+                                          title: const Text("Scouted"),
+                                          initiallyExpanded: false,
+                                          children: [
+                                            for (final entry
+                                                in completeFieldScoutingTasks)
+                                              ScoutSelection(
+                                                team: entry.team,
+                                                match: entry.match,
+                                                alliance: entry.alliance,
+                                                position: entry.position,
+                                                onSelected: () {
+                                                  setState(() {
+                                                    fieldTeamNumber =
+                                                        entry.team;
+                                                    fieldMatchNumber =
+                                                        entry.match;
+                                                    fieldAlliance =
+                                                        entry.alliance;
+                                                    fieldRobotPosition =
+                                                        entry.position;
+                                                  });
+                                                },
+                                                teamNames: teamNameMap,
+                                              )
+                                          ],
+                                        ),
+                                      ],
+                                    )
+                                  else
+                                    const Column(
+                                      children: [
+                                        Icon(
+                                          Icons.info_rounded,
+                                          size: 180,
+                                        ),
+                                        Text(
+                                          "Team Assignments are not available in playoff mode",
+                                          style: TextStyle(fontSize: 18),
                                         )
-                                    ],
-                                  ),
-                                  ExpansionTile(
-                                    title: const Text("Scouted"),
-                                    initiallyExpanded: false,
-                                    children: [
-                                      for (final entry
-                                          in completeFieldScoutingTasks)
-                                        ScoutSelection(
-                                          team: entry.team,
-                                          match: entry.match,
-                                          alliance: entry.alliance,
-                                          position: entry.position,
-                                          onSelected: () {
-                                            setState(() {
-                                              fieldTeamNumber = entry.team;
-                                              fieldMatchNumber = entry.match;
-                                              fieldAlliance = entry.alliance;
-                                              fieldRobotPosition =
-                                                  entry.position;
-                                            });
-                                          },
-                                          teamNames: teamNameMap,
-                                        )
-                                    ],
-                                  ),
-                                ],
-                              )
-                            else
-                              const Column(
-                                children: [
-                                  Icon(
-                                    Icons.info_rounded,
-                                    size: 180,
-                                  ),
-                                  Text(
-                                    "Team Assignments are not available in playoff mode",
-                                    style: TextStyle(fontSize: 18),
-                                  )
+                                      ],
+                                    ),
                                 ],
                               ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  TextField(
-                                    decoration: const InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: 'Team Number',
-                                    ),
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly,
-                                      LengthLimitingTextInputFormatter(4),
-                                    ],
-                                    onChanged: (value) {
-                                      fieldTeamNumber = int.tryParse(value);
-                                    },
-                                    controller: TextEditingController(
-                                      text: fieldTeamNumber == null
-                                          ? ''
-                                          : fieldTeamNumber.toString(),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8.0),
-                                  TextField(
-                                    decoration: const InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: 'Match Number',
-                                    ),
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly,
-                                      LengthLimitingTextInputFormatter(2),
-                                    ],
-                                    onChanged: (value) {
-                                      fieldMatchNumber = int.tryParse(value);
-                                    },
-                                    controller: TextEditingController(
-                                      text: fieldMatchNumber == null
-                                          ? ''
-                                          : fieldMatchNumber.toString(),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8.0),
-                                  ChoiceInput(
-                                    title: "Field Position",
-                                    onChoiceUpdate: (value) {
-                                      setState(() {
-                                        switch (value) {
-                                          case "Red 1":
-                                            fieldAlliance = Alliances.red;
-                                            fieldRobotPosition = 0;
-                                          case "Red 2":
-                                            fieldAlliance = Alliances.red;
-                                            fieldRobotPosition = 1;
-                                          case "Red 3":
-                                            fieldAlliance = Alliances.red;
-                                            fieldRobotPosition = 2;
-                                          case "Blue 1":
-                                            fieldAlliance = Alliances.blue;
-                                            fieldRobotPosition = 0;
-                                          case "Blue 2":
-                                            fieldAlliance = Alliances.blue;
-                                            fieldRobotPosition = 1;
-                                          case "Blue 3":
-                                            fieldAlliance = Alliances.blue;
-                                            fieldRobotPosition = 2;
-                                        }
-                                      });
-                                    },
-                                    choice:
-                                        "${fieldAlliance.name.toString().capitalize} ${(fieldRobotPosition + 1).toString()}",
-                                    options: const [
-                                      "Red 1",
-                                      "Red 2",
-                                      "Red 3",
-                                      "Blue 1",
-                                      "Blue 2",
-                                      "Blue 3"
-                                    ],
-                                  ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              TextField(
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Team Number',
+                                ),
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  LengthLimitingTextInputFormatter(4),
+                                ],
+                                onChanged: (value) {
+                                  fieldTeamNumber = int.tryParse(value);
+                                },
+                                controller: TextEditingController(
+                                  text: fieldTeamNumber == null
+                                      ? ''
+                                      : fieldTeamNumber.toString(),
+                                ),
+                              ),
+                              const SizedBox(height: 8.0),
+                              TextField(
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Match Number',
+                                ),
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  LengthLimitingTextInputFormatter(2),
+                                ],
+                                onChanged: (value) {
+                                  fieldMatchNumber = int.tryParse(value);
+                                },
+                                controller: TextEditingController(
+                                  text: fieldMatchNumber == null
+                                      ? ''
+                                      : fieldMatchNumber.toString(),
+                                ),
+                              ),
+                              const SizedBox(height: 8.0),
+                              ChoiceInput(
+                                title: "Field Position",
+                                onChoiceUpdate: (value) {
+                                  setState(() {
+                                    switch (value) {
+                                      case "Red 1":
+                                        fieldAlliance = Alliances.red;
+                                        fieldRobotPosition = 0;
+                                      case "Red 2":
+                                        fieldAlliance = Alliances.red;
+                                        fieldRobotPosition = 1;
+                                      case "Red 3":
+                                        fieldAlliance = Alliances.red;
+                                        fieldRobotPosition = 2;
+                                      case "Blue 1":
+                                        fieldAlliance = Alliances.blue;
+                                        fieldRobotPosition = 0;
+                                      case "Blue 2":
+                                        fieldAlliance = Alliances.blue;
+                                        fieldRobotPosition = 1;
+                                      case "Blue 3":
+                                        fieldAlliance = Alliances.blue;
+                                        fieldRobotPosition = 2;
+                                    }
+                                  });
+                                },
+                                choice:
+                                    "${fieldAlliance.name.toString().capitalize} ${(fieldRobotPosition + 1).toString()}",
+                                options: const [
+                                  "Red 1",
+                                  "Red 2",
+                                  "Red 3",
+                                  "Blue 1",
+                                  "Blue 2",
+                                  "Blue 3"
                                 ],
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ],
                     )
