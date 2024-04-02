@@ -7,14 +7,16 @@ import 'datatypes.dart';
 enum NumberInputStyle { multi, red, green }
 
 class ScoutSelection extends StatelessWidget {
-  const ScoutSelection(
-      {super.key,
-      required this.team,
-      required this.match,
-      required this.alliance,
-      required this.position,
-      required this.onSelected,
-      required this.teamNames});
+  const ScoutSelection({
+    super.key,
+    required this.team,
+    required this.match,
+    required this.alliance,
+    required this.position,
+    required this.onSelected,
+    required this.teamNames,
+    this.completed = false,
+  });
 
   final int team;
   final int match;
@@ -22,6 +24,8 @@ class ScoutSelection extends StatelessWidget {
   final int position;
   final Function() onSelected;
   final Map teamNames;
+
+  final bool completed;
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +41,11 @@ class ScoutSelection extends StatelessWidget {
               borderRadius: BorderRadius.circular(16.0),
               side: BorderSide(
                   width: 4,
-                  color: alliance == Alliances.red
-                      ? Colors.redAccent
-                      : Colors.blueAccent),
+                  color: completed
+                      ? Colors.green
+                      : alliance == Alliances.red
+                          ? Colors.redAccent
+                          : Colors.blueAccent),
             ))),
         child: Padding(
           padding: const EdgeInsets.all(16.0),

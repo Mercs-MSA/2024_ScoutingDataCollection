@@ -1336,6 +1336,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                                   });
                                                 },
                                                 teamNames: teamNameMap,
+                                                completed: true,
                                               )
                                           ],
                                         ),
