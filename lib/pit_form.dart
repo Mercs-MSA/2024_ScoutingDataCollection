@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'datatypes.dart';
 import 'widgets.dart';
 
-Map CLIMBER_MAP = {
+Map pitClimberMap = {
   "No Climber": "no",
   "Tube-in-Tube": "tt",
   "Lead Screw": "ls",

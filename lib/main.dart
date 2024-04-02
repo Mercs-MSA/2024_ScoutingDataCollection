@@ -2172,7 +2172,7 @@ class _FormAppPageState extends State<FormAppPage> {
       ],
       ["endgameDidTheyGetACard", cardMap[fieldCard]],
       ["endgameDidTheyNoShow", showMap[fieldNoShow]],
-      ["endgameComments", fieldComments]
+      ["endgameComments", fieldComments.replaceAll("\n", "*")]
     ];
 
     if (!header) {
@@ -2214,10 +2214,15 @@ class _FormAppPageState extends State<FormAppPage> {
       ['botWeight', pitWeightData],
       ['drivebase', pitDrivebaseType],
       ['drivebaseAlt', pitAltDrivebaseType],
-      ['climber', CLIMBER_MAP[pitClimberType]],
+      ['climber', pitClimberMap[pitClimberType]],
       ['climberAlt', pitAltClimberType],
       ['isKitbot', pitIsKitbot.name],
-      ['pitKitbotMods', pitIsKitbot == KitBotTypes.modded ? pitKitbotMods : ""],
+      [
+        'pitKitbotMods',
+        pitIsKitbot == KitBotTypes.modded
+            ? pitKitbotMods.replaceAll("\n", "*")
+            : ""
+      ],
       ['intakeInBumper', pitIntakeInBumper],
       ['speakerScore', pitDoesSpeaker],
       ['ampScore', pitDoesAmp],
@@ -2231,7 +2236,7 @@ class _FormAppPageState extends State<FormAppPage> {
       [
         'alternateFunction',
         (!pitDoesSourcePickup && !pitDoesSourcePickup)
-            ? pitAlternateFunction
+            ? pitAlternateFunction.replaceAll("\n", "*")
             : ""
       ],
       ['turretShoot', pitDoesTurretShoot],
@@ -2246,7 +2251,9 @@ class _FormAppPageState extends State<FormAppPage> {
       ['autonRoutes', pitAutonRoutes],
       [
         'autonRouteDescription',
-        pitAutonRoutes > 3 && pitAutonExists ? pitAutonRouteDescription : ""
+        pitAutonRoutes > 3 && pitAutonExists
+            ? pitAutonRouteDescription.replaceAll("\n", "*")
+            : ""
       ],
       ['autonPrefStart', pitPrefStart.name],
       ['autonStrat', pitAutonStrat.replaceAll("\n", "*")],
