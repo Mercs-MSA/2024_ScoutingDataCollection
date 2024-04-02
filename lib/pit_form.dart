@@ -711,8 +711,9 @@ class _PitFormState extends State<PitForm> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        CheckboxListTile(
+                        SwitchListTile(
                           title: const Text('Has Auton'),
+                          thumbIcon: thumbIcon,
                           value: widget.autonExists,
                           onChanged: (bool? newValue) {
                             setState(() {
