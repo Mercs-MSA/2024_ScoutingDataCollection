@@ -2626,6 +2626,7 @@ class _FormAppPageState extends State<FormAppPage> {
       "pitWeightData":
           (pitWeightData != null ? (pitWeightData! > 150) : false) ||
               (pitWeightData != null ? (pitWeightData! < 45) : false),
+      "pitDoesBlock": pitDoesBlock
     };
 
     List<String> warnings = [];
@@ -2678,7 +2679,7 @@ class _FormAppPageState extends State<FormAppPage> {
             ),
             if (warning == "q")
               Text(
-                "Offending item: ${findFirstOccurrence(pitQuestionables, true)?.key}",
+                "Offending items: ${getKeysWithTrueValues(pitQuestionables).join(", ")}",
                 style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
@@ -2693,13 +2694,16 @@ class _FormAppPageState extends State<FormAppPage> {
     return cards;
   }
 
-  MapEntry<String, bool>? findFirstOccurrence(Map<String, bool> map, bool x) {
-    for (var entry in map.entries) {
-      if (entry.value == x) {
-        return entry;
+  List<String> getKeysWithTrueValues(Map<String, bool> map) {
+    var trueKeys = <String>[];
+
+    map.forEach((key, value) {
+      if (value == true) {
+        trueKeys.add(key);
       }
-    }
-    return null;
+    });
+
+    return trueKeys;
   }
 
   String convertTasksListToJsonString<T>(List<T> tasks) {
