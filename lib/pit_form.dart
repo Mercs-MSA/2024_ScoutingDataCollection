@@ -27,6 +27,7 @@ class PitForm extends StatefulWidget {
       required this.onWeightChanged,
       required this.onIntakeInBumperChanged,
       required this.onKitbotChanged,
+      required this.onKitbotModsChanged,
       required this.onClimberTypeChanged,
       required this.onAltClimberTypeChanged,
       required this.onDoesSpeakerChanged,
@@ -64,6 +65,7 @@ class PitForm extends StatefulWidget {
       required this.weight,
       required this.intakeInBumper,
       required this.kitbot,
+      required this.kitbotMods,
       required this.climberType,
       required this.altClimberType,
       required this.doesSpeaker,
@@ -104,6 +106,7 @@ class PitForm extends StatefulWidget {
   final Function(int?) onWeightChanged;
   final Function(bool) onIntakeInBumperChanged;
   final Function(KitBotTypes) onKitbotChanged;
+  final Function(String) onKitbotModsChanged;
   final Function(String) onClimberTypeChanged;
   final Function(String) onAltClimberTypeChanged;
   final Function(bool) onDoesSpeakerChanged;
@@ -141,6 +144,7 @@ class PitForm extends StatefulWidget {
   final int? height;
   final int? weight;
   final KitBotTypes kitbot;
+  final String kitbotMods;
   final bool intakeInBumper;
   final String climberType;
   final String? altClimberType;
@@ -175,6 +179,8 @@ class PitForm extends StatefulWidget {
 }
 
 class _PitFormState extends State<PitForm> {
+  String kitbotMods = "";
+
   int autonSpeakerNotes = 0;
   int autonAmpNotes = 0;
   int autonRoutes = 0;
@@ -406,6 +412,30 @@ class _PitFormState extends State<PitForm> {
                       onSelectionChanged: (newSelection) {
                         widget.onKitbotChanged(newSelection.first);
                       }),
+                  if (widget.kitbot == KitBotTypes.modded)
+                    const SizedBox(height: 8.0),
+                  if (widget.kitbot == KitBotTypes.modded)
+                    TextField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Kitbot Mods',
+                      ),
+                      maxLines: 5,
+                      inputFormatters: <TextInputFormatter>[
+                        LengthLimitingTextInputFormatter(100),
+                        FilteringTextInputFormatter(
+                          RegExp(r'[0-9]|[a-zA-Z]|-| |\n'),
+                          allow: true,
+                        )
+                      ],
+                      onChanged: (value) {
+                        kitbotMods = value;
+                        widget.onKitbotModsChanged(value);
+                      },
+                      controller: TextEditingController(
+                        text: kitbotMods == "" ? widget.kitbotMods : kitbotMods,
+                      ),
+                    ),
                   const Divider(),
                   SwitchListTile(
                     title: const Text('Inside Bumper Intake?'),

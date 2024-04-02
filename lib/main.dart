@@ -105,6 +105,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
   bool pitIntakeInBumper = false;
   KitBotTypes pitIsKitbot = KitBotTypes.not;
+  String pitKitbotMods = "";
   String pitClimberType = "Tube-in-Tube";
   String? pitAltClimberType;
 
@@ -942,6 +943,9 @@ class _FormAppPageState extends State<FormAppPage> {
                                   pitIsKitbot = value;
                                 });
                               },
+                              onKitbotModsChanged: (value) {
+                                pitKitbotMods = value;
+                              },
                               onIntakeInBumperChanged: (value) {
                                 setState(() {
                                   pitIntakeInBumper = value;
@@ -1077,6 +1081,7 @@ class _FormAppPageState extends State<FormAppPage> {
                               height: pitHeightData,
                               weight: pitWeightData,
                               kitbot: pitIsKitbot,
+                              kitbotMods: pitKitbotMods,
                               intakeInBumper: pitIntakeInBumper,
                               climberType: pitClimberType,
                               altClimberType: pitAltClimberType,
@@ -1207,11 +1212,14 @@ class _FormAppPageState extends State<FormAppPage> {
                               const Spacer(),
                               Padding(
                                 padding: const EdgeInsets.all(32.0),
-                                child: QrImageView(
-                                  data: getPitKVFormattedData(
-                                          transpose: true, header: false)[0]
-                                      .join("||"),
-                                  backgroundColor: Colors.white,
+                                child: SizedBox.square(
+                                  dimension: 500,
+                                  child: QrImageView(
+                                    data: getPitKVFormattedData(
+                                            transpose: true, header: false)[0]
+                                        .join("||"),
+                                    backgroundColor: Colors.white,
+                                  ),
                                 ),
                               ),
                               const Spacer(),
@@ -2172,6 +2180,7 @@ class _FormAppPageState extends State<FormAppPage> {
       ['climber', CLIMBER_MAP[pitClimberType]],
       ['climberAlt', pitAltClimberType],
       ['isKitbot', pitIsKitbot.name],
+      ['pitKitbotMods', pitIsKitbot == KitBotTypes.modded ? pitKitbotMods : ""],
       ['intakeInBumper', pitIntakeInBumper],
       ['speakerScore', pitDoesSpeaker],
       ['ampScore', pitDoesAmp],
@@ -2518,6 +2527,7 @@ class _FormAppPageState extends State<FormAppPage> {
     pitWeightData = null;
     pitCanPassStage = false;
     pitIsKitbot = KitBotTypes.not;
+    pitKitbotMods = "";
     pitIntakeInBumper = false;
     pitClimberType = "Tube-in-Tube";
     pitAltClimberType = null;
@@ -2639,6 +2649,8 @@ class _FormAppPageState extends State<FormAppPage> {
           (pitWeightData != null ? (pitWeightData! > 150) : false) ||
               (pitWeightData != null ? (pitWeightData! < 45) : false),
       "pitDoesBlock": pitDoesBlock,
+      "pitRepairabilityScore": pitRepairabilityScore > 4,
+      "pitAutonConsistency": pitAutonConsistency > 4,
     };
 
     List<String> warnings = [];
@@ -2681,7 +2693,7 @@ class _FormAppPageState extends State<FormAppPage> {
                     ),
               subtitle: warning == "q"
                   ? const Text(
-                      "Some data is out of a reasonable limit.",
+                      "Some data may be out of a reasonable limit.",
                       style: TextStyle(color: Colors.black),
                     )
                   : const Text(
