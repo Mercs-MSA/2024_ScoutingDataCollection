@@ -83,14 +83,14 @@ class _FormAppPageState extends State<FormAppPage> {
 
   bool playoffMode = false;
 
-  int? fieldTeamNumber;
   int? pitTeamNumber;
   List<String> pitScouters = ["", ""];
 
+  int? fieldTeamNumber;
   int? fieldMatchNumber;
-
   Alliances fieldAlliance = Alliances.blue;
   int fieldRobotPosition = 1;
+  String fieldScouterName = "";
 
   double pitRepairabilityScore = 1;
   double pitManeuverabilityScore = 1;
@@ -108,11 +108,11 @@ class _FormAppPageState extends State<FormAppPage> {
   String pitClimberType = "Tube-in-Tube";
   String? pitAltClimberType;
 
+  bool fieldAutonExists = false;
   bool fieldLeave = false;
   bool fieldCrossLine = false;
   bool fieldAStop = false;
 
-  bool fieldAutonExists = false;
   bool pitAutonExists = false;
   int pitAutonSpeakerNotes = 0;
   int pitAutonAmpNotes = 0;
@@ -177,8 +177,8 @@ class _FormAppPageState extends State<FormAppPage> {
 
   bool fieldDefenseBot = false;
 
-  double fieldDriverRating = 0;
-  double fieldDefenseRating = 0;
+  double fieldDriverRating = 1;
+  double fieldDefenseRating = 1;
 
   bool fieldHighnote = false;
   bool? fieldCoOp = false;
@@ -855,7 +855,6 @@ class _FormAppPageState extends State<FormAppPage> {
                                         border: OutlineInputBorder(),
                                         labelText: 'Scouter A',
                                       ),
-                                      keyboardType: TextInputType.number,
                                       inputFormatters: <TextInputFormatter>[
                                         LengthLimitingTextInputFormatter(30),
                                         FilteringTextInputFormatter(
@@ -1440,6 +1439,26 @@ class _FormAppPageState extends State<FormAppPage> {
                                   "Blue 2",
                                   "Blue 3"
                                 ],
+                              ),
+                              const SizedBox(height: 8.0),
+                              TextField(
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Scouter Name',
+                                ),
+                                inputFormatters: <TextInputFormatter>[
+                                  LengthLimitingTextInputFormatter(30),
+                                  FilteringTextInputFormatter(
+                                    RegExp(r'[a-zA-Z]'),
+                                    allow: true,
+                                  ),
+                                ],
+                                onChanged: (value) {
+                                  fieldScouterName = value;
+                                },
+                                controller: TextEditingController(
+                                  text: fieldScouterName,
+                                ),
                               ),
                             ],
                           ),
@@ -2083,6 +2102,7 @@ class _FormAppPageState extends State<FormAppPage> {
       ["event", eventId],
       ["teamNumber", "frc$fieldTeamNumber"],
       ["matchNumber", fieldMatchNumber],
+      ["scouter", fieldScouterName],
       ["startingPosition", "${fieldAlliance.name}$fieldRobotPosition"],
       ["hasAuton", fieldAutonExists],
       ["autonLeave", fieldLeave],
@@ -2614,8 +2634,8 @@ class _FormAppPageState extends State<FormAppPage> {
     fieldTrap = "Did Not Trap";
     fieldHarmony = "Did Not Harmonize";
     fieldDefenseBot = false;
-    fieldDriverRating = 0;
-    fieldDefenseRating = 0;
+    fieldDriverRating = 1;
+    fieldDefenseRating = 1;
     fieldHighnote = false;
     fieldCoOp = false;
     fieldCard = "No Card";
