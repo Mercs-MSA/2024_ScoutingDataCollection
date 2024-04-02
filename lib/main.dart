@@ -1213,15 +1213,17 @@ class _FormAppPageState extends State<FormAppPage> {
                                 children: getPitWarningCards(),
                               ),
                               const Spacer(),
-                              Padding(
-                                padding: const EdgeInsets.all(32.0),
-                                child: SizedBox.square(
-                                  dimension: 500,
-                                  child: QrImageView(
-                                    data: getPitKVFormattedData(
-                                            transpose: true, header: false)[0]
-                                        .join("||"),
-                                    backgroundColor: Colors.white,
+                              Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(32.0),
+                                  child: SizedBox.square(
+                                    dimension: 500,
+                                    child: QrImageView(
+                                      data: getPitKVFormattedData(
+                                              transpose: true, header: false)[0]
+                                          .join("||"),
+                                      backgroundColor: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),

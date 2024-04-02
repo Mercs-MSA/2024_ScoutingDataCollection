@@ -251,9 +251,15 @@ class _PitFormState extends State<PitForm> {
                             suffixText: "in",
                           ),
                           keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(2),
+                          // inputFormatters: <TextInputFormatter>[
+                          //   FilteringTextInputFormatter.digitsOnly,
+                          //   LengthLimitingTextInputFormatter(2),
+                          // ],
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^(\d+)?\.?\d{0,2}')),
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d+\.?\d*'))
                           ],
                           onChanged: (value) {
                             widget.onWidthChanged(int.tryParse(value));
