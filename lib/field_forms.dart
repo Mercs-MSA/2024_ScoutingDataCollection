@@ -930,7 +930,7 @@ class _PostMatchFormState extends State<PostMatchForm> {
         if (widget.teamNumberPresent)
           Padding(
             padding: const EdgeInsets.all(12.0),
-            child: ListView(
+            child: Column(
               children: <Widget>[
                 Card(
                   child: Padding(

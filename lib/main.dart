@@ -1613,84 +1613,114 @@ class _FormAppPageState extends State<FormAppPage> {
                   else
                     const SizedBox(),
                   if (fieldPageIndex == 3)
-                    PostMatchForm(
-                      teamNumberPresent: fieldTeamNumber == null
-                          ? false
-                          : true && fieldMatchNumber == null
+                    ListView(
+                      children: [
+                        PostMatchForm(
+                          teamNumberPresent: fieldTeamNumber == null
                               ? false
-                              : true,
-                      allianceColor: fieldAlliance,
-                      robotPosition: fieldRobotPosition,
-                      climbSpeed: fieldClimbSpeed,
-                      onClimbSpeedUpdate: (value) {
-                        setState(() {
-                          fieldClimbSpeed = value;
-                        });
-                      },
-                      stagePos: fieldStagePos,
-                      onStagePosUpdate: (value) {
-                        setState(() {
-                          fieldStagePos = value;
-                        });
-                      },
-                      trap: fieldTrap,
-                      onTrapUpdate: (value) {
-                        setState(() {
-                          fieldTrap = value;
-                        });
-                      },
-                      harmony: fieldHarmony,
-                      onHarmonyChanged: (value) {
-                        setState(() {
-                          fieldHarmony = value;
-                        });
-                      },
-                      defenseBot: fieldDefenseBot,
-                      onDefenseBotChanged: (value) {
-                        setState(() {
-                          fieldDefenseBot = value;
-                        });
-                      },
-                      driverRating: fieldDriverRating,
-                      onDriverRatingChanged: (value) {
-                        setState(() {
-                          fieldDriverRating = value;
-                        });
-                      },
-                      defenseRating: fieldDefenseRating,
-                      onDefenseRatingChanged: (value) {
-                        setState(() {
-                          fieldDefenseRating = value;
-                        });
-                      },
-                      highnote: fieldHighnote,
-                      onHighnoteChanged: (value) {
-                        setState(() {
-                          fieldHighnote = value;
-                        });
-                      },
-                      coOp: fieldCoOp,
-                      onCoOpChanged: (value) {
-                        setState(() {
-                          fieldCoOp = value;
-                        });
-                      },
-                      card: fieldCard,
-                      onCardChanged: (value) {
-                        setState(() {
-                          fieldCard = value;
-                        });
-                      },
-                      noShow: fieldNoShow,
-                      onNoShowChanged: (value) {
-                        setState(() {
-                          fieldNoShow = value;
-                        });
-                      },
-                      comments: fieldComments,
-                      onCommentsChanged: (value) {
-                        fieldComments = value;
-                      },
+                              : true && fieldMatchNumber == null
+                                  ? false
+                                  : true && fieldScouterName != "",
+                          allianceColor: fieldAlliance,
+                          robotPosition: fieldRobotPosition,
+                          climbSpeed: fieldClimbSpeed,
+                          onClimbSpeedUpdate: (value) {
+                            setState(() {
+                              fieldClimbSpeed = value;
+                            });
+                          },
+                          stagePos: fieldStagePos,
+                          onStagePosUpdate: (value) {
+                            setState(() {
+                              fieldStagePos = value;
+                            });
+                          },
+                          trap: fieldTrap,
+                          onTrapUpdate: (value) {
+                            setState(() {
+                              fieldTrap = value;
+                            });
+                          },
+                          harmony: fieldHarmony,
+                          onHarmonyChanged: (value) {
+                            setState(() {
+                              fieldHarmony = value;
+                            });
+                          },
+                          defenseBot: fieldDefenseBot,
+                          onDefenseBotChanged: (value) {
+                            setState(() {
+                              fieldDefenseBot = value;
+                            });
+                          },
+                          driverRating: fieldDriverRating,
+                          onDriverRatingChanged: (value) {
+                            setState(() {
+                              fieldDriverRating = value;
+                            });
+                          },
+                          defenseRating: fieldDefenseRating,
+                          onDefenseRatingChanged: (value) {
+                            setState(() {
+                              fieldDefenseRating = value;
+                            });
+                          },
+                          highnote: fieldHighnote,
+                          onHighnoteChanged: (value) {
+                            setState(() {
+                              fieldHighnote = value;
+                            });
+                          },
+                          coOp: fieldCoOp,
+                          onCoOpChanged: (value) {
+                            setState(() {
+                              fieldCoOp = value;
+                            });
+                          },
+                          card: fieldCard,
+                          onCardChanged: (value) {
+                            setState(() {
+                              fieldCard = value;
+                            });
+                          },
+                          noShow: fieldNoShow,
+                          onNoShowChanged: (value) {
+                            setState(() {
+                              fieldNoShow = value;
+                            });
+                          },
+                          comments: fieldComments,
+                          onCommentsChanged: (value) {
+                            fieldComments = value;
+                          },
+                        ),
+                        Column(
+                          children: getFieldWarningCards(),
+                        ),
+                        if (fieldTeamNumber == null
+                            ? false
+                            : true && fieldMatchNumber == null
+                                ? false
+                                : true && fieldScouterName != "")
+                          const SizedBox(
+                            height: 8.0,
+                          ),
+                        if (fieldTeamNumber == null
+                            ? false
+                            : true && fieldMatchNumber == null
+                                ? false
+                                : true && fieldScouterName != "")
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              setState(() {});
+                            },
+                            label: const Text("Check Data"),
+                            icon: const Icon(Icons.playlist_add_check),
+                          ),
+                        const SizedBox(
+                          height: 8.0,
+                        ),
+                      ],
                     )
                   else
                     const SizedBox(),
@@ -1744,14 +1774,22 @@ class _FormAppPageState extends State<FormAppPage> {
                     Column(
                       children: [
                         const Spacer(),
+                        Column(
+                          children: getFieldWarningCards(),
+                        ),
+                        const Spacer(),
                         Padding(
-                            padding: const EdgeInsets.all(32.0),
+                          padding: const EdgeInsets.all(32.0),
+                          child: SizedBox.square(
+                            dimension: 500,
                             child: QrImageView(
                               data: getFieldKVFormattedData(
                                       transpose: true, header: false)[0]
                                   .join("||"),
                               backgroundColor: Colors.white,
-                            )),
+                            ),
+                          ),
+                        ),
                         const Spacer(),
                         const Divider(),
                         const SizedBox(height: 8.0),
@@ -2172,7 +2210,8 @@ class _FormAppPageState extends State<FormAppPage> {
       ],
       ["endgameDidTheyGetACard", cardMap[fieldCard]],
       ["endgameDidTheyNoShow", showMap[fieldNoShow]],
-      ["endgameComments", fieldComments.replaceAll("\n", "*")]
+      ["endgameComments", fieldComments.replaceAll("\n", "*")],
+      ["questionables", getFieldQuestionables().join(",")]
     ];
 
     if (!header) {
@@ -2691,16 +2730,39 @@ class _FormAppPageState extends State<FormAppPage> {
       pitCoachYears,
       pitAutonExists ? pitAutonStrat : false,
       pitTeleopStrat,
-      pitAutonRoutes < 4 || !pitAutonExists ? false : pitAutonRouteDescription
+      pitAutonRoutes < 4 || !pitAutonExists ? false : pitAutonRouteDescription,
+      pitDrivebaseType == "Other" ? pitAltDrivebaseType : false,
+      pitClimberType == "Other" ? pitAltClimberType : false,
     ];
 
     final pitQuestionables = {
-      "pitWeightData":
+      "pitDoesBlock": pitDoesBlock,
+      "pitRepairabilityScoreOver4": pitRepairabilityScore > 4,
+      "pitAutonConsistencyOver4": pitAutonConsistency > 4,
+      "pitWidthDataOutOfRange": (pitWidthData != null
+          ? (pitWidthData! > 30) || (pitWidthData! < 15)
+          : false),
+      "pitLengthDataOutOfRange": (pitLengthData != null
+          ? (pitLengthData! > 30) || (pitLengthData! < 15)
+          : false),
+      "pitHeightDataOutOfRange": (pitHeightData != null
+          ? (pitHeightData! > 32) || (pitHeightData! < 8)
+          : false),
+      "pitWeightDataOutOfRange":
           (pitWeightData != null ? (pitWeightData! > 150) : false) ||
               (pitWeightData != null ? (pitWeightData! < 45) : false),
-      "pitDoesBlock": pitDoesBlock,
-      "pitRepairabilityScore": pitRepairabilityScore > 4,
-      "pitAutonConsistency": pitAutonConsistency > 4,
+      "pitDriverYearsOver3":
+          (pitDriverYears != null ? pitDriverYears! > 3 : false),
+      "pitOperatorYearsOver3":
+          (pitOperatorYears != null ? pitOperatorYears! > 3 : false),
+      "pitCoachYearsOver3":
+          (pitCoachYears != null ? pitCoachYears! > 3 : false),
+      "pitKitbotWithOver1NoteAuto": (pitIsKitbot == KitBotTypes.kitbot &&
+          pitAutonAmpNotes + pitAutonSpeakerNotes > 1),
+      "pitKitbotWithGroundPickup":
+          (pitIsKitbot == KitBotTypes.kitbot && pitDoesGroundPickup),
+      "pitKitbotWithOver3AutoVersatillity":
+          (pitIsKitbot == KitBotTypes.kitbot && pitAutonVersatility > 3),
     };
 
     List<String> warnings = [];
@@ -2752,11 +2814,109 @@ class _FormAppPageState extends State<FormAppPage> {
                     ),
             ),
             if (warning == "q")
-              Text(
-                "Offending items: ${getKeysWithTrueValues(pitQuestionables).join(", ")}",
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+                child: Text(
+                  "Offending items: ${getKeysWithTrueValues(pitQuestionables).join(", ")}",
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )
+          ],
+        ),
+      );
+      cards.add(card);
+    }
+
+    return cards;
+  }
+
+  List<String> getFieldQuestionables() {
+    final matchQuestionables = {
+      "teleopNotesAddOver35":
+          fieldTeleopAmpNotesScored + fieldTeleopSpeakerNotesScored > 35,
+      "autonScoresAmpAndSpeaker":
+          (fieldAutonAmpNotes > 0 && fieldAutonSpeakerNotes > 0),
+      "combinedNoteScoreOver50": (fieldAutonSpeakerNotes +
+              fieldAutonAmpNotes +
+              fieldTeleopSpeakerNotesScored +
+              fieldTeleopAmpNotesScored >
+          50),
+      "combinedAmpScoreOver20":
+          (fieldAutonAmpNotes + fieldTeleopAmpNotesScored > 20)
+    };
+
+    return getKeysWithTrueValues(matchQuestionables);
+  }
+
+  List<Card> getFieldWarningCards() {
+    final matchFields = [
+      fieldComments,
+    ];
+
+    List<String> warnings = [];
+
+    if (matchFields.contains(null) || matchFields.contains("")) {
+      warnings.add("m");
+    }
+
+    final matchQuestionables = getFieldQuestionables();
+
+    if (matchQuestionables.isNotEmpty) {
+      warnings.add("q");
+    }
+
+    List<Card> cards = [];
+
+    for (final warning in warnings) {
+      var card = Card(
+        color: warning == "q" ? Colors.yellow : Colors.deepOrangeAccent,
+        child: Column(
+          children: [
+            ListTile(
+              leading: warning == "q"
+                  ? const Icon(
+                      Icons.question_mark_rounded,
+                      color: Colors.black,
+                    )
+                  : const Icon(
+                      Icons.warning_rounded,
+                      color: Colors.black,
+                    ),
+              title: warning == "q"
+                  ? const Text(
+                      "Questionable Data Detected!",
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    )
+                  : const Text(
+                      "Missing Data Detected",
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+              subtitle: warning == "q"
+                  ? const Text(
+                      "Some data may be out of a reasonable limit.",
+                      style: TextStyle(color: Colors.black),
+                    )
+                  : const Text(
+                      "Check for any missing or blank fields",
+                      style: TextStyle(color: Colors.black),
+                    ),
+            ),
+            if (warning == "q")
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+                child: Text(
+                  "Offending items: ${matchQuestionables.join(", ")}",
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               )
           ],

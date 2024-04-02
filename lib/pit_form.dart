@@ -221,6 +221,26 @@ class _PitFormState extends State<PitForm> {
               child: Column(
                 children: <Widget>[
                   const SizedBox(height: 8.0),
+                  Card(
+                    color: Theme.of(context).colorScheme.tertiary,
+                    child: Column(
+                      children: [
+                        ListTile(
+                          leading: Icon(
+                            Icons.info,
+                            color: Theme.of(context).colorScheme.onTertiary,
+                          ),
+                          title: Text(
+                            "Weight must include battery and bumper",
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.onTertiary,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
                   Row(
                     children: [
                       Expanded(
