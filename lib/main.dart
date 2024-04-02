@@ -92,8 +92,8 @@ class _FormAppPageState extends State<FormAppPage> {
   Alliances fieldAlliance = Alliances.blue;
   int fieldRobotPosition = 1;
 
-  double pitRepairabilityScore = 0;
-  double pitManeuverabilityScore = 0;
+  double pitRepairabilityScore = 1;
+  double pitManeuverabilityScore = 1;
   String pitDrivebaseType = "Swerve";
   String? pitAltDrivebaseType;
 
@@ -117,8 +117,8 @@ class _FormAppPageState extends State<FormAppPage> {
   bool pitAutonExists = false;
   int pitAutonSpeakerNotes = 0;
   int pitAutonAmpNotes = 0;
-  double pitAutonConsistency = 0.0;
-  double pitAutonVersatility = 0.0;
+  double pitAutonConsistency = 1;
+  double pitAutonVersatility = 1;
   int pitAutonRoutes = 0;
   String pitAutonRouteDescription = "";
   String pitAutonStrat = "";
@@ -2517,8 +2517,8 @@ class _FormAppPageState extends State<FormAppPage> {
 
   void resetPit() {
     pitTeamNumber = null;
-    pitRepairabilityScore = 0;
-    pitManeuverabilityScore = 0;
+    pitRepairabilityScore = 1;
+    pitManeuverabilityScore = 1;
     pitDrivebaseType = "Swerve";
     pitAltDrivebaseType = null;
     pitWidthData = null;
@@ -2534,8 +2534,8 @@ class _FormAppPageState extends State<FormAppPage> {
     pitAutonExists = false;
     pitAutonSpeakerNotes = 0;
     pitAutonAmpNotes = 0;
-    pitAutonConsistency = 0;
-    pitAutonVersatility = 0;
+    pitAutonConsistency = 1;
+    pitAutonVersatility = 1;
     pitAutonRoutes = 0;
     pitAutonRouteDescription = "";
     pitAutonStrat = "";
