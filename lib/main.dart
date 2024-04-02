@@ -1207,7 +1207,7 @@ class _FormAppPageState extends State<FormAppPage> {
                         else
                           const SizedBox(),
                         if (pitTeamNumber != null)
-                          Column(
+                          ListView(
                             children: [
                               Column(
                                 children: getPitWarningCards(),
@@ -1227,7 +1227,6 @@ class _FormAppPageState extends State<FormAppPage> {
                               ),
                               const Spacer(),
                               const Divider(),
-                              const SizedBox(height: 8.0),
                               ElevatedButton(
                                   onPressed: () {
                                     completePitScoutingTasks.add(
