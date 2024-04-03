@@ -877,7 +877,6 @@ class _FormAppPageState extends State<FormAppPage> {
                                         border: OutlineInputBorder(),
                                         labelText: 'Scouter B',
                                       ),
-                                      keyboardType: TextInputType.number,
                                       inputFormatters: <TextInputFormatter>[
                                         LengthLimitingTextInputFormatter(30),
                                         FilteringTextInputFormatter(
