@@ -1206,12 +1206,13 @@ class _FormAppPageState extends State<FormAppPage> {
                         else
                           const SizedBox(),
                         if (pitTeamNumber != null)
-                          ListView(
+                          Column(
                             children: [
-                              Column(
-                                children: getPitWarningCards(),
+                              Flexible(
+                                child: ListView(
+                                  children: getPitWarningCards(),
+                                ),
                               ),
-                              const Spacer(),
                               Padding(
                                 padding: const EdgeInsets.all(32.0),
                                 child: SizedBox.square(
@@ -1224,7 +1225,6 @@ class _FormAppPageState extends State<FormAppPage> {
                                   ),
                                 ),
                               ),
-                              const Spacer(),
                               const Divider(),
                               ElevatedButton(
                                   onPressed: () {
