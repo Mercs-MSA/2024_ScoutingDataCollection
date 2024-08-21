@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mercs_scout/forms.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -67,8 +68,10 @@ class _FormAppPageState extends State<FormAppPage> {
 
   static String configuration = '''
   {
-    "sections": {
-      "pit": {
+    "sections": [
+      {
+        "name": "Test Form",
+        "id": "\$FORMTEST",
         "export": [
           "test1,\$TEST1",
           "test2,\$TEST2",
@@ -97,9 +100,11 @@ class _FormAppPageState extends State<FormAppPage> {
           }
         ]
       }
-    }
+    ]
   }
   ''';
+
+  static List<String> formNames = extractSectionNames(getForm(configuration));
 
   PackageInfo _packageInfo = PackageInfo(
     appName: 'Unknown',
@@ -199,50 +204,51 @@ class _FormAppPageState extends State<FormAppPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Flexible(
-                      fit: FlexFit.tight,
-                      flex: 2,
-                      child: FilledButton(
-                        onPressed: () {
-                          setState(() {
-                            appMode = 1;
-                            setState(() {});
-                          });
-                        },
-                        style: ButtonStyle(
-                          minimumSize: WidgetStateProperty.all(
-                              const Size.fromHeight(150)),
-                          maximumSize: WidgetStateProperty.all(
-                              const Size.fromHeight(200)),
-                          shape:
-                              WidgetStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16.0),
+                    for (String name in formNames)
+                      Flexible(
+                        fit: FlexFit.tight,
+                        flex: 2,
+                        child: FilledButton(
+                          onPressed: () {
+                            setState(() {
+                              appMode = 1;
+                              setState(() {});
+                            });
+                          },
+                          style: ButtonStyle(
+                            minimumSize: WidgetStateProperty.all(
+                                const Size.fromHeight(150)),
+                            maximumSize: WidgetStateProperty.all(
+                                const Size.fromHeight(200)),
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
                             ),
                           ),
-                        ),
-                        child: const Row(
-                          children: [
-                            Icon(
-                              Icons.smart_toy_outlined,
-                              size: 72,
-                            ),
-                            Spacer(),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "\$name",
-                                  style: TextStyle(fontSize: 24),
-                                ),
-                              ],
-                            ),
-                            Spacer(),
-                          ],
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.smart_toy_outlined,
+                                size: 72,
+                              ),
+                              Spacer(),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "$name",
+                                    style: TextStyle(fontSize: 24),
+                                  ),
+                                ],
+                              ),
+                              Spacer(),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
                     const Spacer(),
                     const Image(
                       image: AssetImage('images/mercs.png'),
