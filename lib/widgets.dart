@@ -34,9 +34,9 @@ class ScoutSelection extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onSelected,
         style: ButtonStyle(
-            minimumSize: MaterialStateProperty.all(const Size.fromHeight(120)),
-            maximumSize: MaterialStateProperty.all(const Size.fromHeight(130)),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            minimumSize: WidgetStateProperty.all(const Size.fromHeight(120)),
+            maximumSize: WidgetStateProperty.all(const Size.fromHeight(130)),
+            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0),
               side: BorderSide(
@@ -87,9 +87,9 @@ class PitScoutSelection extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onSelected,
         style: ButtonStyle(
-          minimumSize: MaterialStateProperty.all(const Size.fromHeight(80)),
-          maximumSize: MaterialStateProperty.all(const Size.fromHeight(100)),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          minimumSize: WidgetStateProperty.all(const Size.fromHeight(80)),
+          maximumSize: WidgetStateProperty.all(const Size.fromHeight(100)),
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0),
               side: BorderSide(
@@ -346,49 +346,48 @@ class NumberInput extends StatelessWidget {
               onPressed: onValueSubtract,
               style: style == NumberInputStyle.multi
                   ? ButtonStyle(
-                      fixedSize: MaterialStateProperty.all(
+                      fixedSize: WidgetStateProperty.all(
                           Size.square(miniStyle ? 42 : 56)),
-                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                      padding: WidgetStateProperty.all(EdgeInsets.zero),
                       backgroundColor:
-                          MaterialStateProperty.all(ColorScheme.fromSeed(
+                          WidgetStateProperty.all(ColorScheme.fromSeed(
                         seedColor: Colors.orange,
                         brightness: Brightness.dark,
                       ).primary),
                       foregroundColor:
-                          MaterialStateProperty.all(ColorScheme.fromSeed(
+                          WidgetStateProperty.all(ColorScheme.fromSeed(
                         seedColor: Colors.orange,
                         brightness: Brightness.dark,
                       ).onPrimary),
                     )
                   : style == NumberInputStyle.red
                       ? ButtonStyle(
-                          fixedSize: MaterialStateProperty.all(
+                          fixedSize: WidgetStateProperty.all(
                               Size.square(miniStyle ? 42 : 56)),
-                          padding: MaterialStateProperty.all(EdgeInsets.zero),
+                          padding: WidgetStateProperty.all(EdgeInsets.zero),
                           backgroundColor:
-                              MaterialStateProperty.all(ColorScheme.fromSeed(
+                              WidgetStateProperty.all(ColorScheme.fromSeed(
                             seedColor: Colors.red,
                             brightness: Brightness.dark,
                           ).primary),
                           foregroundColor:
-                              MaterialStateProperty.all(ColorScheme.fromSeed(
+                              WidgetStateProperty.all(ColorScheme.fromSeed(
                             seedColor: Colors.red,
                             brightness: Brightness.dark,
                           ).onPrimary),
                         )
                       : style == NumberInputStyle.green
                           ? ButtonStyle(
-                              fixedSize: MaterialStateProperty.all(
+                              fixedSize: WidgetStateProperty.all(
                                   Size.square(miniStyle ? 42 : 56)),
-                              padding:
-                                  MaterialStateProperty.all(EdgeInsets.zero),
-                              backgroundColor: MaterialStateProperty.all(
-                                  ColorScheme.fromSeed(
+                              padding: WidgetStateProperty.all(EdgeInsets.zero),
+                              backgroundColor:
+                                  WidgetStateProperty.all(ColorScheme.fromSeed(
                                 seedColor: Colors.green,
                                 brightness: Brightness.dark,
                               ).primary),
-                              foregroundColor: MaterialStateProperty.all(
-                                  ColorScheme.fromSeed(
+                              foregroundColor:
+                                  WidgetStateProperty.all(ColorScheme.fromSeed(
                                 seedColor: Colors.green,
                                 brightness: Brightness.dark,
                               ).onPrimary),
@@ -401,49 +400,48 @@ class NumberInput extends StatelessWidget {
               onPressed: onValueAdd,
               style: style == NumberInputStyle.multi
                   ? ButtonStyle(
-                      fixedSize: MaterialStateProperty.all(
+                      fixedSize: WidgetStateProperty.all(
                           Size.square(miniStyle ? 42 : 56)),
-                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                      padding: WidgetStateProperty.all(EdgeInsets.zero),
                       backgroundColor:
-                          MaterialStateProperty.all(ColorScheme.fromSeed(
+                          WidgetStateProperty.all(ColorScheme.fromSeed(
                         seedColor: Colors.green,
                         brightness: Brightness.dark,
                       ).primary),
                       foregroundColor:
-                          MaterialStateProperty.all(ColorScheme.fromSeed(
+                          WidgetStateProperty.all(ColorScheme.fromSeed(
                         seedColor: Colors.green,
                         brightness: Brightness.dark,
                       ).onPrimary),
                     )
                   : style == NumberInputStyle.red
                       ? ButtonStyle(
-                          fixedSize: MaterialStateProperty.all(
+                          fixedSize: WidgetStateProperty.all(
                               Size.square(miniStyle ? 42 : 56)),
-                          padding: MaterialStateProperty.all(EdgeInsets.zero),
+                          padding: WidgetStateProperty.all(EdgeInsets.zero),
                           backgroundColor:
-                              MaterialStateProperty.all(ColorScheme.fromSeed(
+                              WidgetStateProperty.all(ColorScheme.fromSeed(
                             seedColor: Colors.red,
                             brightness: Brightness.dark,
                           ).primary),
                           foregroundColor:
-                              MaterialStateProperty.all(ColorScheme.fromSeed(
+                              WidgetStateProperty.all(ColorScheme.fromSeed(
                             seedColor: Colors.red,
                             brightness: Brightness.dark,
                           ).onPrimary),
                         )
                       : style == NumberInputStyle.green
                           ? ButtonStyle(
-                              fixedSize: MaterialStateProperty.all(
+                              fixedSize: WidgetStateProperty.all(
                                   Size.square(miniStyle ? 42 : 56)),
-                              padding:
-                                  MaterialStateProperty.all(EdgeInsets.zero),
-                              backgroundColor: MaterialStateProperty.all(
-                                  ColorScheme.fromSeed(
+                              padding: WidgetStateProperty.all(EdgeInsets.zero),
+                              backgroundColor:
+                                  WidgetStateProperty.all(ColorScheme.fromSeed(
                                 seedColor: Colors.green,
                                 brightness: Brightness.dark,
                               ).primary),
-                              foregroundColor: MaterialStateProperty.all(
-                                  ColorScheme.fromSeed(
+                              foregroundColor:
+                                  WidgetStateProperty.all(ColorScheme.fromSeed(
                                 seedColor: Colors.green,
                                 brightness: Brightness.dark,
                               ).onPrimary),
