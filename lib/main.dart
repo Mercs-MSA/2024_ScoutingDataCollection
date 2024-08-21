@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mercs_scout/fields.dart';
 import 'package:mercs_scout/forms.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -104,7 +105,8 @@ class _FormAppPageState extends State<FormAppPage> {
   }
   ''';
 
-  static List<String> formNames = extractSectionNames(getForm(configuration));
+  static Map<String, dynamic> forms = getForm(configuration);
+  static List<String> formNames = extractSectionNames(forms);
 
   PackageInfo _packageInfo = PackageInfo(
     appName: 'Unknown',
@@ -402,6 +404,18 @@ class _FormAppPageState extends State<FormAppPage> {
                 ],
               ),
             );
+          } else if ((forms["sections"] as List).length >= appMode - 4) {
+            return Scaffold(
+                appBar: AppBar(
+                  title: Text(forms["sections"][appMode - 5]["name"]),
+                  leading: IconButton(
+                      onPressed: () {
+                        appMode = 0;
+                        setState(() {});
+                      },
+                      icon: const Icon(Icons.arrow_back)),
+                ),
+                body: generatePageFromData(forms["sections"][appMode - 5]));
           } else {
             return const SizedBox();
           }

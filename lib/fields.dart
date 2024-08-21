@@ -44,10 +44,15 @@ class FormLayout {
   Widget toWidget() {
     List<Widget> children = content.map((item) {
       // Determine widget type
-      if (item is FormCheckTile) {
-        return item.toWidget();
-      } else if (item is FormDivider) {
-        return item.toWidget();
+      print(item);
+      if (item is CheckboxListTile) {
+        return Expanded(child: item);
+      } else if (item is VerticalDivider) {
+        return item;
+      } else if (item is Divider) {
+        return item;
+      } else if (item is Column) {
+        return item;
       } else if (item is FormLayout) {
         return item.toWidget(); // Recursively handle nested layouts
       } else {
@@ -81,6 +86,7 @@ Widget generateWidgetFromData(Map<String, dynamic> data) {
       return generateWidgetFromData(item);
     }).toList();
 
+    print(contentWidgets);
     return FormLayout(
       mode: data['mode'],
       content: contentWidgets,
@@ -91,11 +97,11 @@ Widget generateWidgetFromData(Map<String, dynamic> data) {
 }
 
 // Function to generate a page from a list of data
-Widget generatePageFromData(List<Map<String, dynamic>> pageData) {
-  List<Widget> widgets = pageData.map<Widget>((item) {
+Widget generatePageFromData(Map<String, dynamic> pageData) {
+  List<Widget> widgets = pageData["tabs"][0]["content"].map<Widget>((item) {
     return generateWidgetFromData(item);
   }).toList();
 
   // Returning a Column with the widgets for a full page
-  return Column(children: widgets);
+  return ListView(children: widgets);
 }
