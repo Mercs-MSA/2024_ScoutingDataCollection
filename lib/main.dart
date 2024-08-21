@@ -204,14 +204,14 @@ class _FormAppPageState extends State<FormAppPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    for (String name in formNames)
+                    for (final (index, name) in formNames.indexed)
                       Flexible(
                         fit: FlexFit.tight,
                         flex: 2,
                         child: FilledButton(
                           onPressed: () {
                             setState(() {
-                              appMode = 1;
+                              appMode = 5 + index;
                               setState(() {});
                             });
                           },
