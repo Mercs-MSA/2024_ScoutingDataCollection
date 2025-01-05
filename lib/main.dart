@@ -76,8 +76,6 @@ class _FormAppPageState extends State<FormAppPage> {
   bool transposedExport = true;
   bool exportHeaders = true;
 
-  bool playoffMode = false;
-
   int? pitTeamNumber;
   List<String> pitScouters = ["", ""];
 
@@ -145,13 +143,12 @@ class _FormAppPageState extends State<FormAppPage> {
     teamNameMap = json.decode(prefs.getString("teamNamesMap") ?? "{}");
 
     eventId = prefs.getString("eventId") ?? "unknown";
-    playoffMode = prefs.getBool("playoffMode") ?? false;
 
     transposedExport = prefs.getBool("transposedExport") ?? true;
     exportHeaders = prefs.getBool("exportHeaders") ?? true;
 
     setState(() {
-      appMode = prefs.getInt('appMode') ?? 0;
+      appMode = 0;
     });
   }
 
@@ -394,7 +391,7 @@ class _FormAppPageState extends State<FormAppPage> {
                   IconButton(
                       onPressed: () {
                         setState(() {
-                          appMode = 3;
+                          appMode = 2;
                           setAppModePref(appMode);
                         });
                       },
@@ -402,7 +399,7 @@ class _FormAppPageState extends State<FormAppPage> {
                   IconButton(
                       onPressed: () {
                         setState(() {
-                          appMode = 4;
+                          appMode = 3;
                           setAppModePref(appMode);
                         });
                       },
@@ -842,7 +839,7 @@ class _FormAppPageState extends State<FormAppPage> {
             )
           else
             const SizedBox(),
-          if (appMode == 3)
+          if (appMode == 2)
             // Settings
             Scaffold(
               appBar: AppBar(
@@ -1016,18 +1013,6 @@ class _FormAppPageState extends State<FormAppPage> {
                         },
                         controller: TextEditingController(text: eventId),
                       ),
-                      const SizedBox(height: 8.0),
-                      SwitchListTile(
-                          value: playoffMode,
-                          title: const Text("Playoff Mode"),
-                          subtitle: const Text(
-                              "Switch from qualification to playoff match mode"),
-                          onChanged: (value) {
-                            setState(() {
-                              playoffMode = value;
-                              attemptSavePlayoff();
-                            });
-                          }),
                     ],
                   ),
                 ),
@@ -1035,7 +1020,7 @@ class _FormAppPageState extends State<FormAppPage> {
             )
           else
             const SizedBox(),
-          if (appMode == 4)
+          if (appMode == 3)
             Scaffold(
               appBar: AppBar(
                 title: const Text("About"),
@@ -1342,11 +1327,5 @@ class _FormAppPageState extends State<FormAppPage> {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setBool("exportHeaders", exportHeaders);
-  }
-
-  Future<void> attemptSavePlayoff() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    await prefs.setBool("playoffMode", playoffMode);
   }
 }
