@@ -350,7 +350,7 @@ class _FormAppPageState extends State<FormAppPage> {
     );
   }
 
-  void _onBackPressed(bool x) {
+  void _onBackPressed() {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -378,7 +378,9 @@ class _FormAppPageState extends State<FormAppPage> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvoked: _onBackPressed,
+      onPopInvokedWithResult: (bool didPop, Object? result) {
+        _onBackPressed();
+      },
       child: IndexedStack(
         index: appMode,
         children: [
@@ -421,12 +423,12 @@ class _FormAppPageState extends State<FormAppPage> {
                           });
                         },
                         style: ButtonStyle(
-                          minimumSize: MaterialStateProperty.all(
+                          minimumSize: WidgetStateProperty.all(
                               const Size.fromHeight(150)),
-                          maximumSize: MaterialStateProperty.all(
+                          maximumSize: WidgetStateProperty.all(
                               const Size.fromHeight(200)),
                           shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                              WidgetStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16.0),
                             ),
@@ -1256,9 +1258,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
   String convertTasksListToJsonString<T>(List<T> tasks) {
     return json.encode(tasks.map((task) {
-      if (task is ScoutingTask) {
-        return (task as ScoutingTask).toJson();
-      } else if (task is PitScoutingTask) {
+      if (task is PitScoutingTask) {
         return (task as PitScoutingTask).toJson();
       }
       return null;

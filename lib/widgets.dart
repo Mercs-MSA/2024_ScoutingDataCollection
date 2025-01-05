@@ -1,70 +1,7 @@
-import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-import 'datatypes.dart';
-
 enum NumberInputStyle { multi, red, green }
-
-class ScoutSelection extends StatelessWidget {
-  const ScoutSelection({
-    super.key,
-    required this.team,
-    required this.match,
-    required this.alliance,
-    required this.position,
-    required this.onSelected,
-    required this.teamNames,
-    this.completed = false,
-  });
-
-  final int team;
-  final int match;
-  final Alliances alliance;
-  final int position;
-  final Function() onSelected;
-  final Map teamNames;
-
-  final bool completed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ElevatedButton(
-        onPressed: onSelected,
-        style: ButtonStyle(
-            minimumSize: MaterialStateProperty.all(const Size.fromHeight(120)),
-            maximumSize: MaterialStateProperty.all(const Size.fromHeight(130)),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.0),
-              side: BorderSide(
-                  width: 4,
-                  color: completed
-                      ? Colors.green
-                      : alliance == Alliances.red
-                          ? Colors.redAccent
-                          : Colors.blueAccent),
-            ))),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                  "Team $team - ${teamNames[team.toString()] ?? "Unknown Team"}",
-                  style: const TextStyle(fontSize: 22)),
-              Text("Match $match", style: const TextStyle(fontSize: 18)),
-              Text("${alliance.name.capitalize} ${position + 1}",
-                  style: const TextStyle(fontSize: 16)),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class PitScoutSelection extends StatelessWidget {
   const PitScoutSelection({
@@ -87,9 +24,9 @@ class PitScoutSelection extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onSelected,
         style: ButtonStyle(
-          minimumSize: MaterialStateProperty.all(const Size.fromHeight(80)),
-          maximumSize: MaterialStateProperty.all(const Size.fromHeight(100)),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          minimumSize: WidgetStateProperty.all(const Size.fromHeight(80)),
+          maximumSize: WidgetStateProperty.all(const Size.fromHeight(100)),
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0),
               side: BorderSide(
@@ -268,48 +205,48 @@ class NumberInput extends StatelessWidget {
               onPressed: onValueSubtract,
               style: style == NumberInputStyle.multi
                   ? ButtonStyle(
-                      fixedSize: MaterialStateProperty.all(
+                      fixedSize: WidgetStateProperty.all(
                           Size.square(miniStyle ? 42 : 56)),
-                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                      padding: WidgetStateProperty.all(EdgeInsets.zero),
                       backgroundColor:
-                          MaterialStateProperty.all(ColorScheme.fromSeed(
+                          WidgetStateProperty.all(ColorScheme.fromSeed(
                         seedColor: Colors.orange,
                         brightness: Brightness.dark,
                       ).primary),
                       foregroundColor:
-                          MaterialStateProperty.all(ColorScheme.fromSeed(
+                          WidgetStateProperty.all(ColorScheme.fromSeed(
                         seedColor: Colors.orange,
                         brightness: Brightness.dark,
                       ).onPrimary),
                     )
                   : style == NumberInputStyle.red
                       ? ButtonStyle(
-                          fixedSize: MaterialStateProperty.all(
+                          fixedSize: WidgetStateProperty.all(
                               Size.square(miniStyle ? 42 : 56)),
-                          padding: MaterialStateProperty.all(EdgeInsets.zero),
+                          padding: WidgetStateProperty.all(EdgeInsets.zero),
                           backgroundColor:
-                              MaterialStateProperty.all(ColorScheme.fromSeed(
+                              WidgetStateProperty.all(ColorScheme.fromSeed(
                             seedColor: Colors.red,
                             brightness: Brightness.dark,
                           ).primary),
                           foregroundColor:
-                              MaterialStateProperty.all(ColorScheme.fromSeed(
+                              WidgetStateProperty.all(ColorScheme.fromSeed(
                             seedColor: Colors.red,
                             brightness: Brightness.dark,
                           ).onPrimary),
                         )
                       : style == NumberInputStyle.green
                           ? ButtonStyle(
-                              fixedSize: MaterialStateProperty.all(
+                              fixedSize: WidgetStateProperty.all(
                                   Size.square(miniStyle ? 42 : 56)),
                               padding:
-                                  MaterialStateProperty.all(EdgeInsets.zero),
-                              backgroundColor: MaterialStateProperty.all(
+                                  WidgetStateProperty.all(EdgeInsets.zero),
+                              backgroundColor: WidgetStateProperty.all(
                                   ColorScheme.fromSeed(
                                 seedColor: Colors.green,
                                 brightness: Brightness.dark,
                               ).primary),
-                              foregroundColor: MaterialStateProperty.all(
+                              foregroundColor: WidgetStateProperty.all(
                                   ColorScheme.fromSeed(
                                 seedColor: Colors.green,
                                 brightness: Brightness.dark,
@@ -323,48 +260,48 @@ class NumberInput extends StatelessWidget {
               onPressed: onValueAdd,
               style: style == NumberInputStyle.multi
                   ? ButtonStyle(
-                      fixedSize: MaterialStateProperty.all(
+                      fixedSize: WidgetStateProperty.all(
                           Size.square(miniStyle ? 42 : 56)),
-                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                      padding: WidgetStateProperty.all(EdgeInsets.zero),
                       backgroundColor:
-                          MaterialStateProperty.all(ColorScheme.fromSeed(
+                          WidgetStateProperty.all(ColorScheme.fromSeed(
                         seedColor: Colors.green,
                         brightness: Brightness.dark,
                       ).primary),
                       foregroundColor:
-                          MaterialStateProperty.all(ColorScheme.fromSeed(
+                          WidgetStateProperty.all(ColorScheme.fromSeed(
                         seedColor: Colors.green,
                         brightness: Brightness.dark,
                       ).onPrimary),
                     )
                   : style == NumberInputStyle.red
                       ? ButtonStyle(
-                          fixedSize: MaterialStateProperty.all(
+                          fixedSize: WidgetStateProperty.all(
                               Size.square(miniStyle ? 42 : 56)),
-                          padding: MaterialStateProperty.all(EdgeInsets.zero),
+                          padding: WidgetStateProperty.all(EdgeInsets.zero),
                           backgroundColor:
-                              MaterialStateProperty.all(ColorScheme.fromSeed(
+                              WidgetStateProperty.all(ColorScheme.fromSeed(
                             seedColor: Colors.red,
                             brightness: Brightness.dark,
                           ).primary),
                           foregroundColor:
-                              MaterialStateProperty.all(ColorScheme.fromSeed(
+                              WidgetStateProperty.all(ColorScheme.fromSeed(
                             seedColor: Colors.red,
                             brightness: Brightness.dark,
                           ).onPrimary),
                         )
                       : style == NumberInputStyle.green
                           ? ButtonStyle(
-                              fixedSize: MaterialStateProperty.all(
+                              fixedSize: WidgetStateProperty.all(
                                   Size.square(miniStyle ? 42 : 56)),
                               padding:
-                                  MaterialStateProperty.all(EdgeInsets.zero),
-                              backgroundColor: MaterialStateProperty.all(
+                                  WidgetStateProperty.all(EdgeInsets.zero),
+                              backgroundColor: WidgetStateProperty.all(
                                   ColorScheme.fromSeed(
                                 seedColor: Colors.green,
                                 brightness: Brightness.dark,
                               ).primary),
-                              foregroundColor: MaterialStateProperty.all(
+                              foregroundColor: WidgetStateProperty.all(
                                   ColorScheme.fromSeed(
                                 seedColor: Colors.green,
                                 brightness: Brightness.dark,
@@ -373,39 +310,6 @@ class NumberInput extends StatelessWidget {
                           : const ButtonStyle(),
               icon: const Icon(Icons.add),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class DataCard extends StatelessWidget {
-  const DataCard({
-    super.key,
-    required this.item,
-    required this.data,
-    this.type,
-  });
-
-  final String item;
-  final String data;
-  final String? type;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(item),
-            const Spacer(),
-            Text((data.length <= 20) ? data : '${data.substring(0, 20)}...'),
-            const Spacer(),
-            Text(type == null ? "Unknown" : type!),
           ],
         ),
       ),
