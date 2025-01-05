@@ -397,11 +397,11 @@ class _FormAppPageState extends State<FormAppPage> {
                       },
                       icon: const Icon(Icons.settings_outlined)),
                   IconButton(
-                      onPressed: () {
-                        setState(() {
-                          appMode = 3;
-                          setAppModePref(appMode);
-                        });
+                      onPressed: () {showAboutDialog(
+                          context: context,
+                          applicationIcon: Image.asset("images/mercs.png", scale: 2.5,),
+                          applicationVersion: _packageInfo.version,
+                      );
                       },
                       icon: const Icon(Icons.info_outline_rounded))
                 ],
@@ -1032,42 +1032,6 @@ class _FormAppPageState extends State<FormAppPage> {
                     ],
                   ),
                 ),
-              ),
-            )
-          else
-            const SizedBox(),
-          if (appMode == 3)
-            Scaffold(
-              appBar: AppBar(
-                title: const Text("About"),
-                leading: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        appMode = 0;
-                        setAppModePref(appMode);
-                      });
-                    },
-                    icon: const Icon(Icons.arrow_back)),
-              ),
-              body: ListView(
-                children: [
-                  const Image(
-                    image: AssetImage('images/mercs.png'),
-                    width: 380,
-                    height: 380,
-                    isAntiAlias: true,
-                  ),
-                  const Text(
-                    "Mercs Scouting App",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 32),
-                  ),
-                  Text(
-                    "Version: ${_packageInfo.version}",
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 24),
-                  ),
-                ],
               ),
             )
           else
