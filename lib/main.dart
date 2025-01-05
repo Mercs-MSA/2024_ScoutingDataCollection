@@ -780,6 +780,22 @@ class _FormAppPageState extends State<FormAppPage> {
                                 ),
                               ],
                             ),
+                            Material(
+                              elevation: 1,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextField(
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: 'JSON Data',
+                                  ),
+                                  readOnly: true,
+                                  minLines: 2,
+                                  maxLines: 10,
+                                  controller: TextEditingController(text: JsonEncoder.withIndent(" "*4).convert(pitScoutingData)),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ],
