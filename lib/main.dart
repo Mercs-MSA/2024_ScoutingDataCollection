@@ -4,7 +4,6 @@ import 'dart:math';
 
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
@@ -70,13 +69,10 @@ class FormAppPage extends StatefulWidget {
 }
 
 class _FormAppPageState extends State<FormAppPage> {
-  bool switchIsToggled = false;
-
   int pitPageIndex = 0;
-  int fieldPageIndex = 0;
   int appMode = 0;
 
-  String eventId = "2024txama";
+  String eventId = "unknown";
   bool transposedExport = true;
   bool exportHeaders = true;
 
@@ -85,118 +81,29 @@ class _FormAppPageState extends State<FormAppPage> {
   int? pitTeamNumber;
   List<String> pitScouters = ["", ""];
 
-  int? fieldTeamNumber;
-  int? fieldMatchNumber;
-  Alliances fieldAlliance = Alliances.blue;
-  int fieldRobotPosition = 1;
-  String fieldScouterName = "";
+  Map<String,dynamic> pitScoutingDefaultData = {
+    "width":  null,
+    "length": null,
+    "height": null,
+    "weight": null,
+    "drivebase": "Swerve",
+    "autonExists": false,
+  };
 
-  double pitRepairabilityScore = 1;
-  double pitManeuverabilityScore = 1;
-  String pitDrivebaseType = "Swerve";
-  String? pitAltDrivebaseType;
-
-  int? pitWidthData;
-  int? pitLengthData;
-  int? pitHeightData;
-  int? pitWeightData;
-
-  bool pitIntakeInBumper = false;
-  KitBotTypes pitIsKitbot = KitBotTypes.not;
-  String pitKitbotMods = "";
-  String pitClimberType = "Tube-in-Tube";
-  String? pitAltClimberType;
-
-  bool fieldAutonExists = false;
-  bool fieldLeave = false;
-  bool fieldCrossLine = false;
-  bool fieldAStop = false;
-
-  bool pitAutonExists = false;
-  int pitAutonSpeakerNotes = 0;
-  int pitAutonAmpNotes = 0;
-  double pitAutonConsistency = 1;
-  double pitAutonVersatility = 1;
-  int pitAutonRoutes = 0;
-  String pitAutonRouteDescription = "";
-  String pitAutonStrat = "";
-
-  bool pitDoesSpeaker = true;
-  bool pitDoesAmp = true;
-  bool pitDoesTrap = false;
-  ScoringPreference pitScoringPref = ScoringPreference.speaker;
-
-  bool pitDoesGroundPickup = false;
-  bool pitDoesSourcePickup = false;
-  String pitAlternateFunction = "";
-
-  bool pitDoesTurretShoot = false;
-  bool pitDoesExtendShoot = true;
-  bool pitDoesBlock = false;
-  bool pitDoesAutoAim = false;
-
-  bool pitPlayerPreferAmp = false;
-  bool pitPlayerPreferSource = false;
-
-  int? pitDriverYears;
-  int? pitOperatorYears;
-  int? pitCoachYears;
-
-  String pitTeleopStrat = "";
-
-  StartPositions pitPrefStart = StartPositions.middle;
-
-  int fieldAutonSpeakerNotes = 0;
-  int fieldAutonAmpNotes = 0;
-
-  int fieldAutonSpeakerNotesMissed = 0;
-  int fieldAutonAmpNotesMissed = 0;
-
-  bool fieldPickupFloor = false;
-  bool fieldPickupSource = false;
-
-  int fieldTeleopAmpNotesScored = 0;
-  int fieldTeleopAmpNotesMissed = 0;
-
-  int fieldTeleopSpeakerNotesScored = 0;
-  int fieldTeleopSpeakerNotesMissed = 0;
-
-  int fieldTeleopDroppedNotes = 0;
-  int fieldTeleopNotesFed = 0;
-  int fieldTeleopAmps = 0;
-
-  List<bool?> fieldWingNotes = [false, false, false];
-  List<bool?> fieldCenterNotes = [false, false, false, false, false];
-  bool? fieldPreload = true;
-
-  double fieldClimbSpeed = 2;
-  StagePositions fieldStagePos = StagePositions.none;
-  String fieldTrap = "Did Not Trap";
-  String fieldHarmony = "Did Not Harmonize";
-
-  bool fieldDefenseBot = false;
-
-  double fieldDriverRating = 1;
-  double fieldDefenseRating = 1;
-
-  bool fieldHighnote = false;
-  bool? fieldCoOp = false;
-
-  String fieldCard = "No Card";
-  String fieldNoShow = "They Showed Up";
-
-  String fieldComments = "";
+  Map<String,dynamic> pitScoutingData = {
+    "width":  null,
+    "length": null,
+    "height": null,
+    "weight": null,
+    "drivebase": "Swerve",
+    "autonExists": false,
+  };
 
   bool saveDisabled = false;
 
   bool importerSaveCompletes = false;
 
-  List<ScoutingTask> incompleteFieldScoutingTasks = [];
-
   List<PitScoutingTask> incompletePitScoutingTasks = [];
-
-  List<ScoutingTask> completeFieldScoutingTasks = [];
-
   List<PitScoutingTask> completePitScoutingTasks = [];
 
   Map teamNameMap = {};
@@ -235,14 +142,6 @@ class _FormAppPageState extends State<FormAppPage> {
         prefs.getString("jsonCompletePitTasks"),
         (json) => PitScoutingTask.fromJson(json));
 
-    incompleteFieldScoutingTasks = convertJsonStringToTasksList(
-        prefs.getString("jsonIncompleteFieldTasks"),
-        (json) => ScoutingTask.fromJson(json));
-
-    completeFieldScoutingTasks = convertJsonStringToTasksList(
-        prefs.getString("jsonCompleteFieldTasks"),
-        (json) => ScoutingTask.fromJson(json));
-
     teamNameMap = json.decode(prefs.getString("teamNamesMap") ?? "{}");
 
     eventId = prefs.getString("eventId") ?? "unknown";
@@ -278,7 +177,6 @@ class _FormAppPageState extends State<FormAppPage> {
     if (!context.mounted) return;
 
     List<PitScoutingTask> newIncompletePitScoutingTasks = [];
-    List<ScoutingTask> newIncompleteFieldScoutingTasks = [];
 
     try {
       // Specify the file path (adjust it based on your actual file location)
@@ -298,53 +196,12 @@ class _FormAppPageState extends State<FormAppPage> {
         // Now you can work with the jsonData as needed
         if (jsonData is Map &&
             jsonData.containsKey("pit") &&
-            jsonData.containsKey("field") &&
             jsonData.containsKey("teamnames") &&
-            jsonData["pit"] is List &&
-            jsonData["field"] is List) {
+            jsonData["pit"] is List) {
           for (Map pitTeam in jsonData["pit"]) {
             if (pitTeam.containsKey("teamNumber")) {
               newIncompletePitScoutingTasks
                   .add(PitScoutingTask(team: pitTeam["teamNumber"]));
-            } else {
-              if (!mounted) return;
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: const Text("JSON Formatting Error"),
-                    icon: const Icon(
-                      Icons.error_rounded,
-                      size: 72,
-                    ),
-                    content: const Text(
-                        "Imported json file is not correctly formatted"),
-                    actionsOverflowButtonSpacing: 20,
-                    actions: [
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text("OK"),
-                      ),
-                    ],
-                  );
-                },
-              );
-              return;
-            }
-          }
-          for (Map fieldTeam in jsonData["field"]) {
-            if (fieldTeam.containsKey("teamNumber") &&
-                fieldTeam.containsKey("match") &&
-                fieldTeam.containsKey("alliance") &&
-                fieldTeam.containsKey("position")) {
-              newIncompleteFieldScoutingTasks.add(ScoutingTask(
-                team: fieldTeam["teamNumber"],
-                match: fieldTeam["match"],
-                alliance: Alliances.values[fieldTeam["alliance"]],
-                position: fieldTeam["position"],
-              ));
             } else {
               if (!mounted) return;
               showDialog(
@@ -452,7 +309,7 @@ class _FormAppPageState extends State<FormAppPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text(
-                      "Do you want to import and REMOVE ALL old pit and field scouting data"),
+                      "Do you want to import and REMOVE ALL old scouting data"),
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: CheckboxListTile(
@@ -480,8 +337,6 @@ class _FormAppPageState extends State<FormAppPage> {
                     setState(() {
                       incompletePitScoutingTasks =
                           newIncompletePitScoutingTasks;
-                      incompleteFieldScoutingTasks =
-                          newIncompleteFieldScoutingTasks;
                       if (!importerSaveCompletes) {
                         completePitScoutingTasks = [];
                       }
@@ -864,225 +719,10 @@ class _FormAppPageState extends State<FormAppPage> {
                               teamNumberPresent:
                                   (pitTeamNumber == null ? false : true) &&
                                       !pitScouters.contains(""),
-                              onLengthChanged: (value) {
-                                pitLengthData = value;
+                              formData: pitScoutingData,
+                              onDataChanged: (data) {
+                                pitScoutingData[data.keys.first] = data.values.first;
                               },
-                              onWidthChanged: (value) {
-                                pitWidthData = value;
-                              },
-                              onHeightChanged: (value) {
-                                pitHeightData = value;
-                              },
-                              onWeightChanged: (value) {
-                                pitWeightData = value;
-                              },
-                              onRepairabilityChanged: (value) {
-                                pitRepairabilityScore = value;
-                              },
-                              onManeuverabilityChanged: (value) {
-                                pitManeuverabilityScore = value;
-                              },
-                              onDrivebaseChanged: (value) {
-                                setState(() {
-                                  pitDrivebaseType = value;
-                                });
-                              },
-                              onAltDrivebaseChanged: (value) {
-                                pitAltDrivebaseType = value;
-                              },
-                              onKitbotChanged: (value) {
-                                setState(() {
-                                  pitIsKitbot = value;
-                                });
-                              },
-                              onKitbotModsChanged: (value) {
-                                pitKitbotMods = value;
-                              },
-                              onIntakeInBumperChanged: (value) {
-                                setState(() {
-                                  pitIntakeInBumper = value;
-                                });
-                              },
-                              onClimberTypeChanged: (value) {
-                                setState(() {
-                                  pitClimberType = value;
-                                });
-                              },
-                              onAltClimberTypeChanged: (value) {
-                                pitAltClimberType = value;
-                              },
-                              onDoesSpeakerChanged: (value) {
-                                setState(() {
-                                  pitDoesSpeaker = value;
-                                });
-                              },
-                              onDoesAmpChanged: (value) {
-                                setState(() {
-                                  pitDoesAmp = value;
-                                });
-                              },
-                              onDoesTrapChanged: (value) {
-                                setState(() {
-                                  pitDoesTrap = value;
-                                });
-                              },
-                              onScoringPrefChanged: (value) {
-                                setState(() {
-                                  pitScoringPref = value;
-                                });
-                              },
-                              onDoesGroundPickupChanged: (value) {
-                                setState(() {
-                                  pitDoesGroundPickup = value;
-                                });
-                              },
-                              onDoesSourcePickupChanged: (value) {
-                                setState(() {
-                                  pitDoesSourcePickup = value;
-                                });
-                              },
-                              onAlternateFunctionChanged: (value) {
-                                pitAlternateFunction = value;
-                              },
-                              onDoesExtendShootChanged: (value) {
-                                setState(() {
-                                  pitDoesExtendShoot = value;
-                                });
-                              },
-                              onDoesTurretShootChanged: (value) {
-                                setState(() {
-                                  pitDoesTurretShoot = value;
-                                });
-                              },
-                              onDoesBlockChanged: (value) {
-                                setState(() {
-                                  pitDoesBlock = value;
-                                });
-                              },
-                              onAutoAimChanged: (value) {
-                                setState(() {
-                                  pitDoesAutoAim = value;
-                                });
-                              },
-                              onAutonExistsChanged: (value) {
-                                setState(() {
-                                  pitAutonExists = value;
-                                });
-                              },
-                              onAutonSpeakerNotesChanged: (value) {
-                                setState(() {
-                                  pitAutonSpeakerNotes = value;
-                                });
-                              },
-                              onAutonAmpNotesChanged: (value) {
-                                setState(() {
-                                  pitAutonAmpNotes = value;
-                                });
-                              },
-                              onAutonConsistencyChanged: (value) {
-                                setState(() {
-                                  pitAutonConsistency = value;
-                                });
-                              },
-                              onAutonVersatilityChanged: (value) {
-                                setState(() {
-                                  pitAutonVersatility = value;
-                                });
-                              },
-                              onAutonRoutesChanged: (value) {
-                                setState(() {
-                                  pitAutonRoutes = value;
-                                });
-                              },
-                              onAutonRouteDescriptionChanged: (value) {
-                                pitAutonRouteDescription = value;
-                              },
-                              onAutonStratChanged: (value) {
-                                pitAutonStrat = value;
-                              },
-                              onPlayerPreferAmpChanged: (value) {
-                                setState(() {
-                                  pitPlayerPreferAmp = value;
-                                });
-                              },
-                              onPlayerPreferSourceChanged: (value) {
-                                setState(() {
-                                  pitPlayerPreferSource = value;
-                                });
-                              },
-                              onDriverYearsChanged: (value) {
-                                pitDriverYears = value;
-                              },
-                              onOperatorYearsChanged: (value) {
-                                pitOperatorYears = value;
-                              },
-                              onCoachYearsChanged: (value) {
-                                pitCoachYears = value;
-                              },
-                              onPrefStartChanged: (value) {
-                                setState(() {
-                                  pitPrefStart = value;
-                                });
-                              },
-                              onTeleopStratChnaged: (value) {
-                                pitTeleopStrat = value;
-                              },
-                              repairability: pitRepairabilityScore,
-                              maneuverability: pitManeuverabilityScore,
-                              drivebase: pitDrivebaseType,
-                              altDrivebase: pitAltDrivebaseType,
-                              length: pitLengthData,
-                              width: pitWidthData,
-                              height: pitHeightData,
-                              weight: pitWeightData,
-                              kitbot: pitIsKitbot,
-                              kitbotMods: pitKitbotMods,
-                              intakeInBumper: pitIntakeInBumper,
-                              climberType: pitClimberType,
-                              altClimberType: pitAltClimberType,
-                              doesSpeaker: pitDoesSpeaker,
-                              doesAmp: pitDoesAmp,
-                              doesTrap: pitDoesTrap,
-                              scoringPreference: pitScoringPref,
-                              doesSourcePickup: pitDoesSourcePickup,
-                              doesGroundPickup: pitDoesGroundPickup,
-                              alternateFunction: pitAlternateFunction,
-                              doesExtendShoot: pitDoesExtendShoot,
-                              doesTurretShoot: pitDoesTurretShoot,
-                              doesBlock: pitDoesBlock,
-                              doesAutoAim: pitDoesAutoAim,
-                              autonExists: pitAutonExists,
-                              autonSpeakerNotes: pitAutonSpeakerNotes,
-                              autonAmpNotes: pitAutonAmpNotes,
-                              autonConsistency: pitAutonConsistency,
-                              autonVersatility: pitAutonVersatility,
-                              autonRoutes: pitAutonRoutes,
-                              autonRouteDescription: pitAutonRouteDescription,
-                              autonStrat: pitAutonStrat,
-                              playerPreferAmp: pitPlayerPreferAmp,
-                              playerPreferSource: pitPlayerPreferSource,
-                              driverYears: pitDriverYears,
-                              operatorYears: pitOperatorYears,
-                              coachYears: pitCoachYears,
-                              prefStart: pitPrefStart,
-                              teleopStrat: pitTeleopStrat,
-                            ),
-                            if (!(pitTeamNumber == null ||
-                                pitScouters.contains("")))
-                              Column(
-                                children: getPitWarningCards(),
-                              ),
-                            if (!(pitTeamNumber == null ||
-                                pitScouters.contains("")))
-                              ElevatedButton.icon(
-                                onPressed: () {
-                                  setState(() {});
-                                },
-                                label: const Text("Check Data"),
-                                icon: const Icon(Icons.playlist_add_check),
-                              ),
-                            const SizedBox(
-                              height: 8.0,
                             ),
                           ],
                         ),
@@ -1162,11 +802,6 @@ class _FormAppPageState extends State<FormAppPage> {
                         if (pitTeamNumber != null)
                           Column(
                             children: [
-                              Flexible(
-                                child: ListView(
-                                  children: getPitWarningCards(),
-                                ),
-                              ),
                               Padding(
                                 padding: const EdgeInsets.all(32.0),
                                 child: SizedBox.square(
@@ -1441,79 +1076,10 @@ class _FormAppPageState extends State<FormAppPage> {
     );
   }
 
-  bool validatePitData() {
-    for (final value in [
-      pitLengthData,
-      pitWidthData,
-      pitLengthData,
-      pitWeightData
-    ]) {
-      if (value == null) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   List<List> getPitKVFormattedData(
       {bool transpose = false, bool header = true}) {
     var data = [
       ["form", "pit"],
-      ["event", eventId],
-      ["teamNumber", "frc$pitTeamNumber"],
-      ["scouters", pitScouters.join(",")],
-      ['botLength', pitLengthData],
-      ['botWidth', pitWidthData],
-      ['botHeight', pitLengthData],
-      ['botWeight', pitWeightData],
-      ['drivebase', pitDrivebaseType],
-      ['drivebaseAlt', pitAltDrivebaseType],
-      ['climber', pitClimberMap[pitClimberType]],
-      ['climberAlt', pitAltClimberType],
-      ['isKitbot', pitIsKitbot.name],
-      [
-        'pitKitbotMods',
-        pitIsKitbot == KitBotTypes.modded
-            ? pitKitbotMods.replaceAll("\n", "*")
-            : ""
-      ],
-      ['intakeInBumper', pitIntakeInBumper],
-      ['speakerScore', pitDoesSpeaker],
-      ['ampScore', pitDoesAmp],
-      [
-        'scorePref',
-        (pitDoesAmp && pitDoesSpeaker) ? pitScoringPref.name : "none"
-      ],
-      ['trapScore', pitDoesTrap],
-      ['groundPickup', pitDoesGroundPickup],
-      ['sourcePickup', pitDoesSourcePickup],
-      [
-        'alternateFunction',
-        (!pitDoesSourcePickup && !pitDoesSourcePickup)
-            ? pitAlternateFunction.replaceAll("\n", "*")
-            : ""
-      ],
-      ['turretShoot', pitDoesTurretShoot],
-      ['extendShoot', pitDoesExtendShoot],
-      ['hasBlocker', pitDoesBlock],
-      ['hasAutoAim', pitDoesAutoAim],
-      ['hasAuton', pitAutonExists],
-      ['autonSpeakerNotes', pitAutonSpeakerNotes],
-      ['autonAmpNotes', pitAutonAmpNotes],
-      ['autonConsistency', pitAutonConsistency],
-      ['autonVersatility', pitAutonVersatility],
-      ['autonRoutes', pitAutonRoutes],
-      [
-        'autonRouteDescription',
-        pitAutonRoutes > 3 && pitAutonExists
-            ? pitAutonRouteDescription.replaceAll("\n", "*")
-            : ""
-      ],
-      ['autonPrefStart', pitPrefStart.name],
-      ['autonStrat', pitAutonStrat.replaceAll("\n", "*")],
-      ['repairability', pitRepairabilityScore],
-      ['maneuverability', pitManeuverabilityScore],
-      ['teleopStrat', pitTeleopStrat.replaceAll("\n", "*")],
     ];
 
     if (!header) {
@@ -1687,95 +1253,13 @@ class _FormAppPageState extends State<FormAppPage> {
   void resetAll() {
     appMode = 0;
     resetPit();
-    resetField();
   }
 
   void resetPit() {
     pitTeamNumber = null;
-    pitRepairabilityScore = 1;
-    pitManeuverabilityScore = 1;
-    pitDrivebaseType = "Swerve";
-    pitAltDrivebaseType = null;
-    pitWidthData = null;
-    pitLengthData = null;
-    pitHeightData = null;
-    pitWeightData = null;
-    pitIsKitbot = KitBotTypes.not;
-    pitKitbotMods = "";
-    pitIntakeInBumper = false;
-    pitClimberType = "Tube-in-Tube";
-    pitAltClimberType = null;
-    pitAutonExists = false;
-    pitAutonSpeakerNotes = 0;
-    pitAutonAmpNotes = 0;
-    pitAutonConsistency = 1;
-    pitAutonVersatility = 1;
-    pitAutonRoutes = 0;
-    pitAutonRouteDescription = "";
-    pitAutonStrat = "";
-    pitDoesSpeaker = true;
-    pitDoesAmp = true;
-    pitDoesTrap = false;
-    pitScoringPref = ScoringPreference.speaker;
-    pitDoesGroundPickup = false;
-    pitDoesSourcePickup = false;
-    pitAlternateFunction = "";
-    pitDoesTurretShoot = false;
-    pitDoesExtendShoot = true;
-    pitDoesBlock = false;
-    pitDoesAutoAim = false;
-    pitPlayerPreferAmp = false;
-    pitPlayerPreferSource = false;
-    pitDriverYears = null;
-    pitOperatorYears = null;
-    pitCoachYears = null;
-    pitPrefStart = StartPositions.middle;
-    pitTeleopStrat = "";
+    pitScoutingData = Map.from(pitScoutingDefaultData);
     setState(() {
       pitPageIndex = 0;
-    });
-  }
-
-  void resetField() {
-    fieldTeamNumber = null;
-    fieldMatchNumber = null;
-    fieldAlliance = Alliances.red;
-    fieldRobotPosition = 0;
-    fieldAutonExists = false;
-    fieldLeave = false;
-    fieldCrossLine = false;
-    fieldAStop = false;
-    fieldAutonSpeakerNotes = 0;
-    fieldAutonAmpNotes = 0;
-    fieldAutonSpeakerNotesMissed = 0;
-    fieldAutonAmpNotesMissed = 0;
-    fieldLeave = false;
-    fieldCenterNotes = [false, false, false, false, false];
-    fieldWingNotes = [false, false, false];
-    fieldPreload = true;
-    fieldTeleopAmpNotesScored = 0;
-    fieldTeleopAmpNotesMissed = 0;
-    fieldTeleopSpeakerNotesScored = 0;
-    fieldTeleopAmpNotesMissed = 0;
-    fieldPickupFloor = false;
-    fieldPickupSource = false;
-    fieldTeleopDroppedNotes = 0;
-    fieldTeleopNotesFed = 0;
-    fieldTeleopAmps = 0;
-    fieldClimbSpeed = 1;
-    fieldStagePos = StagePositions.none;
-    fieldTrap = "Did Not Trap";
-    fieldHarmony = "Did Not Harmonize";
-    fieldDefenseBot = false;
-    fieldDriverRating = 1;
-    fieldDefenseRating = 1;
-    fieldHighnote = false;
-    fieldCoOp = false;
-    fieldCard = "No Card";
-    fieldNoShow = "They Showed Up";
-    fieldComments = "";
-    setState(() {
-      fieldPageIndex = 0;
     });
   }
 
@@ -1785,233 +1269,13 @@ class _FormAppPageState extends State<FormAppPage> {
       incompletePitScoutingTasks.add(PitScoutingTask(team: rng.nextInt(9999)));
     }
 
-    for (var i = 0; i < 3; i++) {
-      incompleteFieldScoutingTasks.add(ScoutingTask(
-        team: rng.nextInt(9999),
-        match: rng.nextInt(80),
-        alliance: Alliances.values[rng.nextInt(2)],
-        position: rng.nextInt(3),
-      ));
-    }
-
     updateTeamSaves();
   }
 
   void resetAllTeams() {
-    incompleteFieldScoutingTasks = [];
     incompletePitScoutingTasks = [];
-    completeFieldScoutingTasks = [];
     completePitScoutingTasks = [];
     updateTeamSaves();
-  }
-
-  List<Card> getPitWarningCards() {
-    final pitFields = [
-      pitWidthData,
-      pitLengthData,
-      pitHeightData,
-      pitWeightData,
-      pitDriverYears,
-      pitOperatorYears,
-      pitCoachYears,
-      pitAutonExists ? pitAutonStrat : false,
-      pitTeleopStrat,
-      pitAutonRoutes < 4 || !pitAutonExists ? false : pitAutonRouteDescription,
-      pitDrivebaseType == "Other" ? pitAltDrivebaseType : false,
-      pitClimberType == "Other" ? pitAltClimberType : false,
-    ];
-
-    final pitQuestionables = {
-      "pitDoesBlock": pitDoesBlock,
-      "pitRepairabilityScoreOver4": pitRepairabilityScore > 4,
-      "pitAutonConsistencyOver4": pitAutonConsistency > 4,
-      "pitWidthDataOutOfRange": (pitWidthData != null
-          ? (pitWidthData! > 30) || (pitWidthData! < 15)
-          : false),
-      "pitLengthDataOutOfRange": (pitLengthData != null
-          ? (pitLengthData! > 30) || (pitLengthData! < 15)
-          : false),
-      "pitHeightDataOutOfRange": (pitHeightData != null
-          ? (pitHeightData! > 32) || (pitHeightData! < 8)
-          : false),
-      "pitWeightDataOutOfRange":
-          (pitWeightData != null ? (pitWeightData! > 150) : false) ||
-              (pitWeightData != null ? (pitWeightData! < 45) : false),
-      "pitDriverYearsOver3":
-          (pitDriverYears != null ? pitDriverYears! > 3 : false),
-      "pitOperatorYearsOver3":
-          (pitOperatorYears != null ? pitOperatorYears! > 3 : false),
-      "pitCoachYearsOver3":
-          (pitCoachYears != null ? pitCoachYears! > 3 : false),
-      "pitKitbotWithOver1NoteAuto": (pitIsKitbot == KitBotTypes.kitbot &&
-          pitAutonAmpNotes + pitAutonSpeakerNotes > 1),
-      "pitKitbotWithGroundPickup":
-          (pitIsKitbot == KitBotTypes.kitbot && pitDoesGroundPickup),
-      "pitKitbotWithOver3AutoVersatillity":
-          (pitIsKitbot == KitBotTypes.kitbot && pitAutonVersatility > 3),
-    };
-
-    List<String> warnings = [];
-
-    if (pitFields.contains(null) || pitFields.contains("")) {
-      warnings.add("m");
-    }
-
-    if (pitQuestionables.values.contains(true)) {
-      warnings.add("q");
-    }
-
-    List<Card> cards = [];
-
-    for (final warning in warnings) {
-      var card = Card(
-        color: warning == "q" ? Colors.yellow : Colors.deepOrangeAccent,
-        child: Column(
-          children: [
-            ListTile(
-              leading: warning == "q"
-                  ? const Icon(
-                      Icons.question_mark_rounded,
-                      color: Colors.black,
-                    )
-                  : const Icon(
-                      Icons.warning_rounded,
-                      color: Colors.black,
-                    ),
-              title: warning == "q"
-                  ? const Text(
-                      "Questionable Data Detected!",
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    )
-                  : const Text(
-                      "Missing Data Detected",
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    ),
-              subtitle: warning == "q"
-                  ? const Text(
-                      "Some data may be out of a reasonable limit.",
-                      style: TextStyle(color: Colors.black),
-                    )
-                  : const Text(
-                      "Check for any missing or blank fields",
-                      style: TextStyle(color: Colors.black),
-                    ),
-            ),
-            if (warning == "q")
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
-                child: Text(
-                  "Offending items: ${getKeysWithTrueValues(pitQuestionables).join(", ")}",
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              )
-          ],
-        ),
-      );
-      cards.add(card);
-    }
-
-    return cards;
-  }
-
-  List<String> getFieldQuestionables() {
-    final matchQuestionables = {
-      "teleopNotesAddOver35":
-          fieldTeleopAmpNotesScored + fieldTeleopSpeakerNotesScored > 35,
-      "autonScoresAmpAndSpeaker":
-          (fieldAutonAmpNotes > 0 && fieldAutonSpeakerNotes > 0),
-      "combinedNoteScoreOver50": (fieldAutonSpeakerNotes +
-              fieldAutonAmpNotes +
-              fieldTeleopSpeakerNotesScored +
-              fieldTeleopAmpNotesScored >
-          50),
-      "combinedAmpScoreOver20":
-          (fieldAutonAmpNotes + fieldTeleopAmpNotesScored > 20)
-    };
-
-    return getKeysWithTrueValues(matchQuestionables);
-  }
-
-  List<Card> getFieldWarningCards() {
-    final matchFields = [
-      fieldComments,
-    ];
-
-    List<String> warnings = [];
-
-    if (matchFields.contains(null) || matchFields.contains("")) {
-      warnings.add("m");
-    }
-
-    final matchQuestionables = getFieldQuestionables();
-
-    if (matchQuestionables.isNotEmpty) {
-      warnings.add("q");
-    }
-
-    List<Card> cards = [];
-
-    for (final warning in warnings) {
-      var card = Card(
-        color: warning == "q" ? Colors.yellow : Colors.deepOrangeAccent,
-        child: Column(
-          children: [
-            ListTile(
-              leading: warning == "q"
-                  ? const Icon(
-                      Icons.question_mark_rounded,
-                      color: Colors.black,
-                    )
-                  : const Icon(
-                      Icons.warning_rounded,
-                      color: Colors.black,
-                    ),
-              title: warning == "q"
-                  ? const Text(
-                      "Questionable Data Detected!",
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    )
-                  : const Text(
-                      "Missing Data Detected",
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    ),
-              subtitle: warning == "q"
-                  ? const Text(
-                      "Some data may be out of a reasonable limit.",
-                      style: TextStyle(color: Colors.black),
-                    )
-                  : const Text(
-                      "Check for any missing or blank fields",
-                      style: TextStyle(color: Colors.black),
-                    ),
-            ),
-            if (warning == "q")
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
-                child: Text(
-                  "Offending items: ${matchQuestionables.join(", ")}",
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              )
-          ],
-        ),
-      );
-      cards.add(card);
-    }
-
-    return cards;
   }
 
   List<String> getKeysWithTrueValues(Map<String, bool> map) {
@@ -2050,11 +1314,6 @@ class _FormAppPageState extends State<FormAppPage> {
   Future<void> updateTeamSaves() async {
     final prefs = await SharedPreferences.getInstance();
 
-    String jsonIncompleteFieldTasks =
-        convertTasksListToJsonString(incompleteFieldScoutingTasks);
-    String jsonCompleteFieldTasks =
-        convertTasksListToJsonString(completeFieldScoutingTasks);
-
     String jsonIncompletePitTasks =
         convertTasksListToJsonString(incompletePitScoutingTasks);
     String jsonCompletePitTasks =
@@ -2062,8 +1321,6 @@ class _FormAppPageState extends State<FormAppPage> {
 
     String jsonTeamNames = json.encode(teamNameMap);
 
-    await prefs.setString("jsonIncompleteFieldTasks", jsonIncompleteFieldTasks);
-    await prefs.setString("jsonCompleteFieldTasks", jsonCompleteFieldTasks);
     await prefs.setString("jsonIncompletePitTasks", jsonIncompletePitTasks);
     await prefs.setString("jsonCompletePitTasks", jsonCompletePitTasks);
     await prefs.setString("teamNamesMap", jsonTeamNames);
