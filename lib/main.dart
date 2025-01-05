@@ -1063,9 +1063,8 @@ class _FormAppPageState extends State<FormAppPage> {
 
   List<List> getPitKVFormattedData(
       {bool transpose = false, bool header = true}) {
-    var data = [
-      ["form", "pit"],
-    ];
+    List<List<dynamic>> data = [];
+    pitScoutingData.forEach((key, value) {data.add([key, value]);});
 
     if (!header) {
       data = data.map((row) => row.sublist(1)).toList();
