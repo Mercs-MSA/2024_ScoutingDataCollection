@@ -80,6 +80,9 @@ class _FormAppPageState extends State<FormAppPage> {
   List<String> pitScouters = ["", ""];
 
   Map<String,dynamic> pitScoutingDefaultData = {
+    "form": "pit",
+    "team": null,
+    "scouters": ["null", "null"],
     "width":  null,
     "length": null,
     "height": null,
@@ -89,6 +92,9 @@ class _FormAppPageState extends State<FormAppPage> {
   };
 
   Map<String,dynamic> pitScoutingData = {
+    "form": "pit",
+    "team": null,
+    "scouters": ["null", "null"],
     "width":  null,
     "length": null,
     "height": null,
@@ -532,6 +538,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                 setState(() {
                                   pitPageIndex = 0;
                                   pitTeamNumber = null;
+                                  pitScoutingData["team"] = null;
                                 });
                               },
                               child: const Text("Go Back"),
@@ -572,6 +579,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                       onSelected: () {
                                         setState(() {
                                           pitTeamNumber = entry.team;
+                                          pitScoutingData["team"] = entry.team;
                                         });
                                       },
                                       teamNames: teamNameMap,
@@ -604,6 +612,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                                     Navigator.of(context).pop();
                                                     setState(() {
                                                       pitTeamNumber = null;
+                                                      pitScoutingData["team"] = null;
                                                     });
                                                   },
                                                   child: const Text("Go Back"),
@@ -621,6 +630,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                         );
                                         setState(() {
                                           pitTeamNumber = entry.team;
+                                          pitScoutingData["team"] = entry.team;
                                         });
                                       },
                                       teamNames: teamNameMap,
@@ -647,6 +657,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                 ],
                                 onChanged: (value) {
                                   pitTeamNumber = int.tryParse(value);
+                                  pitScoutingData["team"] = int.tryParse(value);
                                 },
                                 controller: TextEditingController(
                                   text: pitTeamNumber == null
@@ -672,6 +683,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                       ],
                                       onChanged: (value) {
                                         pitScouters[0] = value;
+                                        pitScoutingData["scouters"][0] = value;
                                       },
                                       controller: TextEditingController(
                                         text: pitScouters[0],
@@ -694,6 +706,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                       ],
                                       onChanged: (value) {
                                         pitScouters[1] = value;
+                                        pitScoutingData["scouters"][1] = value;
                                       },
                                       controller: TextEditingController(
                                         text: pitScouters[1],
@@ -1046,7 +1059,7 @@ class _FormAppPageState extends State<FormAppPage> {
   List<List> getPitKVFormattedData(
       {bool transpose = false, bool header = true}) {
     List<List<dynamic>> data = [];
-    pitScoutingData.forEach((key, value) {data.add([key, value]);});
+    pitScoutingData.forEach((key, value) {data.add([key, (value is List ? value.join(",") : value)]);});
 
     if (!header) {
       data = data.map((row) => row.sublist(1)).toList();
