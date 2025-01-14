@@ -249,7 +249,7 @@ class _PitFormState extends State<PitForm> {
                       Expanded(
                           child: CheckboxListTile(
                         tristate: false,
-                        title: Text("Is coach an adult?"),
+                        title: Text("Adult Coach?"),
                         value: widget.formData["isCoachAdult"],
                         onChanged: (bool? newValue) {
                           setState(() {

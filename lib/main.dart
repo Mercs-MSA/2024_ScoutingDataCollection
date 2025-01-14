@@ -87,6 +87,10 @@ class _FormAppPageState extends State<FormAppPage> {
     "length": null,
     "height": null,
     "weight": null,
+    "driverYears": null,
+    "operatorYears": null,
+    "coachYears": null,
+    "isCoachAdult": false,
     "drivebase": "Swerve",
     "autonExists": false,
   };
@@ -99,6 +103,10 @@ class _FormAppPageState extends State<FormAppPage> {
     "length": null,
     "height": null,
     "weight": null,
+    "driverYears": null,
+    "operatorYears": null,
+    "coachYears": null,
+    "isCoachAdult": false,
     "drivebase": "Swerve",
     "autonExists": false,
   };
