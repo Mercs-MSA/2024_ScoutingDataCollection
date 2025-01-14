@@ -79,22 +79,30 @@ class _FormAppPageState extends State<FormAppPage> {
   int? pitTeamNumber;
   List<String> pitScouters = ["", ""];
 
-  Map<String,dynamic> pitScoutingDefaultData = {
-    "width":  null,
+  Map<String, dynamic> pitScoutingDefaultData = {
+    "width": null,
     "length": null,
     "height": null,
     "weight": null,
     "drivebase": "Swerve",
     "autonExists": false,
+    "driverYears": null,
+    "operatorYears": null,
+    "coachYears": null,
+    "isCoachAdult": null,
   };
 
-  Map<String,dynamic> pitScoutingData = {
-    "width":  null,
+  Map<String, dynamic> pitScoutingData = {
+    "width": null,
     "length": null,
     "height": null,
     "weight": null,
     "drivebase": "Swerve",
     "autonExists": false,
+    "driverYears": null,
+    "operatorYears": null,
+    "coachYears": null,
+    "isCoachAdult": null,
   };
 
   bool saveDisabled = false;
@@ -399,11 +407,15 @@ class _FormAppPageState extends State<FormAppPage> {
                       },
                       icon: const Icon(Icons.settings_outlined)),
                   IconButton(
-                      onPressed: () {showAboutDialog(
+                      onPressed: () {
+                        showAboutDialog(
                           context: context,
-                          applicationIcon: Image.asset("images/mercs.png", scale: 2.5,),
+                          applicationIcon: Image.asset(
+                            "images/mercs.png",
+                            scale: 2.5,
+                          ),
                           applicationVersion: _packageInfo.version,
-                      );
+                        );
                       },
                       icon: const Icon(Icons.info_outline_rounded))
                 ],
@@ -720,7 +732,8 @@ class _FormAppPageState extends State<FormAppPage> {
                                       !pitScouters.contains(""),
                               formData: pitScoutingData,
                               onDataChanged: (data) {
-                                pitScoutingData[data.keys.first] = data.values.first;
+                                pitScoutingData[data.keys.first] =
+                                    data.values.first;
                               },
                             ),
                           ],
@@ -794,7 +807,9 @@ class _FormAppPageState extends State<FormAppPage> {
                                   readOnly: true,
                                   minLines: 2,
                                   maxLines: 10,
-                                  controller: TextEditingController(text: JsonEncoder.withIndent(" "*4).convert(pitScoutingData)),
+                                  controller: TextEditingController(
+                                      text: JsonEncoder.withIndent(" " * 4)
+                                          .convert(pitScoutingData)),
                                 ),
                               ),
                             ),
@@ -1046,7 +1061,9 @@ class _FormAppPageState extends State<FormAppPage> {
   List<List> getPitKVFormattedData(
       {bool transpose = false, bool header = true}) {
     List<List<dynamic>> data = [];
-    pitScoutingData.forEach((key, value) {data.add([key, value]);});
+    pitScoutingData.forEach((key, value) {
+      data.add([key, value]);
+    });
 
     if (!header) {
       data = data.map((row) => row.sublist(1)).toList();

@@ -4,15 +4,16 @@ import 'package:flutter/services.dart';
 import 'widgets.dart';
 
 class PitForm extends StatefulWidget {
-  const PitForm(
-      {super.key,
-      required this.teamNumberPresent,
-      required this.onDataChanged,
-      required this.formData,});
+  const PitForm({
+    super.key,
+    required this.teamNumberPresent,
+    required this.onDataChanged,
+    required this.formData,
+  });
 
   final bool teamNumberPresent;
 
-  final Function(Map<String,dynamic>) onDataChanged;
+  final Function(Map<String, dynamic>) onDataChanged;
   final Map formData;
 
   @override
@@ -77,7 +78,8 @@ class _PitFormState extends State<PitForm> {
                                 RegExp(r'^\d+\.?\d*'))
                           ],
                           onChanged: (value) {
-                            widget.onDataChanged({"width": int.tryParse(value)});
+                            widget
+                                .onDataChanged({"width": int.tryParse(value)});
                           },
                           controller: TextEditingController(
                             text: widget.formData["width"] == null
@@ -100,7 +102,8 @@ class _PitFormState extends State<PitForm> {
                             LengthLimitingTextInputFormatter(2),
                           ],
                           onChanged: (value) {
-                            widget.onDataChanged({"length": int.tryParse(value)});
+                            widget
+                                .onDataChanged({"length": int.tryParse(value)});
                           },
                           controller: TextEditingController(
                             text: widget.formData["length"] == null
@@ -123,7 +126,8 @@ class _PitFormState extends State<PitForm> {
                             LengthLimitingTextInputFormatter(2),
                           ],
                           onChanged: (value) {
-                            widget.onDataChanged({"height": int.tryParse(value)});
+                            widget
+                                .onDataChanged({"height": int.tryParse(value)});
                           },
                           controller: TextEditingController(
                             text: widget.formData["height"] == null
@@ -146,7 +150,8 @@ class _PitFormState extends State<PitForm> {
                             LengthLimitingTextInputFormatter(3),
                           ],
                           onChanged: (value) {
-                            widget.onDataChanged({"weight": int.tryParse(value)});
+                            widget
+                                .onDataChanged({"weight": int.tryParse(value)});
                           },
                           controller: TextEditingController(
                             text: widget.formData["weight"] == null
@@ -173,6 +178,88 @@ class _PitFormState extends State<PitForm> {
                   const Text(
                       "How long has each member of the drive team been in their role?"),
                   const SizedBox(height: 8.0),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: TextField(
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Driver",
+                            suffixText: "Years"),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(2),
+                        ],
+                        onChanged: (value) {
+                          widget.onDataChanged(
+                              {"driverYears": int.tryParse(value)});
+                        },
+                        controller: TextEditingController(
+                          text: widget.formData["driverYears"] == null
+                              ? ''
+                              : widget.formData["driverYears"].toString(),
+                        ),
+                      )),
+                      const SizedBox(width: 8),
+                      Expanded(
+                          child: TextField(
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Operator",
+                            suffixText: "Years"),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(2),
+                        ],
+                        onChanged: (value) {
+                          widget.onDataChanged(
+                              {"operatorYears": int.tryParse(value)});
+                        },
+                        controller: TextEditingController(
+                          text: widget.formData["operatorYears"] == null
+                              ? ''
+                              : widget.formData["operatorYears"].toString(),
+                        ),
+                      )),
+                      const SizedBox(width: 8),
+                      Expanded(
+                          child: TextField(
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Coach",
+                            suffixText: "Years"),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(2),
+                        ],
+                        onChanged: (value) {
+                          widget.onDataChanged(
+                              {"coachYears": int.tryParse(value)});
+                        },
+                        controller: TextEditingController(
+                          text: widget.formData["coachYears"] == null
+                              ? ''
+                              : widget.formData["coachYears"].toString(),
+                        ),
+                      )),
+                      const SizedBox(width: 8),
+                      Expanded(
+                          child: CheckboxListTile(
+                        tristate: false,
+                        title: Text("Is coach an adult?"),
+                        value: widget.formData["isCoachAdult"],
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            widget.onDataChanged({"isCoachAdult": newValue});
+                          });
+                        },
+                      )),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
                   Container(
                     decoration: BoxDecoration(
                       border: Border.all(
@@ -196,7 +283,11 @@ class _PitFormState extends State<PitForm> {
                         if (widget.formData["autonExists"])
                           Column(
                             children: [
-                              const Text("Auton HERE!!!", style: TextStyle(fontSize: 36, color: Colors.red),),
+                              const Text(
+                                "Auton HERE!!!",
+                                style:
+                                    TextStyle(fontSize: 36, color: Colors.red),
+                              ),
                             ],
                           ),
                       ],
