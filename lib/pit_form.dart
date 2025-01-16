@@ -174,6 +174,60 @@ class _PitFormState extends State<PitForm> {
                     options: const ["Swerve", "Tank", "Other"],
                   ),
                   const SizedBox(height: 8.0),
+                  const Text("Robot Capabilities:"),
+                  const SizedBox(height: 8.0),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: CheckboxListTile(
+                        tristate: false,
+                        title: Text("L1?"),
+                        value: widget.formData["lOne"],
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            widget.onDataChanged({"lOne": newValue});
+                          });
+                        },
+                      )),
+                      const SizedBox(width: 8.0),
+                      Expanded(
+                          child: CheckboxListTile(
+                        tristate: false,
+                        title: Text("L2?"),
+                        value: widget.formData["lTwo"],
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            widget.onDataChanged({"lTwo": newValue});
+                          });
+                        },
+                      )),
+                      const SizedBox(width: 8.0),
+                      Expanded(
+                          child: CheckboxListTile(
+                        tristate: false,
+                        title: Text("L3?"),
+                        value: widget.formData["lThree"],
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            widget.onDataChanged({"lThree": newValue});
+                          });
+                        },
+                      )),
+                      const SizedBox(width: 8.0),
+                      Expanded(
+                          child: CheckboxListTile(
+                        tristate: false,
+                        title: Text("L4?"),
+                        value: widget.formData["lFour"],
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            widget.onDataChanged({"lFour": newValue});
+                          });
+                        },
+                      ))
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
                   const Divider(),
                   const Text(
                       "How long has each member of the drive team been in their role?"),
