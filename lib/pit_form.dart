@@ -325,6 +325,7 @@ class _PitFormState extends State<PitForm> {
                       )),
                       const SizedBox(width: 8),
                       Expanded(
+                          flex: 2,
                           child: CheckboxListTile(
                         tristate: false,
                         title: Text("Adult Coach?"),
