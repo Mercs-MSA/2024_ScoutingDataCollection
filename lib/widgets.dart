@@ -239,15 +239,14 @@ class NumberInput extends StatelessWidget {
                           ? ButtonStyle(
                               fixedSize: WidgetStateProperty.all(
                                   Size.square(miniStyle ? 42 : 56)),
-                              padding:
-                                  WidgetStateProperty.all(EdgeInsets.zero),
-                              backgroundColor: WidgetStateProperty.all(
-                                  ColorScheme.fromSeed(
+                              padding: WidgetStateProperty.all(EdgeInsets.zero),
+                              backgroundColor:
+                                  WidgetStateProperty.all(ColorScheme.fromSeed(
                                 seedColor: Colors.green,
                                 brightness: Brightness.dark,
                               ).primary),
-                              foregroundColor: WidgetStateProperty.all(
-                                  ColorScheme.fromSeed(
+                              foregroundColor:
+                                  WidgetStateProperty.all(ColorScheme.fromSeed(
                                 seedColor: Colors.green,
                                 brightness: Brightness.dark,
                               ).onPrimary),
@@ -294,15 +293,14 @@ class NumberInput extends StatelessWidget {
                           ? ButtonStyle(
                               fixedSize: WidgetStateProperty.all(
                                   Size.square(miniStyle ? 42 : 56)),
-                              padding:
-                                  WidgetStateProperty.all(EdgeInsets.zero),
-                              backgroundColor: WidgetStateProperty.all(
-                                  ColorScheme.fromSeed(
+                              padding: WidgetStateProperty.all(EdgeInsets.zero),
+                              backgroundColor:
+                                  WidgetStateProperty.all(ColorScheme.fromSeed(
                                 seedColor: Colors.green,
                                 brightness: Brightness.dark,
                               ).primary),
-                              foregroundColor: WidgetStateProperty.all(
-                                  ColorScheme.fromSeed(
+                              foregroundColor:
+                                  WidgetStateProperty.all(ColorScheme.fromSeed(
                                 seedColor: Colors.green,
                                 brightness: Brightness.dark,
                               ).onPrimary),

@@ -754,8 +754,9 @@ class _FormAppPageState extends State<FormAppPage> {
                                       !pitScouters.contains(""),
                               formData: pitScoutingData,
                               onDataChanged: (data) {
-                                pitScoutingData[data.keys.first] =
-                                    data.values.first;
+                                data.forEach((k, v) {
+                                  pitScoutingData[k] = v;
+                                });
                               },
                             ),
                           ],

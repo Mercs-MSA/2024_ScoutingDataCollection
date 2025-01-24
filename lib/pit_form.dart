@@ -22,8 +22,6 @@ class PitForm extends StatefulWidget {
 
 enum CoralPositions { lOne, lTwo, lThree, lFour }
 
-Set<CoralPositions> selection = {CoralPositions.lOne};
-
 class _PitFormState extends State<PitForm> {
   @override
   Widget build(BuildContext context) {
@@ -180,8 +178,7 @@ class _PitFormState extends State<PitForm> {
                   const SizedBox(height: 8.0),
                   const Text("Coral Capabilities:"),
                   const SizedBox(height: 8.0),
-                  Expanded(
-                      child: SegmentedButton<CoralPositions>(
+                  SegmentedButton<CoralPositions>(
                     segments: <ButtonSegment<CoralPositions>>[
                       ButtonSegment(
                           value: CoralPositions.lOne, label: Text('L1')),
@@ -192,64 +189,33 @@ class _PitFormState extends State<PitForm> {
                       ButtonSegment(
                           value: CoralPositions.lFour, label: Text('L4')),
                     ],
-                    selected: selection,
+                    selected: {
+                      if (widget.formData["lOne"] != null &&
+                          widget.formData["lOne"])
+                        CoralPositions.lOne,
+                      if (widget.formData["lTwo"] != null &&
+                          widget.formData["lTwo"])
+                        CoralPositions.lTwo,
+                      if (widget.formData["lThree"] != null &&
+                          widget.formData["lThree"])
+                        CoralPositions.lThree,
+                      if (widget.formData["lFour"] != null &&
+                          widget.formData["lFour"])
+                        CoralPositions.lFour,
+                    },
                     onSelectionChanged: (Set<CoralPositions> newSelection) {
                       setState(() {
-                        selection = newSelection;
+                        widget.onDataChanged({
+                          "lOne": newSelection.contains(CoralPositions.lOne),
+                          "lTwo": newSelection.contains(CoralPositions.lTwo),
+                          "lThree":
+                              newSelection.contains(CoralPositions.lThree),
+                          "lFour": newSelection.contains(CoralPositions.lFour)
+                        });
                       });
                     },
                     multiSelectionEnabled: true,
-                  )),
-                  Row(
-                    children: [
-                      Expanded(
-                          child: CheckboxListTile(
-                        tristate: false,
-                        title: Text("L1?"),
-                        value: widget.formData["lOne"],
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            widget.onDataChanged({"lOne": newValue});
-                          });
-                        },
-                      )),
-                      const SizedBox(width: 8.0),
-                      Expanded(
-                          child: CheckboxListTile(
-                        tristate: false,
-                        title: Text("L2?"),
-                        value: widget.formData["lTwo"],
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            widget.onDataChanged({"lTwo": newValue});
-                          });
-                        },
-                      )),
-                      const SizedBox(width: 8.0),
-                      Expanded(
-                          child: CheckboxListTile(
-                        tristate: false,
-                        title: Text("L3?"),
-                        value: widget.formData["lThree"],
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            widget.onDataChanged({"lThree": newValue});
-                          });
-                        },
-                      )),
-                      const SizedBox(width: 8.0),
-                      Expanded(
-                          child: CheckboxListTile(
-                        tristate: false,
-                        title: Text("L4?"),
-                        value: widget.formData["lFour"],
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            widget.onDataChanged({"lFour": newValue});
-                          });
-                        },
-                      )),
-                    ],
+                    emptySelectionAllowed: true,
                   ),
                   const SizedBox(height: 8.0),
                   const Divider(),
@@ -327,15 +293,16 @@ class _PitFormState extends State<PitForm> {
                       Expanded(
                           flex: 2,
                           child: CheckboxListTile(
-                        tristate: false,
-                        title: Text("Adult Coach?"),
-                        value: widget.formData["isCoachAdult"],
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            widget.onDataChanged({"isCoachAdult": newValue});
-                          });
-                        },
-                      )),
+                            tristate: false,
+                            title: Text("Adult Coach?"),
+                            value: widget.formData["isCoachAdult"],
+                            onChanged: (bool? newValue) {
+                              setState(() {
+                                widget
+                                    .onDataChanged({"isCoachAdult": newValue});
+                              });
+                            },
+                          )),
                     ],
                   ),
                   const SizedBox(height: 8),
