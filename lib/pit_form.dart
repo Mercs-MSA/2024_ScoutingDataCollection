@@ -20,6 +20,10 @@ class PitForm extends StatefulWidget {
   State<PitForm> createState() => _PitFormState();
 }
 
+enum CoralPositions { lOne, lTwo, lThree, lFour }
+
+Set<CoralPositions> selection = {CoralPositions.lOne};
+
 class _PitFormState extends State<PitForm> {
   @override
   Widget build(BuildContext context) {
@@ -174,8 +178,28 @@ class _PitFormState extends State<PitForm> {
                     options: const ["Swerve", "Tank", "Other"],
                   ),
                   const SizedBox(height: 8.0),
-                  const Text("Robot Capabilities:"),
+                  const Text("Coral Capabilities:"),
                   const SizedBox(height: 8.0),
+                  Expanded(
+                      child: SegmentedButton<CoralPositions>(
+                    segments: <ButtonSegment<CoralPositions>>[
+                      ButtonSegment(
+                          value: CoralPositions.lOne, label: Text('L1')),
+                      ButtonSegment(
+                          value: CoralPositions.lTwo, label: Text('L2')),
+                      ButtonSegment(
+                          value: CoralPositions.lThree, label: Text('L3')),
+                      ButtonSegment(
+                          value: CoralPositions.lFour, label: Text('L4')),
+                    ],
+                    selected: selection,
+                    onSelectionChanged: (Set<CoralPositions> newSelection) {
+                      setState(() {
+                        selection = newSelection;
+                      });
+                    },
+                    multiSelectionEnabled: true,
+                  )),
                   Row(
                     children: [
                       Expanded(
@@ -224,7 +248,7 @@ class _PitFormState extends State<PitForm> {
                             widget.onDataChanged({"lFour": newValue});
                           });
                         },
-                      ))
+                      )),
                     ],
                   ),
                   const SizedBox(height: 8.0),
