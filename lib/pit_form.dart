@@ -39,6 +39,19 @@ class _PitFormState extends State<PitForm> {
               child: Column(
                 children: <Widget>[
                   const SizedBox(height: 8.0),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text("Physical Size"),
+                      Expanded(
+                        child: Container(
+                          margin:
+                          const EdgeInsets.only(left: 15.0, right: 10.0),
+                          child: Divider(),
+                        ),
+                      ),
+                    ],
+                  ),
                   Card(
                     color: Theme.of(context).colorScheme.tertiary,
                     child: Column(
@@ -165,6 +178,20 @@ class _PitFormState extends State<PitForm> {
                     ],
                   ),
                   const SizedBox(height: 8.0),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text("Mechanisms"),
+                      Expanded(
+                        child: Container(
+                          margin:
+                          const EdgeInsets.only(left: 15.0, right: 10.0),
+                          child: Divider(),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
                   ChoiceInput(
                     title: "Drivebase",
                     onChoiceUpdate: (value) {
@@ -176,7 +203,19 @@ class _PitFormState extends State<PitForm> {
                     options: const ["Swerve", "Tank", "Other"],
                   ),
                   const SizedBox(height: 8.0),
-                  const Text("Coral Capabilities:"),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text("Scoring"),
+                      Expanded(
+                        child: Container(
+                          margin:
+                              const EdgeInsets.only(left: 15.0, right: 10.0),
+                          child: Divider(),
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 8.0),
                   SegmentedButton<CoralPositions>(
                     segments: <ButtonSegment<CoralPositions>>[
@@ -217,8 +256,19 @@ class _PitFormState extends State<PitForm> {
                     multiSelectionEnabled: true,
                     emptySelectionAllowed: true,
                   ),
-                  const SizedBox(height: 8.0),
-                  const Divider(),
+                  const SizedBox(height: 8.0),Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text("Drive Team"),
+                      Expanded(
+                        child: Container(
+                          margin:
+                          const EdgeInsets.only(left: 15.0, right: 10.0),
+                          child: Divider(),
+                        ),
+                      ),
+                    ],
+                  ),
                   const Text(
                       "How long has each member of the drive team been in their role?"),
                   const SizedBox(height: 8.0),
