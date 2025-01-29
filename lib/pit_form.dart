@@ -22,6 +22,8 @@ class PitForm extends StatefulWidget {
 
 enum CoralPositions { lOne, lTwo, lThree, lFour }
 
+enum AlgaePositions { processor, barge, descore }
+
 class _PitFormState extends State<PitForm> {
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,7 @@ class _PitFormState extends State<PitForm> {
                       Expanded(
                         child: Container(
                           margin:
-                          const EdgeInsets.only(left: 15.0, right: 10.0),
+                              const EdgeInsets.only(left: 15.0, right: 10.0),
                           child: Divider(),
                         ),
                       ),
@@ -185,7 +187,7 @@ class _PitFormState extends State<PitForm> {
                       Expanded(
                         child: Container(
                           margin:
-                          const EdgeInsets.only(left: 15.0, right: 10.0),
+                              const EdgeInsets.only(left: 15.0, right: 10.0),
                           child: Divider(),
                         ),
                       ),
@@ -217,53 +219,103 @@ class _PitFormState extends State<PitForm> {
                     ],
                   ),
                   const SizedBox(height: 8.0),
-                  SegmentedButton<CoralPositions>(
-                    segments: <ButtonSegment<CoralPositions>>[
-                      ButtonSegment(
-                          value: CoralPositions.lOne, label: Text('L1')),
-                      ButtonSegment(
-                          value: CoralPositions.lTwo, label: Text('L2')),
-                      ButtonSegment(
-                          value: CoralPositions.lThree, label: Text('L3')),
-                      ButtonSegment(
-                          value: CoralPositions.lFour, label: Text('L4')),
+                  Row(
+                    // mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: SegmentedButton<AlgaePositions>(
+                          segments: <ButtonSegment<AlgaePositions>>[
+                            ButtonSegment(
+                                value: AlgaePositions.processor,
+                                label: Text('Processor')),
+                            ButtonSegment(
+                                value: AlgaePositions.barge,
+                                label: Text('Barge')),
+                            ButtonSegment(
+                                value: AlgaePositions.descore,
+                                label: Text('Descore')),
+                          ],
+                          selected: {
+                            if (widget.formData["processor"] != null &&
+                                widget.formData["processor"])
+                              AlgaePositions.processor,
+                            if (widget.formData["barge"] != null &&
+                                widget.formData["barge"])
+                              AlgaePositions.barge,
+                            if (widget.formData["descore"] != null &&
+                                widget.formData["descore"])
+                              AlgaePositions.descore,
+                          },
+                          onSelectionChanged:
+                              (Set<AlgaePositions> newSelection) {
+                            setState(() {
+                              widget.onDataChanged({
+                                "processor": newSelection
+                                    .contains(AlgaePositions.processor),
+                                "barge":
+                                    newSelection.contains(AlgaePositions.barge),
+                                "descore": newSelection
+                                    .contains(AlgaePositions.descore)
+                              });
+                            });
+                          },
+                          multiSelectionEnabled: true,
+                          emptySelectionAllowed: true,
+                        ),
+                      ),
+                      SegmentedButton<CoralPositions>(
+                        segments: <ButtonSegment<CoralPositions>>[
+                          ButtonSegment(
+                              value: CoralPositions.lOne, label: Text('L1')),
+                          ButtonSegment(
+                              value: CoralPositions.lTwo, label: Text('L2')),
+                          ButtonSegment(
+                              value: CoralPositions.lThree, label: Text('L3')),
+                          ButtonSegment(
+                              value: CoralPositions.lFour, label: Text('L4')),
+                        ],
+                        selected: {
+                          if (widget.formData["lOne"] != null &&
+                              widget.formData["lOne"])
+                            CoralPositions.lOne,
+                          if (widget.formData["lTwo"] != null &&
+                              widget.formData["lTwo"])
+                            CoralPositions.lTwo,
+                          if (widget.formData["lThree"] != null &&
+                              widget.formData["lThree"])
+                            CoralPositions.lThree,
+                          if (widget.formData["lFour"] != null &&
+                              widget.formData["lFour"])
+                            CoralPositions.lFour,
+                        },
+                        onSelectionChanged: (Set<CoralPositions> newSelection) {
+                          setState(() {
+                            widget.onDataChanged({
+                              "lOne":
+                                  newSelection.contains(CoralPositions.lOne),
+                              "lTwo":
+                                  newSelection.contains(CoralPositions.lTwo),
+                              "lThree":
+                                  newSelection.contains(CoralPositions.lThree),
+                              "lFour":
+                                  newSelection.contains(CoralPositions.lFour)
+                            });
+                          });
+                        },
+                        multiSelectionEnabled: true,
+                        emptySelectionAllowed: true,
+                      ),
                     ],
-                    selected: {
-                      if (widget.formData["lOne"] != null &&
-                          widget.formData["lOne"])
-                        CoralPositions.lOne,
-                      if (widget.formData["lTwo"] != null &&
-                          widget.formData["lTwo"])
-                        CoralPositions.lTwo,
-                      if (widget.formData["lThree"] != null &&
-                          widget.formData["lThree"])
-                        CoralPositions.lThree,
-                      if (widget.formData["lFour"] != null &&
-                          widget.formData["lFour"])
-                        CoralPositions.lFour,
-                    },
-                    onSelectionChanged: (Set<CoralPositions> newSelection) {
-                      setState(() {
-                        widget.onDataChanged({
-                          "lOne": newSelection.contains(CoralPositions.lOne),
-                          "lTwo": newSelection.contains(CoralPositions.lTwo),
-                          "lThree":
-                              newSelection.contains(CoralPositions.lThree),
-                          "lFour": newSelection.contains(CoralPositions.lFour)
-                        });
-                      });
-                    },
-                    multiSelectionEnabled: true,
-                    emptySelectionAllowed: true,
                   ),
-                  const SizedBox(height: 8.0),Row(
+                  const SizedBox(height: 8.0),
+                  Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Text("Drive Team"),
                       Expanded(
                         child: Container(
                           margin:
-                          const EdgeInsets.only(left: 15.0, right: 10.0),
+                              const EdgeInsets.only(left: 15.0, right: 10.0),
                           child: Divider(),
                         ),
                       ),
