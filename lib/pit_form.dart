@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'widgets.dart';
 
-class PitForm extends StatefulWidget {
+class PitForm extends StatefulWidget { //TODO: Teleop Strat, Repairablilty, General Comments (OPTIONAL), Human player preferences
   const PitForm({
     super.key,
     required this.teamNumberPresent,
