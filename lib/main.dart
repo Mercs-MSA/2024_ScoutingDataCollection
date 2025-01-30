@@ -436,7 +436,7 @@ class _FormAppPageState extends State<FormAppPage> {
                           context: context,
                           applicationIcon: Image.asset(
                             "images/mercs.png",
-                            scale: 2.5,
+                            scale: 4,
                           ),
                           applicationVersion: _packageInfo.version,
                         );
