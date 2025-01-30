@@ -425,8 +425,7 @@ class _FormAppPageState extends State<FormAppPage> {
                   IconButton(
                       onPressed: () {
                         setState(() {
-                          appMode = 2;
-                          setAppModePref(appMode);
+                          Navigator.push(context, MaterialPageRoute(barrierDismissible: true, builder: (context) => settingsPage()));
                         });
                       },
                       icon: const Icon(Icons.settings_outlined)),
@@ -905,188 +904,184 @@ class _FormAppPageState extends State<FormAppPage> {
             )
           else
             const SizedBox(),
-          if (appMode == 2)
-            // Settings
-            Scaffold(
-              appBar: AppBar(
-                  title: const Text('Application Setup'),
-                  leading: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        appMode = 0;
-                        setAppModePref(appMode);
-                      });
-                    },
-                    icon: const Icon(Icons.arrow_back),
-                  )),
-              body: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          const Text("Team Lists"),
-                          Expanded(
-                            child: Container(
-                                margin: const EdgeInsets.only(
-                                    left: 10.0, right: 15.0),
-                                child: const Divider()),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 4.0),
-                      ElevatedButton.icon(
-                          onPressed: importTeamList,
-                          label: const Text("Import team list"),
-                          icon: const Icon(Icons.upload)),
-                      const SizedBox(height: 8.0),
-                      ElevatedButton.icon(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text("Are you sure?"),
-                                  icon: const Icon(
-                                    Icons.error_rounded,
-                                    size: 72,
-                                  ),
-                                  content: const Text(
-                                      "Are you ABSOLUTELY SURE you want to remove ALL saved team lists"),
-                                  actionsOverflowButtonSpacing: 20,
-                                  actions: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text("No"),
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text("No"),
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        resetAllTeams();
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text("Yes"),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                          label: const Text("RESET ALL TEAMS"),
-                          icon: const Icon(Icons.delete_forever)),
-                      const SizedBox(height: 8.0),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text("Are you sure?"),
-                                icon: const Icon(
-                                  Icons.error_rounded,
-                                  size: 72,
-                                ),
-                                content: const Text(
-                                    "Are you ABSOLUTELY SURE you want to add 3 nonsense teams to each list"),
-                                actionsOverflowButtonSpacing: 20,
-                                actions: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text("No"),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      loadTestTeams();
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text("Yes"),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        label: const Text("Load debug teams"),
-                        icon: const Icon(Icons.bug_report),
-                      ),
-                      const SizedBox(height: 8.0),
-                      Row(
-                        children: [
-                          const Text("Export Options"),
-                          Expanded(
-                            child: Container(
-                                margin: const EdgeInsets.only(
-                                    left: 10.0, right: 15.0),
-                                child: const Divider()),
-                          ),
-                        ],
-                      ),
-                      SwitchListTile(
-                          value: transposedExport,
-                          title: const Text("Transpose Exported Data"),
-                          subtitle: const Text(
-                              "Transpose rows and colums in exported data (recommended)"),
-                          onChanged: (value) {
-                            setState(() {
-                              transposedExport = value;
-                              attemptSaveTranspose();
-                            });
-                          }),
-                      SwitchListTile(
-                          value: exportHeaders,
-                          title: const Text("Export data headers"),
-                          subtitle:
-                              const Text("Add header to csv data exports"),
-                          onChanged: (value) {
-                            setState(() {
-                              exportHeaders = value;
-                              attemptSaveHeaders();
-                            });
-                          }),
-                      Row(
-                        children: [
-                          const Text("Game Options"),
-                          Expanded(
-                            child: Container(
-                                margin: const EdgeInsets.only(
-                                    left: 10.0, right: 15.0),
-                                child: const Divider()),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8.0),
-                      TextField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Event ID',
-                        ),
-                        inputFormatters: <TextInputFormatter>[
-                          LengthLimitingTextInputFormatter(15),
-                        ],
-                        onChanged: (value) {
-                          eventId = value;
-                          attemptSaveEventId();
-                        },
-                        controller: TextEditingController(text: eventId),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            )
-          else
-            const SizedBox(),
         ],
+      ),
+    );
+  }
+
+  Scaffold settingsPage() {
+    return Scaffold(
+      appBar: AppBar(
+          title: const Text('Settings'),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back),
+          )),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  const Text("Team Lists"),
+                  Expanded(
+                    child: Container(
+                        margin: const EdgeInsets.only(
+                            left: 10.0, right: 15.0),
+                        child: const Divider()),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4.0),
+              ElevatedButton.icon(
+                  onPressed: importTeamList,
+                  label: const Text("Import team list"),
+                  icon: const Icon(Icons.upload)),
+              const SizedBox(height: 8.0),
+              ElevatedButton.icon(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text("Are you sure?"),
+                          icon: const Icon(
+                            Icons.error_rounded,
+                            size: 72,
+                          ),
+                          content: const Text(
+                              "Are you ABSOLUTELY SURE you want to remove ALL saved team lists"),
+                          actionsOverflowButtonSpacing: 20,
+                          actions: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text("No"),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text("No"),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                resetAllTeams();
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text("Yes"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  label: const Text("RESET ALL TEAMS"),
+                  icon: const Icon(Icons.delete_forever)),
+              const SizedBox(height: 8.0),
+              ElevatedButton.icon(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text("Are you sure?"),
+                        icon: const Icon(
+                          Icons.error_rounded,
+                          size: 72,
+                        ),
+                        content: const Text(
+                            "Are you ABSOLUTELY SURE you want to add 3 nonsense teams to each list"),
+                        actionsOverflowButtonSpacing: 20,
+                        actions: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text("No"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              loadTestTeams();
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text("Yes"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                label: const Text("Load debug teams"),
+                icon: const Icon(Icons.bug_report),
+              ),
+              const SizedBox(height: 8.0),
+              Row(
+                children: [
+                  const Text("Export Options"),
+                  Expanded(
+                    child: Container(
+                        margin: const EdgeInsets.only(
+                            left: 10.0, right: 15.0),
+                        child: const Divider()),
+                  ),
+                ],
+              ),
+              SwitchListTile(
+                  value: transposedExport,
+                  title: const Text("Transpose Exported Data"),
+                  subtitle: const Text(
+                      "Transpose rows and colums in exported data (recommended)"),
+                  onChanged: (value) {
+                    setState(() {
+                      transposedExport = value;
+                      attemptSaveTranspose();
+                    });
+                  }),
+              SwitchListTile(
+                  value: exportHeaders,
+                  title: const Text("Export data headers"),
+                  subtitle:
+                  const Text("Add header to csv data exports"),
+                  onChanged: (value) {
+                    setState(() {
+                      exportHeaders = value;
+                      attemptSaveHeaders();
+                    });
+                  }),
+              Row(
+                children: [
+                  const Text("Game Options"),
+                  Expanded(
+                    child: Container(
+                        margin: const EdgeInsets.only(
+                            left: 10.0, right: 15.0),
+                        child: const Divider()),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8.0),
+              TextField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Event ID',
+                ),
+                inputFormatters: <TextInputFormatter>[
+                  LengthLimitingTextInputFormatter(15),
+                ],
+                onChanged: (value) {
+                  eventId = value;
+                  attemptSaveEventId();
+                },
+                controller: TextEditingController(text: eventId),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
