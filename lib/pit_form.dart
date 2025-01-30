@@ -228,16 +228,19 @@ class _PitFormState extends State<PitForm> {
                       const SizedBox(width: 8.0),
                       SegmentedButton<AlgaePositions>(
                         style: ButtonStyle(
-                          backgroundColor: WidgetStateProperty.resolveWith<Color>(
-                                (Set<WidgetState> states) {
-                              if (states.contains(WidgetState.selected)){
-                                return ColorScheme.fromSeed(seedColor: Colors.green).primary;
-                              }
-                              return Colors.transparent;
-                            },
-                          ),
-                            padding: WidgetStateProperty.all(EdgeInsets.all(18.0))
-                        ),
+                            backgroundColor:
+                                WidgetStateProperty.resolveWith<Color>(
+                              (Set<WidgetState> states) {
+                                if (states.contains(WidgetState.selected)) {
+                                  return ColorScheme.fromSeed(
+                                          seedColor: Colors.green)
+                                      .primary;
+                                }
+                                return Colors.transparent;
+                              },
+                            ),
+                            padding:
+                                WidgetStateProperty.all(EdgeInsets.all(18.0))),
                         segments: <ButtonSegment<AlgaePositions>>[
                           ButtonSegment(
                               value: AlgaePositions.processor,
@@ -260,16 +263,15 @@ class _PitFormState extends State<PitForm> {
                               widget.formData["descore"])
                             AlgaePositions.descore,
                         },
-                        onSelectionChanged:
-                            (Set<AlgaePositions> newSelection) {
+                        onSelectionChanged: (Set<AlgaePositions> newSelection) {
                           setState(() {
                             widget.onDataChanged({
                               "processor": newSelection
                                   .contains(AlgaePositions.processor),
                               "barge":
                                   newSelection.contains(AlgaePositions.barge),
-                              "descore": newSelection
-                                  .contains(AlgaePositions.descore)
+                              "descore":
+                                  newSelection.contains(AlgaePositions.descore)
                             });
                           });
                         },
@@ -286,16 +288,19 @@ class _PitFormState extends State<PitForm> {
                       const SizedBox(width: 8.0),
                       SegmentedButton<CoralPositions>(
                         style: ButtonStyle(
-                          backgroundColor: WidgetStateProperty.resolveWith<Color>(
-                                (Set<WidgetState> states) {
-                              if (states.contains(WidgetState.selected)){
-                                return ColorScheme.fromSeed(seedColor: Colors.purple).primary;
-                              }
-                              return Colors.transparent;
-                            },
-                          ),
-                            padding: WidgetStateProperty.all(EdgeInsets.all(18.0))
-                        ),
+                            backgroundColor:
+                                WidgetStateProperty.resolveWith<Color>(
+                              (Set<WidgetState> states) {
+                                if (states.contains(WidgetState.selected)) {
+                                  return ColorScheme.fromSeed(
+                                          seedColor: Colors.purple)
+                                      .primary;
+                                }
+                                return Colors.transparent;
+                              },
+                            ),
+                            padding:
+                                WidgetStateProperty.all(EdgeInsets.all(18.0))),
                         segments: <ButtonSegment<CoralPositions>>[
                           ButtonSegment(
                               value: CoralPositions.lOne, label: Text('L1')),
@@ -347,16 +352,19 @@ class _PitFormState extends State<PitForm> {
                       const SizedBox(width: 8.0),
                       SegmentedButton<ClimbPositions>(
                         style: ButtonStyle(
-                          backgroundColor: WidgetStateProperty.resolveWith<Color>(
-                                (Set<WidgetState> states) {
-                              if (states.contains(WidgetState.selected)){
-                                return ColorScheme.fromSeed(seedColor: Colors.blue).primary;
-                              }
-                              return Colors.transparent;
-                            },
-                          ),
-                          padding: WidgetStateProperty.all(EdgeInsets.all(18.0))
-                        ),
+                            backgroundColor:
+                                WidgetStateProperty.resolveWith<Color>(
+                              (Set<WidgetState> states) {
+                                if (states.contains(WidgetState.selected)) {
+                                  return ColorScheme.fromSeed(
+                                          seedColor: Colors.blue)
+                                      .primary;
+                                }
+                                return Colors.transparent;
+                              },
+                            ),
+                            padding:
+                                WidgetStateProperty.all(EdgeInsets.all(18.0))),
                         segments: <ButtonSegment<ClimbPositions>>[
                           ButtonSegment(
                               value: ClimbPositions.shallow,
@@ -373,12 +381,11 @@ class _PitFormState extends State<PitForm> {
                               widget.formData["deepClimb"])
                             ClimbPositions.deep,
                         },
-                        onSelectionChanged:
-                            (Set<ClimbPositions> newSelection) {
+                        onSelectionChanged: (Set<ClimbPositions> newSelection) {
                           setState(() {
                             widget.onDataChanged({
-                              "shallowClimb": newSelection
-                                  .contains(ClimbPositions.shallow),
+                              "shallowClimb":
+                                  newSelection.contains(ClimbPositions.shallow),
                               "deepClimb":
                                   newSelection.contains(ClimbPositions.deep),
                             });
@@ -522,6 +529,31 @@ class _PitFormState extends State<PitForm> {
                             ],
                           ),
                       ],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Notes',
+                    ),
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(500),
+                      FilteringTextInputFormatter(RegExp(r'[^|*]+'),
+                          allow: true)
+                    ],
+                    onChanged: (value) {
+                      widget.onDataChanged(
+                          {"notes": value.replaceAll("\n", "**")});
+                    },
+                    minLines: 3,
+                    maxLines: 7,
+                    controller: TextEditingController(
+                      text: widget.formData["notes"] == null
+                          ? ''
+                          : widget.formData["notes"]
+                              .toString()
+                              .replaceAll("**", "\n"),
                     ),
                   ),
                 ],

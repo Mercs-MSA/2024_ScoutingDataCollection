@@ -102,6 +102,7 @@ class _FormAppPageState extends State<FormAppPage> {
     "isCoachAdult": false,
     "drivebase": "Swerve",
     "autonExists": false,
+    "notes": null,
   };
 
   Map<String, dynamic> pitScoutingData = {
@@ -127,6 +128,7 @@ class _FormAppPageState extends State<FormAppPage> {
     "isCoachAdult": false,
     "drivebase": "Swerve",
     "autonExists": false,
+    "notes": null
   };
 
   bool saveDisabled = false;
@@ -912,34 +914,76 @@ class _FormAppPageState extends State<FormAppPage> {
                                                   title:
                                                       Text("Debug Information"),
                                                 ),
-                                                body: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: TextField(
-                                                    decoration:
-                                                        const InputDecoration(
-                                                      border:
-                                                          OutlineInputBorder(),
-                                                      fillColor:
-                                                          Color(0xff0d0d0d),
-                                                      filled: true,
-                                                      labelText: 'JSON Data',
-                                                    ),
-                                                    readOnly: true,
-                                                    minLines: 2,
-                                                    maxLines: 50,
-                                                    style: TextStyle(
-                                                      color: Color(0xffffffff),
-                                                      fontFamily: "RobotoMono",
-                                                    ),
-                                                    controller:
-                                                        TextEditingController(
+                                                body: Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: TextField(
+                                                        decoration:
+                                                            const InputDecoration(
+                                                          border:
+                                                              OutlineInputBorder(),
+                                                          fillColor:
+                                                              Color(0xff0d0d0d),
+                                                          filled: true,
+                                                          labelText:
+                                                              'JSON Data',
+                                                        ),
+                                                        readOnly: true,
+                                                        minLines: 2,
+                                                        maxLines: 20,
+                                                        style: TextStyle(
+                                                          color:
+                                                              Color(0xffffffff),
+                                                          fontFamily:
+                                                              "RobotoMono",
+                                                        ),
+                                                        controller: TextEditingController(
                                                             text: JsonEncoder
                                                                     .withIndent(
                                                                         " " * 4)
                                                                 .convert(
                                                                     pitScoutingData)),
-                                                  ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: TextField(
+                                                        decoration:
+                                                            const InputDecoration(
+                                                          border:
+                                                              OutlineInputBorder(),
+                                                          fillColor:
+                                                              Color(0xff0d0d0d),
+                                                          filled: true,
+                                                          labelText:
+                                                              'KV/QR Data',
+                                                        ),
+                                                        readOnly: true,
+                                                        minLines: 2,
+                                                        maxLines: 5,
+                                                        style: TextStyle(
+                                                          color:
+                                                              Color(0xffffffff),
+                                                          fontFamily:
+                                                              "RobotoMono",
+                                                        ),
+                                                        controller:
+                                                            TextEditingController(
+                                                          text: getPitKVFormattedData(
+                                                                  transpose:
+                                                                      true,
+                                                                  header:
+                                                                      false)[0]
+                                                              .join("||"),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               );
                                             },
@@ -1196,7 +1240,7 @@ class _FormAppPageState extends State<FormAppPage> {
       {bool transpose = false, bool header = true}) {
     List<List<dynamic>> data = [];
     pitScoutingData.forEach((key, value) {
-      data.add([key, (value is List ? value.join(",") : value)]);
+      data.add([key, (value is List ? value.join(",") : value.toString())]);
     });
 
     if (!header) {
