@@ -24,6 +24,8 @@ enum CoralPositions { lOne, lTwo, lThree, lFour }
 
 enum AlgaePositions { processor, barge, descore }
 
+enum ClimbPositions { shallow, deep }
+
 class _PitFormState extends State<PitForm> {
   @override
   Widget build(BuildContext context) {
@@ -222,6 +224,7 @@ class _PitFormState extends State<PitForm> {
                   Row(
                     // mainAxisSize: MainAxisSize.max,
                     children: [
+                      const SizedBox(width: 100.0),
                       Expanded(
                         child: SegmentedButton<AlgaePositions>(
                           segments: <ButtonSegment<AlgaePositions>>[
@@ -263,6 +266,7 @@ class _PitFormState extends State<PitForm> {
                           emptySelectionAllowed: true,
                         ),
                       ),
+                      const SizedBox(width: 24.0),
                       SegmentedButton<CoralPositions>(
                         segments: <ButtonSegment<CoralPositions>>[
                           ButtonSegment(
@@ -305,6 +309,41 @@ class _PitFormState extends State<PitForm> {
                         multiSelectionEnabled: true,
                         emptySelectionAllowed: true,
                       ),
+                      const SizedBox(width: 24.0),
+                      Expanded(
+                        child: SegmentedButton<ClimbPositions>(
+                          segments: <ButtonSegment<ClimbPositions>>[
+                            ButtonSegment(
+                                value: ClimbPositions.shallow,
+                                label: Text('Shallow Climb')),
+                            ButtonSegment(
+                                value: ClimbPositions.deep,
+                                label: Text('Deep Climb')),
+                          ],
+                          selected: {
+                            if (widget.formData["shallowClimb"] != null &&
+                                widget.formData["shallowClimb"])
+                              ClimbPositions.shallow,
+                            if (widget.formData["deepClimb"] != null &&
+                                widget.formData["deepClimb"])
+                              ClimbPositions.deep,
+                          },
+                          onSelectionChanged:
+                              (Set<ClimbPositions> newSelection) {
+                            setState(() {
+                              widget.onDataChanged({
+                                "shallowClimb": newSelection
+                                    .contains(ClimbPositions.shallow),
+                                "deepClimb":
+                                    newSelection.contains(ClimbPositions.deep),
+                              });
+                            });
+                          },
+                          multiSelectionEnabled: true,
+                          emptySelectionAllowed: true,
+                        ),
+                      ),
+                      const SizedBox(width: 100.0),
                     ],
                   ),
                   const SizedBox(height: 8.0),
