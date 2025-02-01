@@ -24,6 +24,8 @@ enum CoralPositions { lOne, lTwo, lThree, lFour }
 
 enum AlgaePositions { processor, barge, descore }
 
+enum ClimbPositions { shallow, deep }
+
 class _PitFormState extends State<PitForm> {
   @override
   Widget build(BuildContext context) {
@@ -220,50 +222,85 @@ class _PitFormState extends State<PitForm> {
                   ),
                   const SizedBox(height: 8.0),
                   Row(
-                    // mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(
-                        child: SegmentedButton<AlgaePositions>(
-                          segments: <ButtonSegment<AlgaePositions>>[
-                            ButtonSegment(
-                                value: AlgaePositions.processor,
-                                label: Text('Processor')),
-                            ButtonSegment(
-                                value: AlgaePositions.barge,
-                                label: Text('Barge')),
-                            ButtonSegment(
-                                value: AlgaePositions.descore,
-                                label: Text('Descore')),
-                          ],
-                          selected: {
-                            if (widget.formData["processor"] != null &&
-                                widget.formData["processor"])
-                              AlgaePositions.processor,
-                            if (widget.formData["barge"] != null &&
-                                widget.formData["barge"])
-                              AlgaePositions.barge,
-                            if (widget.formData["descore"] != null &&
-                                widget.formData["descore"])
-                              AlgaePositions.descore,
-                          },
-                          onSelectionChanged:
-                              (Set<AlgaePositions> newSelection) {
-                            setState(() {
-                              widget.onDataChanged({
-                                "processor": newSelection
-                                    .contains(AlgaePositions.processor),
-                                "barge":
-                                    newSelection.contains(AlgaePositions.barge),
-                                "descore": newSelection
-                                    .contains(AlgaePositions.descore)
-                              });
+                      const Text("Algae"),
+                      const SizedBox(width: 8.0),
+                      SegmentedButton<AlgaePositions>(
+                        style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStateProperty.resolveWith<Color>(
+                              (Set<WidgetState> states) {
+                                if (states.contains(WidgetState.selected)) {
+                                  return ColorScheme.fromSeed(
+                                          seedColor: Colors.green)
+                                      .primary;
+                                }
+                                return Colors.transparent;
+                              },
+                            ),
+                            padding:
+                                WidgetStateProperty.all(EdgeInsets.all(18.0))),
+                        segments: <ButtonSegment<AlgaePositions>>[
+                          ButtonSegment(
+                              value: AlgaePositions.processor,
+                              label: Text('Processor')),
+                          ButtonSegment(
+                              value: AlgaePositions.barge,
+                              label: Text('Barge')),
+                          ButtonSegment(
+                              value: AlgaePositions.descore,
+                              label: Text('Descore')),
+                        ],
+                        selected: {
+                          if (widget.formData["processor"] != null &&
+                              widget.formData["processor"])
+                            AlgaePositions.processor,
+                          if (widget.formData["barge"] != null &&
+                              widget.formData["barge"])
+                            AlgaePositions.barge,
+                          if (widget.formData["descore"] != null &&
+                              widget.formData["descore"])
+                            AlgaePositions.descore,
+                        },
+                        onSelectionChanged: (Set<AlgaePositions> newSelection) {
+                          setState(() {
+                            widget.onDataChanged({
+                              "processor": newSelection
+                                  .contains(AlgaePositions.processor),
+                              "barge":
+                                  newSelection.contains(AlgaePositions.barge),
+                              "descore":
+                                  newSelection.contains(AlgaePositions.descore)
                             });
-                          },
-                          multiSelectionEnabled: true,
-                          emptySelectionAllowed: true,
-                        ),
+                          });
+                        },
+                        multiSelectionEnabled: true,
+                        emptySelectionAllowed: true,
                       ),
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Coral"),
+                      const SizedBox(width: 8.0),
                       SegmentedButton<CoralPositions>(
+                        style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStateProperty.resolveWith<Color>(
+                              (Set<WidgetState> states) {
+                                if (states.contains(WidgetState.selected)) {
+                                  return ColorScheme.fromSeed(
+                                          seedColor: Colors.purple)
+                                      .primary;
+                                }
+                                return Colors.transparent;
+                              },
+                            ),
+                            padding:
+                                WidgetStateProperty.all(EdgeInsets.all(18.0))),
                         segments: <ButtonSegment<CoralPositions>>[
                           ButtonSegment(
                               value: CoralPositions.lOne, label: Text('L1')),
@@ -307,6 +344,59 @@ class _PitFormState extends State<PitForm> {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 8.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Climbing"),
+                      const SizedBox(width: 8.0),
+                      SegmentedButton<ClimbPositions>(
+                        style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStateProperty.resolveWith<Color>(
+                              (Set<WidgetState> states) {
+                                if (states.contains(WidgetState.selected)) {
+                                  return ColorScheme.fromSeed(
+                                          seedColor: Colors.blue)
+                                      .primary;
+                                }
+                                return Colors.transparent;
+                              },
+                            ),
+                            padding:
+                                WidgetStateProperty.all(EdgeInsets.all(18.0))),
+                        segments: <ButtonSegment<ClimbPositions>>[
+                          ButtonSegment(
+                              value: ClimbPositions.shallow,
+                              label: Text('Shallow Climb')),
+                          ButtonSegment(
+                              value: ClimbPositions.deep,
+                              label: Text('Deep Climb')),
+                        ],
+                        selected: {
+                          if (widget.formData["shallowClimb"] != null &&
+                              widget.formData["shallowClimb"])
+                            ClimbPositions.shallow,
+                          if (widget.formData["deepClimb"] != null &&
+                              widget.formData["deepClimb"])
+                            ClimbPositions.deep,
+                        },
+                        onSelectionChanged: (Set<ClimbPositions> newSelection) {
+                          setState(() {
+                            widget.onDataChanged({
+                              "shallowClimb":
+                                  newSelection.contains(ClimbPositions.shallow),
+                              "deepClimb":
+                                  newSelection.contains(ClimbPositions.deep),
+                            });
+                          });
+                        },
+                        multiSelectionEnabled: true,
+                        emptySelectionAllowed: true,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 100.0),
                   const SizedBox(height: 8.0),
                   Row(
                     mainAxisSize: MainAxisSize.max,
@@ -439,6 +529,31 @@ class _PitFormState extends State<PitForm> {
                             ],
                           ),
                       ],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Notes',
+                    ),
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(500),
+                      FilteringTextInputFormatter(RegExp(r'[^|*]+'),
+                          allow: true)
+                    ],
+                    onChanged: (value) {
+                      widget.onDataChanged(
+                          {"notes": value.replaceAll("\n", "**")});
+                    },
+                    minLines: 3,
+                    maxLines: 7,
+                    controller: TextEditingController(
+                      text: widget.formData["notes"] == null
+                          ? ''
+                          : widget.formData["notes"]
+                              .toString()
+                              .replaceAll("**", "\n"),
                     ),
                   ),
                 ],

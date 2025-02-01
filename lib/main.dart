@@ -94,12 +94,15 @@ class _FormAppPageState extends State<FormAppPage> {
     "processor": false,
     "barge": false,
     "descore": false,
+    "deepClimb": false,
+    "shallowClimb": false,
     "driverYears": null,
     "operatorYears": null,
     "coachYears": null,
     "isCoachAdult": false,
     "drivebase": "Swerve",
     "autonExists": false,
+    "notes": null,
   };
 
   Map<String, dynamic> pitScoutingData = {
@@ -117,12 +120,15 @@ class _FormAppPageState extends State<FormAppPage> {
     "processor": false,
     "barge": false,
     "descore": false,
+    "deepClimb": false,
+    "shallowClimb": false,
     "driverYears": null,
     "operatorYears": null,
     "coachYears": null,
     "isCoachAdult": false,
     "drivebase": "Swerve",
     "autonExists": false,
+    "notes": null
   };
 
   bool saveDisabled = false;
@@ -421,8 +427,11 @@ class _FormAppPageState extends State<FormAppPage> {
                   IconButton(
                       onPressed: () {
                         setState(() {
-                          appMode = 2;
-                          setAppModePref(appMode);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  barrierDismissible: true,
+                                  builder: (context) => settingsPage()));
                         });
                       },
                       icon: const Icon(Icons.settings_outlined)),
@@ -432,7 +441,7 @@ class _FormAppPageState extends State<FormAppPage> {
                           context: context,
                           applicationIcon: Image.asset(
                             "images/mercs.png",
-                            scale: 2.5,
+                            scale: 4,
                           ),
                           applicationVersion: _packageInfo.version,
                         );
@@ -517,7 +526,7 @@ class _FormAppPageState extends State<FormAppPage> {
                         setAppModePref(appMode);
                       });
                     },
-                    icon: const Icon(Icons.arrow_back)),
+                    icon: const Icon(Icons.home)),
               ),
               bottomNavigationBar: NavigationBar(
                 destinations: const <NavigationDestination>[
@@ -530,12 +539,8 @@ class _FormAppPageState extends State<FormAppPage> {
                     label: 'Data',
                   ),
                   NavigationDestination(
-                    icon: Icon(Icons.line_style_rounded),
-                    label: 'CSV',
-                  ),
-                  NavigationDestination(
-                    icon: Icon(Icons.qr_code_rounded),
-                    label: 'QR',
+                    icon: Icon(Icons.save),
+                    label: 'Export',
                   )
                 ],
                 selectedIndex: pitPageIndex,
@@ -771,84 +776,74 @@ class _FormAppPageState extends State<FormAppPage> {
                     )
                   else
                     const SizedBox(),
+                  // if (pitPageIndex == 2)
+                  //   IndexedStack(
+                  //     index: (pitTeamNumber == null || pitScouters.contains(""))
+                  //         ? 0
+                  //         : 1,
+                  //     children: [
+                  //       const Center(child: TeamNumberError()),
+                  //       Column(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: [
+                  //           const Icon(
+                  //             Icons.output_rounded,
+                  //             size: 180,
+                  //           ),
+                  //           Row(
+                  //             mainAxisAlignment: MainAxisAlignment.center,
+                  //             children: [
+                  //               Padding(
+                  //                 padding: const EdgeInsets.all(8.0),
+                  //                 child: Row(
+                  //                   children: [
+                  //
+                  //                     ElevatedButton(
+                  //                       onPressed: () {
+                  //                         completePitScoutingTasks.add(
+                  //                             PitScoutingTask(
+                  //                                 team: pitTeamNumber!));
+                  //                         incompletePitScoutingTasks
+                  //                             .removeWhere((task) =>
+                  //                                 task.team == pitTeamNumber);
+                  //                         setState(() {
+                  //                           pitPageIndex = 0;
+                  //                         });
+                  //                         updateTeamSaves();
+                  //                         resetPit();
+                  //                       },
+                  //                       child: const Text("Reset Data"),
+                  //                     ),
+                  //                   ],
+                  //                 ),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //           Material(
+                  //             elevation: 1,
+                  //             child: Padding(
+                  //               padding: const EdgeInsets.all(8.0),
+                  //               child: TextField(
+                  //                 decoration: const InputDecoration(
+                  //                   border: OutlineInputBorder(),
+                  //                   labelText: 'JSON Data',
+                  //                 ),
+                  //                 readOnly: true,
+                  //                 minLines: 2,
+                  //                 maxLines: 10,
+                  //                 controller: TextEditingController(
+                  //                     text: JsonEncoder.withIndent(" " * 4)
+                  //                         .convert(pitScoutingData)),
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ],
+                  //   )
+                  // else
+                  //   const SizedBox(),
                   if (pitPageIndex == 2)
-                    IndexedStack(
-                      index: (pitTeamNumber == null || pitScouters.contains(""))
-                          ? 0
-                          : 1,
-                      children: [
-                        const Center(child: TeamNumberError()),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.output_rounded,
-                              size: 180,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      ElevatedButton.icon(
-                                        onPressed: saveDisabled == false
-                                            ? onPitScoutSave
-                                            : null,
-                                        label:
-                                            const Text("Export to Directory"),
-                                        icon: const Icon(Icons.save),
-                                      ),
-                                      const SizedBox(
-                                        width: 8.0,
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          completePitScoutingTasks.add(
-                                              PitScoutingTask(
-                                                  team: pitTeamNumber!));
-                                          incompletePitScoutingTasks
-                                              .removeWhere((task) =>
-                                                  task.team == pitTeamNumber);
-                                          setState(() {
-                                            pitPageIndex = 0;
-                                          });
-                                          updateTeamSaves();
-                                          resetPit();
-                                        },
-                                        child: const Text("Reset Data"),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Material(
-                              elevation: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: TextField(
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    labelText: 'JSON Data',
-                                  ),
-                                  readOnly: true,
-                                  minLines: 2,
-                                  maxLines: 10,
-                                  controller: TextEditingController(
-                                      text: JsonEncoder.withIndent(" " * 4)
-                                          .convert(pitScoutingData)),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    )
-                  else
-                    const SizedBox(),
-                  if (pitPageIndex == 3)
                     IndexedStack(
                       index: (pitTeamNumber == null || pitScouters.contains(""))
                           ? 0
@@ -859,36 +854,198 @@ class _FormAppPageState extends State<FormAppPage> {
                         else
                           const SizedBox(),
                         if (pitTeamNumber != null)
-                          Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(32.0),
-                                child: SizedBox.square(
-                                  dimension: 500,
-                                  child: QrImageView(
-                                    data: getPitKVFormattedData(
-                                            transpose: true, header: false)[0]
-                                        .join("||"),
-                                    backgroundColor: Colors.white,
+                          Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Flexible(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: LayoutBuilder(
+                                      builder: (BuildContext context,
+                                          BoxConstraints constraints) {
+                                        return QrImageView(
+                                          data: getPitKVFormattedData(
+                                                  transpose: true,
+                                                  header: false)[0]
+                                              .join("||"),
+                                          backgroundColor: Colors.white,
+                                          size: min(constraints.maxHeight,
+                                              constraints.maxWidth),
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const Divider(),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    completePitScoutingTasks.add(
-                                        PitScoutingTask(team: pitTeamNumber!));
-                                    incompletePitScoutingTasks.removeWhere(
-                                        (task) => task.team == pitTeamNumber);
-                                    setState(() {
-                                      pitPageIndex = 0;
-                                    });
-                                    updateTeamSaves();
-                                    resetPit();
-                                  },
-                                  child: const Text("Reset Data")),
-                              const SizedBox(height: 8.0),
-                            ],
+                                const Row(
+                                  children: [
+                                    Expanded(child: Divider()),
+                                    Padding(
+                                        padding: EdgeInsets.only(right: 8.0)),
+                                    Text("or"),
+                                    Padding(
+                                        padding: EdgeInsets.only(left: 8.0)),
+                                    Expanded(child: Divider()),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton.icon(
+                                      onPressed: saveDisabled == false
+                                          ? onPitScoutSave
+                                          : null,
+                                      label:
+                                          const Text("Export CSV to Directory"),
+                                      icon: const Icon(Icons.save),
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    ElevatedButton.icon(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            barrierDismissible: true,
+                                            builder: (context) {
+                                              return Scaffold(
+                                                appBar: AppBar(
+                                                  title:
+                                                      Text("Debug Information"),
+                                                ),
+                                                body: Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: TextField(
+                                                        decoration:
+                                                            const InputDecoration(
+                                                          border:
+                                                              OutlineInputBorder(),
+                                                          fillColor:
+                                                              Color(0xff0d0d0d),
+                                                          filled: true,
+                                                          labelText:
+                                                              'JSON Data',
+                                                        ),
+                                                        readOnly: true,
+                                                        minLines: 2,
+                                                        maxLines: 20,
+                                                        style: TextStyle(
+                                                          color:
+                                                              Color(0xffffffff),
+                                                          fontFamily:
+                                                              "RobotoMono",
+                                                        ),
+                                                        controller: TextEditingController(
+                                                            text: JsonEncoder
+                                                                    .withIndent(
+                                                                        " " * 4)
+                                                                .convert(
+                                                                    pitScoutingData)),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: TextField(
+                                                        decoration:
+                                                            const InputDecoration(
+                                                          border:
+                                                              OutlineInputBorder(),
+                                                          fillColor:
+                                                              Color(0xff0d0d0d),
+                                                          filled: true,
+                                                          labelText:
+                                                              'KV/QR Data',
+                                                        ),
+                                                        readOnly: true,
+                                                        minLines: 2,
+                                                        maxLines: 5,
+                                                        style: TextStyle(
+                                                          color:
+                                                              Color(0xffffffff),
+                                                          fontFamily:
+                                                              "RobotoMono",
+                                                        ),
+                                                        controller:
+                                                            TextEditingController(
+                                                          text: getPitKVFormattedData(
+                                                                  transpose:
+                                                                      true,
+                                                                  header:
+                                                                      false)[0]
+                                                              .join("||"),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      },
+                                      label: const Text("Show Debug Data"),
+                                      icon: const Icon(Icons.bug_report),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  width: 8.0,
+                                ),
+                                const SizedBox(
+                                  height: 8.0,
+                                ),
+                                const Divider(
+                                  thickness: 4.0,
+                                ),
+                                // Material(
+                                //   elevation: 1,
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.all(8.0),
+                                //     child: TextField(
+                                //       decoration: const InputDecoration(
+                                //         border: OutlineInputBorder(),
+                                //         labelText: 'JSON Data',
+                                //       ),
+                                //       readOnly: true,
+                                //       minLines: 2,
+                                //       maxLines: 10,
+                                //       controller: TextEditingController(
+                                //           text: JsonEncoder.withIndent(" " * 4)
+                                //               .convert(pitScoutingData)),
+                                //     ),
+                                //   ),
+                                // ),
+                                const SizedBox(
+                                  height: 8.0,
+                                ),
+                                FilledButton(
+                                    onPressed: () {
+                                      completePitScoutingTasks.add(
+                                          PitScoutingTask(
+                                              team: pitTeamNumber!));
+                                      incompletePitScoutingTasks.removeWhere(
+                                          (task) => task.team == pitTeamNumber);
+                                      setState(() {
+                                        pitPageIndex = 0;
+                                      });
+                                      updateTeamSaves();
+                                      resetPit();
+                                    },
+                                    child: const Text(
+                                      "Reset Data",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                const SizedBox(height: 8.0),
+                              ],
+                            ),
                           )
                         else
                           const SizedBox(),
@@ -901,188 +1058,180 @@ class _FormAppPageState extends State<FormAppPage> {
             )
           else
             const SizedBox(),
-          if (appMode == 2)
-            // Settings
-            Scaffold(
-              appBar: AppBar(
-                  title: const Text('Application Setup'),
-                  leading: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        appMode = 0;
-                        setAppModePref(appMode);
-                      });
-                    },
-                    icon: const Icon(Icons.arrow_back),
-                  )),
-              body: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          const Text("Team Lists"),
-                          Expanded(
-                            child: Container(
-                                margin: const EdgeInsets.only(
-                                    left: 10.0, right: 15.0),
-                                child: const Divider()),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 4.0),
-                      ElevatedButton.icon(
-                          onPressed: importTeamList,
-                          label: const Text("Import team list"),
-                          icon: const Icon(Icons.upload)),
-                      const SizedBox(height: 8.0),
-                      ElevatedButton.icon(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text("Are you sure?"),
-                                  icon: const Icon(
-                                    Icons.error_rounded,
-                                    size: 72,
-                                  ),
-                                  content: const Text(
-                                      "Are you ABSOLUTELY SURE you want to remove ALL saved team lists"),
-                                  actionsOverflowButtonSpacing: 20,
-                                  actions: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text("No"),
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text("No"),
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        resetAllTeams();
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text("Yes"),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                          label: const Text("RESET ALL TEAMS"),
-                          icon: const Icon(Icons.delete_forever)),
-                      const SizedBox(height: 8.0),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text("Are you sure?"),
-                                icon: const Icon(
-                                  Icons.error_rounded,
-                                  size: 72,
-                                ),
-                                content: const Text(
-                                    "Are you ABSOLUTELY SURE you want to add 3 nonsense teams to each list"),
-                                actionsOverflowButtonSpacing: 20,
-                                actions: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text("No"),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      loadTestTeams();
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text("Yes"),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        label: const Text("Load debug teams"),
-                        icon: const Icon(Icons.bug_report),
-                      ),
-                      const SizedBox(height: 8.0),
-                      Row(
-                        children: [
-                          const Text("Export Options"),
-                          Expanded(
-                            child: Container(
-                                margin: const EdgeInsets.only(
-                                    left: 10.0, right: 15.0),
-                                child: const Divider()),
-                          ),
-                        ],
-                      ),
-                      SwitchListTile(
-                          value: transposedExport,
-                          title: const Text("Transpose Exported Data"),
-                          subtitle: const Text(
-                              "Transpose rows and colums in exported data (recommended)"),
-                          onChanged: (value) {
-                            setState(() {
-                              transposedExport = value;
-                              attemptSaveTranspose();
-                            });
-                          }),
-                      SwitchListTile(
-                          value: exportHeaders,
-                          title: const Text("Export data headers"),
-                          subtitle:
-                              const Text("Add header to csv data exports"),
-                          onChanged: (value) {
-                            setState(() {
-                              exportHeaders = value;
-                              attemptSaveHeaders();
-                            });
-                          }),
-                      Row(
-                        children: [
-                          const Text("Game Options"),
-                          Expanded(
-                            child: Container(
-                                margin: const EdgeInsets.only(
-                                    left: 10.0, right: 15.0),
-                                child: const Divider()),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8.0),
-                      TextField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Event ID',
-                        ),
-                        inputFormatters: <TextInputFormatter>[
-                          LengthLimitingTextInputFormatter(15),
-                        ],
-                        onChanged: (value) {
-                          eventId = value;
-                          attemptSaveEventId();
-                        },
-                        controller: TextEditingController(text: eventId),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            )
-          else
-            const SizedBox(),
         ],
+      ),
+    );
+  }
+
+  Scaffold settingsPage() {
+    return Scaffold(
+      appBar: AppBar(
+          title: const Text('Settings'),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back),
+          )),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  const Text("Team Lists"),
+                  Expanded(
+                    child: Container(
+                        margin: const EdgeInsets.only(left: 10.0, right: 15.0),
+                        child: const Divider()),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4.0),
+              ElevatedButton.icon(
+                  onPressed: importTeamList,
+                  label: const Text("Import team list"),
+                  icon: const Icon(Icons.upload)),
+              const SizedBox(height: 8.0),
+              ElevatedButton.icon(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text("Are you sure?"),
+                          icon: const Icon(
+                            Icons.error_rounded,
+                            size: 72,
+                          ),
+                          content: const Text(
+                              "Are you ABSOLUTELY SURE you want to remove ALL saved team lists"),
+                          actionsOverflowButtonSpacing: 20,
+                          actions: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text("No"),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text("No"),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                resetAllTeams();
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text("Yes"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  label: const Text("RESET ALL TEAMS"),
+                  icon: const Icon(Icons.delete_forever)),
+              const SizedBox(height: 8.0),
+              ElevatedButton.icon(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text("Are you sure?"),
+                        icon: const Icon(
+                          Icons.error_rounded,
+                          size: 72,
+                        ),
+                        content: const Text(
+                            "Are you ABSOLUTELY SURE you want to add 3 nonsense teams to each list"),
+                        actionsOverflowButtonSpacing: 20,
+                        actions: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text("No"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              loadTestTeams();
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text("Yes"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                label: const Text("Load debug teams"),
+                icon: const Icon(Icons.bug_report),
+              ),
+              const SizedBox(height: 8.0),
+              Row(
+                children: [
+                  const Text("Export Options"),
+                  Expanded(
+                    child: Container(
+                        margin: const EdgeInsets.only(left: 10.0, right: 15.0),
+                        child: const Divider()),
+                  ),
+                ],
+              ),
+              SwitchListTile(
+                  value: transposedExport,
+                  title: const Text("Transpose Exported Data"),
+                  subtitle: const Text(
+                      "Transpose rows and colums in exported data (recommended)"),
+                  onChanged: (value) {
+                    setState(() {
+                      transposedExport = value;
+                      attemptSaveTranspose();
+                    });
+                  }),
+              SwitchListTile(
+                  value: exportHeaders,
+                  title: const Text("Export data headers"),
+                  subtitle: const Text("Add header to csv data exports"),
+                  onChanged: (value) {
+                    setState(() {
+                      exportHeaders = value;
+                      attemptSaveHeaders();
+                    });
+                  }),
+              Row(
+                children: [
+                  const Text("Game Options"),
+                  Expanded(
+                    child: Container(
+                        margin: const EdgeInsets.only(left: 10.0, right: 15.0),
+                        child: const Divider()),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8.0),
+              TextField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Event ID',
+                ),
+                inputFormatters: <TextInputFormatter>[
+                  LengthLimitingTextInputFormatter(15),
+                ],
+                onChanged: (value) {
+                  eventId = value;
+                  attemptSaveEventId();
+                },
+                controller: TextEditingController(text: eventId),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -1091,7 +1240,7 @@ class _FormAppPageState extends State<FormAppPage> {
       {bool transpose = false, bool header = true}) {
     List<List<dynamic>> data = [];
     pitScoutingData.forEach((key, value) {
-      data.add([key, (value is List ? value.join(",") : value)]);
+      data.add([key, (value is List ? value.join(",") : value.toString())]);
     });
 
     if (!header) {
