@@ -16,6 +16,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'datatypes.dart';
+import 'match_form.dart';
 import 'pit_form.dart';
 import 'widgets.dart';
 
@@ -138,9 +139,17 @@ class _FormAppPageState extends State<FormAppPage> {
     "notes": null
   };
 
-  Map<String, dynamic> matchScoutingDefaultData = {};
+  Map<String, dynamic> matchScoutingDefaultData = {
+    "form": "match",
+    "team": null,
+    "scouter": "null",
+  };
 
-  Map<String, dynamic> matchScoutingData = {};
+  Map<String, dynamic> matchScoutingData = {
+    "form": "match",
+    "team": null,
+    "scouter": "null",
+  };
 
   bool saveDisabled = false;
 
@@ -744,207 +753,348 @@ class _FormAppPageState extends State<FormAppPage> {
             const SizedBox(),
           if (appMode == 2)
             // Pit Scouting
-            // Scaffold(
-            // appBar: AppBar(
-            // title: const Text('Match Data Collection'),
-            // leading: IconButton(
-            // onPressed: () {
-            // setState(() {
-            // appMode = 0;
-            // matchPageIndex = 0;
-            // setAppModePref(appMode);
-            // });
-            // },
-            // icon: const Icon(Icons.home)),
-            // ),
-            // bottomNavigationBar: NavigationBar(
-            // destinations: const <NavigationDestination>[
-            // NavigationDestination(
-            // icon: Icon(Icons.flag),
-            // label: 'Start',
-            // ),
-            // NavigationDestination(
-            // icon: Icon(Icons.list_alt),
-            // label: 'Data',
-            // ),
-            // NavigationDestination(
-            // icon: Icon(Icons.save),
-            // label: 'Export',
-            // )
-            // ],
-            // selectedIndex: matchPageIndex,
-            // onDestinationSelected: (int index) {
-            // if ((matchTeamNumber != null) &&
-            // (matchPageIndex == 0) &&
-            // (index == 1) &&
-            // !(incompletePitScoutingTasks
-            //     .any((entry) => entry.team == TeamNumber))) {
-            // showDialog(
-            // context: context,
-            // builder: (BuildContext context) {
-            // return AlertDialog(
-            // title: const Text("Warning"),
-            // icon: const Icon(
-            // Icons.warning_rounded,
-            // size: 72,
-            // ),
-            // content: const Text(
-            // "You are selecting a team that you are not assigned to scout. Are you sure you want to continue?"),
-            // actionsOverflowButtonSpacing: 20,
-            // actions: [
-            // ElevatedButton(
-            // onPressed: () {
-            // Navigator.of(context).pop();
-            // setState(() {
-            // pitPageIndex = 0;
-            // pitTeamNumber = null;
-            // pitScoutingData["team"] = null;
-            // });
-            // },
-            // child: const Text("Go Back"),
-            // ),
-            // ElevatedButton(
-            // onPressed: () {
-            // Navigator.of(context).pop();
-            // },
-            // child: const Text("Yes, I'm Sure"),
-            // ),
-            // ],
-            // );
-            // },
-            // );
-            // }
-            // setState(() {
-            // pitPageIndex = index;
-            // });
-            // },
-            // ),
-            // body: IndexedStack(
-            // index: pitPageIndex,
-            // children: [
-            // if (pitPageIndex == 0)
-            // Column(
-            // children: [
-            // Expanded(
-            // child: ListView(
-            // children: [],
-            // );
-            // },
-            // );
-            // setState(() {
-            // pitTeamNumber = entry.team;
-            // pitScoutingData["team"] = entry.team;
-            // });
-            // },
-            // teamNames: teamNameMap,
-            // completed: true,
-            // )
-            // ],
-            // ),
-            // ],
-            // ),
-            // ),
-            // Padding(
-            // padding: const EdgeInsets.all(8.0),
-            // child: Column(
-            // children: [
-            // TextField(
-            // decoration: const InputDecoration(
-            // border: OutlineInputBorder(),
-            // labelText: 'Team Number',
-            // ),
-            // keyboardType: TextInputType.number,
-            // inputFormatters: <TextInputFormatter>[
-            // FilteringTextInputFormatter.digitsOnly,
-            // LengthLimitingTextInputFormatter(4),
-            // ],
-            // onChanged: (value) {
-            // pitTeamNumber = int.tryParse(value);
-            // pitScoutingData["team"] = int.tryParse(value);
-            // },
-            // controller: TextEditingController(
-            // text: pitTeamNumber == null
-            // ? ''
-            //     : pitTeamNumber.toString(),
-            // ),
-            // ),
-            // const SizedBox(height: 8.0),
-            // Row(
-            // children: [
-            // Flexible(
-            // child: TextField(
-            // decoration: const InputDecoration(
-            // border: OutlineInputBorder(),
-            // labelText: 'Scouter A',
-            // ),
-            // inputFormatters: <TextInputFormatter>[
-            // LengthLimitingTextInputFormatter(30),
-            // FilteringTextInputFormatter(
-            // RegExp(r'[a-zA-Z]'),
-            // allow: true,
-            // ),
-            // ],
-            // onChanged: (value) {
-            // pitScouters[0] = value;
-            // pitScoutingData["scouters"][0] = value;
-            // },
-            // controller: TextEditingController(
-            // text: pitScouters[0],
-            // ),
-            // ),
-            // ),
-            // const SizedBox(width: 8.0),
-            // Flexible(
-            // child: TextField(
-            // decoration: const InputDecoration(
-            // border: OutlineInputBorder(),
-            // labelText: 'Scouter B',
-            // ),
-            // inputFormatters: <TextInputFormatter>[
-            // LengthLimitingTextInputFormatter(30),
-            // FilteringTextInputFormatter(
-            // RegExp(r'[a-zA-Z]'),
-            // allow: true,
-            // ),
-            // ],
-            // onChanged: (value) {
-            // pitScouters[1] = value;
-            // pitScoutingData["scouters"][1] = value;
-            // },
-            // controller: TextEditingController(
-            // text: pitScouters[1],
-            // ),
-            // ),
-            // ),
-            // ],
-            // )
-            // ],
-            // ),
-            // ),
-            // ],
-            // )
-            // else
-            // const SizedBox(),
-            // if (pitPageIndex == 1)
-            // ListView(
-            // children: [
-            // Column(
-            // children: [
-            // PitForm(
-            // teamNumberPresent:
-            // (pitTeamNumber == null ? false : true) &&
-            // !pitScouters.contains(""),
-            // formData: pitScoutingData,
-            // onDataChanged: (data) {
-            // data.forEach((k, v) {
-            // pitScoutingData[k] = v;
-            // });
-            // },
-            // ),
-            // ],
-            // ),
-            // ],
-            // )
+            Scaffold(
+              appBar: AppBar(
+                title: const Text('Match Data Collection'),
+                leading: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        appMode = 0;
+                        matchPageIndex = 0;
+                        setAppModePref(appMode);
+                      });
+                    },
+                    icon: const Icon(Icons.home)),
+              ),
+              bottomNavigationBar: NavigationBar(
+                destinations: const <NavigationDestination>[
+                  NavigationDestination(
+                    icon: Icon(Icons.flag),
+                    label: 'Start',
+                  ),
+                  NavigationDestination(
+                    icon: Icon(Icons.list_alt),
+                    label: 'Data',
+                  ),
+                  NavigationDestination(
+                    icon: Icon(Icons.save),
+                    label: 'Export',
+                  )
+                ],
+                selectedIndex: matchPageIndex,
+                onDestinationSelected: (int index) {
+                  if (index == 2 &&
+                      !(matchTeamNumber == null || matchScouter == "") &&
+                      matchPageIndex != 2) {
+                    var count = 0;
+                    Timer.periodic(Duration(milliseconds: 120), (timer) {
+                      if (count > 4) {
+                        timer.cancel();
+                      }
+
+                      Confetti.launch(
+                        context,
+                        options: const ConfettiOptions(
+                          particleCount: 20,
+                          spread: 85,
+                          y: 1,
+                          flat: true,
+                          decay: 0.82,
+                          colors: [Colors.red, Colors.black, Colors.white],
+                        ),
+                      );
+                      count++;
+                    });
+                  }
+                  setState(() {
+                    matchPageIndex = index;
+                  });
+                },
+              ),
+              body: IndexedStack(
+                index: matchPageIndex,
+                children: [
+                  if (matchPageIndex == 0)
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              TextField(
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Team Number',
+                                ),
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  LengthLimitingTextInputFormatter(4),
+                                ],
+                                onChanged: (value) {
+                                  matchTeamNumber = int.tryParse(value);
+                                  matchScoutingData["team"] =
+                                      int.tryParse(value);
+                                },
+                                controller: TextEditingController(
+                                  text: matchTeamNumber == null
+                                      ? ''
+                                      : matchTeamNumber.toString(),
+                                ),
+                              ),
+                              const SizedBox(height: 8.0),
+                              Row(
+                                children: [
+                                  Flexible(
+                                    child: TextField(
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: 'Scouter A',
+                                      ),
+                                      inputFormatters: <TextInputFormatter>[
+                                        LengthLimitingTextInputFormatter(30),
+                                        FilteringTextInputFormatter(
+                                          RegExp(r'[a-zA-Z]'),
+                                          allow: true,
+                                        ),
+                                      ],
+                                      onChanged: (value) {
+                                        matchScouter = value;
+                                        matchScoutingData["scouters"][0] =
+                                            value;
+                                      },
+                                      controller: TextEditingController(
+                                        text: matchScouter,
+                                      ),
+                                    ),
+                                  ),
+                                  // const SizedBox(width: 8.0),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  else
+                    const SizedBox(),
+                  if (matchPageIndex == 1)
+                    ListView(
+                      children: [
+                        Column(
+                          children: [
+                            MatchForm(
+                              teamNumberPresent:
+                                  (matchTeamNumber == null ? false : true) &&
+                                      !(matchScouter == ""),
+                              formData: matchScoutingData,
+                              onDataChanged: (data) {
+                                data.forEach((k, v) {
+                                  matchScoutingData[k] = v;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
+                  else
+                    const SizedBox(),
+                  if (matchPageIndex == 2)
+                    IndexedStack(
+                      index: (matchTeamNumber == null || matchScouter == "")
+                          ? 0
+                          : 1,
+                      children: [
+                        if (matchTeamNumber == null || matchScouter == "")
+                          const Center(child: TeamNumberError())
+                        else
+                          const SizedBox(),
+                        if (matchTeamNumber != null)
+                          Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Flexible(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: LayoutBuilder(
+                                      builder: (BuildContext context,
+                                          BoxConstraints constraints) {
+                                        return QrImageView(
+                                          data: getMatchKVFormattedData(
+                                                  transpose: true,
+                                                  header: false)[0]
+                                              .join("||"),
+                                          backgroundColor: Colors.white,
+                                          size: min(constraints.maxHeight,
+                                              constraints.maxWidth),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                const Row(
+                                  children: [
+                                    Expanded(child: Divider()),
+                                    Padding(
+                                        padding: EdgeInsets.only(right: 8.0)),
+                                    Text("or"),
+                                    Padding(
+                                        padding: EdgeInsets.only(left: 8.0)),
+                                    Expanded(child: Divider()),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton.icon(
+                                      onPressed: saveDisabled == false
+                                          ? onMatchScoutSave
+                                          : null,
+                                      label:
+                                          const Text("Export CSV to Directory"),
+                                      icon: const Icon(Icons.save),
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    ElevatedButton.icon(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            barrierDismissible: true,
+                                            builder: (context) {
+                                              return Scaffold(
+                                                appBar: AppBar(
+                                                  title:
+                                                      Text("Debug Information"),
+                                                ),
+                                                body: Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: TextField(
+                                                        decoration:
+                                                            const InputDecoration(
+                                                          border:
+                                                              OutlineInputBorder(),
+                                                          fillColor:
+                                                              Color(0xff0d0d0d),
+                                                          filled: true,
+                                                          labelText:
+                                                              'JSON Data',
+                                                        ),
+                                                        readOnly: true,
+                                                        minLines: 2,
+                                                        maxLines: 20,
+                                                        style: TextStyle(
+                                                          color:
+                                                              Color(0xffffffff),
+                                                          fontFamily:
+                                                              "RobotoMono",
+                                                        ),
+                                                        controller: TextEditingController(
+                                                            text: JsonEncoder
+                                                                    .withIndent(
+                                                                        " " * 4)
+                                                                .convert(
+                                                                    matchScoutingData)),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: TextField(
+                                                        decoration:
+                                                            const InputDecoration(
+                                                          border:
+                                                              OutlineInputBorder(),
+                                                          fillColor:
+                                                              Color(0xff0d0d0d),
+                                                          filled: true,
+                                                          labelText:
+                                                              'KV/QR Data',
+                                                        ),
+                                                        readOnly: true,
+                                                        minLines: 2,
+                                                        maxLines: 5,
+                                                        style: TextStyle(
+                                                          color:
+                                                              Color(0xffffffff),
+                                                          fontFamily:
+                                                              "RobotoMono",
+                                                        ),
+                                                        controller:
+                                                            TextEditingController(
+                                                          text: getMatchKVFormattedData(
+                                                                  transpose:
+                                                                      true,
+                                                                  header:
+                                                                      false)[0]
+                                                              .join("||"),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      },
+                                      label: const Text("Show Debug Data"),
+                                      icon: const Icon(Icons.bug_report),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  width: 8.0,
+                                ),
+                                const SizedBox(
+                                  height: 8.0,
+                                ),
+                                const Divider(
+                                  thickness: 4.0,
+                                ),
+                                // Material(
+                                //   elevation: 1,
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.all(8.0),
+                                //     child: TextField(
+                                //       decoration: const InputDecoration(
+                                //         border: OutlineInputBorder(),
+                                //         labelText: 'JSON Data',
+                                //       ),
+                                //       readOnly: true,
+                                //       minLines: 2,
+                                //       maxLines: 10,
+                                //       controller: TextEditingController(
+                                //           text: JsonEncoder.withIndent(" " * 4)
+                                //               .convert(pitScoutingData)),
+                                //     ),
+                                //   ),
+                                // ),
+                                const SizedBox(
+                                  height: 8.0,
+                                ),
+                              ],
+                            ),
+                          )
+                        else
+                          const SizedBox(),
+                      ],
+                    )
+                  else
+                    const SizedBox(),
+                ],
+              ),
+            )
+          else
             const SizedBox(),
         ],
       ),
@@ -1068,6 +1218,135 @@ class _FormAppPageState extends State<FormAppPage> {
               onPressed: () {
                 setState(() {
                   pitPageIndex = 0;
+                });
+                resetPit();
+                Navigator.of(context).pop();
+              },
+              child: const Text("Yes"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  List<List> getMatchKVFormattedData(
+      {bool transpose = false, bool header = true}) {
+    List<List<dynamic>> data = [];
+    matchScoutingData.forEach((key, value) {
+      data.add([key, (value is List ? value.join(",") : value.toString())]);
+    });
+
+    if (!header) {
+      data = data.map((row) => row.sublist(1)).toList();
+    }
+
+    if (!transpose) return data;
+
+    List<List> transposedData = List.generate(
+        data[0].length, (i) => List.generate(data.length, (j) => data[j][i]));
+
+    return transposedData;
+  }
+
+  void onMatchScoutSave() async {
+    if (matchTeamNumber == null) {
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Team Number Required"),
+            icon: const Icon(
+              Icons.numbers_rounded,
+              size: 72,
+            ),
+            content: const Text("Save operation cancelled"),
+            actionsOverflowButtonSpacing: 20,
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
+    if (eventId == "") {
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Event ID Required"),
+            icon: const Icon(
+              Icons.abc_rounded,
+              size: 72,
+            ),
+            content: const Text("Save operation cancelled"),
+            actionsOverflowButtonSpacing: 20,
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
+    final fileData = const ListToCsvConverter().convert(getPitKVFormattedData(
+        transpose: transposedExport, header: exportHeaders));
+
+    setState(() {
+      saveDisabled = true;
+    });
+
+    final dirPath = await grabDir();
+
+    if (dirPath != null) {
+      File(path.join(dirPath,
+              "${eventId}_frc${matchTeamNumber}_match/${eventId}_frc${matchTeamNumber}_match.csv"))
+          .create(recursive: true)
+          .onError((e, s) {
+        throw Error;
+      }).then((File file) {
+        file.writeAsBytes(Uint8List.fromList(fileData.codeUnits));
+      });
+    }
+
+    if (!mounted) return;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Completed?"),
+          icon: const Icon(
+            Icons.question_mark_rounded,
+            size: 72,
+          ),
+          content: const Text("Do you want to mark the task as complete?"),
+          actionsOverflowButtonSpacing: 20,
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("No"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  matchPageIndex = 0;
                 });
                 resetPit();
                 Navigator.of(context).pop();
