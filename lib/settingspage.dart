@@ -8,9 +8,6 @@ class SettingsPage extends StatefulWidget {
   final ValueChanged<bool> onTransposeChanged;
   final ValueChanged<bool> onExportHeadersChanged;
   final ValueChanged<String> onEventIdChanged;
-  final VoidCallback onImportTeamList;
-  final VoidCallback onResetAllTeams;
-  final VoidCallback onLoadTestTeams;
 
   const SettingsPage({
     super.key,
@@ -20,9 +17,6 @@ class SettingsPage extends StatefulWidget {
     required this.onTransposeChanged,
     required this.onExportHeadersChanged,
     required this.onEventIdChanged,
-    required this.onImportTeamList,
-    required this.onResetAllTeams,
-    required this.onLoadTestTeams,
   });
 
   @override
@@ -63,32 +57,6 @@ class SettingsPageState extends State<SettingsPage> {
                     ),
                   ),
                 ],
-              ),
-              const SizedBox(height: 4.0),
-              ElevatedButton.icon(
-                onPressed: widget.onImportTeamList,
-                label: const Text("Import team list"),
-                icon: const Icon(Icons.upload),
-              ),
-              const SizedBox(height: 8.0),
-              ElevatedButton.icon(
-                onPressed: () => _showConfirmationDialog(
-                  context,
-                  "Are you ABSOLUTELY SURE you want to remove ALL saved team lists?",
-                  widget.onResetAllTeams,
-                ),
-                label: const Text("RESET ALL TEAMS"),
-                icon: const Icon(Icons.delete_forever),
-              ),
-              const SizedBox(height: 8.0),
-              ElevatedButton.icon(
-                onPressed: () => _showConfirmationDialog(
-                  context,
-                  "Are you ABSOLUTELY SURE you want to add 3 nonsense teams to each list?",
-                  widget.onLoadTestTeams,
-                ),
-                label: const Text("Load debug teams"),
-                icon: const Icon(Icons.bug_report),
               ),
               const SizedBox(height: 8.0),
               Row(

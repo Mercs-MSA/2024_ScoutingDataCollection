@@ -138,16 +138,11 @@ class _FormAppPageState extends State<FormAppPage> {
     "notes": null
   };
 
-  Map<String, dynamic> matchScoutingDefaultData = {
+  Map<String, dynamic> matchScoutingDefaultData = {};
 
-  };
-
-  Map<String, dynamic> matchScoutingData = {
-
-  };
+  Map<String, dynamic> matchScoutingData = {};
 
   bool saveDisabled = false;
-
 
   PackageInfo _packageInfo = PackageInfo(
     appName: 'Unknown',
@@ -260,9 +255,6 @@ class _FormAppPageState extends State<FormAppPage> {
                                     attemptSaveEventId();
                                   });
                                 },
-                                onImportTeamList: importTeamList,
-                                onResetAllTeams: resetAllTeams,
-                                onLoadTestTeams: loadTestTeams,
                               );
                             });
                       },
@@ -347,7 +339,7 @@ class _FormAppPageState extends State<FormAppPage> {
                           maximumSize: WidgetStateProperty.all(
                               const Size.fromHeight(200)),
                           shape:
-                          WidgetStateProperty.all<RoundedRectangleBorder>(
+                              WidgetStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16.0),
                             ),
@@ -423,6 +415,29 @@ class _FormAppPageState extends State<FormAppPage> {
                 ],
                 selectedIndex: pitPageIndex,
                 onDestinationSelected: (int index) {
+                  if (index == 2 &&
+                      !(pitTeamNumber == null || pitScouters.contains("")) &&
+                      pitPageIndex != 2) {
+                    var count = 0;
+                    Timer.periodic(Duration(milliseconds: 120), (timer) {
+                      if (count > 4) {
+                        timer.cancel();
+                      }
+
+                      Confetti.launch(
+                        context,
+                        options: const ConfettiOptions(
+                          particleCount: 20,
+                          spread: 85,
+                          y: 1,
+                          flat: true,
+                          decay: 0.82,
+                          colors: [Colors.red, Colors.black, Colors.white],
+                        ),
+                      );
+                      count++;
+                    });
+                  }
                   setState(() {
                     pitPageIndex = index;
                   });
@@ -733,269 +748,210 @@ class _FormAppPageState extends State<FormAppPage> {
             )
           else
             const SizedBox(),
-    if (appMode == 2)
-    // Pit Scouting
-    Scaffold(
-    appBar: AppBar(
-    title: const Text('Match Data Collection'),
-    leading: IconButton(
-    onPressed: () {
-    setState(() {
-    appMode = 0;
-    matchPageIndex = 0;
-    setAppModePref(appMode);
-    });
-    },
-    icon: const Icon(Icons.home)),
-    ),
-    bottomNavigationBar: NavigationBar(
-    destinations: const <NavigationDestination>[
-    NavigationDestination(
-    icon: Icon(Icons.flag),
-    label: 'Start',
-    ),
-    NavigationDestination(
-    icon: Icon(Icons.list_alt),
-    label: 'Data',
-    ),
-    NavigationDestination(
-    icon: Icon(Icons.save),
-    label: 'Export',
-    )
-    ],
-    selectedIndex: matchPageIndex,
-    onDestinationSelected: (int index) {
-    if ((matchTeamNumber != null) &&
-    (matchPageIndex == 0) &&
-    (index == 1) &&
-    !(incompletePitScoutingTasks
-        .any((entry) => entry.team == TeamNumber))) {
-    showDialog(
-    context: context,
-    builder: (BuildContext context) {
-    return AlertDialog(
-    title: const Text("Warning"),
-    icon: const Icon(
-    Icons.warning_rounded,
-    size: 72,
-    ),
-    content: const Text(
-    "You are selecting a team that you are not assigned to scout. Are you sure you want to continue?"),
-    actionsOverflowButtonSpacing: 20,
-    actions: [
-    ElevatedButton(
-    onPressed: () {
-    Navigator.of(context).pop();
-    setState(() {
-    pitPageIndex = 0;
-    pitTeamNumber = null;
-    pitScoutingData["team"] = null;
-    });
-    },
-    child: const Text("Go Back"),
-    ),
-    ElevatedButton(
-    onPressed: () {
-    Navigator.of(context).pop();
-    },
-    child: const Text("Yes, I'm Sure"),
-    ),
-    ],
-    );
-    },
-    );
-    }
-    setState(() {
-    pitPageIndex = index;
-    });
-    },
-    ),
-    body: IndexedStack(
-    index: pitPageIndex,
-    children: [
-    if (pitPageIndex == 0)
-    Column(
-    children: [
-    Expanded(
-    child: ListView(
-    children: [
-    ExpansionTile(
-    title: const Text("To Be Scouted"),
-    initiallyExpanded: true,
-    children: [
-    for (final entry
-    in incompletePitScoutingTasks)
-    PitScoutSelection(
-    team: entry.team,
-    onSelected: () {
-    setState(() {
-    pitTeamNumber = entry.team;
-    pitScoutingData["team"] = entry.team;
-    });
-    },
-    teamNames: teamNameMap,
-    )
-    ],
-    ),
-    ExpansionTile(
-    title: const Text("Scouted"),
-    initiallyExpanded: false,
-    children: [
-    for (final entry in completePitScoutingTasks)
-    PitScoutSelection(
-    team: entry.team,
-    onSelected: () {
-    showDialog(
-    context: context,
-    builder: (BuildContext context) {
-    return AlertDialog(
-    title: const Text("Warning"),
-    icon: const Icon(
-    Icons.warning_rounded,
-    size: 72,
-    ),
-    content: const Text(
-    "You are selecting a team that has already been scouted. Do you want to re-scout this team?"),
-    actionsOverflowButtonSpacing: 20,
-    actions: [
-    ElevatedButton(
-    onPressed: () {
-    Navigator.of(context).pop();
-    setState(() {
-    pitTeamNumber = null;
-    pitScoutingData["team"] =
-    null;
-    });
-    },
-    child: const Text("Go Back"),
-    ),
-    ElevatedButton(
-    onPressed: () {
-    Navigator.of(context).pop();
-    },
-    child: const Text(
-    "Yes, I'm Sure"),
-    ),
-    ],
-    );
-    },
-    );
-    setState(() {
-    pitTeamNumber = entry.team;
-    pitScoutingData["team"] = entry.team;
-    });
-    },
-    teamNames: teamNameMap,
-    completed: true,
-    )
-    ],
-    ),
-    ],
-    ),
-    ),
-    Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Column(
-    children: [
-    TextField(
-    decoration: const InputDecoration(
-    border: OutlineInputBorder(),
-    labelText: 'Team Number',
-    ),
-    keyboardType: TextInputType.number,
-    inputFormatters: <TextInputFormatter>[
-    FilteringTextInputFormatter.digitsOnly,
-    LengthLimitingTextInputFormatter(4),
-    ],
-    onChanged: (value) {
-    pitTeamNumber = int.tryParse(value);
-    pitScoutingData["team"] = int.tryParse(value);
-    },
-    controller: TextEditingController(
-    text: pitTeamNumber == null
-    ? ''
-        : pitTeamNumber.toString(),
-    ),
-    ),
-    const SizedBox(height: 8.0),
-    Row(
-    children: [
-    Flexible(
-    child: TextField(
-    decoration: const InputDecoration(
-    border: OutlineInputBorder(),
-    labelText: 'Scouter A',
-    ),
-    inputFormatters: <TextInputFormatter>[
-    LengthLimitingTextInputFormatter(30),
-    FilteringTextInputFormatter(
-    RegExp(r'[a-zA-Z]'),
-    allow: true,
-    ),
-    ],
-    onChanged: (value) {
-    pitScouters[0] = value;
-    pitScoutingData["scouters"][0] = value;
-    },
-    controller: TextEditingController(
-    text: pitScouters[0],
-    ),
-    ),
-    ),
-    const SizedBox(width: 8.0),
-    Flexible(
-    child: TextField(
-    decoration: const InputDecoration(
-    border: OutlineInputBorder(),
-    labelText: 'Scouter B',
-    ),
-    inputFormatters: <TextInputFormatter>[
-    LengthLimitingTextInputFormatter(30),
-    FilteringTextInputFormatter(
-    RegExp(r'[a-zA-Z]'),
-    allow: true,
-    ),
-    ],
-    onChanged: (value) {
-    pitScouters[1] = value;
-    pitScoutingData["scouters"][1] = value;
-    },
-    controller: TextEditingController(
-    text: pitScouters[1],
-    ),
-    ),
-    ),
-    ],
-    )
-    ],
-    ),
-    ),
-    ],
-    )
-    else
-    const SizedBox(),
-    if (pitPageIndex == 1)
-    ListView(
-    children: [
-    Column(
-    children: [
-    PitForm(
-    teamNumberPresent:
-    (pitTeamNumber == null ? false : true) &&
-    !pitScouters.contains(""),
-    formData: pitScoutingData,
-    onDataChanged: (data) {
-    data.forEach((k, v) {
-    pitScoutingData[k] = v;
-    });
-    },
-    ),
-    ],
-    ),
-    ],
-    )
-    else
-    const SizedBox(),
+          if (appMode == 2)
+            // Pit Scouting
+            // Scaffold(
+            // appBar: AppBar(
+            // title: const Text('Match Data Collection'),
+            // leading: IconButton(
+            // onPressed: () {
+            // setState(() {
+            // appMode = 0;
+            // matchPageIndex = 0;
+            // setAppModePref(appMode);
+            // });
+            // },
+            // icon: const Icon(Icons.home)),
+            // ),
+            // bottomNavigationBar: NavigationBar(
+            // destinations: const <NavigationDestination>[
+            // NavigationDestination(
+            // icon: Icon(Icons.flag),
+            // label: 'Start',
+            // ),
+            // NavigationDestination(
+            // icon: Icon(Icons.list_alt),
+            // label: 'Data',
+            // ),
+            // NavigationDestination(
+            // icon: Icon(Icons.save),
+            // label: 'Export',
+            // )
+            // ],
+            // selectedIndex: matchPageIndex,
+            // onDestinationSelected: (int index) {
+            // if ((matchTeamNumber != null) &&
+            // (matchPageIndex == 0) &&
+            // (index == 1) &&
+            // !(incompletePitScoutingTasks
+            //     .any((entry) => entry.team == TeamNumber))) {
+            // showDialog(
+            // context: context,
+            // builder: (BuildContext context) {
+            // return AlertDialog(
+            // title: const Text("Warning"),
+            // icon: const Icon(
+            // Icons.warning_rounded,
+            // size: 72,
+            // ),
+            // content: const Text(
+            // "You are selecting a team that you are not assigned to scout. Are you sure you want to continue?"),
+            // actionsOverflowButtonSpacing: 20,
+            // actions: [
+            // ElevatedButton(
+            // onPressed: () {
+            // Navigator.of(context).pop();
+            // setState(() {
+            // pitPageIndex = 0;
+            // pitTeamNumber = null;
+            // pitScoutingData["team"] = null;
+            // });
+            // },
+            // child: const Text("Go Back"),
+            // ),
+            // ElevatedButton(
+            // onPressed: () {
+            // Navigator.of(context).pop();
+            // },
+            // child: const Text("Yes, I'm Sure"),
+            // ),
+            // ],
+            // );
+            // },
+            // );
+            // }
+            // setState(() {
+            // pitPageIndex = index;
+            // });
+            // },
+            // ),
+            // body: IndexedStack(
+            // index: pitPageIndex,
+            // children: [
+            // if (pitPageIndex == 0)
+            // Column(
+            // children: [
+            // Expanded(
+            // child: ListView(
+            // children: [],
+            // );
+            // },
+            // );
+            // setState(() {
+            // pitTeamNumber = entry.team;
+            // pitScoutingData["team"] = entry.team;
+            // });
+            // },
+            // teamNames: teamNameMap,
+            // completed: true,
+            // )
+            // ],
+            // ),
+            // ],
+            // ),
+            // ),
+            // Padding(
+            // padding: const EdgeInsets.all(8.0),
+            // child: Column(
+            // children: [
+            // TextField(
+            // decoration: const InputDecoration(
+            // border: OutlineInputBorder(),
+            // labelText: 'Team Number',
+            // ),
+            // keyboardType: TextInputType.number,
+            // inputFormatters: <TextInputFormatter>[
+            // FilteringTextInputFormatter.digitsOnly,
+            // LengthLimitingTextInputFormatter(4),
+            // ],
+            // onChanged: (value) {
+            // pitTeamNumber = int.tryParse(value);
+            // pitScoutingData["team"] = int.tryParse(value);
+            // },
+            // controller: TextEditingController(
+            // text: pitTeamNumber == null
+            // ? ''
+            //     : pitTeamNumber.toString(),
+            // ),
+            // ),
+            // const SizedBox(height: 8.0),
+            // Row(
+            // children: [
+            // Flexible(
+            // child: TextField(
+            // decoration: const InputDecoration(
+            // border: OutlineInputBorder(),
+            // labelText: 'Scouter A',
+            // ),
+            // inputFormatters: <TextInputFormatter>[
+            // LengthLimitingTextInputFormatter(30),
+            // FilteringTextInputFormatter(
+            // RegExp(r'[a-zA-Z]'),
+            // allow: true,
+            // ),
+            // ],
+            // onChanged: (value) {
+            // pitScouters[0] = value;
+            // pitScoutingData["scouters"][0] = value;
+            // },
+            // controller: TextEditingController(
+            // text: pitScouters[0],
+            // ),
+            // ),
+            // ),
+            // const SizedBox(width: 8.0),
+            // Flexible(
+            // child: TextField(
+            // decoration: const InputDecoration(
+            // border: OutlineInputBorder(),
+            // labelText: 'Scouter B',
+            // ),
+            // inputFormatters: <TextInputFormatter>[
+            // LengthLimitingTextInputFormatter(30),
+            // FilteringTextInputFormatter(
+            // RegExp(r'[a-zA-Z]'),
+            // allow: true,
+            // ),
+            // ],
+            // onChanged: (value) {
+            // pitScouters[1] = value;
+            // pitScoutingData["scouters"][1] = value;
+            // },
+            // controller: TextEditingController(
+            // text: pitScouters[1],
+            // ),
+            // ),
+            // ),
+            // ],
+            // )
+            // ],
+            // ),
+            // ),
+            // ],
+            // )
+            // else
+            // const SizedBox(),
+            // if (pitPageIndex == 1)
+            // ListView(
+            // children: [
+            // Column(
+            // children: [
+            // PitForm(
+            // teamNumberPresent:
+            // (pitTeamNumber == null ? false : true) &&
+            // !pitScouters.contains(""),
+            // formData: pitScoutingData,
+            // onDataChanged: (data) {
+            // data.forEach((k, v) {
+            // pitScoutingData[k] = v;
+            // });
+            // },
+            // ),
+            // ],
+            // ),
+            // ],
+            // )
+            const SizedBox(),
         ],
       ),
     );
@@ -1116,14 +1072,9 @@ class _FormAppPageState extends State<FormAppPage> {
             ),
             ElevatedButton(
               onPressed: () {
-                completePitScoutingTasks
-                    .add(PitScoutingTask(team: pitTeamNumber!));
-                incompletePitScoutingTasks
-                    .removeWhere((task) => task.team == pitTeamNumber);
                 setState(() {
                   pitPageIndex = 0;
                 });
-                updateTeamSaves();
                 resetPit();
                 Navigator.of(context).pop();
               },
@@ -1189,21 +1140,6 @@ class _FormAppPageState extends State<FormAppPage> {
     });
   }
 
-  void loadTestTeams() {
-    var rng = Random();
-    for (var i = 0; i < 3; i++) {
-      incompletePitScoutingTasks.add(PitScoutingTask(team: rng.nextInt(9999)));
-    }
-
-    updateTeamSaves();
-  }
-
-  void resetAllTeams() {
-    incompletePitScoutingTasks = [];
-    completePitScoutingTasks = [];
-    updateTeamSaves();
-  }
-
   List<String> getKeysWithTrueValues(Map<String, bool> map) {
     var trueKeys = <String>[];
 
@@ -1233,21 +1169,6 @@ class _FormAppPageState extends State<FormAppPage> {
     } else {
       return [];
     }
-  }
-
-  Future<void> updateTeamSaves() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    String jsonIncompletePitTasks =
-        convertTasksListToJsonString(incompletePitScoutingTasks);
-    String jsonCompletePitTasks =
-        convertTasksListToJsonString(completePitScoutingTasks);
-
-    String jsonTeamNames = json.encode(teamNameMap);
-
-    await prefs.setString("jsonIncompletePitTasks", jsonIncompletePitTasks);
-    await prefs.setString("jsonCompletePitTasks", jsonCompletePitTasks);
-    await prefs.setString("teamNamesMap", jsonTeamNames);
   }
 
   Future<void> attemptSaveEventId() async {
