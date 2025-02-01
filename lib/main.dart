@@ -110,6 +110,11 @@ class _FormAppPageState extends State<FormAppPage> {
     "drivebase": "Swerve",
     "autonExists": false,
     "notes": null,
+    "justExit": false,
+    "autonStrategy": null,
+    "canAutoLeft": false,
+    "canAutoMid": false,
+    "canAutoRight": false 
   };
 
   Map<String, dynamic> pitScoutingData = {
@@ -135,7 +140,12 @@ class _FormAppPageState extends State<FormAppPage> {
     "isCoachAdult": false,
     "drivebase": "Swerve",
     "autonExists": false,
-    "notes": null
+    "notes": null,
+    "justExit": false,
+    "autonStrategy": null,
+    "canAutoLeft": false,
+    "canAutoMid": false,
+    "canAutoRight": false 
   };
 
   Map<String, dynamic> matchScoutingDefaultData = {};
