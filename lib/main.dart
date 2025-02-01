@@ -215,6 +215,12 @@ class _FormAppPageState extends State<FormAppPage> {
   }
 
   void _onBackPressed() {
+    if (appMode != 0) {
+      setState(() {
+        appMode = 0;
+      });
+      return;
+    }
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
