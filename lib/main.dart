@@ -876,22 +876,18 @@ class _FormAppPageState extends State<FormAppPage> {
                   else
                     const SizedBox(),
                   if (matchPageIndex == 1)
-                    ListView(
+                    Column(
                       children: [
-                        Column(
-                          children: [
-                            MatchForm(
-                              teamNumberPresent:
-                                  (matchTeamNumber == null ? false : true) &&
-                                      !(matchScouter == ""),
-                              formData: matchScoutingData,
-                              onDataChanged: (data) {
-                                data.forEach((k, v) {
-                                  matchScoutingData[k] = v;
-                                });
-                              },
-                            ),
-                          ],
+                        MatchForm(
+                          teamNumberPresent:
+                              (matchTeamNumber == null ? false : true) &&
+                                  !(matchScouter == ""),
+                          formData: matchScoutingData,
+                          onDataChanged: (data) {
+                            data.forEach((k, v) {
+                              matchScoutingData[k] = v;
+                            });
+                          },
                         ),
                       ],
                     )
