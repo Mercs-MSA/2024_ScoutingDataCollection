@@ -661,19 +661,26 @@ class _PitFormState extends State<PitForm> {
                           },
                         ),
                         if (widget.formData["autonExists"])
-                          SwitchListTile(
-                            title: const Text("Just Exit?"),
-                            value: widget.formData["justExit"],
-                            onChanged: (bool? newValue) {
-                              setState(() {
-                                widget.onDataChanged({"justExit": newValue!});
-                              });
-                            },
-                          ),
-                        if (!widget.formData["justExit"] &&
-                            widget.formData["autonExists"])
                           Column(
                             children: [
+                              SwitchListTile(
+                                title: const Text("Just Exit?"),
+                                value: widget.formData["justExit"],
+                                onChanged: (bool? newValue) {
+                                  setState(() {
+                                    widget
+                                        .onDataChanged({"justExit": newValue!});
+                                  });
+                                },
+                              ),
+                              const SizedBox(
+                                height: 8.0,
+                              ),
+                              const Text(
+                                  "What positions are they capable of starting an auto?"),
+                              const SizedBox(
+                                height: 8.0,
+                              ),
                               Row(
                                 children: [
                                   Expanded(
@@ -719,6 +726,12 @@ class _PitFormState extends State<PitForm> {
                                   ),
                                 ],
                               ),
+                            ],
+                          ),
+                        if (!widget.formData["justExit"] &&
+                            widget.formData["autonExists"])
+                          Column(
+                            children: [
                               const SizedBox(
                                 height: 8.0,
                               ),
