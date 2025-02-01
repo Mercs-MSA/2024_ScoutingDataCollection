@@ -348,7 +348,7 @@ class _FormAppPageState extends State<FormAppPage> {
                         child: const Row(
                           children: [
                             Icon(
-                              Icons.smart_toy_outlined,
+                              Icons.flag_rounded,
                               size: 72,
                             ),
                             Spacer(),
