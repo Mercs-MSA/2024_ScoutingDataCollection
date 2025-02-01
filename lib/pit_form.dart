@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_rating/flutter_rating.dart';
 
 import 'widgets.dart';
 
-class PitForm extends StatefulWidget { //TODO: Teleop Strat, Repairablilty, General Comments (OPTIONAL), Human player preferences
+class PitForm extends StatefulWidget { //TODO: Human player preferences
   const PitForm({
     super.key,
     required this.teamNumberPresent,
@@ -25,6 +26,8 @@ enum CoralPositions { lOne, lTwo, lThree, lFour }
 enum AlgaePositions { processor, barge, descore }
 
 enum ClimbPositions { shallow, deep }
+
+enum Role { coral, algae, defense, feed }
 
 class _PitFormState extends State<PitForm> {
   @override
@@ -205,6 +208,21 @@ class _PitFormState extends State<PitForm> {
                     },
                     choice: widget.formData["drivebase"],
                     options: const ["Swerve", "Tank", "Other"],
+                  ),
+                  const SizedBox(height: 10.0),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Repairability:  "),
+                      StarRating(
+                      rating: widget.formData["repairability"],
+                      size: 40,
+                      color: Theme.of(context).indicatorColor,
+                      allowHalfRating: true,
+                      onRatingChanged: (rating) => setState(() {widget.onDataChanged({"repairability": rating});})
+                    
+                    )],
                   ),
                   const SizedBox(height: 8.0),
                   Row(
@@ -396,6 +414,78 @@ class _PitFormState extends State<PitForm> {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 8.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Role (Cycle)"),
+                      const SizedBox(width: 8.0),
+                      SegmentedButton<Role>(
+                        style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStateProperty.resolveWith<Color>(
+                              (Set<WidgetState> states) {
+                                if (states.contains(WidgetState.selected)) {
+                                  return ColorScheme.fromSeed(
+                                          seedColor: Colors.red)
+                                      .primary;
+                                }
+                                return Colors.transparent;
+                              },
+                            ),
+                            padding:
+                                WidgetStateProperty.all(EdgeInsets.all(18.0))),
+                        segments: <ButtonSegment<Role>>[
+                          ButtonSegment(
+                              value: Role.coral,
+                              label: Text('Coral')
+                          ),
+                          ButtonSegment(
+                              value: Role.algae,
+                              label: Text('Algae')
+                          ),
+                          ButtonSegment(
+                              value: Role.defense,
+                              label: Text('Defense')
+                          ),
+                          ButtonSegment(
+                              value: Role.feed,
+                              label: Text('Feeding')
+                          ),
+                        ],
+                        selected: {
+                          if (widget.formData["coralCycle"] != null &&
+                              widget.formData["coralCycle"])
+                            Role.coral,
+                          if (widget.formData["algaeCycle"] != null &&
+                              widget.formData["algaeCycle"])
+                            Role.algae,
+                          if (widget.formData["defense"] != null &&
+                              widget.formData["defense"])
+                            Role.defense,
+                          if (widget.formData["feed"] != null &&
+                              widget.formData["feed"])
+                            Role.feed,
+                        },
+                        onSelectionChanged: (Set<Role> newSelection) {
+                          setState(() {
+                            widget.onDataChanged({
+                              "coralCycle":
+                                  newSelection.contains(Role.coral),
+                              "algaeCycle":
+                                  newSelection.contains(Role.algae),
+                              "defense":
+                                  newSelection.contains(Role.defense),
+                              "feed":
+                                  newSelection.contains(Role.feed),
+                            });
+                          });
+                        },
+                        multiSelectionEnabled: true,
+                        emptySelectionAllowed: true,
+                      ),
+                    ],
+                  ),
                   const SizedBox(width: 100.0),
                   const SizedBox(height: 8.0),
                   Row(
@@ -535,7 +625,7 @@ class _PitFormState extends State<PitForm> {
                   TextField(
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Notes',
+                      labelText: 'General Comments (Optional)',
                     ),
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(500),

@@ -122,11 +122,16 @@ class _FormAppPageState extends State<FormAppPage> {
     "descore": false,
     "deepClimb": false,
     "shallowClimb": false,
+    "coralCycle": false,
+    "algaeCycle": false,
+    "defense": false,
+    "feed": false,
     "driverYears": null,
     "operatorYears": null,
     "coachYears": null,
     "isCoachAdult": false,
     "drivebase": "Swerve",
+    "repairability": 0,
     "autonExists": false,
     "notes": null
   };
