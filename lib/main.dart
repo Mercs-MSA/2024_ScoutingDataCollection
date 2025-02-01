@@ -147,7 +147,7 @@ class _FormAppPageState extends State<FormAppPage> {
     "autonStrategy": null,
     "canAutoLeft": false,
     "canAutoMid": false,
-    "canAutoRight": false
+    "canAutoRight": false,
   };
 
   Map<String, dynamic> matchScoutingDefaultData = {
