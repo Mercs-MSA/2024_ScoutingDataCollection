@@ -282,6 +282,11 @@ class _FormAppPageState extends State<FormAppPage> {
                                     attemptSaveEventId();
                                   });
                                 },
+                                onResetPrefs: () {
+                                  resetPrefs();
+                                  loadPrefs();
+                                  Navigator.pop(context);
+                                },
                               );
                             });
                       },
@@ -291,8 +296,8 @@ class _FormAppPageState extends State<FormAppPage> {
                         showAboutDialog(
                           context: context,
                           applicationIcon: Image.asset(
-                            "images/mercs.png",
-                            scale: 4,
+                            "images/icon.png",
+                            scale: 2,
                           ),
                           applicationVersion: _packageInfo.version,
                         );
