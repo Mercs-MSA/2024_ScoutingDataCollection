@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mercs_scout/datatypes.dart';
 
 import 'widgets.dart';
 
@@ -190,7 +191,7 @@ class _PitFormState extends State<PitForm> {
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text("Mechanisms"),
+                      Text("Mechanical"),
                       Expanded(
                         child: Container(
                           margin:
@@ -211,7 +212,57 @@ class _PitFormState extends State<PitForm> {
                     choice: widget.formData["drivebase"],
                     options: const ["Swerve", "Tank", "Other"],
                   ),
-                  const SizedBox(height: 10.0),
+                  const SizedBox(height: 8.0),
+                  const Text("Is the robot a Kitbot, is so, what type?"),
+                  const SizedBox(height: 8.0),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SegmentedButton(
+                          style: ButtonStyle(
+                              padding: WidgetStateProperty.all(
+                                  EdgeInsets.all(18.0))),
+                          segments: [
+                            ButtonSegment(
+                                value: KitBotTypes.not,
+                                label: Text("Not"),
+                                icon: Icon(Icons.handyman)),
+                            ButtonSegment(
+                              value: KitBotTypes.kitbot,
+                              label: Text("KitBot"),
+                              icon: Icon(Icons.pallet),
+                            ),
+                            ButtonSegment(
+                              value: KitBotTypes.wcp,
+                              label: Text("WCP"),
+                              icon: Icon(Icons.pallet),
+                            ),
+                            ButtonSegment(
+                              value: KitBotTypes.rev,
+                              label: Text("REV"),
+                              icon: Icon(Icons.pallet),
+                            ),
+                            ButtonSegment(
+                              value: KitBotTypes.everybot,
+                              label: Text("Everybot"),
+                              icon: Icon(Icons.pallet),
+                            ),
+                          ],
+                          selected: {
+                            KitBotTypes.values
+                                .byName(widget.formData["kitbotType"])
+                          },
+                          onSelectionChanged: (selection) {
+                            setState(() {
+                              widget.onDataChanged(
+                                  {"kitbotType": selection.first.name});
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
                   RatingInput(
                     title: 'Repairability',
                     onRatingUpdate: (newValue) {
@@ -301,19 +352,21 @@ class _PitFormState extends State<PitForm> {
                       const SizedBox(width: 8.0),
                       SegmentedButton<CoralPositions>(
                         style: ButtonStyle(
-                            backgroundColor:
-                                WidgetStateProperty.resolveWith<Color>(
-                              (Set<WidgetState> states) {
-                                if (states.contains(WidgetState.selected)) {
-                                  return ColorScheme.fromSeed(
-                                          seedColor: Colors.purple)
-                                      .primary;
-                                }
-                                return Colors.transparent;
-                              },
-                            ),
-                            padding:
-                                WidgetStateProperty.all(EdgeInsets.all(18.0))),
+                          backgroundColor:
+                              WidgetStateProperty.resolveWith<Color>(
+                            (Set<WidgetState> states) {
+                              if (states.contains(WidgetState.selected)) {
+                                return ColorScheme.fromSeed(
+                                        seedColor: Colors.purple)
+                                    .primary;
+                              }
+                              return Colors.transparent;
+                            },
+                          ),
+                          padding: WidgetStateProperty.all(
+                            EdgeInsets.all(18.0),
+                          ),
+                        ),
                         segments: <ButtonSegment<CoralPositions>>[
                           ButtonSegment(
                               value: CoralPositions.lOne, label: Text('L1')),
@@ -411,6 +464,20 @@ class _PitFormState extends State<PitForm> {
                   ),
                   const SizedBox(height: 8.0),
                   Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text("Strategy"),
+                      Expanded(
+                        child: Container(
+                          margin:
+                              const EdgeInsets.only(left: 15.0, right: 10.0),
+                          child: Divider(),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text("Role (Cycle)"),
@@ -458,7 +525,6 @@ class _PitFormState extends State<PitForm> {
                       ),
                     ],
                   ),
-                  const SizedBox(width: 100.0),
                   const SizedBox(height: 8.0),
                   Row(
                     mainAxisSize: MainAxisSize.max,
@@ -557,6 +623,20 @@ class _PitFormState extends State<PitForm> {
                               });
                             },
                           )),
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text("Software"),
+                      Expanded(
+                        child: Container(
+                          margin:
+                              const EdgeInsets.only(left: 15.0, right: 10.0),
+                          child: Divider(),
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 8),

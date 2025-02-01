@@ -1,4 +1,4 @@
-// enum KitBotTypes { not, modded, kitbot } // TODO: is this useful anymore
+enum KitBotTypes { not, kitbot, rev, wcp, everybot }
 
 // enum ScoringPreference { amp, speaker, none }  // TODO: is this useful anymore, and update for 2025
 
