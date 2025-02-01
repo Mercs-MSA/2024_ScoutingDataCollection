@@ -713,27 +713,21 @@ class _FormAppPageState extends State<FormAppPage> {
                                 const Divider(
                                   thickness: 4.0,
                                 ),
-                                // Material(
-                                //   elevation: 1,
-                                //   child: Padding(
-                                //     padding: const EdgeInsets.all(8.0),
-                                //     child: TextField(
-                                //       decoration: const InputDecoration(
-                                //         border: OutlineInputBorder(),
-                                //         labelText: 'JSON Data',
-                                //       ),
-                                //       readOnly: true,
-                                //       minLines: 2,
-                                //       maxLines: 10,
-                                //       controller: TextEditingController(
-                                //           text: JsonEncoder.withIndent(" " * 4)
-                                //               .convert(pitScoutingData)),
-                                //     ),
-                                //   ),
-                                // ),
                                 const SizedBox(
                                   height: 8.0,
                                 ),
+                                FilledButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        pitPageIndex = 0;
+                                      });
+                                      resetPit();
+                                    },
+                                    child: const Text(
+                                      "Reset Data",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    )),
                               ],
                             ),
                           )
