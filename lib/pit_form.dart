@@ -527,42 +527,23 @@ class _PitFormState extends State<PitForm> {
                     ],
                   ),
                   const SizedBox(height: 12.0),
-                   Row(
-                     children: [
-                      Column(
-                        children: [
-                          Text("Human Player"),
-                          Text("Coral Placement:"),
-                        ]
+                  Row(children: [
+                    const Text("Human Player"),
+                    const SizedBox(width: 10.0),
+                    Flexible(
+                      child: ChoiceInput(
+                        title: "Preferred Location",
+                        onChoiceUpdate: (value) {
+                          setState(() {
+                            widget
+                                .onDataChanged({"humanPlayerLocation": value!});
+                          });
+                        },
+                        choice: widget.formData["humanPlayerLocation"],
+                        options: const ["Coral", "Processor", "Either"],
                       ),
-                      const SizedBox(width: 10.0),
-                      Flexible(
-                        child: ChoiceInput(
-                          title: "Placement",
-                          onChoiceUpdate: (value) {
-                            setState(() {
-                              widget.onDataChanged({"humanPlayerPlacement": value!});
-                            });
-                          },
-                          choice: widget.formData["humanPlayerPlacement"],
-                          options: const ["Left", "Right", "Center", "Any", "Other"],
-                        ),
-                      ),
-                      const SizedBox(width: 10.0),
-                      Flexible(
-                        child: ChoiceInput(
-                          title: "Orientation",
-                          onChoiceUpdate: (value) {
-                            setState(() {
-                              widget.onDataChanged({"humanPlayerOrientation": value!});
-                            });
-                          },
-                          choice: widget.formData["humanPlayerOrientation"],
-                          options: const ["Vertical", "Horizontal", "Any", "Other"],
-                        ),
-                      ),
-                     ]
-                   ),
+                    ),
+                  ]),
                   const SizedBox(height: 8.0),
                   Row(
                     mainAxisSize: MainAxisSize.max,
@@ -764,6 +745,75 @@ class _PitFormState extends State<PitForm> {
                                   ),
                                 ],
                               ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(children: [
+                                      const Text(
+                                        "MISSED",
+                                        style: TextStyle(fontSize: 16.0),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                FilledButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      if (widget.formData[
+                                                              "autonL4Num"] >
+                                                          0) {
+                                                        widget.onDataChanged({
+                                                          "autonL4Num": widget
+                                                                      .formData[
+                                                                  "autonL4Num"] -
+                                                              1
+                                                        });
+                                                      } else {
+                                                        widget.onDataChanged(
+                                                            {"autonL4Num": 0});
+                                                      }
+                                                    });
+                                                  },
+                                                  child: const Text("-"),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8.0,
+                                                          right: 8.0),
+                                                  child: Text(
+                                                      "L4: ${widget.formData["autonL4Num"]}"),
+                                                ),
+                                                FilledButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      widget.onDataChanged({
+                                                        "autonL4Num": widget
+                                                                    .formData[
+                                                                "autonL4Num"] +
+                                                            1
+                                                      });
+                                                    });
+                                                  },
+                                                  child: const Text("+"),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ]),
+                                  ),
+                                  Expanded(
+                                    child: Column(),
+                                  )
+                                ],
+                              )
                             ],
                           ),
                         if (!widget.formData["justExit"] &&
