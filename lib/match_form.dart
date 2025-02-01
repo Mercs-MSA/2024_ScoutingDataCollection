@@ -19,13 +19,21 @@ class MatchForm extends StatefulWidget {
   State<MatchForm> createState() => _MatchFormState();
 }
 
-enum CoralPositions { lOne, lTwo, lThree, lFour }
+class TabState extends ChangeNotifier {
+  var tabController = TabController(vsync: _MatchFormState(), length: 5);
+}
 
-enum AlgaePositions { processor, barge, descore }
+class _MatchFormState extends State<MatchForm>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
 
-enum ClimbPositions { shallow, deep }
+  @override
+  void initState() {
+    super.initState();
 
-class _MatchFormState extends State<MatchForm> {
+    _tabController = TabController(vsync: this, length: 3);
+  }
+
   @override
   Widget build(BuildContext context) {
     return IndexedStack(
@@ -36,13 +44,33 @@ class _MatchFormState extends State<MatchForm> {
         else
           const SizedBox(),
         if (widget.teamNumberPresent)
-          Center(
-              child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              children: <Widget>[],
+          Scaffold(
+            appBar: TabBar(
+              controller: _tabController,
+              tabs: const <Widget>[
+                Tab(
+                  icon: Icon(Icons.auto_awesome),
+                  text: "Auton",
+                ),
+                Tab(
+                  icon: Icon(Icons.videogame_asset_rounded),
+                  text: "Teleop",
+                ),
+                Tab(
+                  icon: Icon(Icons.bolt),
+                  text: "Endgame",
+                ),
+              ],
             ),
-          ))
+            body: TabBarView(
+              children: [
+                Placeholder(),
+                Placeholder(),
+                Placeholder(),
+              ],
+              controller: _tabController,
+            ),
+          )
         else
           const SizedBox(),
       ],
