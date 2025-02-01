@@ -66,7 +66,7 @@ class _PitFormState extends State<PitForm> {
                             color: Theme.of(context).colorScheme.onTertiary,
                           ),
                           title: Text(
-                            "Weight must include battery and bumper",
+                            "Weight must NOT include battery and bumper",
                             style: TextStyle(
                                 color: Theme.of(context).colorScheme.onTertiary,
                                 fontWeight: FontWeight.bold),
