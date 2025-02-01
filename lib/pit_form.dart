@@ -264,6 +264,7 @@ class _PitFormState extends State<PitForm> {
                   ),
                   const SizedBox(height: 8.0),
                   RatingInput(
+                    enableHalves: false,
                     title: 'Repairability',
                     onRatingUpdate: (newValue) {
                       widget.onDataChanged({"repairability": newValue});
@@ -466,10 +467,10 @@ class _PitFormState extends State<PitForm> {
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text("Strategy"),
+                      Text("TeleOp Strategy"),
                       Expanded(
                         child: Container(
-                          margin:
+                          margin:   
                               const EdgeInsets.only(left: 15.0, right: 10.0),
                           child: Divider(),
                         ),

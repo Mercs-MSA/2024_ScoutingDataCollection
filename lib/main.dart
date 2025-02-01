@@ -170,15 +170,18 @@ class _FormAppPageState extends State<FormAppPage> {
     "scouter": "",
     "alliance": Alliance.blue,
     "match": null,
+    "startPos": "middle",
   };
 
   Map<String, dynamic> matchScoutingData = {
     "form": "match",
     "team": null,
     "scouter": "",
-    "alliance": Alliance.blue,
+    "alliance": "blue",
     "match": null,
+    "startPos": "middle",
   };
+
 
   bool saveDisabled = false;
 
@@ -990,6 +993,68 @@ class _FormAppPageState extends State<FormAppPage> {
                                     });
                                   },
                                   multiSelectionEnabled: false,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: SegmentedButton<MatchStartPos>(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        WidgetStateProperty.resolveWith<Color>(
+                                      (Set<WidgetState> states) {
+                                        if (states
+                                            .contains(WidgetState.selected)) {
+                                          return ColorScheme.fromSeed(
+                                                  seedColor: matchScoutingData[
+                                                              "alliance"] ==
+                                                          "red"
+                                                      ? Colors.red
+                                                      : Colors.blue)
+                                              .primary;
+                                        }
+                                        return Colors.transparent;
+                                      },
+                                    ),
+                                  ),
+                                  emptySelectionAllowed: false,
+                                  multiSelectionEnabled: false,
+                                  segments: <ButtonSegment<MatchStartPos>>[
+                                    ButtonSegment(
+                                        value: MatchStartPos.left,
+                                        label: Text("Left")),
+                                    ButtonSegment(
+                                        value: MatchStartPos.middle,
+                                        label: Text("Middle")),
+                                    ButtonSegment(
+                                        value: MatchStartPos.right,
+                                        label: Text("Right"))
+                                  ],
+                                  selected: {
+                                    if (matchScoutingData["startPos"] == "left")
+                                      MatchStartPos.left,
+                                    if (matchScoutingData["startPos"] == "middle")
+                                      MatchStartPos.middle,
+                                    if (matchScoutingData["startPos"] == "right")
+                                      MatchStartPos.right,
+                                  },
+                                  onSelectionChanged: (selection) {
+                                    setState(() {
+                                      if (selection.first == MatchStartPos.left) {
+                                        matchScoutingData["startPos"] = "left";
+                                      }
+                                      if (selection.first == MatchStartPos.right) {
+                                        matchScoutingData["startPos"] = "right";
+                                      }
+                                      if (selection.first == MatchStartPos.middle) {
+                                        matchScoutingData["startPos"] = "middle";
+                                      }
+                                    });
+                                  
+                                  },
                                 ),
                               ),
                             ],
