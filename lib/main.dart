@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -6,7 +7,9 @@ import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_confetti/flutter_confetti.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+import 'package:mercs_scout/settingspage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path/path.dart' as path;
 import 'package:qr_flutter/qr_flutter.dart';
@@ -426,13 +429,37 @@ class _FormAppPageState extends State<FormAppPage> {
                 actions: [
                   IconButton(
                       onPressed: () {
-                        setState(() {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  barrierDismissible: true,
-                                  builder: (context) => settingsPage()));
-                        });
+                        showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (BuildContext context) {
+                              return SettingsPage(
+                                initialTransposedExport: transposedExport,
+                                initialExportHeaders: exportHeaders,
+                                initialEventId: eventId,
+                                onTransposeChanged: (value) {
+                                  setState(() {
+                                    transposedExport = value;
+                                    attemptSaveTranspose();
+                                  });
+                                },
+                                onExportHeadersChanged: (value) {
+                                  setState(() {
+                                    exportHeaders = value;
+                                    attemptSaveHeaders();
+                                  });
+                                },
+                                onEventIdChanged: (value) {
+                                  setState(() {
+                                    eventId = value;
+                                    attemptSaveEventId();
+                                  });
+                                },
+                                onImportTeamList: importTeamList,
+                                onResetAllTeams: resetAllTeams,
+                                onLoadTestTeams: loadTestTeams,
+                              );
+                            });
                       },
                       icon: const Icon(Icons.settings_outlined)),
                   IconButton(
@@ -503,7 +530,7 @@ class _FormAppPageState extends State<FormAppPage> {
                     const Image(
                       image: AssetImage('images/mercs.png'),
                       fit: BoxFit.scaleDown,
-                      width: 380,
+                      width: 300,
                       isAntiAlias: true,
                     ),
                     const Spacer(),
@@ -584,6 +611,29 @@ class _FormAppPageState extends State<FormAppPage> {
                         );
                       },
                     );
+                  }
+                  if (index == 2 &&
+                      !(pitTeamNumber == null || pitScouters.contains("")) &&
+                      pitPageIndex != 2) {
+                    var count = 0;
+                    Timer.periodic(Duration(milliseconds: 120), (timer) {
+                      if (count > 4) {
+                        timer.cancel();
+                      }
+
+                      Confetti.launch(
+                        context,
+                        options: const ConfettiOptions(
+                          particleCount: 20,
+                          spread: 85,
+                          y: 1,
+                          flat: true,
+                          decay: 0.82,
+                          colors: [Colors.red, Colors.black, Colors.white],
+                        ),
+                      );
+                      count++;
+                    });
                   }
                   setState(() {
                     pitPageIndex = index;
@@ -1059,179 +1109,6 @@ class _FormAppPageState extends State<FormAppPage> {
           else
             const SizedBox(),
         ],
-      ),
-    );
-  }
-
-  Scaffold settingsPage() {
-    return Scaffold(
-      appBar: AppBar(
-          title: const Text('Settings'),
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.arrow_back),
-          )),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  const Text("Team Lists"),
-                  Expanded(
-                    child: Container(
-                        margin: const EdgeInsets.only(left: 10.0, right: 15.0),
-                        child: const Divider()),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 4.0),
-              ElevatedButton.icon(
-                  onPressed: importTeamList,
-                  label: const Text("Import team list"),
-                  icon: const Icon(Icons.upload)),
-              const SizedBox(height: 8.0),
-              ElevatedButton.icon(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text("Are you sure?"),
-                          icon: const Icon(
-                            Icons.error_rounded,
-                            size: 72,
-                          ),
-                          content: const Text(
-                              "Are you ABSOLUTELY SURE you want to remove ALL saved team lists"),
-                          actionsOverflowButtonSpacing: 20,
-                          actions: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text("No"),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text("No"),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                resetAllTeams();
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text("Yes"),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  label: const Text("RESET ALL TEAMS"),
-                  icon: const Icon(Icons.delete_forever)),
-              const SizedBox(height: 8.0),
-              ElevatedButton.icon(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text("Are you sure?"),
-                        icon: const Icon(
-                          Icons.error_rounded,
-                          size: 72,
-                        ),
-                        content: const Text(
-                            "Are you ABSOLUTELY SURE you want to add 3 nonsense teams to each list"),
-                        actionsOverflowButtonSpacing: 20,
-                        actions: [
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text("No"),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              loadTestTeams();
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text("Yes"),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                label: const Text("Load debug teams"),
-                icon: const Icon(Icons.bug_report),
-              ),
-              const SizedBox(height: 8.0),
-              Row(
-                children: [
-                  const Text("Export Options"),
-                  Expanded(
-                    child: Container(
-                        margin: const EdgeInsets.only(left: 10.0, right: 15.0),
-                        child: const Divider()),
-                  ),
-                ],
-              ),
-              SwitchListTile(
-                  value: transposedExport,
-                  title: const Text("Transpose Exported Data"),
-                  subtitle: const Text(
-                      "Transpose rows and colums in exported data (recommended)"),
-                  onChanged: (value) {
-                    setState(() {
-                      transposedExport = value;
-                      attemptSaveTranspose();
-                    });
-                  }),
-              SwitchListTile(
-                  value: exportHeaders,
-                  title: const Text("Export data headers"),
-                  subtitle: const Text("Add header to csv data exports"),
-                  onChanged: (value) {
-                    setState(() {
-                      exportHeaders = value;
-                      attemptSaveHeaders();
-                    });
-                  }),
-              Row(
-                children: [
-                  const Text("Game Options"),
-                  Expanded(
-                    child: Container(
-                        margin: const EdgeInsets.only(left: 10.0, right: 15.0),
-                        child: const Divider()),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8.0),
-              TextField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Event ID',
-                ),
-                inputFormatters: <TextInputFormatter>[
-                  LengthLimitingTextInputFormatter(15),
-                ],
-                onChanged: (value) {
-                  eventId = value;
-                  attemptSaveEventId();
-                },
-                controller: TextEditingController(text: eventId),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
