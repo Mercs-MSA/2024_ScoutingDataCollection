@@ -8,6 +8,7 @@ class SettingsPage extends StatefulWidget {
   final ValueChanged<bool> onTransposeChanged;
   final ValueChanged<bool> onExportHeadersChanged;
   final ValueChanged<String> onEventIdChanged;
+  final Function onResetPrefs;
 
   const SettingsPage({
     super.key,
@@ -17,6 +18,7 @@ class SettingsPage extends StatefulWidget {
     required this.onTransposeChanged,
     required this.onExportHeadersChanged,
     required this.onEventIdChanged,
+    required this.onResetPrefs,
   });
 
   @override
@@ -47,17 +49,6 @@ class SettingsPageState extends State<SettingsPage> {
         child: Center(
           child: Column(
             children: [
-              Row(
-                children: [
-                  const Text("Team Lists"),
-                  Expanded(
-                    child: Container(
-                      margin: const EdgeInsets.only(left: 10.0, right: 15.0),
-                      child: const Divider(),
-                    ),
-                  ),
-                ],
-              ),
               const SizedBox(height: 8.0),
               Row(
                 children: [
@@ -111,10 +102,43 @@ class SettingsPageState extends State<SettingsPage> {
                   LengthLimitingTextInputFormatter(15),
                 ],
                 onChanged: (value) {
-                  setState(() => eventId = value);
                   widget.onEventIdChanged(value);
                 },
                 controller: TextEditingController(text: eventId),
+              ),
+              const SizedBox(height: 8.0),
+              Row(
+                children: [
+                  const Text("Debug"),
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 10.0, right: 15.0),
+                      child: const Divider(),
+                    ),
+                  ),
+                ],
+              ),
+              FilledButton.icon(
+                onPressed: () {
+                  _showConfirmationDialog(
+                      context, "Are you sure you want to wipe ALL configs?",
+                      () {
+                    widget.onResetPrefs();
+                  });
+                },
+                icon: Icon(
+                  Icons.delete_forever,
+                  color: Theme.of(context).colorScheme.onTertiary,
+                ),
+                label: Text(
+                  "Wipe Preferences",
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.onTertiary),
+                ),
+                style: ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll<Color>(
+                      Theme.of(context).colorScheme.tertiary),
+                ),
               ),
             ],
           ),

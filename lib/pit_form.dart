@@ -26,7 +26,9 @@ enum AlgaePositions { processor, barge, descore }
 
 enum ClimbPositions { shallow, deep }
 
-enum StartPosition { left, middle, right }
+enum Role { coral, algae, defense, feed }
+
+enum StartPosition { Left, Middle, Right }
 
 
 class _PitFormState extends State<PitForm> {
@@ -544,34 +546,54 @@ class _PitFormState extends State<PitForm> {
                                       emptySelectionAllowed: true,
                                       multiSelectionEnabled: true,
                                       segments: <ButtonSegment<StartPosition>>[
-                                        ButtonSegment(value: StartPosition.left, label: Text("LEFT")),
-                                        ButtonSegment(value: StartPosition.middle, label: Text("MIDDLE")),
-                                        ButtonSegment(value: StartPosition.right, label: Text("RIGHT"))
-                                      ], 
+                                        ButtonSegment(
+                                            value: StartPosition.Left,
+                                            label: Text("Left")),
+                                        ButtonSegment(
+                                            value: StartPosition.Middle,
+                                            label: Text("Middle")),
+                                        ButtonSegment(
+                                            value: StartPosition.Right,
+                                            label: Text("Right"))
+                                      ],
                                       selected: {
                                         if (widget.formData['canAutoLeft'])
-                                          StartPosition.left,
+                                          StartPosition.Left,
                                         if (widget.formData['canAutoMid'])
-                                          StartPosition.middle,
+                                          StartPosition.Middle,
                                         if (widget.formData['canAutoRight'])
-                                          StartPosition.right
+                                          StartPosition.Right
                                       },
                                       onSelectionChanged: (Set<StartPosition> value) {
                                         setState(() {
                                           widget.onDataChanged(
                                             {
-                                              "canAutoLeft" : value.contains(StartPosition.left),
-                                              "canAutoMid" : value.contains(StartPosition.middle),
-                                              "canAutoRight" : value.contains(StartPosition.right),                                      
+                                              "canAutoLeft" : value.contains(StartPosition.Left),
+                                              "canAutoMid" : value.contains(StartPosition.Middle),
+                                              "canAutoRight" : value.contains(StartPosition.Right),                                      
                                             }
                                           );
+                                          widget.onDataChanged({
+                                            "canAutoLeft": value
+                                                .contains(StartPosition.Left),
+                                            "canAutoMid": value
+                                                .contains(StartPosition.Middle),
+                                            "canAutoRight": value
+                                                .contains(StartPosition.Right),
+                                          });
                                         });
                                       },
                                     ),
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                            ],
+                          ),
+                        if (!widget.formData["justExit"] &&
+                            widget.formData["autonExists"])
+                          Column(
+                            children: [
+                              const SizedBox(
                                 height: 8.0,
                               ),
                               TextField(
@@ -585,82 +607,24 @@ class _PitFormState extends State<PitForm> {
                                 inputFormatters: <TextInputFormatter>[
                                   LengthLimitingTextInputFormatter(250),
 
+                                  LengthLimitingTextInputFormatter(300),
+                                  FilteringTextInputFormatter(RegExp(r'[^|*]+'),
+                                      allow: true)
                                 ],
                                 onChanged: (value) {
-                                  widget.onDataChanged(
-                                      {
-                                        "autonStrategy": value.replaceAll("\n", "**")
-                                      });
+                                  widget.onDataChanged({
+                                    "autonStrategy":
+                                        value.replaceAll("\n", "**")
+                                  });
                                 },
                                 controller: TextEditingController(
-                                  text: 
-                                  widget.formData["autonStrategy"] == null
-                                  ? '' : widget.formData["autonStrategy"].toString(),
+                                  text: widget.formData["autonStrategy"] == null
+                                      ? ''
+                                      : widget.formData["autonStrategy"]
+                                          .toString()
+                                          .replaceAll("**", "\n"),
                                 ),
-
                               ),
-                              Row(children: [
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      const Text("MISSED", style: TextStyle(fontSize: 16.0), ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Column(
-                                          children: [
-
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                FilledButton(
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      if (widget.formData["autonL4Num"] > 0)
-                                                      {
-                                                        widget.onDataChanged({
-                                                          "autonL4Num": widget.formData["autonL4Num"] - 1
-                                                        });
-                                                      }
-                                                      else
-                                                      {
-                                                        widget.onDataChanged({
-                                                          "autonL4Num": 0
-                                                        });
-                                                      }
-                                                    });
-                                                  },
-                                                  child: const Text("-"),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                                                  child: Text("L4: ${widget.formData["autonL4Num"]}" ),
-                                                ),
-                                                FilledButton(
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      widget.onDataChanged({
-                                                        "autonL4Num": widget.formData["autonL4Num"] + 1
-                                                      });
-                                                    });
-                                                  },
-                                                  child: const Text("+"),
-                                                ),
-                                              ],
-                                            ),
-
-                                          ],
-                                        ),
-                                      ),
-                                      
-                                    ]
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    
-                                  ),
-                                )
-                              ],)
                             ],
                           ),
                       ],
