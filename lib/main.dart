@@ -145,7 +145,7 @@ class _FormAppPageState extends State<FormAppPage> {
     "coachYears": null,
     "isCoachAdult": false,
     "drivebase": "Swerve",
-    "repairability": 0,
+    "repairability": 0.0,
     "autonExists": false,
     "notes": null,
     "justExit": false,
