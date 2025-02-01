@@ -525,6 +525,43 @@ class _PitFormState extends State<PitForm> {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 12.0),
+                   Row(
+                     children: [
+                      Column(
+                        children: [
+                          Text("Human Player"),
+                          Text("Coral Placement:"),
+                        ]
+                      ),
+                      const SizedBox(width: 10.0),
+                      Flexible(
+                        child: ChoiceInput(
+                          title: "Placement",
+                          onChoiceUpdate: (value) {
+                            setState(() {
+                              widget.onDataChanged({"humanPlayerPlacement": value!});
+                            });
+                          },
+                          choice: widget.formData["humanPlayerPlacement"],
+                          options: const ["Left", "Right", "Center", "Any", "Other"],
+                        ),
+                      ),
+                      const SizedBox(width: 10.0),
+                      Flexible(
+                        child: ChoiceInput(
+                          title: "Orientation",
+                          onChoiceUpdate: (value) {
+                            setState(() {
+                              widget.onDataChanged({"humanPlayerOrientation": value!});
+                            });
+                          },
+                          choice: widget.formData["humanPlayerOrientation"],
+                          options: const ["Vertical", "Horizontal", "Any", "Other"],
+                        ),
+                      ),
+                     ]
+                   ),
                   const SizedBox(height: 8.0),
                   Row(
                     mainAxisSize: MainAxisSize.max,
