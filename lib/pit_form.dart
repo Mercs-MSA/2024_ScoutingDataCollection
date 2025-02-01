@@ -29,6 +29,8 @@ enum ClimbPositions { shallow, deep }
 
 enum Role { coral, algae, defense, feed }
 
+enum StartPosition { Left, Middle, Right }
+
 class _PitFormState extends State<PitForm> {
   @override
   Widget build(BuildContext context) {
@@ -69,7 +71,7 @@ class _PitFormState extends State<PitForm> {
                             color: Theme.of(context).colorScheme.onTertiary,
                           ),
                           title: Text(
-                            "Weight must include battery and bumper",
+                            "Weight must NOT include battery and bumper",
                             style: TextStyle(
                                 color: Theme.of(context).colorScheme.onTertiary,
                                 fontWeight: FontWeight.bold),
@@ -608,14 +610,74 @@ class _PitFormState extends State<PitForm> {
                             });
                           },
                         ),
-                        if (widget.formData["autonExists"])
+                        if (widget.formData["autonExists"]) SwitchListTile(
+                          title: const Text("Just Exit?"),
+                          value: widget.formData["justExit"],
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              widget.onDataChanged({"justExit": newValue!});
+                            });
+                          },
+                        ),
+                        if (!widget.formData["justExit"] && widget.formData["autonExists"])
                           Column(
                             children: [
-                              const Text(
-                                "Auton HERE!!!",
-                                style:
-                                    TextStyle(fontSize: 36, color: Colors.red),
+                              
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: SegmentedButton(
+                                      emptySelectionAllowed: true,
+                                      multiSelectionEnabled: true,
+                                      segments: <ButtonSegment<StartPosition>>[
+                                        ButtonSegment(value: StartPosition.Left, label: Text("LEFT")),
+                                        ButtonSegment(value: StartPosition.Middle, label: Text("MIDDLE")),
+                                        ButtonSegment(value: StartPosition.Right, label: Text("RIGHT"))
+                                      ], 
+                                      selected: {
+                                        if (widget.formData['canAutoLeft'])
+                                          StartPosition.Left,
+                                        if (widget.formData['canAutoMid'])
+                                          StartPosition.Middle,
+                                        if (widget.formData['canAutoRight'])
+                                          StartPosition.Right
+                                      },
+                                      onSelectionChanged: (Set<StartPosition> value) {
+                                        setState(() {
+                                          widget.onDataChanged(
+                                            {
+                                              "canAutoLeft" : value.contains(StartPosition.Left),
+                                              "canAutoMid" : value.contains(StartPosition.Middle),
+                                              "canAutoRight" : value.contains(StartPosition.Right),                                      
+                                            }
+                                          );
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
+                              TextField(
+                                decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: "Autonomous Strategy"
+                                ),
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  LengthLimitingTextInputFormatter(250),
+                                ],
+                                onChanged: (value) {
+                                  widget.onDataChanged(
+                                      {"autonStrategy": value});
+                                },
+                                controller: TextEditingController(
+                                  text: 
+                                  widget.formData["autonStrategy"] == null
+                                  ? '' : widget.formData["autonStrategy"].toString(),
+                                ),
+
+                              ),
+                              
                             ],
                           ),
                       ],
