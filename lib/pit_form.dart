@@ -26,7 +26,8 @@ enum AlgaePositions { processor, barge, descore }
 
 enum ClimbPositions { shallow, deep }
 
-enum StartPosition { Left, Middle, Right }
+enum StartPosition { left, middle, right }
+
 
 class _PitFormState extends State<PitForm> {
   @override
@@ -516,7 +517,10 @@ class _PitFormState extends State<PitForm> {
                           value: widget.formData["autonExists"],
                           onChanged: (bool? newValue) {
                             setState(() {
-                              widget.onDataChanged({"autonExists": newValue!});
+                              widget.onDataChanged(
+                                {
+                                  "autonExists": newValue!
+                                });
                             });
                           },
                         ),
@@ -540,25 +544,25 @@ class _PitFormState extends State<PitForm> {
                                       emptySelectionAllowed: true,
                                       multiSelectionEnabled: true,
                                       segments: <ButtonSegment<StartPosition>>[
-                                        ButtonSegment(value: StartPosition.Left, label: Text("LEFT")),
-                                        ButtonSegment(value: StartPosition.Middle, label: Text("MIDDLE")),
-                                        ButtonSegment(value: StartPosition.Right, label: Text("RIGHT"))
+                                        ButtonSegment(value: StartPosition.left, label: Text("LEFT")),
+                                        ButtonSegment(value: StartPosition.middle, label: Text("MIDDLE")),
+                                        ButtonSegment(value: StartPosition.right, label: Text("RIGHT"))
                                       ], 
                                       selected: {
                                         if (widget.formData['canAutoLeft'])
-                                          StartPosition.Left,
+                                          StartPosition.left,
                                         if (widget.formData['canAutoMid'])
-                                          StartPosition.Middle,
+                                          StartPosition.middle,
                                         if (widget.formData['canAutoRight'])
-                                          StartPosition.Right
+                                          StartPosition.right
                                       },
                                       onSelectionChanged: (Set<StartPosition> value) {
                                         setState(() {
                                           widget.onDataChanged(
                                             {
-                                              "canAutoLeft" : value.contains(StartPosition.Left),
-                                              "canAutoMid" : value.contains(StartPosition.Middle),
-                                              "canAutoRight" : value.contains(StartPosition.Right),                                      
+                                              "canAutoLeft" : value.contains(StartPosition.left),
+                                              "canAutoMid" : value.contains(StartPosition.middle),
+                                              "canAutoRight" : value.contains(StartPosition.right),                                      
                                             }
                                           );
                                         });
@@ -567,18 +571,26 @@ class _PitFormState extends State<PitForm> {
                                   ),
                                 ],
                               ),
+                              SizedBox(
+                                height: 8.0,
+                              ),
                               TextField(
                                 decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     labelText: "Autonomous Strategy"
                                 ),
                                 keyboardType: TextInputType.number,
+                                minLines: 3,
+                                maxLines: 6,
                                 inputFormatters: <TextInputFormatter>[
                                   LengthLimitingTextInputFormatter(250),
+
                                 ],
                                 onChanged: (value) {
                                   widget.onDataChanged(
-                                      {"autonStrategy": value});
+                                      {
+                                        "autonStrategy": value.replaceAll("\n", "**")
+                                      });
                                 },
                                 controller: TextEditingController(
                                   text: 
@@ -587,7 +599,68 @@ class _PitFormState extends State<PitForm> {
                                 ),
 
                               ),
-                              
+                              Row(children: [
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      const Text("MISSED", style: TextStyle(fontSize: 16.0), ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Column(
+                                          children: [
+
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                FilledButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      if (widget.formData["autonL4Num"] > 0)
+                                                      {
+                                                        widget.onDataChanged({
+                                                          "autonL4Num": widget.formData["autonL4Num"] - 1
+                                                        });
+                                                      }
+                                                      else
+                                                      {
+                                                        widget.onDataChanged({
+                                                          "autonL4Num": 0
+                                                        });
+                                                      }
+                                                    });
+                                                  },
+                                                  child: const Text("-"),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                                                  child: Text("L4: ${widget.formData["autonL4Num"]}" ),
+                                                ),
+                                                FilledButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      widget.onDataChanged({
+                                                        "autonL4Num": widget.formData["autonL4Num"] + 1
+                                                      });
+                                                    });
+                                                  },
+                                                  child: const Text("+"),
+                                                ),
+                                              ],
+                                            ),
+
+                                          ],
+                                        ),
+                                      ),
+                                      
+                                    ]
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    
+                                  ),
+                                )
+                              ],)
                             ],
                           ),
                       ],
