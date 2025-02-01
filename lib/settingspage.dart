@@ -102,7 +102,6 @@ class SettingsPageState extends State<SettingsPage> {
                   LengthLimitingTextInputFormatter(15),
                 ],
                 onChanged: (value) {
-                  setState(() => eventId = value);
                   widget.onEventIdChanged(value);
                 },
                 controller: TextEditingController(text: eventId),
