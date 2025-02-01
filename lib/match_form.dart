@@ -39,12 +39,9 @@ class _MatchFormState extends State<MatchForm> {
           Center(
               child: Padding(
             padding: const EdgeInsets.all(12.0),
-            child: Column(children: <Widget>[
-              Stepper(steps: [
-                Step(title: Text("The Step"), content: Placeholder()),
-                Step(title: Text("The Other Step"), content: FlutterLogo()),
-              ])
-            ]),
+            child: Column(
+              children: <Widget>[],
+            ),
           ))
         else
           const SizedBox(),

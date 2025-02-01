@@ -111,11 +111,6 @@ class _FormAppPageState extends State<FormAppPage> {
     "drivebase": "Swerve",
     "autonExists": false,
     "notes": null,
-    "justExit": false,
-    "autonStrategy": null,
-    "canAutoLeft": false,
-    "canAutoMid": false,
-    "canAutoRight": false 
   };
 
   Map<String, dynamic> pitScoutingData = {
@@ -141,12 +136,7 @@ class _FormAppPageState extends State<FormAppPage> {
     "isCoachAdult": false,
     "drivebase": "Swerve",
     "autonExists": false,
-    "notes": null,
-    "justExit": false,
-    "autonStrategy": null,
-    "canAutoLeft": false,
-    "canAutoMid": false,
-    "canAutoRight": false 
+    "notes": null
   };
 
   Map<String, dynamic> matchScoutingDefaultData = {
@@ -886,18 +876,22 @@ class _FormAppPageState extends State<FormAppPage> {
                   else
                     const SizedBox(),
                   if (matchPageIndex == 1)
-                    Column(
+                    ListView(
                       children: [
-                        MatchForm(
-                          teamNumberPresent:
-                              (matchTeamNumber == null ? false : true) &&
-                                  !(matchScouter == ""),
-                          formData: matchScoutingData,
-                          onDataChanged: (data) {
-                            data.forEach((k, v) {
-                              matchScoutingData[k] = v;
-                            });
-                          },
+                        Column(
+                          children: [
+                            MatchForm(
+                              teamNumberPresent:
+                                  (matchTeamNumber == null ? false : true) &&
+                                      !(matchScouter == ""),
+                              formData: matchScoutingData,
+                              onDataChanged: (data) {
+                                data.forEach((k, v) {
+                                  matchScoutingData[k] = v;
+                                });
+                              },
+                            ),
+                          ],
                         ),
                       ],
                     )
