@@ -158,14 +158,14 @@ class _FormAppPageState extends State<FormAppPage> {
   Map<String, dynamic> matchScoutingDefaultData = {
     "form": "match",
     "team": null,
-    "scouter": "null",
+    "scouter": null,
     "matchNumber": null,
   };
 
   Map<String, dynamic> matchScoutingData = {
     "form": "match",
     "team": null,
-    "scouter": "null",
+    "scouter": null,
     "matchNumber": null,
   };
 

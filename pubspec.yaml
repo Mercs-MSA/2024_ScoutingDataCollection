@@ -41,7 +41,6 @@ dependencies:
   path: ^1.9.0
   qr_flutter: ^4.1.0
   package_info_plus: ^8.1.2
-  flutter_rating: ^2.0.2
   flutter_confetti: ^0.3.4
 
 
@@ -60,12 +59,12 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-flutter_launcher_icons:
-  android: "launcher_icon"
-  ios: "AppIcon"
-  image_path: "images/logofinal.png"
-  min_sdk_android: 21
-  remove_alpha_ios: true
+#flutter_launcher_icons:
+#  android: "launcher_icon"
+#  ios: "AppIcon"
+#  image_path: "images/logofinal.png"
+#  min_sdk_android: 21
+#  remove_alpha_ios: true
 
 # The following section is specific to Flutter packages.
 flutter:

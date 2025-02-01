@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_rating/flutter_rating.dart';
 
 import 'widgets.dart';
 
-class PitForm extends StatefulWidget { //TODO: Human player preferences
+class PitForm extends StatefulWidget {
+  //TODO: Human player preferences
   const PitForm({
     super.key,
     required this.teamNumberPresent,
@@ -212,19 +212,12 @@ class _PitFormState extends State<PitForm> {
                     options: const ["Swerve", "Tank", "Other"],
                   ),
                   const SizedBox(height: 10.0),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Repairability:  "),
-                      StarRating(
-                      rating: widget.formData["repairability"],
-                      size: 40,
-                      color: Theme.of(context).indicatorColor,
-                      allowHalfRating: true,
-                      onRatingChanged: (rating) => setState(() {widget.onDataChanged({"repairability": rating});})
-                    
-                    )],
+                  RatingInput(
+                    title: 'Repairability',
+                    onRatingUpdate: (newValue) {
+                      widget.onDataChanged({"repairability": newValue});
+                    },
+                    initialRating: widget.formData["repairability"],
                   ),
                   const SizedBox(height: 8.0),
                   Row(
@@ -424,36 +417,17 @@ class _PitFormState extends State<PitForm> {
                       const SizedBox(width: 8.0),
                       SegmentedButton<Role>(
                         style: ButtonStyle(
-                            backgroundColor:
-                                WidgetStateProperty.resolveWith<Color>(
-                              (Set<WidgetState> states) {
-                                if (states.contains(WidgetState.selected)) {
-                                  return ColorScheme.fromSeed(
-                                          seedColor: Colors.red)
-                                      .primary;
-                                }
-                                return Colors.transparent;
-                              },
-                            ),
                             padding:
                                 WidgetStateProperty.all(EdgeInsets.all(18.0))),
                         segments: <ButtonSegment<Role>>[
                           ButtonSegment(
-                              value: Role.coral,
-                              label: Text('Coral')
-                          ),
+                              value: Role.coral, label: Text('Coral')),
                           ButtonSegment(
-                              value: Role.algae,
-                              label: Text('Algae')
-                          ),
+                              value: Role.algae, label: Text('Algae')),
                           ButtonSegment(
-                              value: Role.defense,
-                              label: Text('Defense')
-                          ),
+                              value: Role.defense, label: Text('Defense')),
                           ButtonSegment(
-                              value: Role.feed,
-                              label: Text('Feeding')
-                          ),
+                              value: Role.feed, label: Text('Feeding')),
                         ],
                         selected: {
                           if (widget.formData["coralCycle"] != null &&
@@ -472,14 +446,10 @@ class _PitFormState extends State<PitForm> {
                         onSelectionChanged: (Set<Role> newSelection) {
                           setState(() {
                             widget.onDataChanged({
-                              "coralCycle":
-                                  newSelection.contains(Role.coral),
-                              "algaeCycle":
-                                  newSelection.contains(Role.algae),
-                              "defense":
-                                  newSelection.contains(Role.defense),
-                              "feed":
-                                  newSelection.contains(Role.feed),
+                              "coralCycle": newSelection.contains(Role.coral),
+                              "algaeCycle": newSelection.contains(Role.algae),
+                              "defense": newSelection.contains(Role.defense),
+                              "feed": newSelection.contains(Role.feed),
                             });
                           });
                         },
@@ -610,30 +580,40 @@ class _PitFormState extends State<PitForm> {
                             });
                           },
                         ),
-                        if (widget.formData["autonExists"]) SwitchListTile(
-                          title: const Text("Just Exit?"),
-                          value: widget.formData["justExit"],
-                          onChanged: (bool? newValue) {
-                            setState(() {
-                              widget.onDataChanged({"justExit": newValue!});
-                            });
-                          },
-                        ),
-                        if (!widget.formData["justExit"] && widget.formData["autonExists"])
+                        if (widget.formData["autonExists"])
+                          SwitchListTile(
+                            title: const Text("Just Exit?"),
+                            value: widget.formData["justExit"],
+                            onChanged: (bool? newValue) {
+                              setState(() {
+                                widget.onDataChanged({"justExit": newValue!});
+                              });
+                            },
+                          ),
+                        if (!widget.formData["justExit"] &&
+                            widget.formData["autonExists"])
                           Column(
                             children: [
-                              
                               Row(
                                 children: [
                                   Expanded(
-                                    child: SegmentedButton(
+                                    child: SegmentedButton<StartPosition>(
                                       emptySelectionAllowed: true,
                                       multiSelectionEnabled: true,
+                                      style: ButtonStyle(
+                                          padding: WidgetStateProperty.all(
+                                              EdgeInsets.all(18.0))),
                                       segments: <ButtonSegment<StartPosition>>[
-                                        ButtonSegment(value: StartPosition.Left, label: Text("LEFT")),
-                                        ButtonSegment(value: StartPosition.Middle, label: Text("MIDDLE")),
-                                        ButtonSegment(value: StartPosition.Right, label: Text("RIGHT"))
-                                      ], 
+                                        ButtonSegment(
+                                            value: StartPosition.Left,
+                                            label: Text("Left")),
+                                        ButtonSegment(
+                                            value: StartPosition.Middle,
+                                            label: Text("Middle")),
+                                        ButtonSegment(
+                                            value: StartPosition.Right,
+                                            label: Text("Right"))
+                                      ],
                                       selected: {
                                         if (widget.formData['canAutoLeft'])
                                           StartPosition.Left,
@@ -642,42 +622,52 @@ class _PitFormState extends State<PitForm> {
                                         if (widget.formData['canAutoRight'])
                                           StartPosition.Right
                                       },
-                                      onSelectionChanged: (Set<StartPosition> value) {
+                                      onSelectionChanged:
+                                          (Set<StartPosition> value) {
                                         setState(() {
-                                          widget.onDataChanged(
-                                            {
-                                              "canAutoLeft" : value.contains(StartPosition.Left),
-                                              "canAutoMid" : value.contains(StartPosition.Middle),
-                                              "canAutoRight" : value.contains(StartPosition.Right),                                      
-                                            }
-                                          );
+                                          widget.onDataChanged({
+                                            "canAutoLeft": value
+                                                .contains(StartPosition.Left),
+                                            "canAutoMid": value
+                                                .contains(StartPosition.Middle),
+                                            "canAutoRight": value
+                                                .contains(StartPosition.Right),
+                                          });
                                         });
                                       },
                                     ),
                                   ),
                                 ],
                               ),
+                              const SizedBox(
+                                height: 8.0,
+                              ),
                               TextField(
                                 decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    labelText: "Autonomous Strategy"
-                                ),
+                                    labelText: "Autonomous Strategy"),
                                 keyboardType: TextInputType.number,
                                 inputFormatters: <TextInputFormatter>[
-                                  LengthLimitingTextInputFormatter(250),
+                                  LengthLimitingTextInputFormatter(300),
+                                  FilteringTextInputFormatter(RegExp(r'[^|*]+'),
+                                      allow: true)
                                 ],
                                 onChanged: (value) {
-                                  widget.onDataChanged(
-                                      {"autonStrategy": value});
+                                  widget.onDataChanged({
+                                    "autonStrategy":
+                                        value.replaceAll("\n", "**")
+                                  });
                                 },
+                                minLines: 2,
+                                maxLines: 6,
                                 controller: TextEditingController(
-                                  text: 
-                                  widget.formData["autonStrategy"] == null
-                                  ? '' : widget.formData["autonStrategy"].toString(),
+                                  text: widget.formData["autonStrategy"] == null
+                                      ? ''
+                                      : widget.formData["autonStrategy"]
+                                          .toString()
+                                          .replaceAll("**", "\n"),
                                 ),
-
                               ),
-                              
                             ],
                           ),
                       ],
