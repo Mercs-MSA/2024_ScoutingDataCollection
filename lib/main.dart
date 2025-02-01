@@ -357,7 +357,7 @@ class _FormAppPageState extends State<FormAppPage> {
                         child: const Row(
                           children: [
                             Icon(
-                              Icons.smart_toy_outlined,
+                              Icons.flag_rounded,
                               size: 72,
                             ),
                             Spacer(),
@@ -456,86 +456,83 @@ class _FormAppPageState extends State<FormAppPage> {
                 index: pitPageIndex,
                 children: [
                   if (pitPageIndex == 0)
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextField(
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Team Number',
+                            ),
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(4),
+                            ],
+                            onChanged: (value) {
+                              pitTeamNumber = int.tryParse(value);
+                              pitScoutingData["team"] = int.tryParse(value);
+                            },
+                            controller: TextEditingController(
+                              text: pitTeamNumber == null
+                                  ? ''
+                                  : pitTeamNumber.toString(),
+                            ),
+                          ),
+                          const SizedBox(height: 8.0),
+                          Row(
                             children: [
-                              TextField(
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Team Number',
-                                ),
-                                keyboardType: TextInputType.number,
-                                inputFormatters: <TextInputFormatter>[
-                                  FilteringTextInputFormatter.digitsOnly,
-                                  LengthLimitingTextInputFormatter(4),
-                                ],
-                                onChanged: (value) {
-                                  pitTeamNumber = int.tryParse(value);
-                                  pitScoutingData["team"] = int.tryParse(value);
-                                },
-                                controller: TextEditingController(
-                                  text: pitTeamNumber == null
-                                      ? ''
-                                      : pitTeamNumber.toString(),
+                              Flexible(
+                                child: TextField(
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: 'Scouter A',
+                                  ),
+                                  inputFormatters: <TextInputFormatter>[
+                                    LengthLimitingTextInputFormatter(30),
+                                    FilteringTextInputFormatter(
+                                      RegExp(r'[a-zA-Z]'),
+                                      allow: true,
+                                    ),
+                                  ],
+                                  onChanged: (value) {
+                                    pitScouters[0] = value;
+                                    pitScoutingData["scouters"][0] = value;
+                                  },
+                                  controller: TextEditingController(
+                                    text: pitScouters[0],
+                                  ),
                                 ),
                               ),
-                              const SizedBox(height: 8.0),
-                              Row(
-                                children: [
-                                  Flexible(
-                                    child: TextField(
-                                      decoration: const InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        labelText: 'Scouter A',
-                                      ),
-                                      inputFormatters: <TextInputFormatter>[
-                                        LengthLimitingTextInputFormatter(30),
-                                        FilteringTextInputFormatter(
-                                          RegExp(r'[a-zA-Z]'),
-                                          allow: true,
-                                        ),
-                                      ],
-                                      onChanged: (value) {
-                                        pitScouters[0] = value;
-                                        pitScoutingData["scouters"][0] = value;
-                                      },
-                                      controller: TextEditingController(
-                                        text: pitScouters[0],
-                                      ),
-                                    ),
+                              const SizedBox(width: 8.0),
+                              Flexible(
+                                child: TextField(
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: 'Scouter B',
                                   ),
-                                  const SizedBox(width: 8.0),
-                                  Flexible(
-                                    child: TextField(
-                                      decoration: const InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        labelText: 'Scouter B',
-                                      ),
-                                      inputFormatters: <TextInputFormatter>[
-                                        LengthLimitingTextInputFormatter(30),
-                                        FilteringTextInputFormatter(
-                                          RegExp(r'[a-zA-Z]'),
-                                          allow: true,
-                                        ),
-                                      ],
-                                      onChanged: (value) {
-                                        pitScouters[1] = value;
-                                        pitScoutingData["scouters"][1] = value;
-                                      },
-                                      controller: TextEditingController(
-                                        text: pitScouters[1],
-                                      ),
+                                  inputFormatters: <TextInputFormatter>[
+                                    LengthLimitingTextInputFormatter(30),
+                                    FilteringTextInputFormatter(
+                                      RegExp(r'[a-zA-Z]'),
+                                      allow: true,
                                     ),
+                                  ],
+                                  onChanged: (value) {
+                                    pitScouters[1] = value;
+                                    pitScoutingData["scouters"][1] = value;
+                                  },
+                                  controller: TextEditingController(
+                                    text: pitScouters[1],
                                   ),
-                                ],
-                              )
+                                ),
+                              ),
                             ],
-                          ),
-                        ),
-                      ],
+                          )
+                        ],
+                      ),
                     )
                   else
                     const SizedBox(),
