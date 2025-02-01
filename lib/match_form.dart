@@ -63,12 +63,12 @@ class _MatchFormState extends State<MatchForm>
               ],
             ),
             body: TabBarView(
+              controller: _tabController,
               children: [
                 Placeholder(),
                 Placeholder(),
                 Placeholder(),
               ],
-              controller: _tabController,
             ),
           )
         else
