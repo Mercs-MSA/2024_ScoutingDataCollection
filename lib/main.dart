@@ -86,6 +86,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
   int? matchTeamNumber;
   String matchScouter = "";
+  int? matchNumber;
 
   Map<String, dynamic> pitScoutingDefaultData = {
     "form": "pit",
@@ -115,7 +116,7 @@ class _FormAppPageState extends State<FormAppPage> {
     "autonStrategy": null,
     "canAutoLeft": false,
     "canAutoMid": false,
-    "canAutoRight": false 
+    "canAutoRight": false
   };
 
   Map<String, dynamic> pitScoutingData = {
@@ -146,19 +147,21 @@ class _FormAppPageState extends State<FormAppPage> {
     "autonStrategy": null,
     "canAutoLeft": false,
     "canAutoMid": false,
-    "canAutoRight": false 
+    "canAutoRight": false
   };
 
   Map<String, dynamic> matchScoutingDefaultData = {
     "form": "match",
     "team": null,
     "scouter": "null",
+    "matchNumber": null,
   };
 
   Map<String, dynamic> matchScoutingData = {
     "form": "match",
     "team": null,
     "scouter": "null",
+    "matchNumber": null,
   };
 
   bool saveDisabled = false;
@@ -856,7 +859,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                     child: TextField(
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
-                                        labelText: 'Scouter A',
+                                        labelText: 'Scouter Initials',
                                       ),
                                       inputFormatters: <TextInputFormatter>[
                                         LengthLimitingTextInputFormatter(30),
@@ -875,7 +878,30 @@ class _FormAppPageState extends State<FormAppPage> {
                                       ),
                                     ),
                                   ),
-                                  // const SizedBox(width: 8.0),
+                                  const SizedBox(width: 8.0),
+                                  Flexible(
+                                    child: TextField(
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: 'Match Number',
+                                      ),
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.digitsOnly,
+                                        LengthLimitingTextInputFormatter(2),
+                                      ],
+                                      onChanged: (value) {
+                                        matchNumber = int.tryParse(value);
+                                        matchScoutingData["matchNumber"] =
+                                            int.tryParse(value);
+                                      },
+                                      controller: TextEditingController(
+                                        text: matchNumber == null
+                                            ? ''
+                                            : matchNumber.toString(),
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               )
                             ],
