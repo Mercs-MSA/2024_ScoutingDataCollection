@@ -763,7 +763,70 @@ class _PitFormState extends State<PitForm> {
                                   ),
                                 ],
                               ),
+                              Row(children: [
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      const Text("MISSED", style: TextStyle(fontSize: 16.0), ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Column(
+                                          children: [
+
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                FilledButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      if (widget.formData["autonL4Num"] > 0)
+                                                      {
+                                                        widget.onDataChanged({
+                                                          "autonL4Num": widget.formData["autonL4Num"] - 1
+                                                        });
+                                                      }
+                                                      else
+                                                      {
+                                                        widget.onDataChanged({
+                                                          "autonL4Num": 0
+                                                        });
+                                                      }
+                                                    });
+                                                  },
+                                                  child: const Text("-"),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                                                  child: Text("L4: ${widget.formData["autonL4Num"]}" ),
+                                                ),
+                                                FilledButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      widget.onDataChanged({
+                                                        "autonL4Num": widget.formData["autonL4Num"] + 1
+                                                      });
+                                                    });
+                                                  },
+                                                  child: const Text("+"),
+                                                ),
+                                              ],
+                                            ),
+
+                                          ],
+                                        ),
+                                      ),
+                                      
+                                    ]
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    
+                                  ),
+                                )
+                              ],)
                             ],
+                            
                           ),
                         if (!widget.formData["justExit"] &&
                             widget.formData["autonExists"])

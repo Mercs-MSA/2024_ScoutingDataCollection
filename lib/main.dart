@@ -122,6 +122,11 @@ class _FormAppPageState extends State<FormAppPage> {
     "canAutoLeft": false,
     "canAutoMid": false,
     "canAutoRight": false,
+    "autonL4Num": 0,
+    "autonL3Num": 0,
+    "autonL2Num": 0,
+    "autonL1Num": 0,
+    "algaeDescoreNum": 0,
     "kitbotType": "not",
   };
 
@@ -161,6 +166,11 @@ class _FormAppPageState extends State<FormAppPage> {
     "canAutoLeft": false,
     "canAutoMid": false,
     "canAutoRight": false,
+    "autonL4Num": 0,
+    "autonL3Num": 0,
+    "autonL2Num": 0,
+    "autonL1Num": 0,
+    "algaeDescoreNum": 0,
     "kitbotType": "not",
   };
 
