@@ -742,8 +742,7 @@ class _FormAppPageState extends State<FormAppPage> {
             )
           else
             const SizedBox(),
-          if (appMode == 2)
-
+          if (appMode == 2) const SizedBox()
         ],
       ),
     );
