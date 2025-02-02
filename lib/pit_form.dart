@@ -256,6 +256,7 @@ class _PitFormState extends State<PitForm> {
                             setState(() {
                               widget.onDataChanged(
                                   {"kitbotType": selection.first.name});
+                              
                             });
                           },
                         ),
@@ -263,6 +264,9 @@ class _PitFormState extends State<PitForm> {
                     ],
                   ),
                   const SizedBox(height: 8.0),
+                  if (widget.formData["kitbotType"] != "not") SwitchListTile(title: const Text("Modified?"), value: widget.formData["isModifiedKit"], onChanged: (value) {
+                    setState(() {widget.onDataChanged({"isModifiedKit": value});});
+                  }),
                   RatingInput(
                     enableHalves: false,
                     title: 'Repairability',
@@ -683,12 +687,12 @@ class _PitFormState extends State<PitForm> {
                           Column(
                             children: [
                               SwitchListTile(
-                                title: const Text("Just Exit?"),
-                                value: widget.formData["justExit"],
+                                title: const Text("Exits?"),
+                                value: widget.formData["autonExit"],
                                 onChanged: (bool? newValue) {
                                   setState(() {
                                     widget
-                                        .onDataChanged({"justExit": newValue!});
+                                        .onDataChanged({"autonExit": newValue!});
                                   });
                                 },
                               ),
@@ -1208,8 +1212,7 @@ class _PitFormState extends State<PitForm> {
                             ],
                             
                           ),
-                        if (!widget.formData["justExit"] &&
-                            widget.formData["autonExists"])
+                        if (widget.formData["autonExists"])
                           Column(
                             children: [
                               const SizedBox(

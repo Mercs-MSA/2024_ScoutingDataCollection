@@ -116,7 +116,7 @@ class _FormAppPageState extends State<FormAppPage> {
     "humanPlayerLocation": "Coral",
     "autonExists": false,
     "notes": null,
-    "justExit": false,
+    "autonExit": false,
     "autonStrategy": null,
     "canAutoLeft": false,
     "canAutoMid": false,
@@ -130,6 +130,7 @@ class _FormAppPageState extends State<FormAppPage> {
     "autonProcessor": 0,
     "autonNetScore": 0,
     "kitbotType": "not",
+    "isModifiedKit": false,
   };
 
   Map<String, dynamic> pitScoutingData = {
@@ -162,7 +163,7 @@ class _FormAppPageState extends State<FormAppPage> {
     "humanPlayerLocation": "Coral",
     "autonExists": false,
     "notes": null,
-    "justExit": false,
+    "autonExit": false,
     "autonStrategy": null,
     "canAutoLeft": false,
     "canAutoMid": false,
@@ -176,6 +177,7 @@ class _FormAppPageState extends State<FormAppPage> {
     "autonProcessor": 0,
     "autonNetScore": 0,
     "kitbotType": "not",
+    "isModifiedKit": false,
   };
 
   Map<String, dynamic> matchScoutingDefaultData = {
