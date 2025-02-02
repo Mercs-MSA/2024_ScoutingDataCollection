@@ -126,7 +126,10 @@ class _FormAppPageState extends State<FormAppPage> {
     "autonL3Num": 0,
     "autonL2Num": 0,
     "autonL1Num": 0,
-    "algaeDescoreNum": 0,
+    "autonUpperAlgaeDescore": 0,
+    "autonLowerAlgaeDescore": 0,
+    "autonProcessor": 0,
+    "autonNetScore": 0,
     "kitbotType": "not",
   };
 
@@ -170,7 +173,10 @@ class _FormAppPageState extends State<FormAppPage> {
     "autonL3Num": 0,
     "autonL2Num": 0,
     "autonL1Num": 0,
-    "algaeDescoreNum": 0,
+    "autonUpperAlgaeDescore": 0,
+    "autonLowerAlgaeDescore": 0,
+    "autonProcessor": 0,
+    "autonNetScore": 0,
     "kitbotType": "not",
   };
 
