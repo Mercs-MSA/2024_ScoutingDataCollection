@@ -187,6 +187,7 @@ class _FormAppPageState extends State<FormAppPage> {
     "alliance": Alliance.blue,
     "match": null,
     "startPos": "middle",
+    "autoL4scored": 0,
   };
 
   Map<String, dynamic> matchScoutingData = {
@@ -196,8 +197,8 @@ class _FormAppPageState extends State<FormAppPage> {
     "alliance": "blue",
     "match": null,
     "startPos": "middle",
+    "autoL4scored": 0,
   };
-
 
   bool saveDisabled = false;
 
@@ -1052,24 +1053,29 @@ class _FormAppPageState extends State<FormAppPage> {
                                   selected: {
                                     if (matchScoutingData["startPos"] == "left")
                                       MatchStartPos.left,
-                                    if (matchScoutingData["startPos"] == "middle")
+                                    if (matchScoutingData["startPos"] ==
+                                        "middle")
                                       MatchStartPos.middle,
-                                    if (matchScoutingData["startPos"] == "right")
+                                    if (matchScoutingData["startPos"] ==
+                                        "right")
                                       MatchStartPos.right,
                                   },
                                   onSelectionChanged: (selection) {
                                     setState(() {
-                                      if (selection.first == MatchStartPos.left) {
+                                      if (selection.first ==
+                                          MatchStartPos.left) {
                                         matchScoutingData["startPos"] = "left";
                                       }
-                                      if (selection.first == MatchStartPos.right) {
+                                      if (selection.first ==
+                                          MatchStartPos.right) {
                                         matchScoutingData["startPos"] = "right";
                                       }
-                                      if (selection.first == MatchStartPos.middle) {
-                                        matchScoutingData["startPos"] = "middle";
+                                      if (selection.first ==
+                                          MatchStartPos.middle) {
+                                        matchScoutingData["startPos"] =
+                                            "middle";
                                       }
                                     });
-                                  
                                   },
                                 ),
                               ),

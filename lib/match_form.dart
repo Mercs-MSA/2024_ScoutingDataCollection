@@ -65,9 +65,98 @@ class _MatchFormState extends State<MatchForm>
             body: TabBarView(
               controller: _tabController,
               children: [
-                Placeholder(),
-                Placeholder(),
-                Placeholder(),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 8.0),
+                        Row(
+                          children: [
+                            TextButton(
+                                style: TextButton.styleFrom(
+                                    shape: ContinuousRectangleBorder(
+                                        side: BorderSide(
+                                            width: 5.0,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSecondary))),
+                                onPressed: () {
+                                  setState(() {
+                                    if (widget.formData["autoL4scored"] > 0) {
+                                      widget.onDataChanged({
+                                        "autoL4scored":
+                                            widget.formData["autoL4scored"] - 1
+                                      });
+                                    } else {
+                                      widget.onDataChanged({"autoL4scored": 0});
+                                    }
+                                  });
+                                },
+                                iconAlignment: IconAlignment.end,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: const Text("-",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 20.0)),
+                                )),
+                            const Spacer(),
+                            Text(
+                              "L4: ${widget.formData["autoL4scored"]}",
+                              style: TextStyle(fontSize: 20.0),
+                            ),
+                            const Spacer(),
+                            TextButton(
+                                style: TextButton.styleFrom(
+                                    shape: ContinuousRectangleBorder(
+                                        side: BorderSide(
+                                            width: 5.0,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSecondary))),
+                                onPressed: () {
+                                  setState(() {
+                                    widget.onDataChanged({
+                                      "autoL4scored":
+                                          widget.formData["autoL4scored"] + 1
+                                    });
+                                  });
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: const Text("+",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 20.0,
+                                          color: Colors.green)),
+                                )),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 8.0),
+                      ],
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 8.0),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           )
