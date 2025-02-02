@@ -746,11 +746,13 @@ class _PitFormState extends State<PitForm> {
                                 ],
                               ),
                               Row(
+                                mainAxisSize: MainAxisSize.max,
                                 children: [
                                 Expanded(
-                                  child: Column(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
                                     children: [
-                                      const Text("MISSED", style: TextStyle(fontSize: 16.0), ),
+                                      Expanded(child: Divider(color: Colors.white)),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                                         child: const Text("Coral Scoring", style: TextStyle(fontSize: 21.0, fontStyle: FontStyle.italic),),
@@ -766,14 +768,16 @@ class _PitFormState extends State<PitForm> {
                                       Expanded(child: Divider(color: Colors.white)),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                                        child: const Text("Algae Descoring", style: TextStyle(fontSize: 21.0, fontStyle: FontStyle.italic),),
+                                        child: const Text("Algae Scoring", style: TextStyle(fontSize: 21.0, fontStyle: FontStyle.italic),),
                                       ),
                                       Expanded(child: Divider(color: Colors.white))
                                     ],
                                   ),
                                 ),
                               ]),
-                              Row(children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
                                 Expanded(
                                   child: Column(
                                     children: [
