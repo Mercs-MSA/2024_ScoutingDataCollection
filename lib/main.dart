@@ -298,6 +298,8 @@ class _FormAppPageState extends State<FormAppPage> {
                         showModalBottomSheet(
                             context: context,
                             isScrollControlled: true,
+                            showDragHandle: true,
+                            useSafeArea: true,
                             builder: (BuildContext context) {
                               return SettingsPage(
                                 initialTransposedExport: transposedExport,
