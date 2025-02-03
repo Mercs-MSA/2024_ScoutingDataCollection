@@ -192,15 +192,7 @@ class NumberInput extends StatelessWidget {
                   ),
                 ),
               ),
-            enableSpacer ? const Spacer() : const SizedBox(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                value.toString(),
-                style: TextStyle(
-                    fontSize: miniStyle ? 28 : 36, fontWeight: FontWeight.w600),
-              ),
-            ),
+            const SizedBox(width: 8.0),
             IconButton(
               onPressed: onValueSubtract,
               style: style == NumberInputStyle.multi
@@ -254,7 +246,16 @@ class NumberInput extends StatelessWidget {
                           : const ButtonStyle(),
               icon: const Icon(Icons.remove),
             ),
-            const SizedBox(width: 8.0),
+            enableSpacer ? const Spacer() : const SizedBox(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                value.toString(),
+                style: TextStyle(
+                    fontSize: miniStyle ? 28 : 36, fontWeight: FontWeight.w600),
+              ),
+            ),
+            enableSpacer ? const Spacer() : const SizedBox(),
             IconButton(
               onPressed: onValueAdd,
               style: style == NumberInputStyle.multi
@@ -308,6 +309,7 @@ class NumberInput extends StatelessWidget {
                           : const ButtonStyle(),
               icon: const Icon(Icons.add),
             ),
+            const SizedBox(width: 8.0),
           ],
         ),
       ),

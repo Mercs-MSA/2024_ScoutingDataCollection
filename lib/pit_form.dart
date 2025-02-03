@@ -256,7 +256,6 @@ class _PitFormState extends State<PitForm> {
                             setState(() {
                               widget.onDataChanged(
                                   {"kitbotType": selection.first.name});
-                              
                             });
                           },
                         ),
@@ -264,9 +263,15 @@ class _PitFormState extends State<PitForm> {
                     ],
                   ),
                   const SizedBox(height: 8.0),
-                  if (widget.formData["kitbotType"] != "not") SwitchListTile(title: const Text("Modified?"), value: widget.formData["isModifiedKit"], onChanged: (value) {
-                    setState(() {widget.onDataChanged({"isModifiedKit": value});});
-                  }),
+                  if (widget.formData["kitbotType"] != "not")
+                    SwitchListTile(
+                        title: const Text("Modified?"),
+                        value: widget.formData["isModifiedKit"],
+                        onChanged: (value) {
+                          setState(() {
+                            widget.onDataChanged({"isModifiedKit": value});
+                          });
+                        }),
                   RatingInput(
                     enableHalves: false,
                     title: 'Repairability',
@@ -474,7 +479,7 @@ class _PitFormState extends State<PitForm> {
                       Text("TeleOp Strategy"),
                       Expanded(
                         child: Container(
-                          margin:   
+                          margin:
                               const EdgeInsets.only(left: 15.0, right: 10.0),
                           child: Divider(),
                         ),
@@ -691,8 +696,8 @@ class _PitFormState extends State<PitForm> {
                                 value: widget.formData["autonExit"],
                                 onChanged: (bool? newValue) {
                                   setState(() {
-                                    widget
-                                        .onDataChanged({"autonExit": newValue!});
+                                    widget.onDataChanged(
+                                        {"autonExit": newValue!});
                                   });
                                 },
                               ),
@@ -749,19 +754,25 @@ class _PitFormState extends State<PitForm> {
                                   ),
                                 ],
                               ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
+                              Row(mainAxisSize: MainAxisSize.max, children: [
                                 Expanded(
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
-                                      Expanded(child: Divider(color: Colors.white)),
+                                      Expanded(
+                                          child: Divider(color: Colors.white)),
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                                        child: const Text("Coral Scoring", style: TextStyle(fontSize: 21.0, fontStyle: FontStyle.italic),),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10.0, horizontal: 10.0),
+                                        child: const Text(
+                                          "Coral Scoring",
+                                          style: TextStyle(
+                                              fontSize: 21.0,
+                                              fontStyle: FontStyle.italic),
+                                        ),
                                       ),
-                                      Expanded(child: Divider(color: Colors.white))
+                                      Expanded(
+                                          child: Divider(color: Colors.white))
                                     ],
                                   ),
                                 ),
@@ -769,448 +780,605 @@ class _PitFormState extends State<PitForm> {
                                 Expanded(
                                   child: Row(
                                     children: [
-                                      Expanded(child: Divider(color: Colors.white)),
+                                      Expanded(
+                                          child: Divider(color: Colors.white)),
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                                        child: const Text("Algae Scoring", style: TextStyle(fontSize: 21.0, fontStyle: FontStyle.italic),),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10.0, horizontal: 10.0),
+                                        child: const Text(
+                                          "Algae Scoring",
+                                          style: TextStyle(
+                                              fontSize: 21.0,
+                                              fontStyle: FontStyle.italic),
+                                        ),
                                       ),
-                                      Expanded(child: Divider(color: Colors.white))
+                                      Expanded(
+                                          child: Divider(color: Colors.white))
                                     ],
                                   ),
                                 ),
                               ]),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
+                              Row(mainAxisSize: MainAxisSize.max, children: [
                                 Expanded(
-                                  child: Column(
-                                    children: [
-                                      Column(
-                                        children: [
-                                          Card(
-                                            shape: ContinuousRectangleBorder( side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary),),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                TextButton(
-                                                  style: TextButton.styleFrom(shape: ContinuousRectangleBorder(side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary))),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      if (widget.formData[
-                                                              "autonL4Num"] >
-                                                          0) {
-                                                        widget.onDataChanged({
-                                                          "autonL4Num": widget
-                                                                      .formData[
-                                                                  "autonL4Num"] -
-                                                              1
-                                                        });
-                                                      } else {
-                                                        widget.onDataChanged(
-                                                            {"autonL4Num": 0});
-                                                      }
-                                                    });
-                                                  },
-                                                  iconAlignment: IconAlignment.end,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(16.0),
-                                                    child: const Text("-", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0)),
-                                                  )
-                                                ),
-                                                const Spacer(),
-                                                Text("L4: ${widget.formData["autonL4Num"]}", style: TextStyle(fontSize: 20.0),),
-                                                const Spacer(),
-                                                TextButton(
-                                                  style: TextButton.styleFrom(shape: ContinuousRectangleBorder(side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary))),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      widget.onDataChanged({
-                                                        "autonL4Num": widget
-                                                                    .formData[
-                                                                "autonL4Num"] +
+                                  child: Column(children: [
+                                    Column(
+                                      children: [
+                                        NumberInput(
+                                            title: "L4",
+                                            enableSpacer: true,
+                                            value:
+                                                widget.formData["autonL4Num"],
+                                            onValueAdd: () {
+                                              setState(() {
+                                                widget.onDataChanged({
+                                                  "autonL4Num": widget.formData[
+                                                          "autonL4Num"] +
+                                                      1
+                                                });
+                                              });
+                                            },
+                                            onValueSubtract: () {
+                                              setState(() {
+                                                if (widget.formData[
+                                                        "autonL4Num"] >
+                                                    0) {
+                                                  widget.onDataChanged({
+                                                    "autonL4Num":
+                                                        widget.formData[
+                                                                "autonL4Num"] -
                                                             1
-                                                      });
-                                                    });
-                                                  },
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(16.0),
-                                                    child: const Text("+", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0, color: Colors.green)),
-                                                  )
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-
-                                          Card(
-                                            shape: ContinuousRectangleBorder( side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary),),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                TextButton(
-                                                  
-                                                  style: TextButton.styleFrom(shape: ContinuousRectangleBorder(side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary))),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      if (widget.formData["autonL3Num"] > 0)
-                                                      {
-                                                        widget.onDataChanged({
-                                                          "autonL3Num": widget.formData["autonL3Num"] - 1
-                                                        });
-                                                      }
-                                                      else
-                                                      {
-                                                        widget.onDataChanged({
-                                                          "autonL3Num": 0
-                                                        });
-                                                      }
-                                                    });
-                                                  },
-                                                  iconAlignment: IconAlignment.end,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(16.0),
-                                                    child: const Text("-", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0)),
-                                                  )
-                                                ),
-                                                const Spacer(),
-                                                Text("L3: ${widget.formData["autonL3Num"]}", style: TextStyle(fontSize: 20.0)),
-                                                const Spacer(),
-                                                TextButton(
-                                                  style: TextButton.styleFrom(shape: ContinuousRectangleBorder(side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary))),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      widget.onDataChanged({
-                                                        "autonL3Num": widget.formData["autonL3Num"] + 1
-                                                      });
-                                                    });
-                                                  },
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(16.0),
-                                                    child: const Text("+", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0, color: Colors.green)),
-                                                  )
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Card(
-                                            shape: ContinuousRectangleBorder( side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary),),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                TextButton(
-                                                  
-                                                  style: TextButton.styleFrom(shape: ContinuousRectangleBorder(side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary))),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      if (widget.formData["autonL2Num"] > 0)
-                                                      {
-                                                        widget.onDataChanged({
-                                                          "autonL2Num": widget.formData["autonL2Num"] - 1
-                                                        });
-                                                      }
-                                                      else
-                                                      {
-                                                        widget.onDataChanged({
-                                                          "autonL2Num": 0
-                                                        });
-                                                      }
-                                                    });
-                                                  },
-                                                  iconAlignment: IconAlignment.end,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(16.0),
-                                                    child: const Text("-", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0)),
-                                                  )
-                                                ),
-                                                const Spacer(),
-                                                Text("L2: ${widget.formData["autonL2Num"]}", style: TextStyle(fontSize: 20.0)),
-                                                const Spacer(),
-                                                TextButton(
-                                                  style: TextButton.styleFrom(shape: ContinuousRectangleBorder(side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary))),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      widget.onDataChanged({
-                                                        "autonL2Num": widget.formData["autonL2Num"] + 1
-                                                      });
-                                                    });
-                                                  },
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(16.0),
-                                                    child: const Text("+", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0, color: Colors.green)),
-                                                  )
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Card(
-                                            shape: ContinuousRectangleBorder( side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary),),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                TextButton(
-                                                  
-                                                  style: TextButton.styleFrom(shape: ContinuousRectangleBorder(side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary))),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      if (widget.formData["autonL1Num"] > 0)
-                                                      {
-                                                        widget.onDataChanged({
-                                                          "autonL1Num": widget.formData["autonL1Num"] - 1
-                                                        });
-                                                      }
-                                                      else
-                                                      {
-                                                        widget.onDataChanged({
-                                                          "autonL1Num": 0
-                                                        });
-                                                      }
-                                                    });
-                                                  },
-                                                  iconAlignment: IconAlignment.end,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(16.0),
-                                                    child: const Text("-", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0)),
-                                                  )
-                                                ),
-                                                const Spacer(),
-                                                Text("L1: ${widget.formData["autonL1Num"]}", style: TextStyle(fontSize: 20.0)),
-                                                const Spacer(),
-                                                TextButton(
-                                                  style: TextButton.styleFrom(shape: ContinuousRectangleBorder(side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary))),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      widget.onDataChanged({
-                                                        "autonL1Num": widget.formData["autonL1Num"] + 1
-                                                      });
-                                                    });
-                                                  },
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(16.0),
-                                                    child: const Text("+", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0, color: Colors.green)),
-                                                  )
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      
-                                    ]
-                                  ),
+                                                  });
+                                                } else {
+                                                  widget.onDataChanged(
+                                                      {"autonL4Num": 0});
+                                                }
+                                              });
+                                            }),
+                                        NumberInput(
+                                            title: "L3",
+                                            enableSpacer: true,
+                                            value:
+                                                widget.formData["autonL3Num"],
+                                            onValueAdd: () {
+                                              setState(() {
+                                                widget.onDataChanged({
+                                                  "autonL3Num": widget.formData[
+                                                          "autonL3Num"] +
+                                                      1
+                                                });
+                                              });
+                                            },
+                                            onValueSubtract: () {
+                                              setState(() {
+                                                if (widget.formData[
+                                                        "autonL3Num"] >
+                                                    0) {
+                                                  widget.onDataChanged({
+                                                    "autonL3Num":
+                                                        widget.formData[
+                                                                "autonL3Num"] -
+                                                            1
+                                                  });
+                                                } else {
+                                                  widget.onDataChanged(
+                                                      {"autonL3Num": 0});
+                                                }
+                                              });
+                                            }),
+                                        NumberInput(
+                                            title: "L2",
+                                            enableSpacer: true,
+                                            value:
+                                                widget.formData["autonL2Num"],
+                                            onValueAdd: () {
+                                              setState(() {
+                                                widget.onDataChanged({
+                                                  "autonL2Num": widget.formData[
+                                                          "autonL2Num"] +
+                                                      1
+                                                });
+                                              });
+                                            },
+                                            onValueSubtract: () {
+                                              setState(() {
+                                                if (widget.formData[
+                                                        "autonL2Num"] >
+                                                    0) {
+                                                  widget.onDataChanged({
+                                                    "autonL2Num":
+                                                        widget.formData[
+                                                                "autonL2Num"] -
+                                                            1
+                                                  });
+                                                } else {
+                                                  widget.onDataChanged(
+                                                      {"autonL2Num": 0});
+                                                }
+                                              });
+                                            }),
+                                        // Card(
+                                        //   shape: ContinuousRectangleBorder(
+                                        //     side: BorderSide(
+                                        //         width: 5.0,
+                                        //         color: Theme.of(context)
+                                        //             .colorScheme
+                                        //             .onSecondary),
+                                        //   ),
+                                        //   child: Row(
+                                        //     mainAxisSize: MainAxisSize.max,
+                                        //     children: [
+                                        //       TextButton(
+                                        //           style: TextButton.styleFrom(
+                                        //               shape: ContinuousRectangleBorder(
+                                        //                   side: BorderSide(
+                                        //                       width: 5.0,
+                                        //                       color: Theme.of(
+                                        //                               context)
+                                        //                           .colorScheme
+                                        //                           .onSecondary))),
+                                        //           onPressed: () {
+                                        //             setState(() {
+                                        //               if (widget.formData[
+                                        //                       "autonL1Num"] >
+                                        //                   0) {
+                                        //                 widget.onDataChanged({
+                                        //                   "autonL1Num": widget
+                                        //                               .formData[
+                                        //                           "autonL1Num"] -
+                                        //                       1
+                                        //                 });
+                                        //               } else {
+                                        //                 widget.onDataChanged(
+                                        //                     {"autonL1Num": 0});
+                                        //               }
+                                        //             });
+                                        //           },
+                                        //           iconAlignment:
+                                        //               IconAlignment.end,
+                                        //           child: Padding(
+                                        //             padding:
+                                        //                 const EdgeInsets.all(
+                                        //                     16.0),
+                                        //             child: const Text("-",
+                                        //                 style: TextStyle(
+                                        //                     fontWeight:
+                                        //                         FontWeight.w900,
+                                        //                     fontSize: 20.0)),
+                                        //           )),
+                                        //       const Spacer(),
+                                        //       Text(
+                                        //           "L1: ${widget.formData["autonL1Num"]}",
+                                        //           style: TextStyle(
+                                        //               fontSize: 20.0)),
+                                        //       const Spacer(),
+                                        //       TextButton(
+                                        //           style: TextButton.styleFrom(
+                                        //               shape: ContinuousRectangleBorder(
+                                        //                   side: BorderSide(
+                                        //                       width: 5.0,
+                                        //                       color: Theme.of(
+                                        //                               context)
+                                        //                           .colorScheme
+                                        //                           .onSecondary))),
+                                        //           onPressed: () {
+                                        //             setState(() {
+                                        //               widget.onDataChanged({
+                                        //                 "autonL1Num": widget
+                                        //                             .formData[
+                                        //                         "autonL1Num"] +
+                                        //                     1
+                                        //               });
+                                        //             });
+                                        //           },
+                                        //           child: Padding(
+                                        //             padding:
+                                        //                 const EdgeInsets.all(
+                                        //                     16.0),
+                                        //             child: const Text("+",
+                                        //                 style: TextStyle(
+                                        //                     fontWeight:
+                                        //                         FontWeight.w900,
+                                        //                     fontSize: 20.0,
+                                        //                     color:
+                                        //                         Colors.green)),
+                                        //           )),
+                                        //     ],
+                                        //   ),
+                                        // ),
+                                        NumberInput(
+                                            title: "L1",
+                                            enableSpacer: true,
+                                            value:
+                                                widget.formData["autonL1Num"],
+                                            onValueAdd: () {
+                                              setState(() {
+                                                widget.onDataChanged({
+                                                  "autonL1Num": widget.formData[
+                                                          "autonL1Num"] +
+                                                      1
+                                                });
+                                              });
+                                            },
+                                            onValueSubtract: () {
+                                              setState(() {
+                                                if (widget.formData[
+                                                        "autonL1Num"] >
+                                                    0) {
+                                                  widget.onDataChanged({
+                                                    "autonL1Num":
+                                                        widget.formData[
+                                                                "autonL1Num"] -
+                                                            1
+                                                  });
+                                                } else {
+                                                  widget.onDataChanged(
+                                                      {"autonL1Num": 0});
+                                                }
+                                              });
+                                            }),
+                                      ],
+                                    ),
+                                  ]),
                                 ),
                                 SizedBox(width: 10.0),
                                 Expanded(
                                   child: Column(
                                     children: [
                                       Card(
-                                        shape: ContinuousRectangleBorder( side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary),),
+                                        shape: ContinuousRectangleBorder(
+                                          side: BorderSide(
+                                              width: 5.0,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onSecondary),
+                                        ),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             TextButton(
-                                              
-                                              style: TextButton.styleFrom(shape: ContinuousRectangleBorder(side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary))),
-                                              onPressed: () {
-                                                setState(() {
-                                                  if (widget.formData["autonUpperAlgaeDescore"] > 0)
-                                                  {
-                                                    widget.onDataChanged({
-                                                      "autonUpperAlgaeDescore": widget.formData["autonUpperAlgaeDescore"] - 1
-                                                    });
-                                                  }
-                                                  else
-                                                  {
-                                                    widget.onDataChanged({
-                                                      "autonUpperAlgaeDescore": 0
-                                                    });
-                                                  }
-                                                });
-                                              },
-                                              iconAlignment: IconAlignment.end,
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: const Text("-", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0)),
-                                              )
-                                            ),
+                                                style: TextButton.styleFrom(
+                                                    shape: ContinuousRectangleBorder(
+                                                        side: BorderSide(
+                                                            width: 5.0,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .onSecondary))),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    if (widget.formData[
+                                                            "autonUpperAlgaeDescore"] >
+                                                        0) {
+                                                      widget.onDataChanged({
+                                                        "autonUpperAlgaeDescore":
+                                                            widget.formData[
+                                                                    "autonUpperAlgaeDescore"] -
+                                                                1
+                                                      });
+                                                    } else {
+                                                      widget.onDataChanged({
+                                                        "autonUpperAlgaeDescore":
+                                                            0
+                                                      });
+                                                    }
+                                                  });
+                                                },
+                                                iconAlignment:
+                                                    IconAlignment.end,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      16.0),
+                                                  child: const Text("-",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w900,
+                                                          fontSize: 20.0)),
+                                                )),
                                             const Spacer(),
-                                            Text("Upper Descore: ${widget.formData["autonUpperAlgaeDescore"]}", style: TextStyle(fontSize: 20.0)),
+                                            Text(
+                                                "Upper Descore: ${widget.formData["autonUpperAlgaeDescore"]}",
+                                                style:
+                                                    TextStyle(fontSize: 20.0)),
                                             const Spacer(),
                                             TextButton(
-                                              style: TextButton.styleFrom(shape: ContinuousRectangleBorder(side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary))),
-                                              onPressed: () {
-                                                setState(() {
-                                                  widget.onDataChanged({
-                                                    "autonUpperAlgaeDescore": widget.formData["autonUpperAlgaeDescore"] + 1
+                                                style: TextButton.styleFrom(
+                                                    shape: ContinuousRectangleBorder(
+                                                        side: BorderSide(
+                                                            width: 5.0,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .onSecondary))),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    widget.onDataChanged({
+                                                      "autonUpperAlgaeDescore":
+                                                          widget.formData[
+                                                                  "autonUpperAlgaeDescore"] +
+                                                              1
+                                                    });
                                                   });
-                                                });
-                                              },
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: const Text("+", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0, color: Colors.green)),
-                                              )
-                                            ),
+                                                },
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      16.0),
+                                                  child: const Text("+",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w900,
+                                                          fontSize: 20.0,
+                                                          color: Colors.green)),
+                                                )),
                                           ],
                                         ),
                                       ),
                                       Card(
-                                        shape: ContinuousRectangleBorder( side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary),),
+                                        shape: ContinuousRectangleBorder(
+                                          side: BorderSide(
+                                              width: 5.0,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onSecondary),
+                                        ),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             TextButton(
-                                              
-                                              style: TextButton.styleFrom(shape: ContinuousRectangleBorder(side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary))),
-                                              onPressed: () {
-                                                setState(() {
-                                                  if (widget.formData["autonLowerAlgaeDescore"] > 0)
-                                                  {
-                                                    widget.onDataChanged({
-                                                      "autonLowerAlgaeDescore": widget.formData["autonLowerAlgaeDescore"] - 1
-                                                    });
-                                                  }
-                                                  else
-                                                  {
-                                                    widget.onDataChanged({
-                                                      "autonLowerAlgaeDescore": 0
-                                                    });
-                                                  }
-                                                });
-                                              },
-                                              iconAlignment: IconAlignment.end,
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: const Text("-", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0)),
-                                              )
-                                            ),
+                                                style: TextButton.styleFrom(
+                                                    shape: ContinuousRectangleBorder(
+                                                        side: BorderSide(
+                                                            width: 5.0,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .onSecondary))),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    if (widget.formData[
+                                                            "autonLowerAlgaeDescore"] >
+                                                        0) {
+                                                      widget.onDataChanged({
+                                                        "autonLowerAlgaeDescore":
+                                                            widget.formData[
+                                                                    "autonLowerAlgaeDescore"] -
+                                                                1
+                                                      });
+                                                    } else {
+                                                      widget.onDataChanged({
+                                                        "autonLowerAlgaeDescore":
+                                                            0
+                                                      });
+                                                    }
+                                                  });
+                                                },
+                                                iconAlignment:
+                                                    IconAlignment.end,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      16.0),
+                                                  child: const Text("-",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w900,
+                                                          fontSize: 20.0)),
+                                                )),
                                             const Spacer(),
-                                            Text("Lower Descore: ${widget.formData["autonLowerAlgaeDescore"]}", style: TextStyle(fontSize: 20.0)),
+                                            Text(
+                                                "Lower Descore: ${widget.formData["autonLowerAlgaeDescore"]}",
+                                                style:
+                                                    TextStyle(fontSize: 20.0)),
                                             const Spacer(),
                                             TextButton(
-                                              style: TextButton.styleFrom(shape: ContinuousRectangleBorder(side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary))),
-                                              onPressed: () {
-                                                setState(() {
-                                                  widget.onDataChanged({
-                                                    "autonLowerAlgaeDescore": widget.formData["autonLowerAlgaeDescore"] + 1
+                                                style: TextButton.styleFrom(
+                                                    shape: ContinuousRectangleBorder(
+                                                        side: BorderSide(
+                                                            width: 5.0,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .onSecondary))),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    widget.onDataChanged({
+                                                      "autonLowerAlgaeDescore":
+                                                          widget.formData[
+                                                                  "autonLowerAlgaeDescore"] +
+                                                              1
+                                                    });
                                                   });
-                                                });
-                                              },
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: const Text("+", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0, color: Colors.green)),
-                                              )
-                                            ),
+                                                },
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      16.0),
+                                                  child: const Text("+",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w900,
+                                                          fontSize: 20.0,
+                                                          color: Colors.green)),
+                                                )),
                                           ],
                                         ),
                                       ),
                                       Card(
-                                        shape: ContinuousRectangleBorder( side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary),),
+                                        shape: ContinuousRectangleBorder(
+                                          side: BorderSide(
+                                              width: 5.0,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onSecondary),
+                                        ),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             TextButton(
-                                              
-                                              style: TextButton.styleFrom(shape: ContinuousRectangleBorder(side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary))),
-                                              onPressed: () {
-                                                setState(() {
-                                                  if (widget.formData["autonProcessor"] > 0)
-                                                  {
-                                                    widget.onDataChanged({
-                                                      "autonProcessor": widget.formData["autonProcessor"] - 1
-                                                    });
-                                                  }
-                                                  else
-                                                  {
-                                                    widget.onDataChanged({
-                                                      "autonProcessor": 0
-                                                    });
-                                                  }
-                                                });
-                                              },
-                                              iconAlignment: IconAlignment.end,
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: const Text("-", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0)),
-                                              )
-                                            ),
+                                                style: TextButton.styleFrom(
+                                                    shape: ContinuousRectangleBorder(
+                                                        side: BorderSide(
+                                                            width: 5.0,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .onSecondary))),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    if (widget.formData[
+                                                            "autonProcessor"] >
+                                                        0) {
+                                                      widget.onDataChanged({
+                                                        "autonProcessor": widget
+                                                                    .formData[
+                                                                "autonProcessor"] -
+                                                            1
+                                                      });
+                                                    } else {
+                                                      widget.onDataChanged({
+                                                        "autonProcessor": 0
+                                                      });
+                                                    }
+                                                  });
+                                                },
+                                                iconAlignment:
+                                                    IconAlignment.end,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      16.0),
+                                                  child: const Text("-",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w900,
+                                                          fontSize: 20.0)),
+                                                )),
                                             const Spacer(),
-                                            Text("Processor: ${widget.formData["autonProcessor"]}", style: TextStyle(fontSize: 20.0)),
+                                            Text(
+                                                "Processor: ${widget.formData["autonProcessor"]}",
+                                                style:
+                                                    TextStyle(fontSize: 20.0)),
                                             const Spacer(),
                                             TextButton(
-                                              style: TextButton.styleFrom(shape: ContinuousRectangleBorder(side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary))),
-                                              onPressed: () {
-                                                setState(() {
-                                                  widget.onDataChanged({
-                                                    "autonProcessor": widget.formData["autonProcessor"] + 1
+                                                style: TextButton.styleFrom(
+                                                    shape: ContinuousRectangleBorder(
+                                                        side: BorderSide(
+                                                            width: 5.0,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .onSecondary))),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    widget.onDataChanged({
+                                                      "autonProcessor": widget
+                                                                  .formData[
+                                                              "autonProcessor"] +
+                                                          1
+                                                    });
                                                   });
-                                                });
-                                              },
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: const Text("+", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0, color: Colors.green)),
-                                              )
-                                            ),
+                                                },
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      16.0),
+                                                  child: const Text("+",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w900,
+                                                          fontSize: 20.0,
+                                                          color: Colors.green)),
+                                                )),
                                           ],
                                         ),
                                       ),
                                       Card(
-                                        shape: ContinuousRectangleBorder( side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary),),
+                                        shape: ContinuousRectangleBorder(
+                                          side: BorderSide(
+                                              width: 5.0,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onSecondary),
+                                        ),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             TextButton(
-                                              
-                                              style: TextButton.styleFrom(shape: ContinuousRectangleBorder(side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary))),
-                                              onPressed: () {
-                                                setState(() {
-                                                  if (widget.formData["autonNetScore"] > 0)
-                                                  {
-                                                    widget.onDataChanged({
-                                                      "autonNetScore": widget.formData["autonNetScore"] - 1
-                                                    });
-                                                  }
-                                                  else
-                                                  {
-                                                    widget.onDataChanged({
-                                                      "autonNetScore": 0
-                                                    });
-                                                  }
-                                                });
-                                              },
-                                              iconAlignment: IconAlignment.end,
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: const Text("-", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0)),
-                                              )
-                                            ),
+                                                style: TextButton.styleFrom(
+                                                    shape: ContinuousRectangleBorder(
+                                                        side: BorderSide(
+                                                            width: 5.0,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .onSecondary))),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    if (widget.formData[
+                                                            "autonNetScore"] >
+                                                        0) {
+                                                      widget.onDataChanged({
+                                                        "autonNetScore": widget
+                                                                    .formData[
+                                                                "autonNetScore"] -
+                                                            1
+                                                      });
+                                                    } else {
+                                                      widget.onDataChanged(
+                                                          {"autonNetScore": 0});
+                                                    }
+                                                  });
+                                                },
+                                                iconAlignment:
+                                                    IconAlignment.end,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      16.0),
+                                                  child: const Text("-",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w900,
+                                                          fontSize: 20.0)),
+                                                )),
                                             const Spacer(),
-                                            Text("Direct to Net: ${widget.formData["autonNetScore"]}", style: TextStyle(fontSize: 20.0)),
+                                            Text(
+                                                "Direct to Net: ${widget.formData["autonNetScore"]}",
+                                                style:
+                                                    TextStyle(fontSize: 20.0)),
                                             const Spacer(),
                                             TextButton(
-                                              style: TextButton.styleFrom(shape: ContinuousRectangleBorder(side: BorderSide(width: 5.0, color: Theme.of(context).colorScheme.onSecondary))),
-                                              onPressed: () {
-                                                setState(() {
-                                                  widget.onDataChanged({
-                                                    "autonNetScore": widget.formData["autonNetScore"] + 1
+                                                style: TextButton.styleFrom(
+                                                    shape: ContinuousRectangleBorder(
+                                                        side: BorderSide(
+                                                            width: 5.0,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .onSecondary))),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    widget.onDataChanged({
+                                                      "autonNetScore": widget
+                                                                  .formData[
+                                                              "autonNetScore"] +
+                                                          1
+                                                    });
                                                   });
-                                                });
-                                              },
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: const Text("+", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0, color: Colors.green)),
-                                              )
-                                            ),
+                                                },
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      16.0),
+                                                  child: const Text("+",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w900,
+                                                          fontSize: 20.0,
+                                                          color: Colors.green)),
+                                                )),
                                           ],
                                         ),
                                       )
-                                      
                                     ],
-
                                   ),
-                                  
                                 )
                               ]),
                               Column()
                             ],
-                            
                           ),
                         if (widget.formData["autonExists"])
                           Column(
@@ -1246,7 +1414,6 @@ class _PitFormState extends State<PitForm> {
                               ),
                             ],
                           ),
-                          
                       ],
                     ),
                   ),
