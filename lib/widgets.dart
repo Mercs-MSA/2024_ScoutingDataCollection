@@ -198,8 +198,13 @@ class NumberInput extends StatelessWidget {
               style: style == NumberInputStyle.multi
                   ? ButtonStyle(
                       fixedSize: WidgetStateProperty.all(
-                          Size.square(miniStyle ? 42 : 56)),
+                          Size(miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
                       padding: WidgetStateProperty.all(EdgeInsets.zero),
+                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
+                      ),
                       backgroundColor:
                           WidgetStateProperty.all(ColorScheme.fromSeed(
                         seedColor: Colors.orange,
@@ -214,8 +219,14 @@ class NumberInput extends StatelessWidget {
                   : style == NumberInputStyle.red
                       ? ButtonStyle(
                           fixedSize: WidgetStateProperty.all(
-                              Size.square(miniStyle ? 42 : 56)),
+                              Size(miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
                           padding: WidgetStateProperty.all(EdgeInsets.zero),
+                          shape:
+                              WidgetStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4.0),
+                            ),
+                          ),
                           backgroundColor:
                               WidgetStateProperty.all(ColorScheme.fromSeed(
                             seedColor: Colors.red,
@@ -229,9 +240,15 @@ class NumberInput extends StatelessWidget {
                         )
                       : style == NumberInputStyle.green
                           ? ButtonStyle(
-                              fixedSize: WidgetStateProperty.all(
-                                  Size.square(miniStyle ? 42 : 56)),
+                              fixedSize: WidgetStateProperty.all(Size(
+                                  miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
                               padding: WidgetStateProperty.all(EdgeInsets.zero),
+                              shape: WidgetStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4.0),
+                                ),
+                              ),
                               backgroundColor:
                                   WidgetStateProperty.all(ColorScheme.fromSeed(
                                 seedColor: Colors.green,
@@ -252,7 +269,9 @@ class NumberInput extends StatelessWidget {
               child: Text(
                 value.toString(),
                 style: TextStyle(
-                    fontSize: miniStyle ? 28 : 36, fontWeight: FontWeight.w600),
+                    fontSize: miniStyle ? 28 : 36,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: "RobotoMono"),
               ),
             ),
             enableSpacer ? const Spacer() : const SizedBox(),
@@ -261,8 +280,13 @@ class NumberInput extends StatelessWidget {
               style: style == NumberInputStyle.multi
                   ? ButtonStyle(
                       fixedSize: WidgetStateProperty.all(
-                          Size.square(miniStyle ? 42 : 56)),
+                          Size(miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
                       padding: WidgetStateProperty.all(EdgeInsets.zero),
+                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
+                      ),
                       backgroundColor:
                           WidgetStateProperty.all(ColorScheme.fromSeed(
                         seedColor: Colors.green,
@@ -277,8 +301,14 @@ class NumberInput extends StatelessWidget {
                   : style == NumberInputStyle.red
                       ? ButtonStyle(
                           fixedSize: WidgetStateProperty.all(
-                              Size.square(miniStyle ? 42 : 56)),
+                              Size(miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
                           padding: WidgetStateProperty.all(EdgeInsets.zero),
+                          shape:
+                              WidgetStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4.0),
+                            ),
+                          ),
                           backgroundColor:
                               WidgetStateProperty.all(ColorScheme.fromSeed(
                             seedColor: Colors.red,
@@ -292,9 +322,15 @@ class NumberInput extends StatelessWidget {
                         )
                       : style == NumberInputStyle.green
                           ? ButtonStyle(
-                              fixedSize: WidgetStateProperty.all(
-                                  Size.square(miniStyle ? 42 : 56)),
+                              fixedSize: WidgetStateProperty.all(Size(
+                                  miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
                               padding: WidgetStateProperty.all(EdgeInsets.zero),
+                              shape: WidgetStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4.0),
+                                ),
+                              ),
                               backgroundColor:
                                   WidgetStateProperty.all(ColorScheme.fromSeed(
                                 seedColor: Colors.green,
