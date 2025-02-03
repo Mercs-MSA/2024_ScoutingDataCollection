@@ -5,8 +5,10 @@ class SettingsPage extends StatefulWidget {
   final bool initialTransposedExport;
   final bool initialExportHeaders;
   final String initialEventId;
+  final bool initialDevMode;
   final ValueChanged<bool> onTransposeChanged;
   final ValueChanged<bool> onExportHeadersChanged;
+  final ValueChanged<bool> onDevModeChanged;
   final ValueChanged<String> onEventIdChanged;
   final Function onResetPrefs;
 
@@ -15,8 +17,10 @@ class SettingsPage extends StatefulWidget {
     required this.initialTransposedExport,
     required this.initialExportHeaders,
     required this.initialEventId,
+    required this.initialDevMode,
     required this.onTransposeChanged,
     required this.onExportHeadersChanged,
+    required this.onDevModeChanged,
     required this.onEventIdChanged,
     required this.onResetPrefs,
   });
@@ -29,6 +33,7 @@ class SettingsPageState extends State<SettingsPage> {
   late bool transposedExport;
   late bool exportHeaders;
   late String eventId;
+  late bool devMode;
 
   @override
   void initState() {
@@ -36,6 +41,7 @@ class SettingsPageState extends State<SettingsPage> {
     transposedExport = widget.initialTransposedExport;
     exportHeaders = widget.initialExportHeaders;
     eventId = widget.initialEventId;
+    devMode = widget.initialDevMode;
   }
 
   @override
@@ -139,6 +145,15 @@ class SettingsPageState extends State<SettingsPage> {
                   backgroundColor: WidgetStatePropertyAll<Color>(
                       Theme.of(context).colorScheme.tertiary),
                 ),
+              ),
+              SwitchListTile(
+                value: devMode,
+                title: const Text("Developer Mode"),
+                subtitle: const Text("Auto-fill all start data"),
+                onChanged: (value) {
+                  setState(() => devMode = value);
+                  widget.onDevModeChanged(value);
+                },
               ),
             ],
           ),

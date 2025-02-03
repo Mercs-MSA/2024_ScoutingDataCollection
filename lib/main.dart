@@ -80,6 +80,7 @@ class _FormAppPageState extends State<FormAppPage> {
   String eventId = "unknown";
   bool transposedExport = true;
   bool exportHeaders = true;
+  bool devMode = false;
 
   int? pitTeamNumber;
   List<String> pitScouters = ["", ""];
@@ -232,6 +233,7 @@ class _FormAppPageState extends State<FormAppPage> {
 
     transposedExport = prefs.getBool("transposedExport") ?? true;
     exportHeaders = prefs.getBool("exportHeaders") ?? true;
+    devMode = prefs.getBool("develMode") ?? false;
 
     setState(() {
       appMode = 0;
@@ -301,6 +303,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                 initialTransposedExport: transposedExport,
                                 initialExportHeaders: exportHeaders,
                                 initialEventId: eventId,
+                                initialDevMode: devMode,
                                 onTransposeChanged: (value) {
                                   setState(() {
                                     transposedExport = value;
@@ -323,6 +326,12 @@ class _FormAppPageState extends State<FormAppPage> {
                                   resetPrefs();
                                   loadPrefs();
                                   Navigator.pop(context);
+                                },
+                                onDevModeChanged: (value) {
+                                  setState(() {
+                                    devMode = value;
+                                    attemptSaveDevMode();
+                                  });
                                 },
                               );
                             });
@@ -354,6 +363,14 @@ class _FormAppPageState extends State<FormAppPage> {
                           setState(() {
                             appMode = 1;
                             setAppModePref(appMode);
+                            // pit
+                            if (devMode) {
+                              pitTeamNumber = 9999;
+                              pitScoutingData["team"] = 9999;
+                              pitScouters = ["RonCollins", "RonCollins"];
+                              pitScoutingData["scouters"] =
+                                  "RonCollins,RonCollins";
+                            }
                           });
                         },
                         style: ButtonStyle(
@@ -400,6 +417,13 @@ class _FormAppPageState extends State<FormAppPage> {
                           setState(() {
                             appMode = 2;
                             setAppModePref(appMode);
+                            // match
+                            if (devMode) {
+                              matchTeamNumber = 9999;
+                              matchScoutingData["match"] = 1;
+                              matchScoutingData["team"] = 9999;
+                              matchScoutingData["scouter"] = "RonCollins";
+                            }
                           });
                         },
                         style: ButtonStyle(
@@ -1628,5 +1652,12 @@ class _FormAppPageState extends State<FormAppPage> {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setBool("exportHeaders", exportHeaders);
+  }
+
+  Future<void> attemptSaveDevMode() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      prefs.setBool('develMode', devMode);
+    });
   }
 }
