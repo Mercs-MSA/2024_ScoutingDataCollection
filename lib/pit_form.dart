@@ -5,7 +5,6 @@ import 'package:mercs_scout/datatypes.dart';
 import 'widgets.dart';
 
 class PitForm extends StatefulWidget {
-  //TODO: Human player preferences
   const PitForm({
     super.key,
     required this.teamNumberPresent,
@@ -21,16 +20,6 @@ class PitForm extends StatefulWidget {
   @override
   State<PitForm> createState() => _PitFormState();
 }
-
-enum CoralPositions { lOne, lTwo, lThree, lFour }
-
-enum AlgaePositions { processor, barge, descore }
-
-enum ClimbPositions { shallow, deep }
-
-enum Role { coral, algae, defense, feed }
-
-enum StartPosition { left, middle, right }
 
 class _PitFormState extends State<PitForm> {
   @override
@@ -203,50 +192,91 @@ class _PitFormState extends State<PitForm> {
                   const SizedBox(height: 8.0),
                   const Text("Is the robot a Kitbot, is so, what type?"),
                   const SizedBox(height: 8.0),
-                  Row(
+                  Column(
                     children: [
-                      Expanded(
-                        child: SegmentedButton(
-                          style: ButtonStyle(
-                              padding: WidgetStateProperty.all(
-                                  EdgeInsets.all(18.0))),
-                          segments: [
-                            ButtonSegment(
-                                value: KitBotTypes.not,
-                                label: Text("Not"),
-                                icon: Icon(Icons.handyman)),
-                            ButtonSegment(
-                              value: KitBotTypes.kitbot,
-                              label: Text("KitBot"),
-                              icon: Icon(Icons.pallet),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: RadioListTile(
+                              key: Key("pit-kitbot"),
+                              title: Text("Non-Kitbot"),
+                              value: widget.formData["kitbotType"] == "not",
+                              groupValue: true,
+                              onChanged: (value) {
+                                setState(() {
+                                  widget.onDataChanged(
+                                      {"kitbotType": KitBotTypes.not.name});
+                                });
+                              },
                             ),
-                            ButtonSegment(
-                              value: KitBotTypes.wcp,
-                              label: Text("WCP"),
-                              icon: Icon(Icons.pallet),
+                          ),
+                          Expanded(
+                            child: RadioListTile(
+                              key: Key("pit-kitbot"),
+                              title: Text("Kitbot"),
+                              value: widget.formData["kitbotType"] == "kitbot",
+                              groupValue: true,
+                              onChanged: (value) {
+                                setState(() {
+                                  widget.onDataChanged(
+                                      {"kitbotType": KitBotTypes.kitbot.name});
+                                });
+                              },
                             ),
-                            ButtonSegment(
-                              value: KitBotTypes.rev,
-                              label: Text("REV"),
-                              icon: Icon(Icons.pallet),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: RadioListTile(
+                              key: Key("pit-kitbot"),
+                              title: Text("WCP"),
+                              value: widget.formData["kitbotType"] == "wcp",
+                              groupValue: true,
+                              onChanged: (value) {
+                                setState(() {
+                                  widget.onDataChanged(
+                                      {"kitbotType": KitBotTypes.wcp.name});
+                                });
+                              },
                             ),
-                            ButtonSegment(
-                              value: KitBotTypes.everybot,
-                              label: Text("Everybot"),
-                              icon: Icon(Icons.pallet),
+                          ),
+                          Expanded(
+                            child: RadioListTile(
+                              key: Key("pit-kitbot"),
+                              title: Text("REV"),
+                              value: widget.formData["kitbotType"] == "rev",
+                              groupValue: true,
+                              onChanged: (value) {
+                                setState(() {
+                                  widget.onDataChanged(
+                                      {"kitbotType": KitBotTypes.rev.name});
+                                });
+                              },
                             ),
-                          ],
-                          selected: {
-                            KitBotTypes.values
-                                .byName(widget.formData["kitbotType"])
-                          },
-                          onSelectionChanged: (selection) {
-                            setState(() {
-                              widget.onDataChanged(
-                                  {"kitbotType": selection.first.name});
-                            });
-                          },
-                        ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: RadioListTile(
+                              key: Key("pit-kitbot"),
+                              title: Text("Everybot"),
+                              value:
+                                  widget.formData["kitbotType"] == "everybot",
+                              groupValue: true,
+                              onChanged: (value) {
+                                setState(() {
+                                  widget.onDataChanged({
+                                    "kitbotType": KitBotTypes.everybot.name
+                                  });
+                                });
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -491,41 +521,45 @@ class _PitFormState extends State<PitForm> {
                     children: [
                       const Text("Role (Cycle)"),
                       const SizedBox(width: 8.0),
-                      SegmentedButton<Role>(
+                      SegmentedButton<TeleopRole>(
                         style: ButtonStyle(
                             padding:
                                 WidgetStateProperty.all(EdgeInsets.all(18.0))),
-                        segments: <ButtonSegment<Role>>[
+                        segments: <ButtonSegment<TeleopRole>>[
                           ButtonSegment(
-                              value: Role.coral, label: Text('Coral')),
+                              value: TeleopRole.coral, label: Text('Coral')),
                           ButtonSegment(
-                              value: Role.algae, label: Text('Algae')),
+                              value: TeleopRole.algae, label: Text('Algae')),
                           ButtonSegment(
-                              value: Role.defense, label: Text('Defense')),
+                              value: TeleopRole.defense,
+                              label: Text('Defense')),
                           ButtonSegment(
-                              value: Role.feed, label: Text('Feeding')),
+                              value: TeleopRole.feed, label: Text('Feeding')),
                         ],
                         selected: {
                           if (widget.formData["coralCycle"] != null &&
                               widget.formData["coralCycle"])
-                            Role.coral,
+                            TeleopRole.coral,
                           if (widget.formData["algaeCycle"] != null &&
                               widget.formData["algaeCycle"])
-                            Role.algae,
+                            TeleopRole.algae,
                           if (widget.formData["defense"] != null &&
                               widget.formData["defense"])
-                            Role.defense,
+                            TeleopRole.defense,
                           if (widget.formData["feed"] != null &&
                               widget.formData["feed"])
-                            Role.feed,
+                            TeleopRole.feed,
                         },
-                        onSelectionChanged: (Set<Role> newSelection) {
+                        onSelectionChanged: (Set<TeleopRole> newSelection) {
                           setState(() {
                             widget.onDataChanged({
-                              "coralCycle": newSelection.contains(Role.coral),
-                              "algaeCycle": newSelection.contains(Role.algae),
-                              "defense": newSelection.contains(Role.defense),
-                              "feed": newSelection.contains(Role.feed),
+                              "coralCycle":
+                                  newSelection.contains(TeleopRole.coral),
+                              "algaeCycle":
+                                  newSelection.contains(TeleopRole.algae),
+                              "defense":
+                                  newSelection.contains(TeleopRole.defense),
+                              "feed": newSelection.contains(TeleopRole.feed),
                             });
                           });
                         },
@@ -1105,7 +1139,6 @@ class _PitFormState extends State<PitForm> {
                                 decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     labelText: "Autonomous Strategy"),
-                                keyboardType: TextInputType.number,
                                 inputFormatters: <TextInputFormatter>[
                                   LengthLimitingTextInputFormatter(300),
                                   FilteringTextInputFormatter(RegExp(r'[^|*]+'),

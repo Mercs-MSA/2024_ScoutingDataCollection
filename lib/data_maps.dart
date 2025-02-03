@@ -1,0 +1,62 @@
+import 'datatypes.dart';
+
+Map<String, dynamic> getPitDataMap() {
+  return {
+    "form": "pit",
+    "team": null,
+    "scouters": ["null", "null"],
+    "width": null,
+    "length": null,
+    "height": null,
+    "weight": null,
+    "lOne": false,
+    "lTwo": false,
+    "lThree": false,
+    "lFour": false,
+    "processor": false,
+    "barge": false,
+    "descore": false,
+    "deepClimb": false,
+    "shallowClimb": false,
+    "coralCycle": false,
+    "algaeCycle": false,
+    "defense": false,
+    "feed": false,
+    "driverYears": null,
+    "operatorYears": null,
+    "coachYears": null,
+    "isCoachAdult": false,
+    "drivebase": "Swerve",
+    "repairability": 3.0,
+    "humanPlayerLocation": "Coral",
+    "autonExists": false,
+    "notes": null,
+    "autonExit": false,
+    "autonStrategy": null,
+    "canAutoLeft": false,
+    "canAutoMid": false,
+    "canAutoRight": false,
+    "autonL4Num": 0,
+    "autonL3Num": 0,
+    "autonL2Num": 0,
+    "autonL1Num": 0,
+    "autonUpperAlgaeDescore": 0,
+    "autonLowerAlgaeDescore": 0,
+    "autonProcessor": 0,
+    "autonNetScore": 0,
+    "kitbotType": "not",
+    "isModifiedKit": false,
+  };
+}
+
+Map<String, dynamic> getMatchDataMap() {
+  return {
+    "form": "match",
+    "team": null,
+    "scouter": "",
+    "alliance": Alliance.blue,
+    "match": null,
+    "startPos": "middle",
+    "autoL4scored": 0,
+  };
+}

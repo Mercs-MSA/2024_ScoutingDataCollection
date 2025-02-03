@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_confetti/flutter_confetti.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+import 'package:mercs_scout/data_maps.dart';
 import 'package:mercs_scout/settingspage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path/path.dart' as path;
@@ -87,119 +88,11 @@ class _FormAppPageState extends State<FormAppPage> {
 
   int? matchTeamNumber;
 
-  Map<String, dynamic> pitScoutingDefaultData = {
-    "form": "pit",
-    "team": null,
-    "scouters": ["null", "null"],
-    "width": null,
-    "length": null,
-    "height": null,
-    "weight": null,
-    "lOne": false,
-    "lTwo": false,
-    "lThree": false,
-    "lFour": false,
-    "processor": false,
-    "barge": false,
-    "descore": false,
-    "deepClimb": false,
-    "shallowClimb": false,
-    "coralCycle": false,
-    "algaeCycle": false,
-    "defense": false,
-    "feed": false,
-    "driverYears": null,
-    "operatorYears": null,
-    "coachYears": null,
-    "isCoachAdult": false,
-    "drivebase": "Swerve",
-    "repairability": 3.0,
-    "humanPlayerLocation": "Coral",
-    "autonExists": false,
-    "notes": null,
-    "autonExit": false,
-    "autonStrategy": null,
-    "canAutoLeft": false,
-    "canAutoMid": false,
-    "canAutoRight": false,
-    "autonL4Num": 0,
-    "autonL3Num": 0,
-    "autonL2Num": 0,
-    "autonL1Num": 0,
-    "autonUpperAlgaeDescore": 0,
-    "autonLowerAlgaeDescore": 0,
-    "autonProcessor": 0,
-    "autonNetScore": 0,
-    "kitbotType": "not",
-    "isModifiedKit": false,
-  };
+  Map<String, dynamic> pitScoutingDefaultData = getPitDataMap();
+  Map<String, dynamic> pitScoutingData = getPitDataMap();
 
-  Map<String, dynamic> pitScoutingData = {
-    "form": "pit",
-    "team": null,
-    "scouters": ["null", "null"],
-    "width": null,
-    "length": null,
-    "height": null,
-    "weight": null,
-    "lOne": false,
-    "lTwo": false,
-    "lThree": false,
-    "lFour": false,
-    "processor": false,
-    "barge": false,
-    "descore": false,
-    "deepClimb": false,
-    "shallowClimb": false,
-    "coralCycle": false,
-    "algaeCycle": false,
-    "defense": false,
-    "feed": false,
-    "driverYears": null,
-    "operatorYears": null,
-    "coachYears": null,
-    "isCoachAdult": false,
-    "drivebase": "Swerve",
-    "repairability": 3.0,
-    "humanPlayerLocation": "Coral",
-    "autonExists": false,
-    "notes": null,
-    "autonExit": false,
-    "autonStrategy": null,
-    "canAutoLeft": false,
-    "canAutoMid": false,
-    "canAutoRight": false,
-    "autonL4Num": 0,
-    "autonL3Num": 0,
-    "autonL2Num": 0,
-    "autonL1Num": 0,
-    "autonUpperAlgaeDescore": 0,
-    "autonLowerAlgaeDescore": 0,
-    "autonProcessor": 0,
-    "autonNetScore": 0,
-    "kitbotType": "not",
-    "isModifiedKit": false,
-  };
-
-  Map<String, dynamic> matchScoutingDefaultData = {
-    "form": "match",
-    "team": null,
-    "scouter": "",
-    "alliance": Alliance.blue,
-    "match": null,
-    "startPos": "middle",
-    "autoL4scored": 0,
-  };
-
-  Map<String, dynamic> matchScoutingData = {
-    "form": "match",
-    "team": null,
-    "scouter": "",
-    "alliance": "blue",
-    "match": null,
-    "startPos": "middle",
-    "autoL4scored": 0,
-  };
+  Map<String, dynamic> matchScoutingDefaultData = getMatchDataMap();
+  Map<String, dynamic> matchScoutingData = getMatchDataMap();
 
   bool saveDisabled = false;
 
