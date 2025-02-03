@@ -1209,12 +1209,12 @@ class _PitFormState extends State<PitForm> {
                         ListTile(
                           leading: Icon(
                             Icons.info,
-                            color: Theme.of(context).colorScheme.onTertiary,
+                            color: Theme.of(context).colorScheme.onPrimary,
                           ),
                           title: Text(
                             "Remember to take robot pictures",
                             style: TextStyle(
-                                color: Theme.of(context).colorScheme.onTertiary,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),

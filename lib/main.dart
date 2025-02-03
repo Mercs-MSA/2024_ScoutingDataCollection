@@ -5,6 +5,7 @@ import 'dart:math';
 
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_confetti/flutter_confetti.dart';
@@ -82,6 +83,7 @@ class _FormAppPageState extends State<FormAppPage> {
   bool transposedExport = true;
   bool exportHeaders = true;
   bool devMode = false;
+  bool showWebWarning = true;
 
   int? pitTeamNumber;
   List<String> pitScouters = ["", ""];
@@ -109,7 +111,47 @@ class _FormAppPageState extends State<FormAppPage> {
   void initState() {
     super.initState();
     _initPackageInfo();
-    loadPrefs();
+    loadPrefs().whenComplete(() {
+      if (!kIsWeb) {
+        return;
+      }
+
+      if (!showWebWarning) {
+        return;
+      }
+
+      WidgetsBinding.instance.addPostFrameCallback((_) => showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Web Support'),
+              icon: Icon(
+                Icons.construction,
+                size: 64,
+              ),
+              content: const Text(
+                  'Web support is a work in progress.\nSome features may not be fully functional.'),
+              actions: <Widget>[
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("Dismiss"),
+                ),
+                FilledButton(
+                  onPressed: () {
+                    showWebWarning = false;
+                    attemptSaveShowWebWarning();
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    "Don't show again",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+          ));
+    });
   }
 
   Future<void> _initPackageInfo() async {
@@ -127,6 +169,7 @@ class _FormAppPageState extends State<FormAppPage> {
     transposedExport = prefs.getBool("transposedExport") ?? true;
     exportHeaders = prefs.getBool("exportHeaders") ?? true;
     devMode = prefs.getBool("develMode") ?? false;
+    showWebWarning = prefs.getBool("showWebWarning") ?? true;
 
     setState(() {
       appMode = 0;
@@ -955,6 +998,16 @@ class _FormAppPageState extends State<FormAppPage> {
                                         return Colors.transparent;
                                       },
                                     ),
+                                    padding: WidgetStateProperty.all(
+                                      EdgeInsets.all(24.0),
+                                    ),
+                                    shape: WidgetStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(4)),
+                                      ),
+                                    ),
                                   ),
                                   emptySelectionAllowed: false,
                                   multiSelectionEnabled: false,
@@ -1553,6 +1606,13 @@ class _FormAppPageState extends State<FormAppPage> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       prefs.setBool('develMode', devMode);
+    });
+  }
+
+  Future<void> attemptSaveShowWebWarning() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      prefs.setBool('showWebWarning', showWebWarning);
     });
   }
 }
