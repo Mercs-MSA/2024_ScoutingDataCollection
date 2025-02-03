@@ -48,7 +48,6 @@ class _PitFormState extends State<PitForm> {
               padding: const EdgeInsets.all(12.0),
               child: Column(
                 children: <Widget>[
-                  const SizedBox(height: 8.0),
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
@@ -251,6 +250,15 @@ class _PitFormState extends State<PitForm> {
                       ),
                     ],
                   ),
+                  if (widget.formData["kitbotType"] != "not")
+                    CheckboxListTile(
+                        title: const Text("Modified?"),
+                        value: widget.formData["isModifiedKit"],
+                        onChanged: (value) {
+                          setState(() {
+                            widget.onDataChanged({"isModifiedKit": value});
+                          });
+                        }),
                   const SizedBox(height: 8.0),
                   ChoiceInput(
                     title: "Drivebase",
@@ -263,15 +271,6 @@ class _PitFormState extends State<PitForm> {
                     options: const ["Swerve", "Tank", "Other"],
                   ),
                   const SizedBox(height: 8.0),
-                  if (widget.formData["kitbotType"] != "not")
-                    SwitchListTile(
-                        title: const Text("Modified?"),
-                        value: widget.formData["isModifiedKit"],
-                        onChanged: (value) {
-                          setState(() {
-                            widget.onDataChanged({"isModifiedKit": value});
-                          });
-                        }),
                   RatingInput(
                     enableHalves: false,
                     title: 'Repairability',
@@ -1156,6 +1155,26 @@ class _PitFormState extends State<PitForm> {
                           : widget.formData["notes"]
                               .toString()
                               .replaceAll("**", "\n"),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Card(
+                    color: Theme.of(context).colorScheme.primary,
+                    child: Column(
+                      children: [
+                        ListTile(
+                          leading: Icon(
+                            Icons.info,
+                            color: Theme.of(context).colorScheme.onTertiary,
+                          ),
+                          title: Text(
+                            "Remember to take robot pictures",
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.onTertiary,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
