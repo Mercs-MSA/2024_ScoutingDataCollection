@@ -190,105 +190,116 @@ class _PitFormState extends State<PitForm> {
                     ],
                   ),
                   const SizedBox(height: 8.0),
-                  const Text("Is the robot a Kitbot, is so, what type?"),
-                  const SizedBox(height: 8.0),
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: RadioListTile(
-                              key: Key("pit-kitbot"),
-                              title: Text("Non-Kitbot"),
-                              value: widget.formData["kitbotType"] == "not",
-                              groupValue: true,
-                              onChanged: (value) {
-                                setState(() {
-                                  widget.onDataChanged(
-                                      {"kitbotType": KitBotTypes.not.name});
-                                });
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: RadioListTile(
-                              key: Key("pit-kitbot"),
-                              title: Text("Kitbot"),
-                              value: widget.formData["kitbotType"] == "kitbot",
-                              groupValue: true,
-                              onChanged: (value) {
-                                setState(() {
-                                  widget.onDataChanged(
-                                      {"kitbotType": KitBotTypes.kitbot.name});
-                                });
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: RadioListTile(
-                              key: Key("pit-kitbot"),
-                              title: Text("WCP"),
-                              value: widget.formData["kitbotType"] == "wcp",
-                              groupValue: true,
-                              onChanged: (value) {
-                                setState(() {
-                                  widget.onDataChanged(
-                                      {"kitbotType": KitBotTypes.wcp.name});
-                                });
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: RadioListTile(
-                              key: Key("pit-kitbot"),
-                              title: Text("REV"),
-                              value: widget.formData["kitbotType"] == "rev",
-                              groupValue: true,
-                              onChanged: (value) {
-                                setState(() {
-                                  widget.onDataChanged(
-                                      {"kitbotType": KitBotTypes.rev.name});
-                                });
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: RadioListTile(
-                              key: Key("pit-kitbot"),
-                              title: Text("Everybot"),
-                              value:
-                                  widget.formData["kitbotType"] == "everybot",
-                              groupValue: true,
-                              onChanged: (value) {
-                                setState(() {
-                                  widget.onDataChanged({
-                                    "kitbotType": KitBotTypes.everybot.name
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          width: 1.0, color: Theme.of(context).dividerColor),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Column(
+                      children: [
+                        const Text("Is the robot a Kitbot, is so, what type?"),
+                        const SizedBox(height: 8.0),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: RadioListTile(
+                                key: Key("pit-kitbot"),
+                                title: Text("Non-Kitbot"),
+                                value: widget.formData["kitbotType"] == "not",
+                                groupValue: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    widget.onDataChanged(
+                                        {"kitbotType": KitBotTypes.not.name});
                                   });
-                                });
-                              },
+                                },
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                            Expanded(
+                              child: RadioListTile(
+                                key: Key("pit-kitbot"),
+                                title: Text("Kitbot"),
+                                value:
+                                    widget.formData["kitbotType"] == "kitbot",
+                                groupValue: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    widget.onDataChanged({
+                                      "kitbotType": KitBotTypes.kitbot.name
+                                    });
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: RadioListTile(
+                                key: Key("pit-kitbot"),
+                                title: Text("WCP"),
+                                value: widget.formData["kitbotType"] == "wcp",
+                                groupValue: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    widget.onDataChanged(
+                                        {"kitbotType": KitBotTypes.wcp.name});
+                                  });
+                                },
+                              ),
+                            ),
+                            Expanded(
+                              child: RadioListTile(
+                                key: Key("pit-kitbot"),
+                                title: Text("REV"),
+                                value: widget.formData["kitbotType"] == "rev",
+                                groupValue: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    widget.onDataChanged(
+                                        {"kitbotType": KitBotTypes.rev.name});
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: RadioListTile(
+                                key: Key("pit-kitbot"),
+                                title: Text("Everybot"),
+                                value:
+                                    widget.formData["kitbotType"] == "everybot",
+                                groupValue: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    widget.onDataChanged({
+                                      "kitbotType": KitBotTypes.everybot.name
+                                    });
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        if (widget.formData["kitbotType"] != "not")
+                          CheckboxListTile(
+                              title: const Text("Modified?"),
+                              value: widget.formData["isModifiedKit"],
+                              onChanged: (value) {
+                                setState(() {
+                                  widget
+                                      .onDataChanged({"isModifiedKit": value});
+                                });
+                              }),
+                      ],
+                    ),
                   ),
-                  if (widget.formData["kitbotType"] != "not")
-                    CheckboxListTile(
-                        title: const Text("Modified?"),
-                        value: widget.formData["isModifiedKit"],
-                        onChanged: (value) {
-                          setState(() {
-                            widget.onDataChanged({"isModifiedKit": value});
-                          });
-                        }),
                   const SizedBox(height: 8.0),
                   ChoiceInput(
                     title: "Drivebase",
