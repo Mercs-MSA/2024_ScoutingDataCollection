@@ -202,17 +202,6 @@ class _PitFormState extends State<PitForm> {
                     ],
                   ),
                   const SizedBox(height: 8.0),
-                  ChoiceInput(
-                    title: "Drivebase",
-                    onChoiceUpdate: (value) {
-                      setState(() {
-                        widget.onDataChanged({"drivebase": value!});
-                      });
-                    },
-                    choice: widget.formData["drivebase"],
-                    options: const ["Swerve", "Tank", "Other"],
-                  ),
-                  const SizedBox(height: 8.0),
                   const Text("Is the robot a Kitbot, is so, what type?"),
                   const SizedBox(height: 8.0),
                   Row(
@@ -261,6 +250,17 @@ class _PitFormState extends State<PitForm> {
                         ),
                       ),
                     ],
+                  ),
+                  const SizedBox(height: 8.0),
+                  ChoiceInput(
+                    title: "Drivebase",
+                    onChoiceUpdate: (value) {
+                      setState(() {
+                        widget.onDataChanged({"drivebase": value!});
+                      });
+                    },
+                    choice: widget.formData["drivebase"],
+                    options: const ["Swerve", "Tank", "Other"],
                   ),
                   const SizedBox(height: 8.0),
                   if (widget.formData["kitbotType"] != "not")
@@ -754,50 +754,65 @@ class _PitFormState extends State<PitForm> {
                                   ),
                                 ],
                               ),
-                              Row(mainAxisSize: MainAxisSize.max, children: [
-                                Expanded(
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                          child: Divider(color: Colors.white)),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10.0, horizontal: 10.0),
-                                        child: const Text(
-                                          "Coral Scoring",
-                                          style: TextStyle(
-                                              fontSize: 21.0,
-                                              fontStyle: FontStyle.italic),
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          child: Divider(
+                                              color: Theme.of(context)
+                                                  .dividerColor),
                                         ),
-                                      ),
-                                      Expanded(
-                                          child: Divider(color: Colors.white))
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width: 10.0),
-                                Expanded(
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                          child: Divider(color: Colors.white)),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10.0, horizontal: 10.0),
-                                        child: const Text(
-                                          "Algae Scoring",
-                                          style: TextStyle(
-                                              fontSize: 21.0,
-                                              fontStyle: FontStyle.italic),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10.0, horizontal: 10.0),
+                                          child: const Text(
+                                            "Coral Scoring",
+                                            style: TextStyle(
+                                                fontSize: 21.0,
+                                                fontStyle: FontStyle.italic),
+                                          ),
                                         ),
-                                      ),
-                                      Expanded(
-                                          child: Divider(color: Colors.white))
-                                    ],
+                                        Expanded(
+                                          child: Divider(
+                                              color: Theme.of(context)
+                                                  .dividerColor),
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ]),
+                                  SizedBox(width: 10.0),
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Divider(
+                                              color: Theme.of(context)
+                                                  .dividerColor),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10.0, horizontal: 10.0),
+                                          child: const Text(
+                                            "Algae Scoring",
+                                            style: TextStyle(
+                                                fontSize: 21.0,
+                                                fontStyle: FontStyle.italic),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Divider(
+                                              color: Theme.of(context)
+                                                  .dividerColor),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                               Row(mainAxisSize: MainAxisSize.max, children: [
                                 Expanded(
                                   child: Column(children: [
