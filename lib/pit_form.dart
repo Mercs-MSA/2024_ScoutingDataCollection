@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mercs_scout/data_maps.dart';
 import 'package:mercs_scout/datatypes.dart';
 
 import 'widgets.dart';
@@ -212,7 +213,7 @@ class _PitFormState extends State<PitForm> {
                                 onChanged: (value) {
                                   setState(() {
                                     widget.onDataChanged(
-                                        {"kitbotType": KitBotTypes.not.name});
+                                        getKitbotData(KitBotTypes.not));
                                   });
                                 },
                               ),
@@ -226,9 +227,9 @@ class _PitFormState extends State<PitForm> {
                                 groupValue: true,
                                 onChanged: (value) {
                                   setState(() {
-                                    widget.onDataChanged({
-                                      "kitbotType": KitBotTypes.kitbot.name
-                                    });
+                                    widget.onDataChanged(
+                                      getKitbotData(KitBotTypes.kitbot),
+                                    );
                                   });
                                 },
                               ),
@@ -246,7 +247,7 @@ class _PitFormState extends State<PitForm> {
                                 onChanged: (value) {
                                   setState(() {
                                     widget.onDataChanged(
-                                        {"kitbotType": KitBotTypes.wcp.name});
+                                        getKitbotData(KitBotTypes.wcp));
                                   });
                                 },
                               ),
@@ -260,7 +261,7 @@ class _PitFormState extends State<PitForm> {
                                 onChanged: (value) {
                                   setState(() {
                                     widget.onDataChanged(
-                                        {"kitbotType": KitBotTypes.rev.name});
+                                        getKitbotData(KitBotTypes.rev));
                                   });
                                 },
                               ),
@@ -278,9 +279,8 @@ class _PitFormState extends State<PitForm> {
                                 groupValue: true,
                                 onChanged: (value) {
                                   setState(() {
-                                    widget.onDataChanged({
-                                      "kitbotType": KitBotTypes.everybot.name
-                                    });
+                                    widget.onDataChanged(
+                                        getKitbotData(KitBotTypes.everybot));
                                   });
                                 },
                               ),
