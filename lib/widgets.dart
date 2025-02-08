@@ -352,3 +352,44 @@ class NumberInput extends StatelessWidget {
     );
   }
 }
+
+
+class SectionHeader extends StatelessWidget
+{
+  final Color color;
+  final String title;
+  final double fontSize;
+  final double padding;
+
+  const SectionHeader ({super.key, 
+    required this.title,
+    this.color = Colors.white,
+    this.fontSize = 21.0,
+    this.padding = 5.0
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: padding),
+        child: Row(
+          children: [
+            Expanded(child: Divider(color: color)),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(title, 
+                style: TextStyle(
+                  fontSize: fontSize,
+                  fontStyle: FontStyle.italic
+                )
+              ),
+            ),
+            Expanded(child: Divider(color: color))
+          ]
+        ),
+      ),
+    );
+  }
+  
+}

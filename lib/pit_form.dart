@@ -801,60 +801,9 @@ class _PitFormState extends State<PitForm> {
                               Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Expanded(
-                                          child: Divider(
-                                              color: Theme.of(context)
-                                                  .dividerColor),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 10.0, horizontal: 10.0),
-                                          child: const Text(
-                                            "Coral Scoring",
-                                            style: TextStyle(
-                                                fontSize: 21.0,
-                                                fontStyle: FontStyle.italic),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Divider(
-                                              color: Theme.of(context)
-                                                  .dividerColor),
-                                        )
-                                      ],
-                                    ),
-                                  ),
+                                  SectionHeader(title: "Coral Scoring", color: Theme.of(context).dividerColor),
                                   SizedBox(width: 10.0),
-                                  Expanded(
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: Divider(
-                                              color: Theme.of(context)
-                                                  .dividerColor),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 10.0, horizontal: 10.0),
-                                          child: const Text(
-                                            "Algae Scoring",
-                                            style: TextStyle(
-                                                fontSize: 21.0,
-                                                fontStyle: FontStyle.italic),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Divider(
-                                              color: Theme.of(context)
-                                                  .dividerColor),
-                                        )
-                                      ],
-                                    ),
-                                  ),
+                                  SectionHeader(title: "Algae Scoring", color: Theme.of(context).dividerColor)
                                 ],
                               ),
                               Row(mainAxisSize: MainAxisSize.max, children: [
