@@ -58,6 +58,7 @@ Map<String, dynamic> getMatchDataMap() {
     "match": null,
     "startPos": "middle",
     "autoL4scored": 0,
+    "endgamePos": "none",
   };
 }
 

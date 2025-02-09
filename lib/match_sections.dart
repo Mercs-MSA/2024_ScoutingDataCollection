@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mercs_scout/datatypes.dart';
 
 import 'match_form.dart';
 
@@ -137,7 +138,166 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
         padding: EdgeInsets.all(12.0),
         child: Column(
           children: [
-            Text("EndgameSection\nParent form data: ${widget.form.formData}"),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text("Climb"),
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 15.0, right: 10.0),
+                    child: Divider(),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
+                    child: SegmentedButton<EndgamePositions>(
+                      showSelectedIcon: false,
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                      ),
+                      emptySelectionAllowed: true,
+                      multiSelectionEnabled: false,
+                      segments: <ButtonSegment<EndgamePositions>>[
+                        ButtonSegment(
+                          value: EndgamePositions.shallow,
+                          label: Text("Shallow Climb",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15)),
+                          icon: Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Image(
+                              image: widget.form.formData["alliance"] == "red"
+                                  ? AssetImage('images/shallow_cage_r.png')
+                                  : AssetImage('images/shallow_cage_b.png'),
+                              fit: BoxFit.scaleDown,
+                              height: 200,
+                              isAntiAlias: true,
+                            ),
+                          ),
+                        ),
+                        ButtonSegment(
+                          value: EndgamePositions.deep,
+                          label: Text("Deep Climb",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15)),
+                          icon: Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Image(
+                              image: widget.form.formData["alliance"] == "red"
+                                  ? AssetImage('images/deep_cage_r.png')
+                                  : AssetImage('images/deep_cage_b.png'),
+                              fit: BoxFit.scaleDown,
+                              height: 200,
+                              isAntiAlias: true,
+                            ),
+                          ),
+                        ),
+                      ],
+                      selected: {
+                        if (widget.form.formData["endgamePos"] == "shallow")
+                          EndgamePositions.shallow,
+                        if (widget.form.formData["endgamePos"] == "deep")
+                          EndgamePositions.deep,
+                      },
+                      onSelectionChanged: (Set<EndgamePositions> newSelection) {
+                        setState(() {
+                          if (newSelection.contains(EndgamePositions.shallow)) {
+                            widget.form.formData["endgamePos"] = "shallow";
+                          }
+                          if (newSelection.contains(EndgamePositions.deep)) {
+                            widget.form.formData["endgamePos"] = "deep";
+                          }
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                    child: Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  child: SegmentedButton(
+                    showSelectedIcon: false,
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                    ),
+                    emptySelectionAllowed: true,
+                    segments: <ButtonSegment<EndgamePositions>>[
+                      ButtonSegment(
+                          value: EndgamePositions.park,
+                          label: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text("Park",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 15)),
+                          )),
+                    ],
+                    selected: {
+                      if (widget.form.formData["endgamePos"] == "park")
+                        EndgamePositions.park,
+                    },
+                    onSelectionChanged: (Set<EndgamePositions> newSelection) {
+                      setState(() {
+                        if (newSelection.contains(EndgamePositions.park)) {
+                          widget.form.formData["endgamePos"] = "park";
+                        }
+                      });
+                    },
+                  ),
+                )),
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                    child: Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  child: SegmentedButton(
+                    showSelectedIcon: false,
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                    ),
+                    emptySelectionAllowed: true,
+                    segments: <ButtonSegment<EndgamePositions>>[
+                      ButtonSegment(
+                          value: EndgamePositions.none,
+                          label: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text("No Park/Climb",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 15)),
+                          )),
+                    ],
+                    selected: {
+                      if (widget.form.formData["endgamePos"] == "none")
+                        EndgamePositions.none,
+                    },
+                    onSelectionChanged: (Set<EndgamePositions> newSelection) {
+                      setState(() {
+                        if (newSelection.contains(EndgamePositions.none)) {
+                          widget.form.formData["endgamePos"] = "none";
+                        }
+                      });
+                    },
+                  ),
+                )),
+              ],
+            ),
           ],
         ),
       ),
