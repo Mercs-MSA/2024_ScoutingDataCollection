@@ -83,6 +83,7 @@ Map<String, dynamic> getMatchDataMap() {
     "teleAlgaeDescored": 0,
     "teleProcessorScored": 0,
     "teleProcessorMissed": 0,
+    "endgamePos": "none",
   };
 }
 

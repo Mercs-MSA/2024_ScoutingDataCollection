@@ -13,3 +13,5 @@ enum ClimbPositions { shallow, deep }
 enum TeleopRole { coral, algae, defense, feed }
 
 enum StartPosition { left, middle, right }
+
+enum EndgamePositions { shallow, deep, park, none }

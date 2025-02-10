@@ -78,6 +78,10 @@ flutter:
   assets:
     - images/mercs.png
     - images/icon.png
+    - images/deep_cage_b.png
+    - images/deep_cage_r.png
+    - images/shallow_cage_b.png
+    - images/shallow_cage_r.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
