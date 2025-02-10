@@ -107,6 +107,8 @@ class _FormAppPageState extends State<FormAppPage> {
     installerStore: 'Unknown',
   );
 
+  bool algaeColorIsManufacturingDefect = Random.secure().nextBool();
+
   @override
   void initState() {
     super.initState();
