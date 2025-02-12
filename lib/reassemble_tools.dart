@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class ReassembleListener extends StatefulWidget {
-  const ReassembleListener({required this.onReassemble, required this.child})
-      : super();
+  const ReassembleListener(
+      {super.key, required this.onReassemble, required this.child});
 
   final VoidCallback onReassemble;
   final Widget child;
 
   @override
-  _ReassembleListenerState createState() => _ReassembleListenerState();
+  ReassembleListenerState createState() => ReassembleListenerState();
 }
 
-class _ReassembleListenerState extends State<ReassembleListener> {
+class ReassembleListenerState extends State<ReassembleListener> {
   @override
   void reassemble() {
     super.reassemble();
