@@ -9,12 +9,15 @@ class MatchForm extends StatefulWidget {
     required this.teamNumberPresent,
     required this.onDataChanged,
     required this.formData,
+    required this.colorDebug
   });
 
   final bool teamNumberPresent;
 
   final Function(Map<String, dynamic>) onDataChanged;
   final Map formData;
+  final bool colorDebug;
+  
 
   @override
   State<MatchForm> createState() => _MatchFormState();
@@ -48,7 +51,7 @@ class _MatchFormState extends State<MatchForm>
           Scaffold(
             appBar: TabBar(
               controller: _tabController,
-              tabs: const <Widget>[
+              tabs: <Widget>[
                 Tab(
                   icon: Icon(Icons.auto_awesome),
                   text: "Auton",
@@ -66,9 +69,9 @@ class _MatchFormState extends State<MatchForm>
             body: TabBarView(
               controller: _tabController,
               children: [
-                MatchAutonSection(form: widget),
-                MatchTeleopSection(form: widget),
-                MatchEndgameSection(form: widget),
+                MatchAutonSection(form: widget, colorDebug: widget.colorDebug),
+                MatchTeleopSection(form: widget, colorDebug: widget.colorDebug),
+                MatchEndgameSection(form: widget, colorDebug: widget.colorDebug),
               ],
             ),
           )

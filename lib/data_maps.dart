@@ -1,5 +1,7 @@
 import 'datatypes.dart';
 
+bool colorDebug = false;
+
 Map<String, dynamic> getPitDataMap() {
   return {
     "form": "pit",

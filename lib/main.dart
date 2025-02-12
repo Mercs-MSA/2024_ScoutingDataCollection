@@ -89,6 +89,7 @@ class _FormAppPageState extends State<FormAppPage> {
   List<String> pitScouters = ["", ""];
 
   int? matchTeamNumber;
+  final bool colorDebug = Random.secure().nextDouble() > 0.5;
 
   Map<String, dynamic> pitScoutingDefaultData = getPitDataMap();
   Map<String, dynamic> pitScoutingData = getPitDataMap();
@@ -107,10 +108,10 @@ class _FormAppPageState extends State<FormAppPage> {
     installerStore: 'Unknown',
   );
 
-  bool algaeColorIsManufacturingDefect = Random.secure().nextBool();
 
   @override
   void initState() {
+    
     super.initState();
     _initPackageInfo();
     loadPrefs().whenComplete(() {
@@ -378,7 +379,7 @@ class _FormAppPageState extends State<FormAppPage> {
                             ),
                           ),
                         ),
-                        child: const Row(
+                        child: Row(
                           children: [
                             Icon(
                               Icons.flag_rounded,
@@ -575,6 +576,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                   pitScoutingData[k] = v;
                                 });
                               },
+                              colorDebug: this.colorDebug,
                             ),
                           ],
                         ),
@@ -1071,6 +1073,7 @@ class _FormAppPageState extends State<FormAppPage> {
                           matchScoutingData[k] = v;
                         });
                       },
+                      colorDebug: colorDebug,
                     )
                   else
                     const SizedBox(),

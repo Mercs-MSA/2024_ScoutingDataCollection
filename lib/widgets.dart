@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-enum NumberInputStyle { multi, red, green }
 
 class PitScoutSelection extends StatelessWidget {
   const PitScoutSelection({
@@ -145,6 +144,8 @@ class ChoiceInput extends StatelessWidget {
   }
 }
 
+enum InputType { regular, coral, algae, missed }
+
 class NumberInput extends StatelessWidget {
   final String title;
   final bool miniStyle;
@@ -153,9 +154,11 @@ class NumberInput extends StatelessWidget {
   final void Function() onValueAdd;
   final void Function() onValueSubtract;
 
-  final NumberInputStyle style;
-
   final bool enableSpacer;
+
+  final InputType inputType;
+
+  final bool currColor;
 
   const NumberInput({
     super.key,
@@ -164,8 +167,9 @@ class NumberInput extends StatelessWidget {
     required this.onValueAdd,
     required this.onValueSubtract,
     this.miniStyle = false,
-    this.style = NumberInputStyle.multi,
     this.enableSpacer = false,
+    this.inputType = InputType.regular,
+    this.currColor = false
   });
 
   @override
@@ -195,72 +199,26 @@ class NumberInput extends StatelessWidget {
             const SizedBox(width: 8.0),
             IconButton(
               onPressed: onValueSubtract,
-              style: style == NumberInputStyle.multi
-                  ? ButtonStyle(
-                      fixedSize: WidgetStateProperty.all(
-                          Size(miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
-                      padding: WidgetStateProperty.all(EdgeInsets.zero),
-                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                      ),
-                      backgroundColor:
-                          WidgetStateProperty.all(ColorScheme.fromSeed(
-                        seedColor: Colors.orange,
-                        brightness: Brightness.dark,
-                      ).primary),
-                      foregroundColor:
-                          WidgetStateProperty.all(ColorScheme.fromSeed(
-                        seedColor: Colors.orange,
-                        brightness: Brightness.dark,
-                      ).onPrimary),
-                    )
-                  : style == NumberInputStyle.red
-                      ? ButtonStyle(
-                          fixedSize: WidgetStateProperty.all(
-                              Size(miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
-                          padding: WidgetStateProperty.all(EdgeInsets.zero),
-                          shape:
-                              WidgetStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                          ),
-                          backgroundColor:
-                              WidgetStateProperty.all(ColorScheme.fromSeed(
-                            seedColor: Colors.red,
-                            brightness: Brightness.dark,
-                          ).primary),
-                          foregroundColor:
-                              WidgetStateProperty.all(ColorScheme.fromSeed(
-                            seedColor: Colors.red,
-                            brightness: Brightness.dark,
-                          ).onPrimary),
-                        )
-                      : style == NumberInputStyle.green
-                          ? ButtonStyle(
-                              fixedSize: WidgetStateProperty.all(Size(
-                                  miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
-                              padding: WidgetStateProperty.all(EdgeInsets.zero),
-                              shape: WidgetStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(4.0),
-                                ),
-                              ),
-                              backgroundColor:
-                                  WidgetStateProperty.all(ColorScheme.fromSeed(
-                                seedColor: Colors.green,
-                                brightness: Brightness.dark,
-                              ).primary),
-                              foregroundColor:
-                                  WidgetStateProperty.all(ColorScheme.fromSeed(
-                                seedColor: Colors.green,
-                                brightness: Brightness.dark,
-                              ).onPrimary),
-                            )
-                          : const ButtonStyle(),
+              style: ButtonStyle(
+                fixedSize: WidgetStateProperty.all(
+                    Size(miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
+                padding: WidgetStateProperty.all(EdgeInsets.zero),
+                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4.0),
+                  ),
+                ),
+                backgroundColor:
+                    WidgetStateProperty.all(ColorScheme.fromSeed(
+                  seedColor: Colors.red,
+                  brightness: Brightness.dark,
+                ).primary),
+                foregroundColor:
+                    WidgetStateProperty.all(ColorScheme.fromSeed(
+                  seedColor: Colors.red,
+                  brightness: Brightness.dark,
+                ).onPrimary),
+              ),
               icon: const Icon(Icons.remove),
             ),
             enableSpacer ? const Spacer() : const SizedBox(),
@@ -277,72 +235,47 @@ class NumberInput extends StatelessWidget {
             enableSpacer ? const Spacer() : const SizedBox(),
             IconButton(
               onPressed: onValueAdd,
-              style: style == NumberInputStyle.multi
-                  ? ButtonStyle(
-                      fixedSize: WidgetStateProperty.all(
-                          Size(miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
-                      padding: WidgetStateProperty.all(EdgeInsets.zero),
-                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                      ),
-                      backgroundColor:
-                          WidgetStateProperty.all(ColorScheme.fromSeed(
-                        seedColor: Colors.green,
-                        brightness: Brightness.dark,
-                      ).primary),
-                      foregroundColor:
-                          WidgetStateProperty.all(ColorScheme.fromSeed(
-                        seedColor: Colors.green,
-                        brightness: Brightness.dark,
-                      ).onPrimary),
-                    )
-                  : style == NumberInputStyle.red
-                      ? ButtonStyle(
-                          fixedSize: WidgetStateProperty.all(
-                              Size(miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
-                          padding: WidgetStateProperty.all(EdgeInsets.zero),
-                          shape:
-                              WidgetStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                          ),
-                          backgroundColor:
-                              WidgetStateProperty.all(ColorScheme.fromSeed(
-                            seedColor: Colors.red,
-                            brightness: Brightness.dark,
-                          ).primary),
-                          foregroundColor:
-                              WidgetStateProperty.all(ColorScheme.fromSeed(
-                            seedColor: Colors.red,
-                            brightness: Brightness.dark,
-                          ).onPrimary),
-                        )
-                      : style == NumberInputStyle.green
-                          ? ButtonStyle(
-                              fixedSize: WidgetStateProperty.all(Size(
-                                  miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
-                              padding: WidgetStateProperty.all(EdgeInsets.zero),
-                              shape: WidgetStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(4.0),
-                                ),
-                              ),
-                              backgroundColor:
-                                  WidgetStateProperty.all(ColorScheme.fromSeed(
-                                seedColor: Colors.green,
-                                brightness: Brightness.dark,
-                              ).primary),
-                              foregroundColor:
-                                  WidgetStateProperty.all(ColorScheme.fromSeed(
-                                seedColor: Colors.green,
-                                brightness: Brightness.dark,
-                              ).onPrimary),
-                            )
-                          : const ButtonStyle(),
+              style: ButtonStyle(
+                fixedSize: WidgetStateProperty.all(
+                    Size(miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
+                padding: WidgetStateProperty.all(EdgeInsets.zero),
+                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4.0),
+                  ),
+                ),
+                backgroundColor:
+                    WidgetStateProperty.all(ColorScheme.fromSeed(
+                  seedColor: switch(inputType)
+                  {
+
+                    InputType.regular => Colors.green,
+                    InputType.coral => Colors.purple,
+                    InputType.algae => switch (currColor)
+                    {
+                      true => Colors.green,
+                      false => const Color.fromARGB(255, 78, 180, 148),
+                    },
+                    InputType.missed => Colors.red
+                  },
+                  brightness: Brightness.dark,
+                ).primary),
+                foregroundColor:
+                    WidgetStateProperty.all(ColorScheme.fromSeed(
+                  seedColor: switch(inputType)
+                  {
+                    InputType.regular => Colors.green,
+                    InputType.coral => Colors.purple,
+                    InputType.algae => switch (currColor)
+                    {
+                      true => Colors.green,
+                      false => const Color.fromARGB(255, 78, 180, 127),
+                    },
+                    InputType.missed => Colors.red
+                  },
+                  brightness: Brightness.dark,
+                ).onPrimary),
+              ),   
               icon: const Icon(Icons.add),
             ),
             const SizedBox(width: 8.0),

@@ -11,12 +11,14 @@ class PitForm extends StatefulWidget {
     required this.teamNumberPresent,
     required this.onDataChanged,
     required this.formData,
+    required this.colorDebug,
   });
 
   final bool teamNumberPresent;
 
   final Function(Map<String, dynamic>) onDataChanged;
   final Map formData;
+  final bool colorDebug;
 
   @override
   State<PitForm> createState() => _PitFormState();
@@ -347,7 +349,7 @@ class _PitFormState extends State<PitForm> {
                               (Set<WidgetState> states) {
                                 if (states.contains(WidgetState.selected)) {
                                   return ColorScheme.fromSeed(
-                                          seedColor: Colors.green)
+                                          seedColor: widget.colorDebug ? Colors.green : const Color.fromARGB(255, 78, 180, 127),)
                                       .primary;
                                 }
                                 return Colors.transparent;
@@ -841,7 +843,9 @@ class _PitFormState extends State<PitForm> {
                                                       {"autonL4Num": 0});
                                                 }
                                               });
-                                            }),
+                                            },
+                                            inputType: InputType.coral,
+                                        ),
                                         NumberInput(
                                             title: "L3",
                                             enableSpacer: true,
@@ -872,7 +876,8 @@ class _PitFormState extends State<PitForm> {
                                                       {"autonL3Num": 0});
                                                 }
                                               });
-                                            }),
+                                            },
+                                            inputType: InputType.coral,),
                                         NumberInput(
                                             title: "L2",
                                             enableSpacer: true,
@@ -903,7 +908,8 @@ class _PitFormState extends State<PitForm> {
                                                       {"autonL2Num": 0});
                                                 }
                                               });
-                                            }),
+                                            },
+                                            inputType: InputType.coral,),
                                         NumberInput(
                                             title: "L1",
                                             enableSpacer: true,
@@ -934,7 +940,8 @@ class _PitFormState extends State<PitForm> {
                                                       {"autonL1Num": 0});
                                                 }
                                               });
-                                            }),
+                                            },
+                                            inputType: InputType.coral,),
                                       ],
                                     ),
                                   ]),
@@ -978,6 +985,10 @@ class _PitFormState extends State<PitForm> {
                                             },
                                           );
                                         },
+                                        
+                                        inputType: InputType.algae,
+                                        currColor: widget.colorDebug,
+                                        
                                       ),
                                       NumberInput(
                                         title: "Lower\nDescore",
@@ -1014,6 +1025,8 @@ class _PitFormState extends State<PitForm> {
                                             },
                                           );
                                         },
+                                        inputType: InputType.algae,
+                                        currColor: widget.colorDebug,
                                       ),
                                       NumberInput(
                                         title: "Processor",
@@ -1048,6 +1061,8 @@ class _PitFormState extends State<PitForm> {
                                             },
                                           );
                                         },
+                                        inputType: InputType.algae,
+                                        currColor: widget.colorDebug,
                                       ),
                                       NumberInput(
                                         title: "Direct\nNet",
@@ -1081,6 +1096,8 @@ class _PitFormState extends State<PitForm> {
                                             },
                                           );
                                         },
+                                        inputType: InputType.algae,
+                                        currColor: widget.colorDebug,
                                       ),
                                     ],
                                   ),

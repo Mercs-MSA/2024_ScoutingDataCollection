@@ -10,8 +10,10 @@ class MatchAutonSection extends StatefulWidget {
   const MatchAutonSection({
     super.key,
     required this.form,
+    required this.colorDebug,
   });
 
+  final bool colorDebug;
   @override
   State<MatchAutonSection> createState() => _MatchAutonSectionState();
 }
@@ -52,6 +54,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                   });
                 },
                 enableSpacer: true,
+                inputType: InputType.algae,
+                currColor: widget.colorDebug,
               ),
             ),
             Expanded(
@@ -75,6 +79,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                   });
                 },
                 enableSpacer: true,
+                inputType: InputType.missed,
+                currColor: widget.colorDebug,
               ),
             ),
           ],
@@ -106,6 +112,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                     });
                 });
               },
+              inputType: InputType.algae,
+              currColor: widget.colorDebug,
               enableSpacer: false,
             )
           ],
@@ -145,6 +153,7 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                       });
                     },
                     enableSpacer: true,
+                    inputType: InputType.coral,
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -167,6 +176,7 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                       });
                     },
                     enableSpacer: true,
+                    inputType: InputType.coral,
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -189,6 +199,7 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                       });
                     },
                     enableSpacer: true,
+                    inputType: InputType.coral,
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -211,12 +222,10 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                       });
                     },
                     enableSpacer: true,
+                    inputType: InputType.coral,
                   ),
                 ],
               ),
-            ),
-            Expanded(
-              child: SizedBox(),
             ),
             Expanded(
               child: Column(
@@ -250,6 +259,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                       });
                     },
                     enableSpacer: true,
+                    inputType: InputType.missed,
+                    currColor: widget.colorDebug,
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -272,6 +283,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                       });
                     },
                     enableSpacer: true,
+                    inputType: InputType.missed,
+                    currColor: widget.colorDebug,
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -294,6 +307,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                       });
                     },
                     enableSpacer: true,
+                    inputType: InputType.missed,
+                    currColor: widget.colorDebug,
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -316,6 +331,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                       });
                     },
                     enableSpacer: true,
+                    inputType: InputType.missed,
+                    currColor: widget.colorDebug,
                   ),
                 ],
               ),
@@ -353,6 +370,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                   });
                 },
                 enableSpacer: true,
+                inputType: InputType.algae,
+                currColor: widget.colorDebug,
               ),
             ),
             Expanded(
@@ -377,6 +396,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                   });
                 },
                 enableSpacer: true,
+                inputType: InputType.missed,
+                currColor: widget.colorDebug,
               ),
             )
           ],
@@ -392,7 +413,11 @@ class MatchTeleopSection extends StatefulWidget {
   const MatchTeleopSection({
     super.key,
     required this.form,
+    required this.colorDebug
   });
+
+  final bool colorDebug;
+
   @override
   State<MatchTeleopSection> createState() => _MatchTeleopSectionState();
 }
@@ -433,6 +458,8 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   });
                 },
                 enableSpacer: true,
+                inputType: InputType.algae,
+                currColor: true,
               ),
             ),
             Expanded(
@@ -456,6 +483,8 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   });
                 },
                 enableSpacer: true,
+                inputType: InputType.missed,
+                currColor: widget.colorDebug,
               ),
             ),
           ],
@@ -488,6 +517,8 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                 });
               },
               enableSpacer: false,
+              inputType: InputType.algae,
+              currColor: widget.colorDebug,
             )
           ],
         ),
@@ -526,6 +557,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                       });
                     },
                     enableSpacer: true,
+                    inputType: InputType.coral,
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -548,6 +580,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                       });
                     },
                     enableSpacer: true,
+                    inputType: InputType.coral,
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -570,6 +603,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                       });
                     },
                     enableSpacer: true,
+                    inputType: InputType.coral,
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -592,12 +626,10 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                       });
                     },
                     enableSpacer: true,
+                    inputType: InputType.coral,
                   ),
                 ],
               ),
-            ),
-            Expanded(
-              child: SizedBox(),
             ),
             Expanded(
               child: Column(
@@ -631,6 +663,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                       });
                     },
                     enableSpacer: true,
+                    inputType: InputType.missed,
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -653,6 +686,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                       });
                     },
                     enableSpacer: true,
+                    inputType: InputType.missed,
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -675,6 +709,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                       });
                     },
                     enableSpacer: true,
+                    inputType: InputType.missed,
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -697,6 +732,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                       });
                     },
                     enableSpacer: true,
+                    inputType: InputType.missed,
                   ),
                 ],
               ),
@@ -734,6 +770,8 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   });
                 },
                 enableSpacer: true,
+                inputType: InputType.algae,
+                currColor: widget.colorDebug,
               ),
             ),
             Expanded(
@@ -758,6 +796,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   });
                 },
                 enableSpacer: true,
+                inputType: InputType.missed,
               ),
             )
           ],
@@ -773,7 +812,11 @@ class MatchEndgameSection extends StatefulWidget {
   const MatchEndgameSection({
     super.key,
     required this.form,
+    required this.colorDebug
   });
+
+  final bool colorDebug;
+
   @override
   State<MatchEndgameSection> createState() => _MatchEndgameSectionState();
 }
