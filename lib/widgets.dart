@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-
 class PitScoutSelection extends StatelessWidget {
   const PitScoutSelection({
     super.key,
@@ -160,17 +159,16 @@ class NumberInput extends StatelessWidget {
 
   final bool currColor;
 
-  const NumberInput({
-    super.key,
-    required this.title,
-    required this.value,
-    required this.onValueAdd,
-    required this.onValueSubtract,
-    this.miniStyle = false,
-    this.enableSpacer = false,
-    this.inputType = InputType.regular,
-    this.currColor = false
-  });
+  const NumberInput(
+      {super.key,
+      required this.title,
+      required this.value,
+      required this.onValueAdd,
+      required this.onValueSubtract,
+      this.miniStyle = true,
+      this.enableSpacer = false,
+      this.inputType = InputType.regular,
+      this.currColor = false});
 
   @override
   Widget build(BuildContext context) {
@@ -184,101 +182,107 @@ class NumberInput extends StatelessWidget {
           ),
           borderRadius: const BorderRadius.all(Radius.circular(4.0)),
         ),
-        child: Row(
+        child: Column(
           children: [
-            if (!miniStyle)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
+            if (miniStyle)
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 16,
                 ),
               ),
-            const SizedBox(width: 8.0),
-            IconButton(
-              onPressed: onValueSubtract,
-              style: ButtonStyle(
-                fixedSize: WidgetStateProperty.all(
-                    Size(miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
-                padding: WidgetStateProperty.all(EdgeInsets.zero),
-                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4.0),
+            Row(
+              children: [
+                if (!miniStyle)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                const SizedBox(width: 8.0),
+                IconButton(
+                  onPressed: onValueSubtract,
+                  style: ButtonStyle(
+                    fixedSize: WidgetStateProperty.all(
+                        Size(miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
+                    padding: WidgetStateProperty.all(EdgeInsets.zero),
+                    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                    ),
+                    backgroundColor:
+                        WidgetStateProperty.all(ColorScheme.fromSeed(
+                      seedColor: Colors.red,
+                      brightness: Brightness.dark,
+                    ).primary),
+                    foregroundColor:
+                        WidgetStateProperty.all(ColorScheme.fromSeed(
+                      seedColor: Colors.red,
+                      brightness: Brightness.dark,
+                    ).onPrimary),
+                  ),
+                  icon: const Icon(Icons.remove),
+                ),
+                enableSpacer ? const Spacer() : const SizedBox(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    value.toString(),
+                    style: TextStyle(
+                        fontSize: miniStyle ? 28 : 36,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: "RobotoMono"),
                   ),
                 ),
-                backgroundColor:
-                    WidgetStateProperty.all(ColorScheme.fromSeed(
-                  seedColor: Colors.red,
-                  brightness: Brightness.dark,
-                ).primary),
-                foregroundColor:
-                    WidgetStateProperty.all(ColorScheme.fromSeed(
-                  seedColor: Colors.red,
-                  brightness: Brightness.dark,
-                ).onPrimary),
-              ),
-              icon: const Icon(Icons.remove),
-            ),
-            enableSpacer ? const Spacer() : const SizedBox(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                value.toString(),
-                style: TextStyle(
-                    fontSize: miniStyle ? 28 : 36,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: "RobotoMono"),
-              ),
-            ),
-            enableSpacer ? const Spacer() : const SizedBox(),
-            IconButton(
-              onPressed: onValueAdd,
-              style: ButtonStyle(
-                fixedSize: WidgetStateProperty.all(
-                    Size(miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
-                padding: WidgetStateProperty.all(EdgeInsets.zero),
-                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4.0),
+                enableSpacer ? const Spacer() : const SizedBox(),
+                IconButton(
+                  onPressed: onValueAdd,
+                  style: ButtonStyle(
+                    fixedSize: WidgetStateProperty.all(
+                        Size(miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
+                    padding: WidgetStateProperty.all(EdgeInsets.zero),
+                    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                    ),
+                    backgroundColor:
+                        WidgetStateProperty.all(ColorScheme.fromSeed(
+                      seedColor: switch (inputType) {
+                        InputType.regular => Colors.green,
+                        InputType.coral => Colors.purple,
+                        InputType.algae => switch (currColor) {
+                            true => Colors.green,
+                            false => const Color.fromARGB(255, 78, 180, 148),
+                          },
+                        InputType.missed => Colors.red
+                      },
+                      brightness: Brightness.dark,
+                    ).primary),
+                    foregroundColor:
+                        WidgetStateProperty.all(ColorScheme.fromSeed(
+                      seedColor: switch (inputType) {
+                        InputType.regular => Colors.green,
+                        InputType.coral => Colors.purple,
+                        InputType.algae => switch (currColor) {
+                            true => Colors.green,
+                            false => const Color.fromARGB(255, 78, 180, 127),
+                          },
+                        InputType.missed => Colors.red
+                      },
+                      brightness: Brightness.dark,
+                    ).onPrimary),
                   ),
+                  icon: const Icon(Icons.add),
                 ),
-                backgroundColor:
-                    WidgetStateProperty.all(ColorScheme.fromSeed(
-                  seedColor: switch(inputType)
-                  {
-
-                    InputType.regular => Colors.green,
-                    InputType.coral => Colors.purple,
-                    InputType.algae => switch (currColor)
-                    {
-                      true => Colors.green,
-                      false => const Color.fromARGB(255, 78, 180, 148),
-                    },
-                    InputType.missed => Colors.red
-                  },
-                  brightness: Brightness.dark,
-                ).primary),
-                foregroundColor:
-                    WidgetStateProperty.all(ColorScheme.fromSeed(
-                  seedColor: switch(inputType)
-                  {
-                    InputType.regular => Colors.green,
-                    InputType.coral => Colors.purple,
-                    InputType.algae => switch (currColor)
-                    {
-                      true => Colors.green,
-                      false => const Color.fromARGB(255, 78, 180, 127),
-                    },
-                    InputType.missed => Colors.red
-                  },
-                  brightness: Brightness.dark,
-                ).onPrimary),
-              ),   
-              icon: const Icon(Icons.add),
+                const SizedBox(width: 8.0),
+              ],
             ),
-            const SizedBox(width: 8.0),
           ],
         ),
       ),
@@ -286,43 +290,35 @@ class NumberInput extends StatelessWidget {
   }
 }
 
-
-class SectionHeader extends StatelessWidget
-{
+class SectionHeader extends StatelessWidget {
   final Color color;
   final String title;
   final double fontSize;
   final double padding;
 
-  const SectionHeader ({super.key, 
-    required this.title,
-    this.color = Colors.white,
-    this.fontSize = 21.0,
-    this.padding = 5.0
-  });
+  const SectionHeader(
+      {super.key,
+      required this.title,
+      this.color = Colors.white,
+      this.fontSize = 21.0,
+      this.padding = 5.0});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: padding),
-        child: Row(
-          children: [
-            Expanded(child: Divider(color: color)),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(title, 
-                style: TextStyle(
-                  fontSize: fontSize,
-                  fontStyle: FontStyle.italic
-                )
-              ),
-            ),
-            Expanded(child: Divider(color: color))
-          ]
-        ),
+        child: Row(children: [
+          Expanded(child: Divider(color: color)),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(title,
+                style:
+                    TextStyle(fontSize: fontSize, fontStyle: FontStyle.italic)),
+          ),
+          Expanded(child: Divider(color: color))
+        ]),
       ),
     );
   }
-  
 }

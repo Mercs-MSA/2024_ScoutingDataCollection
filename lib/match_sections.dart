@@ -410,11 +410,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
 class MatchTeleopSection extends StatefulWidget {
   final MatchForm form;
 
-  const MatchTeleopSection({
-    super.key,
-    required this.form,
-    required this.colorDebug
-  });
+  const MatchTeleopSection(
+      {super.key, required this.form, required this.colorDebug});
 
   final bool colorDebug;
 
@@ -809,11 +806,8 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
 class MatchEndgameSection extends StatefulWidget {
   final MatchForm form;
 
-  const MatchEndgameSection({
-    super.key,
-    required this.form,
-    required this.colorDebug
-  });
+  const MatchEndgameSection(
+      {super.key, required this.form, required this.colorDebug});
 
   final bool colorDebug;
 
@@ -913,81 +907,56 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                 ),
               ],
             ),
-            Row(
-              children: [
-                Expanded(
-                    child: Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 8),
-                  child: SegmentedButton(
-                    showSelectedIcon: false,
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                    ),
-                    emptySelectionAllowed: true,
-                    segments: <ButtonSegment<EndgamePositions>>[
-                      ButtonSegment(
-                          value: EndgamePositions.park,
-                          label: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text("Park",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 15)),
-                          )),
-                    ],
-                    selected: {
-                      if (widget.form.formData["endgamePos"] == "park")
-                        EndgamePositions.park,
-                    },
-                    onSelectionChanged: (Set<EndgamePositions> newSelection) {
-                      setState(() {
-                        if (newSelection.contains(EndgamePositions.park)) {
-                          widget.form.formData["endgamePos"] = "park";
-                        }
-                      });
-                    },
-                  ),
-                )),
-              ],
+            const SizedBox(
+              height: 8.0,
             ),
-            Row(
-              children: [
-                Expanded(
-                    child: Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 8),
-                  child: SegmentedButton(
-                    showSelectedIcon: false,
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                    ),
-                    emptySelectionAllowed: true,
-                    segments: <ButtonSegment<EndgamePositions>>[
-                      ButtonSegment(
-                          value: EndgamePositions.none,
-                          label: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text("No Park/Climb",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 15)),
-                          )),
-                    ],
-                    selected: {
-                      if (widget.form.formData["endgamePos"] == "none")
-                        EndgamePositions.none,
-                    },
-                    onSelectionChanged: (Set<EndgamePositions> newSelection) {
-                      setState(() {
-                        if (newSelection.contains(EndgamePositions.none)) {
-                          widget.form.formData["endgamePos"] = "none";
-                        }
-                      });
-                    },
+            Padding(
+              padding: const EdgeInsets.only(left: 8, right: 8),
+              child: SegmentedButton(
+                showSelectedIcon: false,
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
-                )),
-              ],
+                ),
+                emptySelectionAllowed: true,
+                direction: Axis.vertical,
+                segments: <ButtonSegment<EndgamePositions>>[
+                  ButtonSegment(
+                      value: EndgamePositions.park,
+                      icon: Icon(Icons.local_parking_rounded),
+                      label: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text("Park",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 15)),
+                      )),
+                  ButtonSegment(
+                      value: EndgamePositions.none,
+                      icon: Icon(Icons.not_interested_rounded),
+                      label: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text("No Park/Climb",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 15)),
+                      )),
+                ],
+                selected: {
+                  if (widget.form.formData["endgamePos"] == "park")
+                    EndgamePositions.park,
+                  if (widget.form.formData["endgamePos"] == "none")
+                    EndgamePositions.none,
+                },
+                onSelectionChanged: (Set<EndgamePositions> newSelection) {
+                  setState(() {
+                    if (newSelection.contains(EndgamePositions.park)) {
+                      widget.form.formData["endgamePos"] = "park";
+                    } else if (newSelection.contains(EndgamePositions.none)) {
+                      widget.form.formData["endgamePos"] = "none";
+                    }
+                  });
+                },
+              ),
             ),
           ],
         ),
