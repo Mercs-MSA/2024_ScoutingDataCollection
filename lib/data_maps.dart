@@ -10,7 +10,6 @@ Map<String, dynamic> getPitDataMap() {
     "width": null,
     "length": null,
     "height": null,
-    "weight": null,
     "lOne": false,
     "lTwo": false,
     "lThree": false,
