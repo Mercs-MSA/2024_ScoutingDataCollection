@@ -43,7 +43,7 @@ class ScoutingApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Scouting App',
+      title: 'Sleepy Ron',
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
@@ -221,12 +221,11 @@ class _FormAppPageState extends State<FormAppPage> {
   Widget build(BuildContext context) {
     return ReassembleListener(
       onReassemble: () {
-        if (matchScoutingData.keys == getMatchDataMap().keys) {
+        if (mapEquals(matchScoutingData, getMatchDataMap()) &&
+            mapEquals(pitScoutingData, getPitDataMap())) {
           return;
         }
-        if (pitScoutingData.keys == getPitDataMap().keys) {
-          return;
-        }
+
         WidgetsBinding.instance.addPostFrameCallback((_) => showDialog(
               context: context,
               builder: (context) => AlertDialog(
@@ -270,7 +269,7 @@ class _FormAppPageState extends State<FormAppPage> {
               // Main Menu
               Scaffold(
                 appBar: AppBar(
-                  title: const Text("Welcome!"),
+                  title: const Text("Sleepy Ron"),
                   actions: [
                     IconButton(
                         onPressed: () {
