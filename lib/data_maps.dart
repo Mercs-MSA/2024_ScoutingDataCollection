@@ -56,7 +56,7 @@ Map<String, dynamic> getMatchDataMap() {
     "form": "match",
     "team": null,
     "scouter": "",
-    "alliance": Alliance.blue,
+    "alliance": "blue",
     "match": null,
     "startPos": "middle",
     "autoL4scored": 0,
