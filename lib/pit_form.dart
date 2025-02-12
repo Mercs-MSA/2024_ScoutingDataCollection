@@ -202,14 +202,14 @@ class _PitFormState extends State<PitForm> {
                     ),
                     child: Column(
                       children: [
-                        const Text("Is the robot a Kitbot, is so, what type?"),
+                        const Text("Is the robot a Kitbot, if so, what type?"),
                         const SizedBox(height: 8.0),
                         Row(
                           children: [
                             Expanded(
                               child: RadioListTile(
                                 key: Key("pit-kitbot"),
-                                title: Text("Non-Kitbot"),
+                                title: Text("Custom"),
                                 value: widget.formData["kitbotType"] == "not",
                                 groupValue: true,
                                 onChanged: (value) {
@@ -349,8 +349,11 @@ class _PitFormState extends State<PitForm> {
                               (Set<WidgetState> states) {
                                 if (states.contains(WidgetState.selected)) {
                                   return ColorScheme.fromSeed(
-                                          seedColor: widget.colorDebug ? Colors.green : const Color.fromARGB(255, 78, 180, 127),)
-                                      .primary;
+                                    seedColor: widget.colorDebug
+                                        ? Colors.green
+                                        : const Color.fromARGB(
+                                            255, 78, 180, 127),
+                                  ).primary;
                                 }
                                 return Colors.transparent;
                               },
@@ -803,9 +806,13 @@ class _PitFormState extends State<PitForm> {
                               Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  SectionHeader(title: "Coral Scoring", color: Theme.of(context).dividerColor),
+                                  SectionHeader(
+                                      title: "Coral Scoring",
+                                      color: Theme.of(context).dividerColor),
                                   SizedBox(width: 10.0),
-                                  SectionHeader(title: "Algae Scoring", color: Theme.of(context).dividerColor)
+                                  SectionHeader(
+                                      title: "Algae Scoring",
+                                      color: Theme.of(context).dividerColor)
                                 ],
                               ),
                               Row(mainAxisSize: MainAxisSize.max, children: [
@@ -814,134 +821,129 @@ class _PitFormState extends State<PitForm> {
                                     Column(
                                       children: [
                                         NumberInput(
-                                            title: "L4",
-                                            enableSpacer: true,
-                                            value:
-                                                widget.formData["autonL4Num"],
-                                            onValueAdd: () {
-                                              setState(() {
+                                          title: "L4",
+                                          enableSpacer: true,
+                                          value: widget.formData["autonL4Num"],
+                                          onValueAdd: () {
+                                            setState(() {
+                                              widget.onDataChanged({
+                                                "autonL4Num": widget.formData[
+                                                        "autonL4Num"] +
+                                                    1
+                                              });
+                                            });
+                                          },
+                                          onValueSubtract: () {
+                                            setState(() {
+                                              if (widget
+                                                      .formData["autonL4Num"] >
+                                                  0) {
                                                 widget.onDataChanged({
                                                   "autonL4Num": widget.formData[
-                                                          "autonL4Num"] +
+                                                          "autonL4Num"] -
                                                       1
                                                 });
-                                              });
-                                            },
-                                            onValueSubtract: () {
-                                              setState(() {
-                                                if (widget.formData[
-                                                        "autonL4Num"] >
-                                                    0) {
-                                                  widget.onDataChanged({
-                                                    "autonL4Num":
-                                                        widget.formData[
-                                                                "autonL4Num"] -
-                                                            1
-                                                  });
-                                                } else {
-                                                  widget.onDataChanged(
-                                                      {"autonL4Num": 0});
-                                                }
-                                              });
-                                            },
-                                            inputType: InputType.coral,
+                                              } else {
+                                                widget.onDataChanged(
+                                                    {"autonL4Num": 0});
+                                              }
+                                            });
+                                          },
+                                          inputType: InputType.coral,
                                         ),
                                         NumberInput(
-                                            title: "L3",
-                                            enableSpacer: true,
-                                            value:
-                                                widget.formData["autonL3Num"],
-                                            onValueAdd: () {
-                                              setState(() {
+                                          title: "L3",
+                                          enableSpacer: true,
+                                          value: widget.formData["autonL3Num"],
+                                          onValueAdd: () {
+                                            setState(() {
+                                              widget.onDataChanged({
+                                                "autonL3Num": widget.formData[
+                                                        "autonL3Num"] +
+                                                    1
+                                              });
+                                            });
+                                          },
+                                          onValueSubtract: () {
+                                            setState(() {
+                                              if (widget
+                                                      .formData["autonL3Num"] >
+                                                  0) {
                                                 widget.onDataChanged({
                                                   "autonL3Num": widget.formData[
-                                                          "autonL3Num"] +
+                                                          "autonL3Num"] -
                                                       1
                                                 });
-                                              });
-                                            },
-                                            onValueSubtract: () {
-                                              setState(() {
-                                                if (widget.formData[
-                                                        "autonL3Num"] >
-                                                    0) {
-                                                  widget.onDataChanged({
-                                                    "autonL3Num":
-                                                        widget.formData[
-                                                                "autonL3Num"] -
-                                                            1
-                                                  });
-                                                } else {
-                                                  widget.onDataChanged(
-                                                      {"autonL3Num": 0});
-                                                }
-                                              });
-                                            },
-                                            inputType: InputType.coral,),
+                                              } else {
+                                                widget.onDataChanged(
+                                                    {"autonL3Num": 0});
+                                              }
+                                            });
+                                          },
+                                          inputType: InputType.coral,
+                                        ),
                                         NumberInput(
-                                            title: "L2",
-                                            enableSpacer: true,
-                                            value:
-                                                widget.formData["autonL2Num"],
-                                            onValueAdd: () {
-                                              setState(() {
+                                          title: "L2",
+                                          enableSpacer: true,
+                                          value: widget.formData["autonL2Num"],
+                                          onValueAdd: () {
+                                            setState(() {
+                                              widget.onDataChanged({
+                                                "autonL2Num": widget.formData[
+                                                        "autonL2Num"] +
+                                                    1
+                                              });
+                                            });
+                                          },
+                                          onValueSubtract: () {
+                                            setState(() {
+                                              if (widget
+                                                      .formData["autonL2Num"] >
+                                                  0) {
                                                 widget.onDataChanged({
                                                   "autonL2Num": widget.formData[
-                                                          "autonL2Num"] +
+                                                          "autonL2Num"] -
                                                       1
                                                 });
-                                              });
-                                            },
-                                            onValueSubtract: () {
-                                              setState(() {
-                                                if (widget.formData[
-                                                        "autonL2Num"] >
-                                                    0) {
-                                                  widget.onDataChanged({
-                                                    "autonL2Num":
-                                                        widget.formData[
-                                                                "autonL2Num"] -
-                                                            1
-                                                  });
-                                                } else {
-                                                  widget.onDataChanged(
-                                                      {"autonL2Num": 0});
-                                                }
-                                              });
-                                            },
-                                            inputType: InputType.coral,),
+                                              } else {
+                                                widget.onDataChanged(
+                                                    {"autonL2Num": 0});
+                                              }
+                                            });
+                                          },
+                                          inputType: InputType.coral,
+                                        ),
                                         NumberInput(
-                                            title: "L1",
-                                            enableSpacer: true,
-                                            value:
-                                                widget.formData["autonL1Num"],
-                                            onValueAdd: () {
-                                              setState(() {
+                                          title: "L1",
+                                          enableSpacer: true,
+                                          value: widget.formData["autonL1Num"],
+                                          onValueAdd: () {
+                                            setState(() {
+                                              widget.onDataChanged({
+                                                "autonL1Num": widget.formData[
+                                                        "autonL1Num"] +
+                                                    1
+                                              });
+                                            });
+                                          },
+                                          onValueSubtract: () {
+                                            setState(() {
+                                              if (widget
+                                                      .formData["autonL1Num"] >
+                                                  0) {
                                                 widget.onDataChanged({
                                                   "autonL1Num": widget.formData[
-                                                          "autonL1Num"] +
+                                                          "autonL1Num"] -
                                                       1
                                                 });
-                                              });
-                                            },
-                                            onValueSubtract: () {
-                                              setState(() {
-                                                if (widget.formData[
-                                                        "autonL1Num"] >
-                                                    0) {
-                                                  widget.onDataChanged({
-                                                    "autonL1Num":
-                                                        widget.formData[
-                                                                "autonL1Num"] -
-                                                            1
-                                                  });
-                                                } else {
-                                                  widget.onDataChanged(
-                                                      {"autonL1Num": 0});
-                                                }
-                                              });
-                                            },
-                                            inputType: InputType.coral,),
+                                              } else {
+                                                widget.onDataChanged(
+                                                    {"autonL1Num": 0});
+                                              }
+                                            });
+                                          },
+                                          inputType: InputType.coral,
+                                        ),
                                       ],
                                     ),
                                   ]),
@@ -951,7 +953,7 @@ class _PitFormState extends State<PitForm> {
                                   child: Column(
                                     children: [
                                       NumberInput(
-                                        title: "Upper\nDescore",
+                                        title: "Upper Descore",
                                         enableSpacer: true,
                                         value: widget
                                             .formData["autonUpperAlgaeDescore"],
@@ -985,13 +987,11 @@ class _PitFormState extends State<PitForm> {
                                             },
                                           );
                                         },
-                                        
                                         inputType: InputType.algae,
                                         currColor: widget.colorDebug,
-                                        
                                       ),
                                       NumberInput(
-                                        title: "Lower\nDescore",
+                                        title: "Lower Descore",
                                         enableSpacer: true,
                                         value: widget
                                             .formData["autonLowerAlgaeDescore"],
@@ -1065,7 +1065,7 @@ class _PitFormState extends State<PitForm> {
                                         currColor: widget.colorDebug,
                                       ),
                                       NumberInput(
-                                        title: "Direct\nNet",
+                                        title: "Direct Net",
                                         enableSpacer: true,
                                         value: widget.formData["autonNetScore"],
                                         onValueAdd: () {
