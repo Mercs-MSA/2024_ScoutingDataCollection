@@ -108,10 +108,10 @@ class _FormAppPageState extends State<FormAppPage> {
     installerStore: 'Unknown',
   );
 
+  List<ConfettiController> killableConfetti = [];
 
   @override
   void initState() {
-    
     super.initState();
     _initPackageInfo();
     loadPrefs().whenComplete(() {
@@ -453,12 +453,18 @@ class _FormAppPageState extends State<FormAppPage> {
                       !(pitTeamNumber == null || pitScouters.contains("")) &&
                       pitPageIndex != 2) {
                     var count = 0;
+
+                    for (var element in killableConfetti.reversed) {
+                      element.kill();
+                    }
+                    killableConfetti.clear();
+
                     Timer.periodic(Duration(milliseconds: 120), (timer) {
                       if (count > 4) {
                         timer.cancel();
                       }
 
-                      Confetti.launch(
+                      final c = Confetti.launch(
                         context,
                         options: const ConfettiOptions(
                           particleCount: 20,
@@ -469,6 +475,7 @@ class _FormAppPageState extends State<FormAppPage> {
                           colors: [Colors.red, Colors.black, Colors.white],
                         ),
                       );
+                      killableConfetti.add(c);
                       count++;
                     });
                   }
@@ -576,7 +583,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                   pitScoutingData[k] = v;
                                 });
                               },
-                              colorDebug: this.colorDebug,
+                              colorDebug: colorDebug,
                             ),
                           ],
                         ),
@@ -812,12 +819,18 @@ class _FormAppPageState extends State<FormAppPage> {
                           matchScoutingData["scouter"] == "") &&
                       matchPageIndex != 2) {
                     var count = 0;
+
+                    for (var element in killableConfetti.reversed) {
+                      element.kill();
+                    }
+                    killableConfetti.clear();
+
                     Timer.periodic(Duration(milliseconds: 120), (timer) {
                       if (count > 4) {
                         timer.cancel();
                       }
 
-                      Confetti.launch(
+                      final c = Confetti.launch(
                         context,
                         options: ConfettiOptions(
                           particleCount: 20,
@@ -834,6 +847,7 @@ class _FormAppPageState extends State<FormAppPage> {
                           ],
                         ),
                       );
+                      killableConfetti.add(c);
                       count++;
                     });
                   }
