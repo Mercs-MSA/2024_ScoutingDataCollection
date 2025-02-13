@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'package:collection/collection.dart';
 
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
@@ -22,7 +23,6 @@ import 'datatypes.dart';
 import 'match_form.dart';
 import 'pit_form.dart';
 import 'widgets.dart';
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -91,7 +91,7 @@ class _FormAppPageState extends State<FormAppPage> {
   List<String> pitScouters = ["", ""];
 
   int? matchTeamNumber;
-  
+
   final bool colorDebug = Random.secure().nextBool();
 
   Map<String, dynamic> pitScoutingDefaultData = getPitDataMap();
@@ -223,8 +223,10 @@ class _FormAppPageState extends State<FormAppPage> {
   Widget build(BuildContext context) {
     return ReassembleListener(
       onReassemble: () {
-        if (mapEquals(matchScoutingData, getMatchDataMap()) &&
-            mapEquals(pitScoutingData, getPitDataMap())) {
+        if (const ListEquality().equals(matchScoutingData.keys.toList(),
+                getMatchDataMap().keys.toList()) &&
+            const ListEquality().equals(
+                getPitDataMap().keys.toList(), pitScoutingData.keys.toList())) {
           return;
         }
 
