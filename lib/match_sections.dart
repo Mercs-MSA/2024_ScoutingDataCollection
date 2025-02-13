@@ -56,8 +56,7 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                   });
                 },
                 enableSpacer: true,
-                inputType: InputType.algae,
-                currColor: widget.colorDebug,
+                inputType: (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
               ),
             ),
             Expanded(
@@ -82,8 +81,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                   });
                 },
                 enableSpacer: true,
-                inputType: InputType.algae,
-                currColor: widget.colorDebug,
+                inputType: (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                
               ),
             ),
           ],
@@ -116,8 +115,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                   }
                 });
               },
-              inputType: InputType.algae,
-              currColor: widget.colorDebug,
+              inputType: (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+              
               enableSpacer: false,
             )
           ],
@@ -269,7 +268,7 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                     },
                     enableSpacer: true,
                     inputType: InputType.coral,
-                    currColor: widget.colorDebug,
+                    
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -294,7 +293,7 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                     },
                     enableSpacer: true,
                     inputType: InputType.coral,
-                    currColor: widget.colorDebug,
+                    
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -319,7 +318,7 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                     },
                     enableSpacer: true,
                     inputType: InputType.coral,
-                    currColor: widget.colorDebug,
+                    
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -344,7 +343,7 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                     },
                     enableSpacer: true,
                     inputType: InputType.coral,
-                    currColor: widget.colorDebug,
+                    
                   ),
                 ],
               ),
@@ -383,8 +382,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                   });
                 },
                 enableSpacer: true,
-                inputType: InputType.algae,
-                currColor: widget.colorDebug,
+                inputType: (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                
               ),
             ),
             Expanded(
@@ -410,8 +409,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                   });
                 },
                 enableSpacer: true,
-                inputType: InputType.algae,
-                currColor: widget.colorDebug,
+                inputType: (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                
               ),
             )
           ],
@@ -470,8 +469,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   });
                 },
                 enableSpacer: true,
-                inputType: InputType.algae,
-                currColor: colorDebug,
+                inputType: (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
               ),
             ),
             Expanded(
@@ -496,8 +494,8 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   });
                 },
                 enableSpacer: true,
-                inputType: InputType.algae,
-                currColor: widget.colorDebug,
+                inputType: (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                
               ),
             ),
           ],
@@ -531,8 +529,8 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                 });
               },
               enableSpacer: false,
-              inputType: InputType.algae,
-              currColor: widget.colorDebug,
+              inputType: (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+              
             )
           ],
         ),
@@ -793,8 +791,8 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   });
                 },
                 enableSpacer: true,
-                inputType: InputType.algae,
-                currColor: widget.colorDebug,
+                inputType: (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                
               ),
             ),
             Expanded(
@@ -820,8 +818,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   });
                 },
                 enableSpacer: true,
-                inputType: InputType.algae,
-                currColor: colorDebug,
+                inputType: (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
               ),
             )
           ],

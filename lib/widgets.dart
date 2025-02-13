@@ -147,10 +147,16 @@ class ChoiceInput extends StatelessWidget {
 
 
 enum InputType { 
-  def,
-  coral, 
-  algae,
-  stopwatch
+  def(Colors.green, Colors.red),
+  coral(Colors.purple, Colors.red), 
+  algae(Color.fromRGBO(76, 175, 80, 1), Colors.red),
+  altAlgae(Color.fromARGB(255, 78, 180, 148), Colors.red),
+  stopwatch(Colors.grey, Colors.grey);
+
+  final Color color;
+  final Color subtractColor;
+
+  const InputType(this.color, this.subtractColor);
 }
 
 
@@ -233,12 +239,12 @@ class NumberInput extends StatelessWidget {
                     ),
                     backgroundColor:
                         WidgetStateProperty.all(ColorScheme.fromSeed(
-                      seedColor: inputType == InputType.stopwatch ? Colors.grey : Colors.red,
+                      seedColor: inputType.subtractColor,
                       brightness: Brightness.dark,
                     ).primary),
                     foregroundColor:
                         WidgetStateProperty.all(ColorScheme.fromSeed(
-                      seedColor: Colors.red,
+                      seedColor: inputType.subtractColor,
                       brightness: Brightness.dark,
                     ).onPrimary),
                   ),
@@ -269,29 +275,12 @@ class NumberInput extends StatelessWidget {
                     ),
                     backgroundColor:
                         WidgetStateProperty.all(ColorScheme.fromSeed(
-                      seedColor: switch (inputType) {
-                        InputType.def => Colors.green,
-                        InputType.coral => Colors.purple,
-                        InputType.algae => switch (currColor) {
-                            true => Colors.green,
-                            false => const Color.fromARGB(255, 78, 180, 148),
-                          },
-                        // TODO: Handle this case.
-                        InputType.stopwatch => Colors.grey,
-                      },
+                      seedColor: inputType.color,
                       brightness: Brightness.dark,
                     ).primary),
                     foregroundColor:
                         WidgetStateProperty.all(ColorScheme.fromSeed(
-                      seedColor: switch (inputType) {
-                        InputType.def => Colors.green,
-                        InputType.coral => Colors.purple,
-                        InputType.algae => switch (currColor) {
-                            true => Colors.green,
-                            false => const Color.fromARGB(255, 78, 180, 127),
-                          },
-                        InputType.stopwatch => Colors.grey
-                      },
+                      seedColor: inputType.color,
                       brightness: Brightness.dark,
                     ).onPrimary),
                   ),
