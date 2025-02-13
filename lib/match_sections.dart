@@ -985,28 +985,20 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: NumberInput(
-                inputType: (widget.form.formData["endgamePos"] == "shallow" ||
-                        widget.form.formData["endgamePos"] == "deep")
-                    ? InputType.def
-                    : InputType.stopwatch,
-                title: "Climb Time (Seconds)",
-                value: (widget.form.formData["endgamePos"] == "shallow" ||
-                        widget.form.formData["endgamePos"] == "deep")
-                    ? widget.form.formData["climbTime"]
-                    : 0,
+                isDisabled: !(widget.form.formData["endgamePos"] == "shallow" ||
+                        widget.form.formData["endgamePos"] == "deep"),
+                disabledText: "N/A",
+                inputType: InputType.def,
+                title: "Climb Time",
+                value: "${widget.form.formData["climbTime"]}.0 s" ,
                 onValueAdd: () {
-                  if (widget.form.formData["endgamePos"] == "shallow" ||
-                      widget.form.formData["endgamePos"] == "deep") {
-                    setState(() {
-                      widget.form.onDataChanged(
-                          {"climbTime": widget.form.formData["climbTime"] + 1});
-                    });
-                  }
+                  setState(() {
+                    widget.form.onDataChanged(
+                        {"climbTime": widget.form.formData["climbTime"] + 1});
+                  });                
                 },
                 onValueSubtract: () {
-                  if (widget.form.formData["climbTime"] > 0 &&
-                      widget.form.formData["endgamePos"] == "shallow" &&
-                      widget.form.formData["endgamePos"] == "deep") {
+                  if (widget.form.formData["climbTime"] > 0) {
                     setState(() {
                       widget.form.onDataChanged(
                           {"climbTime": widget.form.formData["climbTime"] - 1});

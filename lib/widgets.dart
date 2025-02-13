@@ -160,9 +160,9 @@ class NumberInput extends StatelessWidget {
   final String title;
   final bool miniStyle;
 
-  final int value;
-  final void Function() onValueAdd;
-  final void Function() onValueSubtract;
+  final String value;
+  final void Function()? onValueAdd;
+  final void Function()? onValueSubtract;
 
   final bool enableSpacer;
 
@@ -170,16 +170,24 @@ class NumberInput extends StatelessWidget {
 
   final bool currColor;
 
-  const NumberInput(
-      {super.key,
-      required this.title,
-      required this.value,
-      required this.onValueAdd,
-      required this.onValueSubtract,
-      this.miniStyle = true,
-      this.enableSpacer = false,
-      this.inputType = InputType.def,
-      this.currColor = false});
+  final bool isDisabled;
+
+  final String disabledText; 
+
+  const NumberInput
+  ({
+    super.key,
+    required this.title,
+    required this.value,
+    required this.onValueAdd,
+    required this.onValueSubtract,
+    this.miniStyle = true,
+    this.enableSpacer = false,
+    this.inputType = InputType.def,
+    this.currColor = false,
+    this.isDisabled = false,
+    this.disabledText = "Disabled"
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -220,35 +228,38 @@ class NumberInput extends StatelessWidget {
                     ),
                   ),
                 const SizedBox(width: 8.0),
-                IconButton(
-                  onPressed: onValueSubtract,
-                  style: ButtonStyle(
-                    fixedSize: WidgetStateProperty.all(
-                        Size(miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
-                    padding: WidgetStateProperty.all(EdgeInsets.zero),
-                    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4.0),
+                if (!isDisabled)
+                  IconButton(
+                    onPressed: onValueSubtract,
+                    style: ButtonStyle(
+                      fixedSize: WidgetStateProperty.all(
+                          Size(miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
+                      padding: WidgetStateProperty.all(EdgeInsets.zero),
+                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
                       ),
+                      backgroundColor:
+                          WidgetStateProperty.all(ColorScheme.fromSeed(
+                        seedColor: inputType.subtractColor,
+                        brightness: Brightness.dark,
+                      ).primary),
+                      foregroundColor:
+                          WidgetStateProperty.all(ColorScheme.fromSeed(
+                        seedColor: inputType.subtractColor,
+                        brightness: Brightness.dark,
+                      ).onPrimary),
                     ),
-                    backgroundColor:
-                        WidgetStateProperty.all(ColorScheme.fromSeed(
-                      seedColor: inputType.subtractColor,
-                      brightness: Brightness.dark,
-                    ).primary),
-                    foregroundColor:
-                        WidgetStateProperty.all(ColorScheme.fromSeed(
-                      seedColor: inputType.subtractColor,
-                      brightness: Brightness.dark,
-                    ).onPrimary),
+                    icon: const Icon(Icons.remove),
                   ),
-                  icon: const Icon(Icons.remove),
-                ),
+                 
                 enableSpacer ? const Spacer() : const SizedBox(),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    value.toString(),
+                    
+                    (!isDisabled ? value.toString() : disabledText),
                     style: TextStyle(
                         fontSize: miniStyle ? 28 : 36,
                         fontWeight: FontWeight.w600,
@@ -256,30 +267,31 @@ class NumberInput extends StatelessWidget {
                   ),
                 ),
                 enableSpacer ? const Spacer() : const SizedBox(),
-                IconButton(
-                  onPressed: onValueAdd,
-                  style: ButtonStyle(
-                    fixedSize: WidgetStateProperty.all(
-                        Size(miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
-                    padding: WidgetStateProperty.all(EdgeInsets.zero),
-                    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4.0),
+                if (!isDisabled)
+                  IconButton(
+                    onPressed: onValueAdd,
+                    style: ButtonStyle(
+                      fixedSize: WidgetStateProperty.all(
+                          Size(miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
+                      padding: WidgetStateProperty.all(EdgeInsets.zero),
+                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
                       ),
+                      backgroundColor:
+                          WidgetStateProperty.all(ColorScheme.fromSeed(
+                        seedColor: inputType.color,
+                        brightness: Brightness.dark,
+                      ).primary),
+                      foregroundColor:
+                          WidgetStateProperty.all(ColorScheme.fromSeed(
+                        seedColor: inputType.color,
+                        brightness: Brightness.dark,
+                      ).onPrimary),
                     ),
-                    backgroundColor:
-                        WidgetStateProperty.all(ColorScheme.fromSeed(
-                      seedColor: inputType.color,
-                      brightness: Brightness.dark,
-                    ).primary),
-                    foregroundColor:
-                        WidgetStateProperty.all(ColorScheme.fromSeed(
-                      seedColor: inputType.color,
-                      brightness: Brightness.dark,
-                    ).onPrimary),
+                    icon: const Icon(Icons.add),
                   ),
-                  icon: const Icon(Icons.add),
-                ),
                 const SizedBox(width: 8.0),
               ],
             ),
@@ -289,7 +301,6 @@ class NumberInput extends StatelessWidget {
     );
   }
 }
-
 class SectionHeader extends StatelessWidget {
   final Color color;
   final String title;
