@@ -986,16 +986,24 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
               padding: const EdgeInsets.all(8.0),
               child: NumberInput(
                 isDisabled: !(widget.form.formData["endgamePos"] == "shallow" ||
-                        widget.form.formData["endgamePos"] == "deep"),
+                    widget.form.formData["endgamePos"] == "deep"),
                 disabledText: "N/A",
                 inputType: InputType.def,
                 title: "Climb Time",
-                value: "${widget.form.formData["climbTime"]}.0 s" ,
+                value: widget.form.formData["climbTime"],
+                suffix: (widget.form.formData["endgamePos"] == "shallow" ||
+                        widget.form.formData["endgamePos"] == "deep")
+                    ? Text(
+                        "s",
+                        style:
+                            TextStyle(fontSize: 28, fontFamily: "RobotoMono"),
+                      )
+                    : null,
                 onValueAdd: () {
                   setState(() {
                     widget.form.onDataChanged(
                         {"climbTime": widget.form.formData["climbTime"] + 1});
-                  });                
+                  });
                 },
                 onValueSubtract: () {
                   if (widget.form.formData["climbTime"] > 0) {

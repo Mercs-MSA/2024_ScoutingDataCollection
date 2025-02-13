@@ -160,9 +160,11 @@ class NumberInput extends StatelessWidget {
   final String title;
   final bool miniStyle;
 
-  final String value;
+  final int value;
   final void Function()? onValueAdd;
   final void Function()? onValueSubtract;
+
+  final Widget? suffix;
 
   final bool enableSpacer;
 
@@ -172,22 +174,21 @@ class NumberInput extends StatelessWidget {
 
   final bool isDisabled;
 
-  final String disabledText; 
+  final String disabledText;
 
-  const NumberInput
-  ({
-    super.key,
-    required this.title,
-    required this.value,
-    required this.onValueAdd,
-    required this.onValueSubtract,
-    this.miniStyle = true,
-    this.enableSpacer = false,
-    this.inputType = InputType.def,
-    this.currColor = false,
-    this.isDisabled = false,
-    this.disabledText = "Disabled"
-  });
+  const NumberInput(
+      {super.key,
+      required this.title,
+      required this.value,
+      this.suffix,
+      required this.onValueAdd,
+      required this.onValueSubtract,
+      this.miniStyle = true,
+      this.enableSpacer = false,
+      this.inputType = InputType.def,
+      this.currColor = false,
+      this.isDisabled = false,
+      this.disabledText = "Disabled"});
 
   @override
   Widget build(BuildContext context) {
@@ -253,17 +254,21 @@ class NumberInput extends StatelessWidget {
                     ),
                     icon: const Icon(Icons.remove),
                   ),
-                 
                 enableSpacer ? const Spacer() : const SizedBox(),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    
-                    (!isDisabled ? value.toString() : disabledText),
-                    style: TextStyle(
-                        fontSize: miniStyle ? 28 : 36,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: "RobotoMono"),
+                  child: Row(
+                    children: [
+                      Text(
+                        (!isDisabled ? value.toString() : disabledText),
+                        style: TextStyle(
+                          fontSize: miniStyle ? 28 : 36,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: "RobotoMono",
+                        ),
+                      ),
+                      suffix != null ? suffix! : const SizedBox(),
+                    ],
                   ),
                 ),
                 enableSpacer ? const Spacer() : const SizedBox(),
@@ -301,6 +306,7 @@ class NumberInput extends StatelessWidget {
     );
   }
 }
+
 class SectionHeader extends StatelessWidget {
   final Color color;
   final String title;
