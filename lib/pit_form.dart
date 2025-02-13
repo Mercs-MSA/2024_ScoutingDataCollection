@@ -110,29 +110,6 @@ class _PitFormState extends State<PitForm> {
                         ),
                       ),
                       const SizedBox(width: 8.0),
-                      Expanded(
-                        child: TextField(
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Height',
-                            suffixText: 'in',
-                          ),
-                          keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(2),
-                          ],
-                          onChanged: (value) {
-                            widget
-                                .onDataChanged({"height": int.tryParse(value)});
-                          },
-                          controller: TextEditingController(
-                            text: widget.formData["height"] == null
-                                ? ''
-                                : widget.formData["height"].toString(),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                   const SizedBox(height: 8.0),

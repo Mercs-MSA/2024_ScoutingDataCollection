@@ -1041,6 +1041,16 @@ class _FormAppPageState extends State<FormAppPage> {
                             SizedBox(height: 8),
                             Row(
                               children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 2, right: 8),
+                                  child: Column(
+                                    children: [
+                                      Text("Auto Start"),
+                                      Text("Position")
+                                    ],
+                                  ),
+                                ),
                                 Expanded(
                                   child: SegmentedButton<MatchStartPos>(
                                     style: ButtonStyle(

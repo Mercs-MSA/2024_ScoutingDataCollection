@@ -979,10 +979,41 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                     } else if (newSelection.contains(EndgamePositions.none)) {
                       widget.form.formData["endgamePos"] = "none";
                     }
+                    widget.form.formData["climbTime"] = 0;
                   });
                 },
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: NumberInput(
+                title: "Climb Time (Seconds)",
+                value: (widget.form.formData["endgamePos"] == "shallow" ||
+                        widget.form.formData["endgamePos"] == "deep")
+                    ? widget.form.formData["climbTime"]
+                    : 0,
+                onValueAdd: () {
+                  if (widget.form.formData["endgamePos"] == "shallow" ||
+                      widget.form.formData["endgamePos"] == "deep") {
+                    setState(() {
+                      widget.form.onDataChanged(
+                          {"climbTime": widget.form.formData["climbTime"] + 1});
+                    });
+                  }
+                },
+                onValueSubtract: () {
+                  if (widget.form.formData["climbTime"] > 0 &&
+                      widget.form.formData["endgamePos"] == "shallow" &&
+                      widget.form.formData["endgamePos"] == "deep") {
+                    setState(() {
+                      widget.form.onDataChanged(
+                          {"climbTime": widget.form.formData["climbTime"] - 1});
+                    });
+                  }
+                },
+                enableSpacer: true,
+              ),
+            )
           ],
         ),
       ),
