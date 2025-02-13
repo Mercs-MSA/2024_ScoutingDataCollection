@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mercs_scout/data_maps.dart';
 import 'package:mercs_scout/datatypes.dart';
 
 import 'match_form.dart';
@@ -56,7 +55,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                   });
                 },
                 enableSpacer: true,
-                inputType: (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                inputType:
+                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
               ),
             ),
             Expanded(
@@ -81,8 +81,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                   });
                 },
                 enableSpacer: true,
-                inputType: (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
-                
+                inputType:
+                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
               ),
             ),
           ],
@@ -115,8 +115,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                   }
                 });
               },
-              inputType: (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
-              
+              inputType:
+                  (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
               enableSpacer: false,
             )
           ],
@@ -268,7 +268,6 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                     },
                     enableSpacer: true,
                     inputType: InputType.coral,
-                    
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -293,7 +292,6 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                     },
                     enableSpacer: true,
                     inputType: InputType.coral,
-                    
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -318,7 +316,6 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                     },
                     enableSpacer: true,
                     inputType: InputType.coral,
-                    
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -343,7 +340,6 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                     },
                     enableSpacer: true,
                     inputType: InputType.coral,
-                    
                   ),
                 ],
               ),
@@ -382,8 +378,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                   });
                 },
                 enableSpacer: true,
-                inputType: (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
-                
+                inputType:
+                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
               ),
             ),
             Expanded(
@@ -409,8 +405,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                   });
                 },
                 enableSpacer: true,
-                inputType: (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
-                
+                inputType:
+                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
               ),
             )
           ],
@@ -469,7 +465,8 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   });
                 },
                 enableSpacer: true,
-                inputType: (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                inputType:
+                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
               ),
             ),
             Expanded(
@@ -494,8 +491,8 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   });
                 },
                 enableSpacer: true,
-                inputType: (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
-                
+                inputType:
+                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
               ),
             ),
           ],
@@ -529,8 +526,8 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                 });
               },
               enableSpacer: false,
-              inputType: (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
-              
+              inputType:
+                  (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
             )
           ],
         ),
@@ -791,8 +788,8 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   });
                 },
                 enableSpacer: true,
-                inputType: (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
-                
+                inputType:
+                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
               ),
             ),
             Expanded(
@@ -818,7 +815,8 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   });
                 },
                 enableSpacer: true,
-                inputType: (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                inputType:
+                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
               ),
             )
           ],
@@ -987,6 +985,10 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: NumberInput(
+                inputType: (widget.form.formData["endgamePos"] == "shallow" ||
+                        widget.form.formData["endgamePos"] == "deep")
+                    ? InputType.def
+                    : InputType.stopwatch,
                 title: "Climb Time (Seconds)",
                 value: (widget.form.formData["endgamePos"] == "shallow" ||
                         widget.form.formData["endgamePos"] == "deep")

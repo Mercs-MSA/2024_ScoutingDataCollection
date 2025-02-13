@@ -15,7 +15,6 @@ class PitScoutSelection extends StatelessWidget {
   final bool completed;
   final Map teamNames;
 
-  
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -144,11 +143,9 @@ class ChoiceInput extends StatelessWidget {
   }
 }
 
-
-
-enum InputType { 
+enum InputType {
   def(Colors.green, Colors.red),
-  coral(Colors.purple, Colors.red), 
+  coral(Colors.purple, Colors.red),
   algae(Color.fromRGBO(76, 175, 80, 1), Colors.red),
   altAlgae(Color.fromARGB(255, 78, 180, 148), Colors.red),
   stopwatch(Colors.grey, Colors.grey);
@@ -158,7 +155,6 @@ enum InputType {
 
   const InputType(this.color, this.subtractColor);
 }
-
 
 class NumberInput extends StatelessWidget {
   final String title;
@@ -174,18 +170,16 @@ class NumberInput extends StatelessWidget {
 
   final bool currColor;
 
-  const NumberInput
-  ({
-    super.key,
-    required this.title,
-    required this.value,
-    required this.onValueAdd,
-    required this.onValueSubtract,
-    this.miniStyle = true,
-    this.enableSpacer = false,
-    this.inputType = InputType.def,
-    this.currColor = false
-  });
+  const NumberInput(
+      {super.key,
+      required this.title,
+      required this.value,
+      required this.onValueAdd,
+      required this.onValueSubtract,
+      this.miniStyle = true,
+      this.enableSpacer = false,
+      this.inputType = InputType.def,
+      this.currColor = false});
 
   @override
   Widget build(BuildContext context) {
