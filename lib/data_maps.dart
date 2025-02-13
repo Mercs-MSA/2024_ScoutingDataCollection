@@ -85,6 +85,7 @@ Map<String, dynamic> getMatchDataMap() {
     "teleProcessorScored": 0,
     "teleProcessorMissed": 0,
     "endgamePos": "none",
+    "climbTime": 0,
   };
 }
 
