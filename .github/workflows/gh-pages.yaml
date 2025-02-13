@@ -14,3 +14,4 @@ jobs:
       - uses: TesteurManiak/flutter-gh-pages@feat/wasm-compilation
         with:
           baseHref: /FRC_ScoutingDataCollection/
+          compileToWasm: true
