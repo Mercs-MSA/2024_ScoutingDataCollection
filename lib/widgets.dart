@@ -15,6 +15,7 @@ class PitScoutSelection extends StatelessWidget {
   final bool completed;
   final Map teamNames;
 
+  
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -143,7 +144,15 @@ class ChoiceInput extends StatelessWidget {
   }
 }
 
-enum InputType { regular, coral, algae, missed }
+
+
+enum InputType { 
+  def,
+  coral, 
+  algae,
+  stopwatch
+}
+
 
 class NumberInput extends StatelessWidget {
   final String title;
@@ -159,16 +168,18 @@ class NumberInput extends StatelessWidget {
 
   final bool currColor;
 
-  const NumberInput(
-      {super.key,
-      required this.title,
-      required this.value,
-      required this.onValueAdd,
-      required this.onValueSubtract,
-      this.miniStyle = true,
-      this.enableSpacer = false,
-      this.inputType = InputType.regular,
-      this.currColor = false});
+  const NumberInput
+  ({
+    super.key,
+    required this.title,
+    required this.value,
+    required this.onValueAdd,
+    required this.onValueSubtract,
+    this.miniStyle = true,
+    this.enableSpacer = false,
+    this.inputType = InputType.def,
+    this.currColor = false
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -185,11 +196,16 @@ class NumberInput extends StatelessWidget {
         child: Column(
           children: [
             if (miniStyle)
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
+              Column(
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  Divider()
+                ],
               ),
             Row(
               children: [
@@ -217,7 +233,7 @@ class NumberInput extends StatelessWidget {
                     ),
                     backgroundColor:
                         WidgetStateProperty.all(ColorScheme.fromSeed(
-                      seedColor: Colors.red,
+                      seedColor: inputType == InputType.stopwatch ? Colors.grey : Colors.red,
                       brightness: Brightness.dark,
                     ).primary),
                     foregroundColor:
@@ -254,26 +270,27 @@ class NumberInput extends StatelessWidget {
                     backgroundColor:
                         WidgetStateProperty.all(ColorScheme.fromSeed(
                       seedColor: switch (inputType) {
-                        InputType.regular => Colors.green,
+                        InputType.def => Colors.green,
                         InputType.coral => Colors.purple,
                         InputType.algae => switch (currColor) {
                             true => Colors.green,
                             false => const Color.fromARGB(255, 78, 180, 148),
                           },
-                        InputType.missed => Colors.red
+                        // TODO: Handle this case.
+                        InputType.stopwatch => Colors.grey,
                       },
                       brightness: Brightness.dark,
                     ).primary),
                     foregroundColor:
                         WidgetStateProperty.all(ColorScheme.fromSeed(
                       seedColor: switch (inputType) {
-                        InputType.regular => Colors.green,
+                        InputType.def => Colors.green,
                         InputType.coral => Colors.purple,
                         InputType.algae => switch (currColor) {
                             true => Colors.green,
                             false => const Color.fromARGB(255, 78, 180, 127),
                           },
-                        InputType.missed => Colors.red
+                        InputType.stopwatch => Colors.grey
                       },
                       brightness: Brightness.dark,
                     ).onPrimary),

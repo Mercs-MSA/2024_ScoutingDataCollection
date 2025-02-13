@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mercs_scout/data_maps.dart';
 import 'package:mercs_scout/datatypes.dart';
 
 import 'match_form.dart';
@@ -81,7 +82,7 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                   });
                 },
                 enableSpacer: true,
-                inputType: InputType.missed,
+                inputType: InputType.algae,
                 currColor: widget.colorDebug,
               ),
             ),
@@ -267,7 +268,7 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                       });
                     },
                     enableSpacer: true,
-                    inputType: InputType.missed,
+                    inputType: InputType.coral,
                     currColor: widget.colorDebug,
                   ),
                   NumberInput(
@@ -292,7 +293,7 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                       });
                     },
                     enableSpacer: true,
-                    inputType: InputType.missed,
+                    inputType: InputType.coral,
                     currColor: widget.colorDebug,
                   ),
                   NumberInput(
@@ -317,7 +318,7 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                       });
                     },
                     enableSpacer: true,
-                    inputType: InputType.missed,
+                    inputType: InputType.coral,
                     currColor: widget.colorDebug,
                   ),
                   NumberInput(
@@ -342,7 +343,7 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                       });
                     },
                     enableSpacer: true,
-                    inputType: InputType.missed,
+                    inputType: InputType.coral,
                     currColor: widget.colorDebug,
                   ),
                 ],
@@ -409,7 +410,7 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                   });
                 },
                 enableSpacer: true,
-                inputType: InputType.missed,
+                inputType: InputType.algae,
                 currColor: widget.colorDebug,
               ),
             )
@@ -470,7 +471,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                 },
                 enableSpacer: true,
                 inputType: InputType.algae,
-                currColor: true,
+                currColor: colorDebug,
               ),
             ),
             Expanded(
@@ -495,7 +496,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   });
                 },
                 enableSpacer: true,
-                inputType: InputType.missed,
+                inputType: InputType.algae,
                 currColor: widget.colorDebug,
               ),
             ),
@@ -681,7 +682,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                       });
                     },
                     enableSpacer: true,
-                    inputType: InputType.missed,
+                    inputType: InputType.coral,
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -705,7 +706,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                       });
                     },
                     enableSpacer: true,
-                    inputType: InputType.missed,
+                    inputType: InputType.coral,
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -729,7 +730,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                       });
                     },
                     enableSpacer: true,
-                    inputType: InputType.missed,
+                    inputType: InputType.coral,
                   ),
                   NumberInput(
                     onValueAdd: () {
@@ -753,7 +754,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                       });
                     },
                     enableSpacer: true,
-                    inputType: InputType.missed,
+                    inputType: InputType.coral,
                   ),
                 ],
               ),
@@ -819,7 +820,8 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   });
                 },
                 enableSpacer: true,
-                inputType: InputType.missed,
+                inputType: InputType.algae,
+                currColor: colorDebug,
               ),
             )
           ],

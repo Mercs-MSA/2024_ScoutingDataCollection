@@ -23,6 +23,7 @@ import 'match_form.dart';
 import 'pit_form.dart';
 import 'widgets.dart';
 
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -90,7 +91,8 @@ class _FormAppPageState extends State<FormAppPage> {
   List<String> pitScouters = ["", ""];
 
   int? matchTeamNumber;
-  final bool colorDebug = Random.secure().nextDouble() > 0.5;
+  
+  final bool colorDebug = Random.secure().nextBool();
 
   Map<String, dynamic> pitScoutingDefaultData = getPitDataMap();
   Map<String, dynamic> pitScoutingData = getPitDataMap();
