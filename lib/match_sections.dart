@@ -98,32 +98,33 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Expanded(
-            NumberInput(
-              title: "Algae De-scored",
-              value: widget.form.formData["autoAlgaeDescored"],
-              onValueAdd: () {
-                setState(() {
-                  widget.form.onDataChanged({
-                    "autoAlgaeDescored":
-                        widget.form.formData["autoAlgaeDescored"] + 1
-                  });
-                });
-              },
-              onValueSubtract: () {
-                setState(() {
-                  if (widget.form.formData["autoAlgaeDescored"] > 0) {
+            Expanded(
+              child: NumberInput(
+                title: "Algae De-scored",
+                value: widget.form.formData["autoAlgaeDescored"],
+                onValueAdd: () {
+                  setState(() {
                     widget.form.onDataChanged({
                       "autoAlgaeDescored":
-                          widget.form.formData["autoAlgaeDescored"] - 1
+                          widget.form.formData["autoAlgaeDescored"] + 1
                     });
-                  }
-                });
-              },
-              inputType:
-                  (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
-              enableSpacer: false,
-            )
+                  });
+                },
+                onValueSubtract: () {
+                  setState(() {
+                    if (widget.form.formData["autoAlgaeDescored"] > 0) {
+                      widget.form.onDataChanged({
+                        "autoAlgaeDescored":
+                            widget.form.formData["autoAlgaeDescored"] - 1
+                      });
+                    }
+                  });
+                },
+                inputType:
+                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                enableSpacer: true,
+              ),
+            ),
           ],
         ),
         Row(
@@ -584,30 +585,32 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Expanded(
-            NumberInput(
-              title: "Algae De-scored",
-              value: widget.form.formData["teleAlgaeDescored"],
-              onValueAdd: () {
-                setState(() {
-                  widget.form.onDataChanged({
-                    "teleAlgaeDescored":
-                        widget.form.formData["teleAlgaeDescored"] + 1
-                  });
-                });
-              },
-              onValueSubtract: () {
-                setState(() {
-                  if (widget.form.formData["teleAlgaeDescored"] > 0) {
+            Expanded(
+              child: NumberInput(
+                title: "Algae De-scored",
+                value: widget.form.formData["teleAlgaeDescored"],
+                onValueAdd: () {
+                  setState(() {
                     widget.form.onDataChanged({
                       "teleAlgaeDescored":
-                          widget.form.formData["teleAlgaeDescored"] - 1
+                          widget.form.formData["teleAlgaeDescored"] + 1
                     });
-                  }
-                });
-              },
-              enableSpacer: false,
-              inputType:
-                  (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                  });
+                },
+                onValueSubtract: () {
+                  setState(() {
+                    if (widget.form.formData["teleAlgaeDescored"] > 0) {
+                      widget.form.onDataChanged({
+                        "teleAlgaeDescored":
+                            widget.form.formData["teleAlgaeDescored"] - 1
+                      });
+                    }
+                  });
+                },
+                enableSpacer: true,
+                inputType:
+                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+              ),
             )
           ],
         ),
