@@ -1,16 +1,14 @@
-import 'dart:typed_data';
-
 // ignore: camel_case_types
 class document {
-  static _Body? body;
+  static Body? body;
 
   static dynamic createElement(String tag) {
-    document.body = _Body();
+    document.body = Body();
     return HTMLAnchorElement();
   }
 }
 
-class _Body {
+class Body {
   void appendChild(dynamic element) {}
   void removeChild(dynamic element) {}
 }
