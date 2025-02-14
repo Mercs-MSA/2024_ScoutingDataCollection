@@ -23,7 +23,7 @@ jobs:
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build apk --release --verbose
+        run: flutter build apk --release
 
       - name: Upload APK to Artifacts
         uses: actions/upload-artifact@v4
@@ -59,7 +59,7 @@ jobs:
       - name: Zip Windows Files
         run: |
           $VERSION="${{ github.ref_name }}" 
-          Compress-Archive -Path build/windows/runner/Release/* -DestinationPath "windows-x86_64-${VERSION}.zip"
+          Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath "windows-x86_64-${VERSION}.zip"
         shell: pwsh
 
       - name: Upload Windows Artifact

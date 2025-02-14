@@ -1,4 +1,4 @@
-# flutter_form_elements
+# mercs_scout
 
 A new Flutter project.
 
