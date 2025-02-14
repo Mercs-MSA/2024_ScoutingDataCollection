@@ -544,7 +544,7 @@ class _FormAppPageState extends State<FormAppPage> {
                               keyboardType: TextInputType.number,
                               inputFormatters: <TextInputFormatter>[
                                 FilteringTextInputFormatter.digitsOnly,
-                                LengthLimitingTextInputFormatter(4),
+                                LengthLimitingTextInputFormatter(5),
                               ],
                               onChanged: (value) {
                                 pitTeamNumber = int.tryParse(value);
@@ -918,7 +918,7 @@ class _FormAppPageState extends State<FormAppPage> {
                               keyboardType: TextInputType.number,
                               inputFormatters: <TextInputFormatter>[
                                 FilteringTextInputFormatter.digitsOnly,
-                                LengthLimitingTextInputFormatter(4),
+                                LengthLimitingTextInputFormatter(5),
                               ],
                               onChanged: (value) {
                                 matchTeamNumber = int.tryParse(value);
