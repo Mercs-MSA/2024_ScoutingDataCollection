@@ -164,6 +164,7 @@ class NumberInput extends StatelessWidget {
   final void Function()? onValueAdd;
   final void Function()? onValueSubtract;
 
+  final Widget? prefix;
   final Widget? suffix;
 
   final bool enableSpacer;
@@ -180,6 +181,7 @@ class NumberInput extends StatelessWidget {
       {super.key,
       required this.title,
       required this.value,
+      this.prefix,
       this.suffix,
       required this.onValueAdd,
       required this.onValueSubtract,
@@ -259,6 +261,7 @@ class NumberInput extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
+                      prefix != null ? prefix! : const SizedBox(),
                       Text(
                         (!isDisabled ? value.toString() : disabledText),
                         style: TextStyle(

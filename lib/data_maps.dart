@@ -81,6 +81,8 @@ Map<String, dynamic> getMatchDataMap() {
     "teleL1Missed": 0,
     "teleNetScored": 0,
     "teleNetMissed": 0,
+    "teleNetScoredHuman": 0,
+    "teleNetMissedHuman": 0,
     "teleAlgaeDescored": 0,
     "teleProcessorScored": 0,
     "teleProcessorMissed": 0,
