@@ -88,8 +88,12 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
             ),
           ],
         ),
-        Divider(
-          color: Theme.of(context).dividerColor,
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            SectionHeader(
+                title: "Algae Descore", color: Theme.of(context).dividerColor),
+          ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -411,7 +415,7 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
               ),
             )
           ],
-        )
+        ),
       ],
     );
   }
@@ -569,8 +573,12 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
             ),
           ],
         ),
-        Divider(
-          color: Theme.of(context).dividerColor,
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            SectionHeader(
+                title: "Algae Descore", color: Theme.of(context).dividerColor),
+          ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -913,100 +921,93 @@ class MatchEndgameSection extends StatefulWidget {
 class _MatchEndgameSectionState extends State<MatchEndgameSection> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.all(12.0),
-        child: Column(
+    return ListView(
+      shrinkWrap: true,
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.max,
           children: [
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Text("Climb"),
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 15.0, right: 10.0),
-                    child: Divider(),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
-                    child: SegmentedButton<EndgamePositions>(
-                      showSelectedIcon: false,
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                      ),
-                      emptySelectionAllowed: true,
-                      multiSelectionEnabled: false,
-                      segments: <ButtonSegment<EndgamePositions>>[
-                        ButtonSegment(
-                          value: EndgamePositions.shallow,
-                          label: Text("Shallow Climb",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 15)),
-                          icon: Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
-                            child: Image(
-                              image: widget.form.formData["alliance"] == "red"
-                                  ? AssetImage('images/shallow_cage_r.png')
-                                  : AssetImage('images/shallow_cage_b.png'),
-                              fit: BoxFit.scaleDown,
-                              height: 100,
-                              isAntiAlias: true,
-                            ),
-                          ),
-                        ),
-                        ButtonSegment(
-                          value: EndgamePositions.deep,
-                          label: Text("Deep Climb",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 15)),
-                          icon: Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
-                            child: Image(
-                              image: widget.form.formData["alliance"] == "red"
-                                  ? AssetImage('images/deep_cage_r.png')
-                                  : AssetImage('images/deep_cage_b.png'),
-                              fit: BoxFit.scaleDown,
-                              height: 100,
-                              isAntiAlias: true,
-                            ),
-                          ),
-                        ),
-                      ],
-                      selected: {
-                        if (widget.form.formData["endgamePos"] == "shallow")
-                          EndgamePositions.shallow,
-                        if (widget.form.formData["endgamePos"] == "deep")
-                          EndgamePositions.deep,
-                      },
-                      onSelectionChanged: (Set<EndgamePositions> newSelection) {
-                        setState(() {
-                          if (newSelection.contains(EndgamePositions.shallow)) {
-                            widget.form.formData["endgamePos"] = "shallow";
-                          }
-                          if (newSelection.contains(EndgamePositions.deep)) {
-                            widget.form.formData["endgamePos"] = "deep";
-                          }
-                        });
-                      },
+            SectionHeader(
+                title: "Algae Descore", color: Theme.of(context).dividerColor),
+          ],
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: SegmentedButton<EndgamePositions>(
+                  showSelectedIcon: false,
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
+                  emptySelectionAllowed: true,
+                  multiSelectionEnabled: false,
+                  segments: <ButtonSegment<EndgamePositions>>[
+                    ButtonSegment(
+                      value: EndgamePositions.shallow,
+                      label: Text("Shallow Climb",
+                          style: TextStyle(color: Colors.white, fontSize: 15)),
+                      icon: Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Image(
+                          image: widget.form.formData["alliance"] == "red"
+                              ? AssetImage('images/shallow_cage_r.png')
+                              : AssetImage('images/shallow_cage_b.png'),
+                          fit: BoxFit.scaleDown,
+                          height: 100,
+                          isAntiAlias: true,
+                        ),
+                      ),
+                    ),
+                    ButtonSegment(
+                      value: EndgamePositions.deep,
+                      label: Text("Deep Climb",
+                          style: TextStyle(color: Colors.white, fontSize: 15)),
+                      icon: Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Image(
+                          image: widget.form.formData["alliance"] == "red"
+                              ? AssetImage('images/deep_cage_r.png')
+                              : AssetImage('images/deep_cage_b.png'),
+                          fit: BoxFit.scaleDown,
+                          height: 100,
+                          isAntiAlias: true,
+                        ),
+                      ),
+                    ),
+                  ],
+                  selected: {
+                    if (widget.form.formData["endgamePos"] == "shallow")
+                      EndgamePositions.shallow,
+                    if (widget.form.formData["endgamePos"] == "deep")
+                      EndgamePositions.deep,
+                  },
+                  onSelectionChanged: (Set<EndgamePositions> newSelection) {
+                    setState(() {
+                      if (newSelection.contains(EndgamePositions.shallow)) {
+                        widget.form.formData["endgamePos"] = "shallow";
+                      }
+                      if (newSelection.contains(EndgamePositions.deep)) {
+                        widget.form.formData["endgamePos"] = "deep";
+                      }
+                    });
+                  },
                 ),
-              ],
+              ),
             ),
-            const SizedBox(
-              height: 8.0,
-            ),
+          ],
+        ),
+        const SizedBox(
+          height: 8.0,
+        ),
+        Row(
+          children: [
             Padding(
-              padding: const EdgeInsets.only(left: 8, right: 8),
+              padding: const EdgeInsets.all(2.0),
               child: SegmentedButton(
                 showSelectedIcon: false,
                 style: ElevatedButton.styleFrom(
@@ -1021,7 +1022,7 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                       value: EndgamePositions.park,
                       icon: Icon(Icons.local_parking_rounded),
                       label: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.all(16.0),
                         child: Text("Park",
                             style:
                                 TextStyle(color: Colors.white, fontSize: 15)),
@@ -1030,7 +1031,7 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                       value: EndgamePositions.none,
                       icon: Icon(Icons.not_interested_rounded),
                       label: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.all(16.0),
                         child: Text("No Park/Climb",
                             style:
                                 TextStyle(color: Colors.white, fontSize: 15)),
@@ -1054,8 +1055,7 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            Expanded(
               child: NumberInput(
                 isDisabled: !(widget.form.formData["endgamePos"] == "shallow" ||
                     widget.form.formData["endgamePos"] == "deep"),
@@ -1087,10 +1087,17 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                 },
                 enableSpacer: true,
               ),
-            )
+            ),
           ],
         ),
-      ),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            SectionHeader(
+                title: "Cards", color: Theme.of(context).dividerColor),
+          ],
+        ),
+      ],
     );
   }
 }
