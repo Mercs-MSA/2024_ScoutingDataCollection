@@ -92,6 +92,6 @@ jobs:
           files: |
             artifacts/app-release.apk
             artifacts/app-release.apk.sha1
-            artifacts/windows-x86_64-${VERSION}.zip
+            artifacts/windows-x86_64-${{ github.ref_name }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
