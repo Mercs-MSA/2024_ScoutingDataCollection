@@ -10,14 +10,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_confetti/flutter_confetti.dart';
-import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:mercs_scout/data_maps.dart';
 import 'package:mercs_scout/reassemble_tools.dart';
 import 'package:mercs_scout/settingspage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:path/path.dart' as path;
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'dummyweb.dart' if (dart.library.html) 'package:web/web.dart' as web;
 
 import 'datatypes.dart';
 import 'match_form.dart';
@@ -129,19 +130,21 @@ class _FormAppPageState extends State<FormAppPage> {
       WidgetsBinding.instance.addPostFrameCallback((_) => showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: const Text('Web Support'),
+              title: const Text('Get the Android App'),
               icon: Icon(
-                Icons.construction,
+                Icons.android_rounded,
                 size: 64,
               ),
               content: const Text(
-                  'Web support is a work in progress.\nSome features may not be fully functional.'),
+                  'Use the Sleepy Ron Android app for improved performance'),
               actions: <Widget>[
                 ElevatedButton(
                   onPressed: () {
+                    launchUrlString(
+                        "https://github.com/Mercs-MSA/FRC_ScoutingDataCollection/releases");
                     Navigator.of(context).pop();
                   },
-                  child: const Text("Dismiss"),
+                  child: const Text("App Releases"),
                 ),
                 FilledButton(
                   onPressed: () {
@@ -687,8 +690,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                         onPressed: saveDisabled == false
                                             ? onPitScoutSave
                                             : null,
-                                        label: const Text(
-                                            "Export CSV to Directory"),
+                                        label: const Text("Export CSV"),
                                         icon: const Icon(Icons.save),
                                       ),
                                       const SizedBox(
@@ -1204,8 +1206,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                         onPressed: saveDisabled == false
                                             ? onMatchScoutSave
                                             : null,
-                                        label: const Text(
-                                            "Export CSV to Directory"),
+                                        label: const Text("Export CSV"),
                                         icon: const Icon(Icons.save),
                                       ),
                                       const SizedBox(
@@ -1431,17 +1432,12 @@ class _FormAppPageState extends State<FormAppPage> {
       saveDisabled = true;
     });
 
-    final dirPath = await grabDir();
-
-    if (dirPath != null) {
-      File(path.join(dirPath,
-              "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_pit.csv"))
-          .create(recursive: true)
-          .onError((e, s) {
-        throw Error;
-      }).then((File file) {
-        file.writeAsBytes(Uint8List.fromList(fileData.codeUnits));
-      });
+    if (kIsWeb) {
+      saveFileWeb(Uint8List.fromList(fileData.codeUnits),
+          "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_pit.csv");
+    } else {
+      saveFileNative(Uint8List.fromList(fileData.codeUnits),
+          "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_pit.csv");
     }
 
     if (!mounted) return;
@@ -1560,17 +1556,12 @@ class _FormAppPageState extends State<FormAppPage> {
       saveDisabled = true;
     });
 
-    final dirPath = await grabDir();
-
-    if (dirPath != null) {
-      File(path.join(dirPath,
-              "${eventId}_frc${matchTeamNumber}_match/${eventId}_frc${matchTeamNumber}_match.csv"))
-          .create(recursive: true)
-          .onError((e, s) {
-        throw Error;
-      }).then((File file) {
-        file.writeAsBytes(Uint8List.fromList(fileData.codeUnits));
-      });
+    if (kIsWeb) {
+      saveFileWeb(Uint8List.fromList(fileData.codeUnits),
+          "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_pit.csv");
+    } else {
+      saveFileNative(Uint8List.fromList(fileData.codeUnits),
+          "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_pit.csv");
     }
 
     if (!mounted) return;
@@ -1608,15 +1599,7 @@ class _FormAppPageState extends State<FormAppPage> {
     );
   }
 
-  Future<void> saveFileMobile(Uint8List data, String fileName) async {
-    final params = SaveFileDialogParams(data: data, fileName: fileName);
-    await FlutterFileDialog.saveFile(params: params);
-    setState(() {
-      saveDisabled = false;
-    });
-  }
-
-  Future<void> saveFileDesktop(Uint8List data, String fileName) async {
+  Future<void> saveFileNative(Uint8List data, String fileName) async {
     String? outputFile = await FilePicker.platform.saveFile(
       dialogTitle: 'Export data',
       fileName: fileName,
@@ -1631,16 +1614,23 @@ class _FormAppPageState extends State<FormAppPage> {
     });
   }
 
-  Future<String?> grabDir() async {
-    String? outputFile = await FilePicker.platform.getDirectoryPath(
-      dialogTitle: 'Export directory',
-    );
+  Future<void> saveFileWeb(Uint8List data, String fileName) async {
+    if (!kIsWeb) {
+      return;
+    }
 
+    final web.HTMLAnchorElement anchor =
+        web.document.createElement('a') as web.HTMLAnchorElement
+          ..href = "data:application/octet-stream;base64,${base64Encode(data)}"
+          ..style.display = 'none'
+          ..download = fileName;
+
+    web.document.body!.appendChild(anchor);
+    anchor.click();
+    web.document.body!.removeChild(anchor);
     setState(() {
       saveDisabled = false;
     });
-
-    return outputFile;
   }
 
   Future<void> resetPrefs() async {
@@ -1695,4 +1685,8 @@ class _FormAppPageState extends State<FormAppPage> {
       prefs.setBool('showWebWarning', showWebWarning);
     });
   }
+}
+
+extension on String {
+  set display(String display) {}
 }
