@@ -1,0 +1,90 @@
+name: Release Flutter APK
+
+on:
+  push:
+    tags:
+      - '2025.*'  # Triggers when a new tag like v1.0.0 is pushed
+
+jobs:
+  build_apk:
+    name: Build APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Upload APK to Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-apk
+          path: |
+            build/app/outputs/flutter-apk/app-release.apk
+            build/app/outputs/flutter-apk/app-release.apk.sha1
+
+  build_windows:
+    name: Build Windows EXE
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.x"
+          channel: "stable"
+
+      - name: Enable Windows Support
+        run: flutter config --enable-windows-desktop
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Build Windows App
+        run: flutter build windows --release
+
+      - name: Zip Windows Files
+        run: |
+          $VERSION="${{ github.ref_name }}" 
+          Compress-Archive -Path artifacts/windows/* -DestinationPath artifacts/windows-x86_64-${VERSION}.zip
+
+      - name: Upload Windows Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-windows
+          path: build/windows/runner/Release/
+
+  release:
+    name: Create GitHub Release
+    needs: build_apk
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download APK from Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: release-apk
+          path: build
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            artifacts/app-release.apk
+            artifacts/app-release.apk.sha1
+            artifacts/windows-x86_64-${VERSION}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
