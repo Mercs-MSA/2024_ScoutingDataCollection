@@ -3,7 +3,7 @@ name: Release Flutter APK
 on:
   push:
     tags:
-      - '2025.*'  # Triggers when a new tag like v1.0.0 is pushed
+      - '*'
 
 jobs:
   build_apk:
