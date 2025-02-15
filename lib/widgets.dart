@@ -351,12 +351,14 @@ class LabeledSwitch extends StatelessWidget {
     required this.padding,
     required this.value,
     required this.onChanged,
+    required this.selectedColor,
   });
 
   final Widget label;
   final EdgeInsets padding;
   final bool value;
   final ValueChanged<bool> onChanged;
+  final Color selectedColor;
 
   @override
   Widget build(BuildContext context) {
@@ -367,8 +369,7 @@ class LabeledSwitch extends StatelessWidget {
               width: 1, color: const Color.fromARGB(255, 214, 173, 170)),
           borderRadius: BorderRadius.circular(5.0),
         ),
-        backgroundColor:
-            value ? const Color.fromARGB(255, 217, 84, 74) : Colors.transparent,
+        backgroundColor: value ? selectedColor : Colors.transparent,
       ),
       onPressed: () {
         onChanged(!value);

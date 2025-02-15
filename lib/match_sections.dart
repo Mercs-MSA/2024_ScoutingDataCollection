@@ -507,74 +507,74 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
             ),
           ],
         ),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            SectionHeader(
-                title: "Human Net Scoring",
-                color: Theme.of(context).dividerColor),
-          ],
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: NumberInput(
-                onValueAdd: () {
-                  setState(() {
-                    widget.form.onDataChanged({
-                      "teleNetScoredHuman":
-                          widget.form.formData["teleNetScoredHuman"] + 1
-                    });
-                  });
-                },
-                prefix: Icon(Icons.directions_walk),
-                title: "Net Scored",
-                value: widget.form.formData["teleNetScoredHuman"],
-                onValueSubtract: () {
-                  setState(() {
-                    if (widget.form.formData["teleNetScoredHuman"] > 0) {
-                      widget.form.onDataChanged({
-                        "teleNetScoredHuman":
-                            widget.form.formData["teleNetScoredHuman"] - 1
-                      });
-                    }
-                  });
-                },
-                enableSpacer: true,
-                inputType:
-                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
-              ),
-            ),
-            Expanded(
-              child: NumberInput(
-                onValueAdd: () {
-                  setState(() {
-                    widget.form.onDataChanged({
-                      "teleNetMissedHuman":
-                          widget.form.formData["teleNetMissedHuman"] + 1
-                    });
-                  });
-                },
-                title: "Net Missed",
-                prefix: Icon(Icons.directions_walk),
-                value: widget.form.formData["teleNetMissedHuman"],
-                onValueSubtract: () {
-                  setState(() {
-                    if (widget.form.formData["teleNetMissedHuman"] > 0) {
-                      widget.form.onDataChanged({
-                        "teleNetMissedHuman":
-                            widget.form.formData["teleNetMissedHuman"] - 1
-                      });
-                    }
-                  });
-                },
-                enableSpacer: true,
-                inputType:
-                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
-              ),
-            ),
-          ],
-        ),
+        // Row(
+        //   mainAxisSize: MainAxisSize.max,
+        //   children: [
+        //     SectionHeader(
+        //         title: "Human Net Scoring",
+        //         color: Theme.of(context).dividerColor),
+        //   ],
+        // ),
+        // Row(
+        //   children: [
+        //     Expanded(
+        //       child: NumberInput(
+        //         onValueAdd: () {
+        //           setState(() {
+        //             widget.form.onDataChanged({
+        //               "teleNetScoredHuman":
+        //                   widget.form.formData["teleNetScoredHuman"] + 1
+        //             });
+        //           });
+        //         },
+        //         prefix: Icon(Icons.directions_walk),
+        //         title: "Net Scored",
+        //         value: widget.form.formData["teleNetScoredHuman"],
+        //         onValueSubtract: () {
+        //           setState(() {
+        //             if (widget.form.formData["teleNetScoredHuman"] > 0) {
+        //               widget.form.onDataChanged({
+        //                 "teleNetScoredHuman":
+        //                     widget.form.formData["teleNetScoredHuman"] - 1
+        //               });
+        //             }
+        //           });
+        //         },
+        //         enableSpacer: true,
+        //         inputType:
+        //             (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+        //       ),
+        //     ),
+        //     Expanded(
+        //       child: NumberInput(
+        //         onValueAdd: () {
+        //           setState(() {
+        //             widget.form.onDataChanged({
+        //               "teleNetMissedHuman":
+        //                   widget.form.formData["teleNetMissedHuman"] + 1
+        //             });
+        //           });
+        //         },
+        //         title: "Net Missed",
+        //         prefix: Icon(Icons.directions_walk),
+        //         value: widget.form.formData["teleNetMissedHuman"],
+        //         onValueSubtract: () {
+        //           setState(() {
+        //             if (widget.form.formData["teleNetMissedHuman"] > 0) {
+        //               widget.form.onDataChanged({
+        //                 "teleNetMissedHuman":
+        //                     widget.form.formData["teleNetMissedHuman"] - 1
+        //               });
+        //             }
+        //           });
+        //         },
+        //         enableSpacer: true,
+        //         inputType:
+        //             (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+        //       ),
+        //     ),
+        //   ],
+        // ),
         Row(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -1105,59 +1105,43 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
-              child: NumberInput(
-                  enableSpacer: true,
-                  inputType: InputType.yellow,
-                  title: "Yellow Cards",
-                  value: widget.form.formData["yellowCards"],
-                  onValueAdd: () {
-                    if (widget.form.formData["yellowCards"] < 2) {
-                      setState(() {
-                        widget.form.onDataChanged({
-                          "yellowCards": widget.form.formData["yellowCards"] + 1
-                        });
-                      });
-                      if (widget.form.formData["yellowCards"] == 2) {
-                        widget.form.onDataChanged({"redCard": true});
-                      }
-                    }
-                  },
-                  onValueSubtract: () {
-                    if (widget.form.formData["yellowCards"] > 0) {
-                      setState(() {
-                        widget.form.onDataChanged({
-                          "yellowCards": widget.form.formData["yellowCards"] - 1
-                        });
-                      });
-                    }
-                  }),
-            ),
+                child: LabeledSwitch(
+              label: Text(
+                "Yellow Card?",
+                style: TextStyle(
+                    fontSize: 15,
+                    color: widget.form.formData["yellowCard"]
+                        ? Colors.black
+                        : Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+              padding: EdgeInsets.only(top: 30, bottom: 30),
+              value: widget.form.formData["yellowCard"],
+              selectedColor: const Color.fromARGB(255, 244, 226, 73),
+              onChanged: (bool? newValue) {
+                setState(() {
+                  widget.form.onDataChanged({"yellowCard": newValue!});
+                });
+              },
+            )),
             Expanded(
                 child: LabeledSwitch(
               label: Text(
                 "Red Card?",
-                style: TextStyle(fontSize: 15, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
               ),
               padding: EdgeInsets.only(top: 30, bottom: 30),
               value: widget.form.formData["redCard"],
+              selectedColor: const Color.fromARGB(255, 217, 84, 74),
               onChanged: (bool? newValue) {
                 setState(() {
                   widget.form.onDataChanged({"redCard": newValue!});
                 });
               },
-            )
-                // child: SwitchListTile(
-                //     title: Padding(
-                //       padding: EdgeInsets.only(top: 20, bottom: 20),
-                //       child: Text("Red Card?"),
-                //     ),
-                //     value: widget.form.formData["redCard"],
-                //     onChanged: (bool? newValue) {
-                //       setState(() {
-                //         widget.form.onDataChanged({"redCard": newValue});
-                //       });
-                //     })
-                )
+            ))
           ],
         ),
         Row(
@@ -1167,57 +1151,33 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                 title: "Extras", color: Theme.of(context).dividerColor),
           ],
         ),
-        Row(
-          children: [
-            Expanded(
-                flex: 2,
-                child: CheckboxListTile(
-                  title: Text("Didn't Show Up?"),
-                  value: widget.form.formData["noShow"],
-                  onChanged: (bool? newValue) {
-                    setState(() {
-                      widget.form.onDataChanged({"noShow": newValue});
-                    });
-                  },
-                )),
-            Expanded(
-                flex: 2,
-                child: CheckboxListTile(
-                  title: Text("Disabled?"),
-                  value: widget.form.formData["disabled"],
-                  onChanged: (bool? newValue) {
-                    setState(() {
-                      widget.form.onDataChanged({"disabled": newValue});
-                    });
-                  },
-                )),
-          ],
-        ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText:
-                  'Optional Notes (Subsystem malfunction, coral stuck, etc.)',
-            ),
-            inputFormatters: [
-              LengthLimitingTextInputFormatter(500),
-              FilteringTextInputFormatter(RegExp(r'[^|*]+'), allow: true)
+          padding: const EdgeInsets.only(bottom: 15),
+          child: Row(
+            children: [
+              Expanded(
+                  flex: 2,
+                  child: CheckboxListTile(
+                    title: Text("Didn't Show Up?"),
+                    value: widget.form.formData["noShow"],
+                    onChanged: (bool? newValue) {
+                      setState(() {
+                        widget.form.onDataChanged({"noShow": newValue});
+                      });
+                    },
+                  )),
+              Expanded(
+                  flex: 2,
+                  child: CheckboxListTile(
+                    title: Text("Disabled?"),
+                    value: widget.form.formData["disabled"],
+                    onChanged: (bool? newValue) {
+                      setState(() {
+                        widget.form.onDataChanged({"disabled": newValue});
+                      });
+                    },
+                  )),
             ],
-            onChanged: (value) {
-              widget.form
-                  .onDataChanged({"notes": value.replaceAll("\n", "**")});
-            },
-            minLines: 3,
-            maxLines: 7,
-            controller: TextEditingController(
-              text: widget.form.formData["notes"] == null
-                  ? ''
-                  : widget.form.formData["notes"]
-                      .toString()
-                      .replaceAll("**", "\n"),
-            ),
           ),
         ),
       ],
