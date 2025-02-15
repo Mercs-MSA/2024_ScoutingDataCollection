@@ -54,6 +54,26 @@ class _PitFormState extends State<PitForm> {
                     ],
                   ),
                   const SizedBox(height: 8.0),
+                  Card(
+                    color: Theme.of(context).colorScheme.tertiary,
+                    child: Column(
+                      children: [
+                        ListTile(
+                          leading: Icon(
+                            Icons.info,
+                            color: Theme.of(context).colorScheme.onTertiary,
+                          ),
+                          title: Text(
+                            "Weight must NOT include battery and bumper",
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.onTertiary,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
                   Row(
                     children: [
                       Expanded(
@@ -110,6 +130,29 @@ class _PitFormState extends State<PitForm> {
                         ),
                       ),
                       const SizedBox(width: 8.0),
+                      Expanded(
+                        child: TextField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Weight',
+                            suffixText: 'lbs',
+                          ),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(3),
+                          ],
+                          onChanged: (value) {
+                            widget
+                                .onDataChanged({"weight": int.tryParse(value)});
+                          },
+                          controller: TextEditingController(
+                            text: widget.formData["weight"] == null
+                                ? ''
+                                : widget.formData["weight"].toString(),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 8.0),

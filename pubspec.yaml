@@ -44,6 +44,7 @@ dependencies:
   flutter_confetti: ^0.3.4
   url_launcher_web: ^2.4.0
   url_launcher: ^6.3.1
+  collection: ^1.19.0
 
 
 dev_dependencies:

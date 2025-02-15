@@ -9,7 +9,7 @@ Map<String, dynamic> getPitDataMap() {
     "scouters": ["null", "null"],
     "width": null,
     "length": null,
-    "height": null,
+    "weight": null,
     "lOne": false,
     "lTwo": false,
     "lThree": false,

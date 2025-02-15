@@ -16,7 +16,6 @@ import 'package:mercs_scout/settingspage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'dummyweb.dart' if (dart.library.html) 'package:web/web.dart' as web;
 
@@ -385,7 +384,10 @@ class _FormAppPageState extends State<FormAppPage> {
                                 children: [
                                   Text(
                                     "Pit Scouting",
-                                    style: TextStyle(fontSize: 24),
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                   Text("Enter pit scouting mode.")
                                 ],
@@ -438,7 +440,10 @@ class _FormAppPageState extends State<FormAppPage> {
                                 children: [
                                   Text(
                                     "Match Scouting",
-                                    style: TextStyle(fontSize: 24),
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                   Text("Enter match scouting mode.")
                                 ],
