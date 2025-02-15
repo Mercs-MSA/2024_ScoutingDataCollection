@@ -88,6 +88,11 @@ Map<String, dynamic> getMatchDataMap() {
     "teleProcessorMissed": 0,
     "endgamePos": "none",
     "climbTime": 0,
+    "yellowCards": 0,
+    "redCard": false,
+    "noShow": false,
+    "disabled": false,
+    "notes": null,
   };
 }
 

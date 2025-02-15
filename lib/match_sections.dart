@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mercs_scout/datatypes.dart';
+import 'package:flutter/services.dart';
 
 import 'match_form.dart';
 import 'widgets.dart';
@@ -1064,7 +1065,7 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                     widget.form.formData["endgamePos"] == "deep"),
                 disabledText: "N/A",
                 inputType: InputType.def,
-                title: "Climb Time",
+                title: "Approx. Climb Time",
                 value: widget.form.formData["climbTime"],
                 suffix: (widget.form.formData["endgamePos"] == "shallow" ||
                         widget.form.formData["endgamePos"] == "deep")
@@ -1099,6 +1100,125 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
             SectionHeader(
                 title: "Cards", color: Theme.of(context).dividerColor),
           ],
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+              child: NumberInput(
+                  enableSpacer: true,
+                  inputType: InputType.yellow,
+                  title: "Yellow Cards",
+                  value: widget.form.formData["yellowCards"],
+                  onValueAdd: () {
+                    if (widget.form.formData["yellowCards"] < 2) {
+                      setState(() {
+                        widget.form.onDataChanged({
+                          "yellowCards": widget.form.formData["yellowCards"] + 1
+                        });
+                      });
+                      if (widget.form.formData["yellowCards"] == 2) {
+                        widget.form.onDataChanged({"redCard": true});
+                      }
+                    }
+                  },
+                  onValueSubtract: () {
+                    if (widget.form.formData["yellowCards"] > 0) {
+                      setState(() {
+                        widget.form.onDataChanged({
+                          "yellowCards": widget.form.formData["yellowCards"] - 1
+                        });
+                      });
+                    }
+                  }),
+            ),
+            Expanded(
+                child: LabeledSwitch(
+              label: Text(
+                "Red Card?",
+                style: TextStyle(fontSize: 15, color: Colors.white),
+              ),
+              padding: EdgeInsets.only(top: 30, bottom: 30),
+              value: widget.form.formData["redCard"],
+              onChanged: (bool? newValue) {
+                setState(() {
+                  widget.form.onDataChanged({"redCard": newValue!});
+                });
+              },
+            )
+                // child: SwitchListTile(
+                //     title: Padding(
+                //       padding: EdgeInsets.only(top: 20, bottom: 20),
+                //       child: Text("Red Card?"),
+                //     ),
+                //     value: widget.form.formData["redCard"],
+                //     onChanged: (bool? newValue) {
+                //       setState(() {
+                //         widget.form.onDataChanged({"redCard": newValue});
+                //       });
+                //     })
+                )
+          ],
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            SectionHeader(
+                title: "Extras", color: Theme.of(context).dividerColor),
+          ],
+        ),
+        Row(
+          children: [
+            Expanded(
+                flex: 2,
+                child: CheckboxListTile(
+                  title: Text("Didn't Show Up?"),
+                  value: widget.form.formData["noShow"],
+                  onChanged: (bool? newValue) {
+                    setState(() {
+                      widget.form.onDataChanged({"noShow": newValue});
+                    });
+                  },
+                )),
+            Expanded(
+                flex: 2,
+                child: CheckboxListTile(
+                  title: Text("Disabled?"),
+                  value: widget.form.formData["disabled"],
+                  onChanged: (bool? newValue) {
+                    setState(() {
+                      widget.form.onDataChanged({"disabled": newValue});
+                    });
+                  },
+                )),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextField(
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText:
+                  'Optional Notes (Subsystem malfunction, coral stuck, etc.)',
+            ),
+            inputFormatters: [
+              LengthLimitingTextInputFormatter(500),
+              FilteringTextInputFormatter(RegExp(r'[^|*]+'), allow: true)
+            ],
+            onChanged: (value) {
+              widget.form
+                  .onDataChanged({"notes": value.replaceAll("\n", "**")});
+            },
+            minLines: 3,
+            maxLines: 7,
+            controller: TextEditingController(
+              text: widget.form.formData["notes"] == null
+                  ? ''
+                  : widget.form.formData["notes"]
+                      .toString()
+                      .replaceAll("**", "\n"),
+            ),
+          ),
         ),
       ],
     );

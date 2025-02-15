@@ -148,7 +148,8 @@ enum InputType {
   coral(Colors.purple, Colors.red),
   algae(Color.fromRGBO(76, 175, 80, 1), Colors.red),
   altAlgae(Color.fromARGB(255, 78, 180, 148), Colors.red),
-  stopwatch(Colors.grey, Colors.grey);
+  stopwatch(Colors.grey, Colors.grey),
+  yellow(Colors.amber, Colors.amber);
 
   final Color color;
   final Color subtractColor;
@@ -338,6 +339,53 @@ class SectionHeader extends StatelessWidget {
           ),
           Expanded(child: Divider(color: color))
         ]),
+      ),
+    );
+  }
+}
+
+class LabeledSwitch extends StatelessWidget {
+  const LabeledSwitch({
+    super.key,
+    required this.label,
+    required this.padding,
+    required this.value,
+    required this.onChanged,
+  });
+
+  final Widget label;
+  final EdgeInsets padding;
+  final bool value;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+              width: 1, color: const Color.fromARGB(255, 214, 173, 170)),
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        backgroundColor:
+            value ? const Color.fromARGB(255, 217, 84, 74) : Colors.transparent,
+      ),
+      onPressed: () {
+        onChanged(!value);
+      },
+      child: Padding(
+        padding: padding,
+        child: Row(
+          children: <Widget>[
+            Expanded(child: label),
+            Switch(
+              value: value,
+              onChanged: (bool newValue) {
+                onChanged(newValue);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
