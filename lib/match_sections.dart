@@ -146,19 +146,19 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                     onValueAdd: () {
                       setState(() {
                         widget.form.onDataChanged({
-                          "autoL4scored":
-                              widget.form.formData["autoL4scored"] + 1
+                          "autoL4Scored":
+                              widget.form.formData["autoL4Scored"] + 1
                         });
                       });
                     },
                     title: "L4",
-                    value: widget.form.formData["autoL4scored"],
+                    value: widget.form.formData["autoL4Scored"],
                     onValueSubtract: () {
                       setState(() {
-                        if (widget.form.formData["autoL4scored"] > 0) {
+                        if (widget.form.formData["autoL4Scored"] > 0) {
                           widget.form.onDataChanged({
-                            "autoL4scored":
-                                widget.form.formData["autoL4scored"] - 1
+                            "autoL4Scored":
+                                widget.form.formData["autoL4Scored"] - 1
                           });
                         }
                       });
