@@ -90,6 +90,8 @@ Map<String, dynamic> getMatchDataMap() {
     "redCard": false,
     "noShow": false,
     "disabled": false,
+    "comments":
+        "", // We will leave this here if the transfer person wants to add after scanning
   };
 }
 
