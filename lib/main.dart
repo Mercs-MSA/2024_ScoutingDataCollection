@@ -1414,12 +1414,102 @@ class _FormAppPageState extends State<FormAppPage> {
                       },
                       icon: const Icon(Icons.home)),
                 ),
+                body: Column(
+                  children: [
+                    SectionHeader(title: "Red Alliance"),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                            style: ButtonStyle(
+                              shape: WidgetStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                            ),
+                            onPressed: () {
+                              showFullscreenLetter("G", Colors.red);
+                            },
+                            child: const Text(
+                              "G",
+                              style: TextStyle(fontSize: 48),
+                            )),
+                      ],
+                    ),
+                    SectionHeader(title: "Blue Alliance"),
+                  ],
+                ),
               )
             else
               const SizedBox(),
           ],
         ),
       ),
+    );
+  }
+
+  void showFullscreenLetter(String letter, Color background) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      useSafeArea: false,
+      anchorPoint: Offset.zero,
+      barrierLabel: "Test",
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: background,
+          insetPadding: EdgeInsets.all(0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(0.0),
+          ),
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    double maxFontSize =
+                        constraints.maxHeight * 0.8; // 80% of height
+                    return Center(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown, // Ensures text shrinks if needed
+                        child: Text(
+                          letter,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize:
+                                maxFontSize, // Dynamically scale font size
+                            fontWeight: FontWeight.bold,
+                            color: background.computeLuminance() > 0.5
+                                ? Colors.black
+                                : Colors.white,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  style: ElevatedButton.styleFrom(
+                    shape: CircleBorder(),
+                    padding: EdgeInsets.all(12),
+                    backgroundColor: Colors.black.withOpacity(0.5),
+                    foregroundColor: Colors.white,
+                  ),
+                  child: Icon(Icons.close, size: 32),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
