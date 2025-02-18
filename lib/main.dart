@@ -8,6 +8,7 @@ import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_confetti/flutter_confetti.dart';
 import 'package:mercs_scout/data_maps.dart';
@@ -111,7 +112,10 @@ class _FormAppPageState extends State<FormAppPage> {
     installerStore: 'Unknown',
   );
 
+  bool cheerConfetti = true;
+  ConfettiController killableCheerConfetti = ConfettiController();
   List<ConfettiController> killableConfetti = [];
+  Timer? cheerConfettiTimer;
 
   @override
   void initState() {
@@ -1416,29 +1420,238 @@ class _FormAppPageState extends State<FormAppPage> {
                 ),
                 body: Column(
                   children: [
+                    const Spacer(
+                      flex: 2,
+                    ),
                     SectionHeader(title: "Red Alliance"),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton(
-                            style: ButtonStyle(
-                              shape: WidgetStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
+                          style: ButtonStyle(
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),
-                            onPressed: () {
-                              showFullscreenLetter("G", Colors.red);
-                            },
-                            child: const Text(
-                              "G",
-                              style: TextStyle(fontSize: 48),
-                            )),
+                          ),
+                          onPressed: () {
+                            showFullscreenLetter("G", Colors.red);
+                          },
+                          child: const Text(
+                            "G",
+                            style: TextStyle(fontSize: 48),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            showFullscreenLetter("O", Colors.red);
+                          },
+                          child: const Text(
+                            "O",
+                            style: TextStyle(fontSize: 48),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 20.0,
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            showFullscreenLetter("R", Colors.red);
+                          },
+                          child: const Text(
+                            "R",
+                            style: TextStyle(fontSize: 48),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            showFullscreenLetter("E", Colors.red);
+                          },
+                          child: const Text(
+                            "E",
+                            style: TextStyle(fontSize: 48),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            showFullscreenLetter("D", Colors.red);
+                          },
+                          child: const Text(
+                            "D",
+                            style: TextStyle(fontSize: 48),
+                          ),
+                        ),
                       ],
                     ),
                     SectionHeader(title: "Blue Alliance"),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            showFullscreenLetter("G", Colors.blue);
+                          },
+                          child: const Text(
+                            "G",
+                            style: TextStyle(fontSize: 48),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            showFullscreenLetter("O", Colors.blue);
+                          },
+                          child: const Text(
+                            "O",
+                            style: TextStyle(fontSize: 48),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 20.0,
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            showFullscreenLetter("B", Colors.blue);
+                          },
+                          child: const Text(
+                            "B",
+                            style: TextStyle(fontSize: 48),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            showFullscreenLetter("L", Colors.blue);
+                          },
+                          child: const Text(
+                            "L",
+                            style: TextStyle(fontSize: 48),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            showFullscreenLetter("U", Colors.blue);
+                          },
+                          child: const Text(
+                            "U",
+                            style: TextStyle(fontSize: 48),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            showFullscreenLetter("E", Colors.blue);
+                          },
+                          child: const Text(
+                            "E",
+                            style: TextStyle(fontSize: 48),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Spacer(
+                      flex: 2,
+                    ),
                   ],
                 ),
               )
@@ -1450,6 +1663,10 @@ class _FormAppPageState extends State<FormAppPage> {
     );
   }
 
+  double randomInRange(double min, double max) {
+    return min + Random().nextDouble() * (max - min);
+  }
+
   void showFullscreenLetter(String letter, Color background) {
     showDialog(
       context: context,
@@ -1458,59 +1675,137 @@ class _FormAppPageState extends State<FormAppPage> {
       anchorPoint: Offset.zero,
       barrierLabel: "Test",
       builder: (BuildContext context) {
-        return Dialog(
-          backgroundColor: background,
-          insetPadding: EdgeInsets.all(0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(0.0),
-          ),
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    double maxFontSize =
-                        constraints.maxHeight * 0.8; // 80% of height
-                    return Center(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown, // Ensures text shrinks if needed
-                        child: Text(
-                          letter,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize:
-                                maxFontSize, // Dynamically scale font size
-                            fontWeight: FontWeight.bold,
-                            color: background.computeLuminance() > 0.5
-                                ? Colors.black
-                                : Colors.white,
-                          ),
-                        ),
+        return StatefulBuilder(
+          builder: (context, setState) {
+            /// call the kill method to kill the confetti
+            /// controller.kill();
+            ///
+
+            WidgetsBinding.instance.addPostFrameCallback((timestamp) {
+              if (cheerConfettiTimer == null || !cheerConfettiTimer!.isActive) {
+                cheerConfettiTimer = Timer.periodic(
+                  Duration(milliseconds: 240),
+                  (timer) {
+                    if (!cheerConfetti) {
+                      return;
+                    }
+                    killableCheerConfetti = Confetti.launch(
+                      context,
+                      options: ConfettiOptions(
+                        particleCount: 80,
+                        spread: 360,
+                        startVelocity: 30,
+                        ticks: 60,
+                        x: randomInRange(0.1, 0.9),
+                        y: Random().nextDouble() - 0.2,
+                        gravity: -0.3,
+                        flat: true,
+                        colors: [
+                          Color.fromARGB(
+                              255,
+                              (background.r * 127).round(),
+                              (background.g * 127).round(),
+                              (background.b * 127).round()),
+                          Colors.black,
+                          Colors.white
+                        ],
                       ),
                     );
                   },
-                ),
+                );
+              }
+            });
+
+            return Dialog(
+              backgroundColor: background,
+              insetPadding: EdgeInsets.all(0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(0.0),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: ElevatedButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  style: ElevatedButton.styleFrom(
-                    shape: CircleBorder(),
-                    padding: EdgeInsets.all(12),
-                    backgroundColor: Colors.black.withOpacity(0.5),
-                    foregroundColor: Colors.white,
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        double maxFontSize =
+                            constraints.maxHeight * 0.8; // 80% of height
+                        return Center(
+                          child: FittedBox(
+                            fit: BoxFit
+                                .scaleDown, // Ensures text shrinks if needed
+                            child: Text(
+                              letter,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize:
+                                    maxFontSize, // Dynamically scale font size
+                                fontWeight: FontWeight.bold,
+                                color: background.computeLuminance() > 0.5
+                                    ? Colors.black
+                                    : Colors.white,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                  child: Icon(Icons.close, size: 32),
-                ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            if (cheerConfettiTimer != null) {
+                              cheerConfettiTimer?.cancel();
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: CircleBorder(),
+                            padding: EdgeInsets.all(18),
+                          ),
+                          child: Icon(Icons.close, size: 32),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              cheerConfetti = !cheerConfetti;
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(72)),
+                            padding: EdgeInsets.all(18),
+                          ),
+                          child: Row(children: [
+                            Icon(Icons.celebration_rounded, size: 32),
+                            Icon(
+                              cheerConfetti ? Icons.check : Icons.close,
+                              size: 32,
+                            ),
+                          ]),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         );
       },
-    );
+    ).then((x) {
+      if (cheerConfettiTimer != null) {
+        cheerConfettiTimer?.cancel();
+      }
+    });
   }
 
   List<List> getPitKVFormattedData(
