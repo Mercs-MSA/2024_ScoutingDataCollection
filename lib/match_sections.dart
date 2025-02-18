@@ -800,6 +800,38 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
           ],
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Expanded(
+            Expanded(
+              child: NumberInput(
+                title: "Coral Dropped",
+                value: widget.form.formData["teleCoralDropped"],
+                onValueAdd: () {
+                  setState(() {
+                    widget.form.onDataChanged({
+                      "teleCoralDropped":
+                          widget.form.formData["teleCoralDropped"] + 1
+                    });
+                  });
+                },
+                onValueSubtract: () {
+                  setState(() {
+                    if (widget.form.formData["teleCoralDropped"] > 0) {
+                      widget.form.onDataChanged({
+                        "teleCoralDropped":
+                            widget.form.formData["teleCoralDropped"] - 1
+                      });
+                    }
+                  });
+                },
+                enableSpacer: true,
+                inputType: InputType.coral,
+              ),
+            )
+          ],
+        ),
+        Row(
           mainAxisSize: MainAxisSize.max,
           children: [
             SectionHeader(
