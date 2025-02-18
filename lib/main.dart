@@ -454,6 +454,55 @@ class _FormAppPageState extends State<FormAppPage> {
                         ),
                       ),
                       const SizedBox(height: 8.0),
+                      Flexible(
+                        fit: FlexFit.tight,
+                        flex: 2,
+                        child: FilledButton(
+                          onPressed: () {
+                            setState(() {
+                              appMode = 3;
+                              setAppModePref(appMode);
+                            });
+                          },
+                          style: ButtonStyle(
+                            minimumSize: WidgetStateProperty.all(
+                                const Size.fromHeight(150)),
+                            maximumSize: WidgetStateProperty.all(
+                                const Size.fromHeight(200)),
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.star_rounded,
+                                size: 72,
+                              ),
+                              Spacer(),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Playoff Cheering",
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text("Enter playoff cheering mode")
+                                ],
+                              ),
+                              Spacer(),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8.0),
                       const Spacer(),
                       const Image(
                         image: AssetImage('images/mercs.png'),
@@ -1346,6 +1395,24 @@ class _FormAppPageState extends State<FormAppPage> {
                     else
                       const SizedBox(),
                   ],
+                ),
+              )
+            else
+              const SizedBox(),
+            if (appMode == 3)
+              // Pit Scouting
+              Scaffold(
+                appBar: AppBar(
+                  title: const Text('Cheering'),
+                  leading: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          appMode = 0;
+                          matchPageIndex = 0;
+                          setAppModePref(appMode);
+                        });
+                      },
+                      icon: const Icon(Icons.home)),
                 ),
               )
             else
