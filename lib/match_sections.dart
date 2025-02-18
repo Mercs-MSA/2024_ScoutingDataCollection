@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mercs_scout/datatypes.dart';
-import 'package:flutter/services.dart';
 
 import 'match_form.dart';
 import 'widgets.dart';
@@ -85,45 +84,6 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                 enableSpacer: true,
                 inputType:
                     (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
-              ),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            SectionHeader(
-                title: "Algae Descore", color: Theme.of(context).dividerColor),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: NumberInput(
-                title: "Algae De-scored",
-                value: widget.form.formData["autoAlgaeDescored"],
-                onValueAdd: () {
-                  setState(() {
-                    widget.form.onDataChanged({
-                      "autoAlgaeDescored":
-                          widget.form.formData["autoAlgaeDescored"] + 1
-                    });
-                  });
-                },
-                onValueSubtract: () {
-                  setState(() {
-                    if (widget.form.formData["autoAlgaeDescored"] > 0) {
-                      widget.form.onDataChanged({
-                        "autoAlgaeDescored":
-                            widget.form.formData["autoAlgaeDescored"] - 1
-                      });
-                    }
-                  });
-                },
-                inputType:
-                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
-                enableSpacer: true,
               ),
             ),
           ],
@@ -354,6 +314,45 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
           ],
         ),
         Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            SectionHeader(
+                title: "Algae Descore", color: Theme.of(context).dividerColor),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: NumberInput(
+                title: "Algae De-scored",
+                value: widget.form.formData["autoAlgaeDescored"],
+                onValueAdd: () {
+                  setState(() {
+                    widget.form.onDataChanged({
+                      "autoAlgaeDescored":
+                          widget.form.formData["autoAlgaeDescored"] + 1
+                    });
+                  });
+                },
+                onValueSubtract: () {
+                  setState(() {
+                    if (widget.form.formData["autoAlgaeDescored"] > 0) {
+                      widget.form.onDataChanged({
+                        "autoAlgaeDescored":
+                            widget.form.formData["autoAlgaeDescored"] - 1
+                      });
+                    }
+                  });
+                },
+                inputType:
+                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                enableSpacer: true,
+              ),
+            ),
+          ],
+        ),
+        Row(
           children: [
             SectionHeader(
                 title: "Processor", color: Theme.of(context).dividerColor)
@@ -575,46 +574,6 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
         //     ),
         //   ],
         // ),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            SectionHeader(
-                title: "Algae Descore", color: Theme.of(context).dividerColor),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Expanded(
-            Expanded(
-              child: NumberInput(
-                title: "Algae De-scored",
-                value: widget.form.formData["teleAlgaeDescored"],
-                onValueAdd: () {
-                  setState(() {
-                    widget.form.onDataChanged({
-                      "teleAlgaeDescored":
-                          widget.form.formData["teleAlgaeDescored"] + 1
-                    });
-                  });
-                },
-                onValueSubtract: () {
-                  setState(() {
-                    if (widget.form.formData["teleAlgaeDescored"] > 0) {
-                      widget.form.onDataChanged({
-                        "teleAlgaeDescored":
-                            widget.form.formData["teleAlgaeDescored"] - 1
-                      });
-                    }
-                  });
-                },
-                enableSpacer: true,
-                inputType:
-                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
-              ),
-            )
-          ],
-        ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -838,6 +797,46 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                 ],
               ),
             ),
+          ],
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            SectionHeader(
+                title: "Algae Descore", color: Theme.of(context).dividerColor),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Expanded(
+            Expanded(
+              child: NumberInput(
+                title: "Algae De-scored",
+                value: widget.form.formData["teleAlgaeDescored"],
+                onValueAdd: () {
+                  setState(() {
+                    widget.form.onDataChanged({
+                      "teleAlgaeDescored":
+                          widget.form.formData["teleAlgaeDescored"] + 1
+                    });
+                  });
+                },
+                onValueSubtract: () {
+                  setState(() {
+                    if (widget.form.formData["teleAlgaeDescored"] > 0) {
+                      widget.form.onDataChanged({
+                        "teleAlgaeDescored":
+                            widget.form.formData["teleAlgaeDescored"] - 1
+                      });
+                    }
+                  });
+                },
+                enableSpacer: true,
+                inputType:
+                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+              ),
+            )
           ],
         ),
         Row(
@@ -1101,48 +1100,56 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                 title: "Cards", color: Theme.of(context).dividerColor),
           ],
         ),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Expanded(
+        Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
                 child: LabeledSwitch(
-              label: Text(
-                "Yellow Card?",
-                style: TextStyle(
-                    fontSize: 15,
-                    color: widget.form.formData["yellowCard"]
-                        ? Colors.black
-                        : Colors.white,
-                    fontWeight: FontWeight.bold),
+                  label: Text(
+                    "Yellow Card?",
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: widget.form.formData["yellowCard"]
+                            ? Colors.black
+                            : Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  padding: EdgeInsets.only(top: 30, bottom: 30),
+                  value: widget.form.formData["yellowCard"],
+                  selectedColor: const Color.fromARGB(255, 244, 226, 73),
+                  onChanged: (bool? newValue) {
+                    setState(() {
+                      widget.form.onDataChanged({"yellowCard": newValue!});
+                    });
+                  },
+                ),
               ),
-              padding: EdgeInsets.only(top: 30, bottom: 30),
-              value: widget.form.formData["yellowCard"],
-              selectedColor: const Color.fromARGB(255, 244, 226, 73),
-              onChanged: (bool? newValue) {
-                setState(() {
-                  widget.form.onDataChanged({"yellowCard": newValue!});
-                });
-              },
-            )),
-            Expanded(
+              const SizedBox(
+                width: 8.0,
+              ),
+              Expanded(
                 child: LabeledSwitch(
-              label: Text(
-                "Red Card?",
-                style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
-              padding: EdgeInsets.only(top: 30, bottom: 30),
-              value: widget.form.formData["redCard"],
-              selectedColor: const Color.fromARGB(255, 217, 84, 74),
-              onChanged: (bool? newValue) {
-                setState(() {
-                  widget.form.onDataChanged({"redCard": newValue!});
-                });
-              },
-            ))
-          ],
+                  label: Text(
+                    "Red Card?",
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  padding: EdgeInsets.only(top: 30, bottom: 30),
+                  value: widget.form.formData["redCard"],
+                  selectedColor: const Color.fromARGB(255, 217, 84, 74),
+                  onChanged: (bool? newValue) {
+                    setState(() {
+                      widget.form.onDataChanged({"redCard": newValue!});
+                    });
+                  },
+                ),
+              )
+            ],
+          ),
         ),
         Row(
           mainAxisSize: MainAxisSize.max,
