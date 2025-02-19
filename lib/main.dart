@@ -1684,7 +1684,7 @@ class _FormAppPageState extends State<FormAppPage> {
             WidgetsBinding.instance.addPostFrameCallback((timestamp) {
               if (cheerConfettiTimer == null || !cheerConfettiTimer!.isActive) {
                 cheerConfettiTimer = Timer.periodic(
-                  Duration(milliseconds: 240),
+                  Duration(milliseconds: 1500),
                   (timer) {
                     if (!cheerConfetti) {
                       return;
