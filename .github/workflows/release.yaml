@@ -103,7 +103,7 @@ jobs:
 
       - name: Zip Linux Files
         run: |
-          $VERSION="${{ github.ref_name }}" 
+          VERSION="${{ github.ref_name }}" 
           tar -czvf linux-x86_64-${VERSION}.tar.gz build/linux/x64/release/bundle/*
         shell: bash
 
