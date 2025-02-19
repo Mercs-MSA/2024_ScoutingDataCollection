@@ -68,9 +68,44 @@ jobs:
           name: release-windows
           path: windows-x86_64-${{ github.ref_name }}.zip
 
+  build_linux:
+    name: Build Linux App
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.x"
+          channel: "stable"
+
+      - name: Enable Linux Support
+        run: flutter config --enable-linux-desktop
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Build Linux App
+        run: flutter build linux --release --verbose
+
+      - name: Zip Linux Files
+        run: |
+          $VERSION="${{ github.ref_name }}" 
+          tar -czvf linux-x86_64-${VERSION}.tar.gz build/linux/x64/release/bundle/*
+        shell: bash
+
+      - name: Upload Linux Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-linux
+          path: linux-x86_64-${{ github.ref_name }}.tar.gz
+
   release:
     name: Create GitHub Release
-    needs: build_apk
+    needs: [build_apk, build_windows]
     runs-on: ubuntu-latest
 
     steps:
@@ -93,5 +128,6 @@ jobs:
             artifacts/app-release.apk
             artifacts/app-release.apk.sha1
             artifacts/windows-x86_64-${{ github.ref_name }}.zip
+            artifacts/linux-x86_64-${{ github.ref_name }}.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
