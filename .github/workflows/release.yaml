@@ -105,7 +105,7 @@ jobs:
 
   release:
     name: Create GitHub Release
-    needs: [build_apk, build_windows]
+    needs: [build_apk, build_windows, build_linux]
     runs-on: ubuntu-latest
 
     steps:
