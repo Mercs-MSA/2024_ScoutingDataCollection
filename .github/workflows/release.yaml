@@ -131,6 +131,12 @@ jobs:
           name: release-windows
           path: artifacts
 
+      - name: Download Windows App from Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: release-linux
+          path: artifacts
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
