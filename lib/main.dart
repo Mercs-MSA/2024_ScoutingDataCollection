@@ -330,13 +330,18 @@ class _FormAppPageState extends State<FormAppPage> {
                     IconButton(
                         onPressed: () {
                           showAboutDialog(
-                            context: context,
-                            applicationIcon: Image.asset(
-                              "images/icon.png",
-                              scale: 2,
-                            ),
-                            applicationVersion: _packageInfo.version,
-                          );
+                              context: context,
+                              applicationIcon: Image.asset(
+                                "images/icon.png",
+                                scale: 2,
+                              ),
+                              applicationVersion: _packageInfo.version,
+                              children: [
+                                Image.asset(
+                                  "images/ron.png",
+                                  height: 300,
+                                ),
+                              ]);
                         },
                         icon: const Icon(Icons.info_outline_rounded))
                   ],
