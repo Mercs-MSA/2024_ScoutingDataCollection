@@ -1727,10 +1727,11 @@ class _FormAppPageState extends State<FormAppPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Expanded(
+                    flex: 3,
                     child: LayoutBuilder(
                       builder: (context, constraints) {
                         double maxFontSize =
-                            constraints.maxHeight * 0.8; // 80% of height
+                            constraints.maxHeight; // 80% of height
                         return Center(
                           child: FittedBox(
                             fit: BoxFit
