@@ -1431,101 +1431,151 @@ class _FormAppPageState extends State<FormAppPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            shape:
-                                WidgetStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.0)),
                               ),
+                              backgroundColor:
+                                  Colors.redAccent, // Custom primary color
+                              foregroundColor:
+                                  Colors.white, // Ensure good contrast
                             ),
-                          ),
-                          onPressed: () {
-                            showFullscreenLetter("G", Colors.red);
-                          },
-                          child: const Text(
-                            "G",
-                            style: TextStyle(fontSize: 48),
+                            onPressed: () {
+                              showFullscreenLetter("G", Colors.red);
+                            },
+                            child: const Text(
+                              "G",
+                              softWrap: false,
+                              style: TextStyle(fontSize: 32),
+                            ),
                           ),
                         ),
                         const SizedBox(
                           width: 8.0,
                         ),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            shape:
-                                WidgetStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.0)),
                               ),
+                              backgroundColor:
+                                  Colors.redAccent, // Custom primary color
+                              foregroundColor:
+                                  Colors.white, // Ensure good contrast
                             ),
-                          ),
-                          onPressed: () {
-                            showFullscreenLetter("O", Colors.red);
-                          },
-                          child: const Text(
-                            "O",
-                            style: TextStyle(fontSize: 48),
+                            onPressed: () {
+                              showFullscreenLetter("O", Colors.red);
+                            },
+                            child: const Text(
+                              "O",
+                              softWrap: false,
+                              style: TextStyle(fontSize: 32),
+                            ),
                           ),
                         ),
                         const SizedBox(
                           width: 20.0,
                         ),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            shape:
-                                WidgetStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.0)),
                               ),
+                              backgroundColor:
+                                  Colors.redAccent, // Custom primary color
+                              foregroundColor:
+                                  Colors.white, // Ensure good contrast
                             ),
-                          ),
-                          onPressed: () {
-                            showFullscreenLetter("R", Colors.red);
-                          },
-                          child: const Text(
-                            "R",
-                            style: TextStyle(fontSize: 48),
+                            onPressed: () {
+                              showFullscreenLetter("R", Colors.red);
+                            },
+                            child: const Text(
+                              "R",
+                              softWrap: false,
+                              style: TextStyle(fontSize: 32),
+                            ),
                           ),
                         ),
                         const SizedBox(
                           width: 8.0,
                         ),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            shape:
-                                WidgetStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.0)),
                               ),
+                              backgroundColor:
+                                  Colors.redAccent, // Custom primary color
+                              foregroundColor:
+                                  Colors.white, // Ensure good contrast
                             ),
-                          ),
-                          onPressed: () {
-                            showFullscreenLetter("E", Colors.red);
-                          },
-                          child: const Text(
-                            "E",
-                            style: TextStyle(fontSize: 48),
+                            onPressed: () {
+                              showFullscreenLetter("E", Colors.red);
+                            },
+                            child: const Text(
+                              "E",
+                              softWrap: false,
+                              style: TextStyle(fontSize: 32),
+                            ),
                           ),
                         ),
                         const SizedBox(
                           width: 8.0,
                         ),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            shape:
-                                WidgetStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.0)),
                               ),
+                              backgroundColor:
+                                  Colors.redAccent, // Custom primary color
+                              foregroundColor:
+                                  Colors.white, // Ensure good contrast
+                            ),
+                            onPressed: () {
+                              showFullscreenLetter("D", Colors.red);
+                            },
+                            child: const Text(
+                              "D",
+                              softWrap: false,
+                              style: TextStyle(fontSize: 32),
                             ),
                           ),
-                          onPressed: () {
-                            showFullscreenLetter("D", Colors.red);
-                          },
-                          child: const Text(
-                            "D",
-                            style: TextStyle(fontSize: 48),
+                        ),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.0)),
+                              ),
+                              backgroundColor:
+                                  Colors.redAccent, // Custom primary color
+                              foregroundColor:
+                                  Colors.white, // Ensure good contrast
+                            ),
+                            onPressed: () {
+                              showFullscreenLetter("!", Colors.red);
+                            },
+                            child: const Text(
+                              "!",
+                              softWrap: false,
+                              style: TextStyle(fontSize: 32),
+                            ),
                           ),
                         ),
                       ],
@@ -1534,121 +1584,151 @@ class _FormAppPageState extends State<FormAppPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            shape:
-                                WidgetStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.0)),
                               ),
+                              backgroundColor:
+                                  Colors.blueAccent, // Custom primary color
+                              foregroundColor:
+                                  Colors.white, // Ensure good contrast
                             ),
-                          ),
-                          onPressed: () {
-                            showFullscreenLetter("G", Colors.blue);
-                          },
-                          child: const Text(
-                            "G",
-                            style: TextStyle(fontSize: 48),
+                            onPressed: () {
+                              showFullscreenLetter("G", Colors.blue);
+                            },
+                            child: const Text(
+                              "G",
+                              softWrap: false,
+                              style: TextStyle(fontSize: 32),
+                            ),
                           ),
                         ),
                         const SizedBox(
                           width: 8.0,
                         ),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            shape:
-                                WidgetStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.0)),
                               ),
+                              backgroundColor:
+                                  Colors.blueAccent, // Custom primary color
+                              foregroundColor:
+                                  Colors.white, // Ensure good contrast
                             ),
-                          ),
-                          onPressed: () {
-                            showFullscreenLetter("O", Colors.blue);
-                          },
-                          child: const Text(
-                            "O",
-                            style: TextStyle(fontSize: 48),
+                            onPressed: () {
+                              showFullscreenLetter("O", Colors.blue);
+                            },
+                            child: const Text(
+                              "O",
+                              softWrap: false,
+                              style: TextStyle(fontSize: 32),
+                            ),
                           ),
                         ),
                         const SizedBox(
                           width: 20.0,
                         ),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            shape:
-                                WidgetStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.0)),
                               ),
+                              backgroundColor:
+                                  Colors.blueAccent, // Custom primary color
+                              foregroundColor:
+                                  Colors.white, // Ensure good contrast
                             ),
-                          ),
-                          onPressed: () {
-                            showFullscreenLetter("B", Colors.blue);
-                          },
-                          child: const Text(
-                            "B",
-                            style: TextStyle(fontSize: 48),
+                            onPressed: () {
+                              showFullscreenLetter("B", Colors.blue);
+                            },
+                            child: const Text(
+                              "B",
+                              softWrap: false,
+                              style: TextStyle(fontSize: 32),
+                            ),
                           ),
                         ),
                         const SizedBox(
                           width: 8.0,
                         ),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            shape:
-                                WidgetStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.0)),
                               ),
+                              backgroundColor:
+                                  Colors.blueAccent, // Custom primary color
+                              foregroundColor:
+                                  Colors.white, // Ensure good contrast
                             ),
-                          ),
-                          onPressed: () {
-                            showFullscreenLetter("L", Colors.blue);
-                          },
-                          child: const Text(
-                            "L",
-                            style: TextStyle(fontSize: 48),
+                            onPressed: () {
+                              showFullscreenLetter("L", Colors.blue);
+                            },
+                            child: const Text(
+                              "L",
+                              softWrap: false,
+                              style: TextStyle(fontSize: 32),
+                            ),
                           ),
                         ),
                         const SizedBox(
                           width: 8.0,
                         ),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            shape:
-                                WidgetStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.0)),
                               ),
+                              backgroundColor:
+                                  Colors.blueAccent, // Custom primary color
+                              foregroundColor:
+                                  Colors.white, // Ensure good contrast
                             ),
-                          ),
-                          onPressed: () {
-                            showFullscreenLetter("U", Colors.blue);
-                          },
-                          child: const Text(
-                            "U",
-                            style: TextStyle(fontSize: 48),
+                            onPressed: () {
+                              showFullscreenLetter("U", Colors.blue);
+                            },
+                            child: const Text(
+                              "U",
+                              softWrap: false,
+                              style: TextStyle(fontSize: 32),
+                            ),
                           ),
                         ),
                         const SizedBox(
                           width: 8.0,
                         ),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            shape:
-                                WidgetStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.0)),
                               ),
+                              backgroundColor:
+                                  Colors.blueAccent, // Custom primary color
+                              foregroundColor:
+                                  Colors.white, // Ensure good contrast
                             ),
-                          ),
-                          onPressed: () {
-                            showFullscreenLetter("E", Colors.blue);
-                          },
-                          child: const Text(
-                            "E",
-                            style: TextStyle(fontSize: 48),
+                            onPressed: () {
+                              showFullscreenLetter("E", Colors.blue);
+                            },
+                            child: const Text(
+                              "E",
+                              softWrap: false,
+                              style: TextStyle(fontSize: 32),
+                            ),
                           ),
                         ),
                       ],
