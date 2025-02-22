@@ -25,70 +25,6 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
       shrinkWrap: true,
       children: [
         Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            SectionHeader(
-                title: "Robot Net Scoring",
-                color: Theme.of(context).dividerColor),
-          ],
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: NumberInput(
-                onValueAdd: () {
-                  setState(() {
-                    widget.form.onDataChanged({
-                      "autoNetScored": widget.form.formData["autoNetScored"] + 1
-                    });
-                  });
-                },
-                title: "Net Scored",
-                value: widget.form.formData["autoNetScored"],
-                onValueSubtract: () {
-                  setState(() {
-                    if (widget.form.formData["autoNetScored"] > 0) {
-                      widget.form.onDataChanged({
-                        "autoNetScored":
-                            widget.form.formData["autoNetScored"] - 1
-                      });
-                    }
-                  });
-                },
-                enableSpacer: true,
-                inputType:
-                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
-              ),
-            ),
-            Expanded(
-              child: NumberInput(
-                onValueAdd: () {
-                  setState(() {
-                    widget.form.onDataChanged({
-                      "autoNetMissed": widget.form.formData["autoNetMissed"] + 1
-                    });
-                  });
-                },
-                title: "Net Missed",
-                value: widget.form.formData["autoNetMissed"],
-                onValueSubtract: () {
-                  setState(() {
-                    if (widget.form.formData["autoNetMissed"] > 0) {
-                      widget.form.onDataChanged({
-                        "autoNetMissed":
-                            widget.form.formData["autoNetMissed"] - 1
-                      });
-                    }
-                  });
-                },
-                enableSpacer: true,
-                inputType:
-                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
-              ),
-            ),
-          ],
-        ),
-        Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
@@ -415,6 +351,71 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                     (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
               ),
             )
+            
+          ],
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            SectionHeader(
+                title: "Robot Net Scoring",
+                color: Theme.of(context).dividerColor),
+          ],
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: NumberInput(
+                onValueAdd: () {
+                  setState(() {
+                    widget.form.onDataChanged({
+                      "autoNetScored": widget.form.formData["autoNetScored"] + 1
+                    });
+                  });
+                },
+                title: "Net Scored",
+                value: widget.form.formData["autoNetScored"],
+                onValueSubtract: () {
+                  setState(() {
+                    if (widget.form.formData["autoNetScored"] > 0) {
+                      widget.form.onDataChanged({
+                        "autoNetScored":
+                            widget.form.formData["autoNetScored"] - 1
+                      });
+                    }
+                  });
+                },
+                enableSpacer: true,
+                inputType:
+                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+              ),
+            ),
+            Expanded(
+              child: NumberInput(
+                onValueAdd: () {
+                  setState(() {
+                    widget.form.onDataChanged({
+                      "autoNetMissed": widget.form.formData["autoNetMissed"] + 1
+                    });
+                  });
+                },
+                title: "Net Missed",
+                value: widget.form.formData["autoNetMissed"],
+                onValueSubtract: () {
+                  setState(() {
+                    if (widget.form.formData["autoNetMissed"] > 0) {
+                      widget.form.onDataChanged({
+                        "autoNetMissed":
+                            widget.form.formData["autoNetMissed"] - 1
+                      });
+                    }
+                  });
+                },
+                enableSpacer: true,
+                inputType:
+                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+              ),
+            ),
           ],
         ),
       ],
@@ -440,72 +441,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
     return ListView(
       shrinkWrap: true,
       children: [
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            SectionHeader(
-                title: "Robot Net Scoring",
-                color: Theme.of(context).dividerColor),
-          ],
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: NumberInput(
-                onValueAdd: () {
-                  setState(() {
-                    widget.form.onDataChanged({
-                      "teleNetScored": widget.form.formData["teleNetScored"] + 1
-                    });
-                  });
-                },
-                prefix: Icon(Icons.precision_manufacturing),
-                title: "Net Scored",
-                value: widget.form.formData["teleNetScored"],
-                onValueSubtract: () {
-                  setState(() {
-                    if (widget.form.formData["teleNetScored"] > 0) {
-                      widget.form.onDataChanged({
-                        "teleNetScored":
-                            widget.form.formData["teleNetScored"] - 1
-                      });
-                    }
-                  });
-                },
-                enableSpacer: true,
-                inputType:
-                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
-              ),
-            ),
-            Expanded(
-              child: NumberInput(
-                onValueAdd: () {
-                  setState(() {
-                    widget.form.onDataChanged({
-                      "teleNetMissed": widget.form.formData["teleNetMissed"] + 1
-                    });
-                  });
-                },
-                prefix: Icon(Icons.precision_manufacturing),
-                title: "Net Missed",
-                value: widget.form.formData["teleNetMissed"],
-                onValueSubtract: () {
-                  setState(() {
-                    if (widget.form.formData["teleNetMissed"] > 0) {
-                      widget.form.onDataChanged({
-                        "teleNetMissed":
-                            widget.form.formData["teleNetMissed"] - 1
-                      });
-                    }
-                  });
-                },
-                enableSpacer: true,
-                inputType:
-                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
-              ),
-            ),
-          ],
-        ),
+        
         // Row(
         //   mainAxisSize: MainAxisSize.max,
         //   children: [
@@ -799,38 +735,38 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
             ),
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Expanded(
-            Expanded(
-              child: NumberInput(
-                title: "Coral Dropped",
-                value: widget.form.formData["teleCoralDropped"],
-                onValueAdd: () {
-                  setState(() {
-                    widget.form.onDataChanged({
-                      "teleCoralDropped":
-                          widget.form.formData["teleCoralDropped"] + 1
-                    });
-                  });
-                },
-                onValueSubtract: () {
-                  setState(() {
-                    if (widget.form.formData["teleCoralDropped"] > 0) {
-                      widget.form.onDataChanged({
-                        "teleCoralDropped":
-                            widget.form.formData["teleCoralDropped"] - 1
-                      });
-                    }
-                  });
-                },
-                enableSpacer: true,
-                inputType: InputType.coral,
-              ),
-            )
-          ],
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     // Expanded(
+        //     Expanded(
+        //       child: NumberInput(
+        //         title: "Coral Dropped",
+        //         value: widget.form.formData["teleCoralDropped"],
+        //         onValueAdd: () {
+        //           setState(() {
+        //             widget.form.onDataChanged({
+        //               "teleCoralDropped":
+        //                   widget.form.formData["teleCoralDropped"] + 1
+        //             });
+        //           });
+        //         },
+        //         onValueSubtract: () {
+        //           setState(() {
+        //             if (widget.form.formData["teleCoralDropped"] > 0) {
+        //               widget.form.onDataChanged({
+        //                 "teleCoralDropped":
+        //                     widget.form.formData["teleCoralDropped"] - 1
+        //               });
+        //             }
+        //           });
+        //         },
+        //         enableSpacer: true,
+        //         inputType: InputType.coral,
+        //       ),
+        //     )
+        //   ],
+        // ),
         Row(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -935,7 +871,73 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
               ),
             )
           ],
-        )
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            SectionHeader(
+                title: "Robot Net Scoring",
+                color: Theme.of(context).dividerColor),
+          ],
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: NumberInput(
+                onValueAdd: () {
+                  setState(() {
+                    widget.form.onDataChanged({
+                      "teleNetScored": widget.form.formData["teleNetScored"] + 1
+                    });
+                  });
+                },
+                prefix: Icon(Icons.precision_manufacturing),
+                title: "Net Scored",
+                value: widget.form.formData["teleNetScored"],
+                onValueSubtract: () {
+                  setState(() {
+                    if (widget.form.formData["teleNetScored"] > 0) {
+                      widget.form.onDataChanged({
+                        "teleNetScored":
+                            widget.form.formData["teleNetScored"] - 1
+                      });
+                    }
+                  });
+                },
+                enableSpacer: true,
+                inputType:
+                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+              ),
+            ),
+            Expanded(
+              child: NumberInput(
+                onValueAdd: () {
+                  setState(() {
+                    widget.form.onDataChanged({
+                      "teleNetMissed": widget.form.formData["teleNetMissed"] + 1
+                    });
+                  });
+                },
+                prefix: Icon(Icons.precision_manufacturing),
+                title: "Net Missed",
+                value: widget.form.formData["teleNetMissed"],
+                onValueSubtract: () {
+                  setState(() {
+                    if (widget.form.formData["teleNetMissed"] > 0) {
+                      widget.form.onDataChanged({
+                        "teleNetMissed":
+                            widget.form.formData["teleNetMissed"] - 1
+                      });
+                    }
+                  });
+                },
+                enableSpacer: true,
+                inputType:
+                    (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }

@@ -923,43 +923,43 @@ class _FormAppPageState extends State<FormAppPage> {
                   ],
                   selectedIndex: matchPageIndex,
                   onDestinationSelected: (int index) {
-                    if (index == 2 &&
-                        !(matchTeamNumber == null ||
-                            matchScoutingData["scouter"] == "") &&
-                        matchPageIndex != 2) {
-                      var count = 0;
+                    // if (index == 2 &&
+                    //     !(matchTeamNumber == null ||
+                    //         matchScoutingData["scouter"] == "") &&
+                    //     matchPageIndex != 2) {
+                    //   var count = 0;
 
-                      for (var element in killableConfetti.reversed) {
-                        element.kill();
-                      }
-                      killableConfetti.clear();
+                    //   for (var element in killableConfetti.reversed) {
+                    //     element.kill();
+                    //   }
+                    //   killableConfetti.clear();
 
-                      Timer.periodic(Duration(milliseconds: 120), (timer) {
-                        if (count > 4) {
-                          timer.cancel();
-                        }
+                    //   Timer.periodic(Duration(milliseconds: 120), (timer) {
+                    //     if (count > 4) {
+                    //       timer.cancel();
+                    //     }
 
-                        final c = Confetti.launch(
-                          context,
-                          options: ConfettiOptions(
-                            particleCount: 20,
-                            spread: 85,
-                            y: 1,
-                            flat: true,
-                            decay: 0.82,
-                            colors: [
-                              matchScoutingData["alliance"] == "red"
-                                  ? Colors.red
-                                  : Colors.blue,
-                              Colors.black,
-                              Colors.white
-                            ],
-                          ),
-                        );
-                        killableConfetti.add(c);
-                        count++;
-                      });
-                    }
+                    //     final c = Confetti.launch(
+                    //       context,
+                    //       options: ConfettiOptions(
+                    //         particleCount: 20,
+                    //         spread: 85,
+                    //         y: 1,
+                    //         flat: true,
+                    //         decay: 0.82,
+                    //         colors: [
+                    //           matchScoutingData["alliance"] == "red"
+                    //               ? Colors.red
+                    //               : Colors.blue,
+                    //           Colors.black,
+                    //           Colors.white
+                    //         ],
+                    //       ),
+                    //     );
+                    //     killableConfetti.add(c);
+                    //     count++;
+                    //   });
+                    // }
                     setState(() {
                       matchPageIndex = index;
                     });
