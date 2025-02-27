@@ -233,7 +233,7 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                     value: widget.form.formData["autoL1Missed"],
                     onValueSubtract: () {
                       setState(() {
-                        if (widget.form.formData["autoL4Missed"] > 0) {
+                        if (widget.form.formData["autoL1Missed"] > 0) {
                           widget.form.onDataChanged({
                             "autoL1Missed":
                                 widget.form.formData["autoL1Missed"] - 1
@@ -351,7 +351,6 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                     (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
               ),
             )
-            
           ],
         ),
         Row(
@@ -441,7 +440,6 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
     return ListView(
       shrinkWrap: true,
       children: [
-        
         // Row(
         //   mainAxisSize: MainAxisSize.max,
         //   children: [
@@ -719,7 +717,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                     value: widget.form.formData["teleL1Missed"],
                     onValueSubtract: () {
                       setState(() {
-                        if (widget.form.formData["teleL4Missed"] > 0) {
+                        if (widget.form.formData["teleL1Missed"] > 0) {
                           widget.form.onDataChanged({
                             "teleL1Missed":
                                 widget.form.formData["teleL1Missed"] - 1

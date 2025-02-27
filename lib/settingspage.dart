@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mercs_scout/data_maps.dart';
 
 class SettingsPage extends StatefulWidget {
   final bool initialTransposedExport;
@@ -93,6 +94,25 @@ class SettingsPageState extends State<SettingsPage> {
               ),
             ],
           ),
+          const SizedBox(height: 8.0),
+          TextField(
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Team Number (For Cheering)',
+              ),
+              inputFormatters: <TextInputFormatter>[
+                LengthLimitingTextInputFormatter(5),
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              keyboardType: TextInputType.numberWithOptions(
+                  signed: false, decimal: false),
+              onChanged: (value) {
+                appTeamNum = int.tryParse(value);
+                appTeamNum ??= 9999;
+              },
+              controller: TextEditingController(
+                text: appTeamNum == null ? '' : appTeamNum.toString(),
+              )),
           const SizedBox(height: 8.0),
           TextField(
             decoration: const InputDecoration(

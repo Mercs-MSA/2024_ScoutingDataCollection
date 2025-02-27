@@ -487,7 +487,7 @@ class _FormAppPageState extends State<FormAppPage> {
                           child: Row(
                             children: [
                               Icon(
-                                Icons.star_rounded,
+                                Icons.celebration_rounded,
                                 size: 72,
                               ),
                               Spacer(),
@@ -1067,7 +1067,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                         },
                                       ),
                                       padding: WidgetStateProperty.all(
-                                        EdgeInsets.all(32.0),
+                                        EdgeInsets.all(40.0),
                                       ),
                                       shape: WidgetStateProperty.all<
                                           RoundedRectangleBorder>(
@@ -1422,319 +1422,711 @@ class _FormAppPageState extends State<FormAppPage> {
                       },
                       icon: const Icon(Icons.home)),
                 ),
-                body: Column(
+                body: ListView(
                   children: [
-                    const Spacer(
-                      flex: 2,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          SectionHeader(
+                              title:
+                                  "Choose a letter and hold your tablet up!"),
+                        ],
+                      ),
                     ),
-                    SectionHeader(title: "Red Alliance"),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        // const Spacer(
+                        //   flex: 2,
+                        // ),
                         Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            spacing: 8.0,
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.redAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter("G", Colors.red);
+                                },
+                                child: const Text(
+                                  "G",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
                               ),
-                              backgroundColor:
-                                  Colors.redAccent, // Custom primary color
-                              foregroundColor:
-                                  Colors.white, // Ensure good contrast
-                            ),
-                            onPressed: () {
-                              showFullscreenLetter("G", Colors.red);
-                            },
-                            child: const Text(
-                              "G",
-                              softWrap: false,
-                              style: TextStyle(fontSize: 32),
-                            ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.redAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter("O", Colors.red);
+                                },
+                                child: const Text(
+                                  "O",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 25.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.redAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter("R", Colors.red);
+                                },
+                                child: const Text(
+                                  "R",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.redAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter("E", Colors.red);
+                                },
+                                child: const Text(
+                                  "E",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.redAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter("D", Colors.red);
+                                },
+                                child: const Text(
+                                  "D",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.redAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter("!", Colors.red);
+                                },
+                                child: const Text(
+                                  "!",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(
-                          width: 8.0,
-                        ),
                         Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
+                          child: Column(
+                            spacing: 8.0,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.redAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter("G", Colors.red);
+                                },
+                                child: const Text(
+                                  "G",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
                               ),
-                              backgroundColor:
-                                  Colors.redAccent, // Custom primary color
-                              foregroundColor:
-                                  Colors.white, // Ensure good contrast
-                            ),
-                            onPressed: () {
-                              showFullscreenLetter("O", Colors.red);
-                            },
-                            child: const Text(
-                              "O",
-                              softWrap: false,
-                              style: TextStyle(fontSize: 32),
-                            ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.redAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter("O", Colors.red);
+                                },
+                                child: const Text(
+                                  "O",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 25.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.redAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter(
+                                      appTeamNum.toString().substring(0, 1),
+                                      Colors.red);
+                                },
+                                child: Text(
+                                  appTeamNum.toString().substring(0, 1),
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.redAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter(
+                                      appTeamNum.toString().length >= 4
+                                          ? appTeamNum
+                                              .toString()
+                                              .substring(1, 2)
+                                          : "!",
+                                      Colors.red);
+                                },
+                                child: Text(
+                                  appTeamNum.toString().length >= 4
+                                      ? appTeamNum.toString().substring(1, 2)
+                                      : "!",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.redAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter(
+                                      appTeamNum.toString().length >= 4
+                                          ? appTeamNum
+                                              .toString()
+                                              .substring(2, 3)
+                                          : "!",
+                                      Colors.red);
+                                },
+                                child: Text(
+                                  appTeamNum.toString().length >= 4
+                                      ? appTeamNum.toString().substring(2, 3)
+                                      : "!",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.redAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter(
+                                      appTeamNum.toString().length >= 4
+                                          ? appTeamNum
+                                              .toString()
+                                              .substring(3, 4)
+                                          : "!",
+                                      Colors.red);
+                                },
+                                child: Text(
+                                  appTeamNum.toString().length >= 4
+                                      ? appTeamNum.toString().substring(3, 4)
+                                      : "!",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.redAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter(
+                                      appTeamNum.toString().length >= 5
+                                          ? appTeamNum
+                                              .toString()
+                                              .substring(4, 5)
+                                          : "!",
+                                      Colors.red);
+                                },
+                                child: Text(
+                                  appTeamNum.toString().length >= 5
+                                      ? appTeamNum.toString().substring(4, 5)
+                                      : "!",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(
-                          width: 20.0,
-                        ),
                         Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
+                          child: Column(
+                            spacing: 8.0,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.blueAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter("G", Colors.blue);
+                                },
+                                child: const Text(
+                                  "G",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
                               ),
-                              backgroundColor:
-                                  Colors.redAccent, // Custom primary color
-                              foregroundColor:
-                                  Colors.white, // Ensure good contrast
-                            ),
-                            onPressed: () {
-                              showFullscreenLetter("R", Colors.red);
-                            },
-                            child: const Text(
-                              "R",
-                              softWrap: false,
-                              style: TextStyle(fontSize: 32),
-                            ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.blueAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter("O", Colors.blue);
+                                },
+                                child: const Text(
+                                  "O",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 25.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.blueAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter(
+                                      appTeamNum.toString().substring(0, 1),
+                                      Colors.blue);
+                                },
+                                child: Text(
+                                  appTeamNum.toString().substring(0, 1),
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.blueAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter(
+                                      appTeamNum.toString().length >= 4
+                                          ? appTeamNum
+                                              .toString()
+                                              .substring(1, 2)
+                                          : "!",
+                                      Colors.blue);
+                                },
+                                child: Text(
+                                  appTeamNum.toString().length >= 4
+                                      ? appTeamNum.toString().substring(1, 2)
+                                      : "!",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.blueAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter(
+                                      appTeamNum.toString().length >= 4
+                                          ? appTeamNum
+                                              .toString()
+                                              .substring(2, 3)
+                                          : "!",
+                                      Colors.blue);
+                                },
+                                child: Text(
+                                  appTeamNum.toString().length >= 4
+                                      ? appTeamNum.toString().substring(2, 3)
+                                      : "!",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.blueAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter(
+                                      appTeamNum.toString().length >= 4
+                                          ? appTeamNum
+                                              .toString()
+                                              .substring(3, 4)
+                                          : "!",
+                                      Colors.blue);
+                                },
+                                child: Text(
+                                  appTeamNum.toString().length >= 4
+                                      ? appTeamNum.toString().substring(3, 4)
+                                      : "!",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.blueAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter(
+                                      appTeamNum.toString().length >= 5
+                                          ? appTeamNum
+                                              .toString()
+                                              .substring(4, 5)
+                                          : "!",
+                                      Colors.blue);
+                                },
+                                child: Text(
+                                  appTeamNum.toString().length >= 5
+                                      ? appTeamNum.toString().substring(4, 5)
+                                      : "!",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(
-                          width: 8.0,
-                        ),
                         Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
+                          child: Column(
+                            spacing: 8.0,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.blueAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter("G", Colors.blue);
+                                },
+                                child: const Text(
+                                  "G",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
                               ),
-                              backgroundColor:
-                                  Colors.redAccent, // Custom primary color
-                              foregroundColor:
-                                  Colors.white, // Ensure good contrast
-                            ),
-                            onPressed: () {
-                              showFullscreenLetter("E", Colors.red);
-                            },
-                            child: const Text(
-                              "E",
-                              softWrap: false,
-                              style: TextStyle(fontSize: 32),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 8.0,
-                        ),
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
+                              const SizedBox(
+                                width: 8.0,
                               ),
-                              backgroundColor:
-                                  Colors.redAccent, // Custom primary color
-                              foregroundColor:
-                                  Colors.white, // Ensure good contrast
-                            ),
-                            onPressed: () {
-                              showFullscreenLetter("D", Colors.red);
-                            },
-                            child: const Text(
-                              "D",
-                              softWrap: false,
-                              style: TextStyle(fontSize: 32),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 8.0,
-                        ),
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.blueAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter("O", Colors.blue);
+                                },
+                                child: const Text(
+                                  "O",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
                               ),
-                              backgroundColor:
-                                  Colors.redAccent, // Custom primary color
-                              foregroundColor:
-                                  Colors.white, // Ensure good contrast
-                            ),
-                            onPressed: () {
-                              showFullscreenLetter("!", Colors.red);
-                            },
-                            child: const Text(
-                              "!",
-                              softWrap: false,
-                              style: TextStyle(fontSize: 32),
-                            ),
+                              const SizedBox(
+                                height: 25.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.blueAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter("B", Colors.blue);
+                                },
+                                child: const Text(
+                                  "B",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.blueAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter("L", Colors.blue);
+                                },
+                                child: const Text(
+                                  "L",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.blueAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter("U", Colors.blue);
+                                },
+                                child: const Text(
+                                  "U",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  backgroundColor:
+                                      Colors.blueAccent, // Custom primary color
+                                  foregroundColor:
+                                      Colors.white, // Ensure good contrast
+                                ),
+                                onPressed: () {
+                                  showFullscreenLetter("E", Colors.blue);
+                                },
+                                child: const Text(
+                                  "E",
+                                  softWrap: false,
+                                  style: TextStyle(fontSize: 46),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
-                    ),
-                    SectionHeader(title: "Blue Alliance"),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
-                              ),
-                              backgroundColor:
-                                  Colors.blueAccent, // Custom primary color
-                              foregroundColor:
-                                  Colors.white, // Ensure good contrast
-                            ),
-                            onPressed: () {
-                              showFullscreenLetter("G", Colors.blue);
-                            },
-                            child: const Text(
-                              "G",
-                              softWrap: false,
-                              style: TextStyle(fontSize: 32),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 8.0,
-                        ),
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
-                              ),
-                              backgroundColor:
-                                  Colors.blueAccent, // Custom primary color
-                              foregroundColor:
-                                  Colors.white, // Ensure good contrast
-                            ),
-                            onPressed: () {
-                              showFullscreenLetter("O", Colors.blue);
-                            },
-                            child: const Text(
-                              "O",
-                              softWrap: false,
-                              style: TextStyle(fontSize: 32),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 20.0,
-                        ),
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
-                              ),
-                              backgroundColor:
-                                  Colors.blueAccent, // Custom primary color
-                              foregroundColor:
-                                  Colors.white, // Ensure good contrast
-                            ),
-                            onPressed: () {
-                              showFullscreenLetter("B", Colors.blue);
-                            },
-                            child: const Text(
-                              "B",
-                              softWrap: false,
-                              style: TextStyle(fontSize: 32),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 8.0,
-                        ),
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
-                              ),
-                              backgroundColor:
-                                  Colors.blueAccent, // Custom primary color
-                              foregroundColor:
-                                  Colors.white, // Ensure good contrast
-                            ),
-                            onPressed: () {
-                              showFullscreenLetter("L", Colors.blue);
-                            },
-                            child: const Text(
-                              "L",
-                              softWrap: false,
-                              style: TextStyle(fontSize: 32),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 8.0,
-                        ),
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
-                              ),
-                              backgroundColor:
-                                  Colors.blueAccent, // Custom primary color
-                              foregroundColor:
-                                  Colors.white, // Ensure good contrast
-                            ),
-                            onPressed: () {
-                              showFullscreenLetter("U", Colors.blue);
-                            },
-                            child: const Text(
-                              "U",
-                              softWrap: false,
-                              style: TextStyle(fontSize: 32),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 8.0,
-                        ),
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
-                              ),
-                              backgroundColor:
-                                  Colors.blueAccent, // Custom primary color
-                              foregroundColor:
-                                  Colors.white, // Ensure good contrast
-                            ),
-                            onPressed: () {
-                              showFullscreenLetter("E", Colors.blue);
-                            },
-                            child: const Text(
-                              "E",
-                              softWrap: false,
-                              style: TextStyle(fontSize: 32),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Spacer(
-                      flex: 2,
                     ),
                   ],
                 ),
