@@ -117,6 +117,7 @@ class _FormAppPageState extends State<FormAppPage> {
   Timer? cheerConfettiTimer;
 
   Alliance cheeringAlliance = Alliance.red;
+  List<String> customCheeringStrings = [];
 
   @override
   void initState() {
@@ -183,6 +184,7 @@ class _FormAppPageState extends State<FormAppPage> {
     exportHeaders = prefs.getBool("exportHeaders") ?? true;
     devMode = prefs.getBool("develMode") ?? false;
     showWebWarning = prefs.getBool("showWebWarning") ?? true;
+    customCheeringStrings = prefs.getStringList("customCheeringStrings") ?? [];
 
     setState(() {
       appMode = 0;
@@ -291,40 +293,46 @@ class _FormAppPageState extends State<FormAppPage> {
                               useSafeArea: true,
                               builder: (BuildContext context) {
                                 return SettingsPage(
-                                  initialTransposedExport: transposedExport,
-                                  initialExportHeaders: exportHeaders,
-                                  initialEventId: eventId,
-                                  initialDevMode: devMode,
-                                  onTransposeChanged: (value) {
-                                    setState(() {
-                                      transposedExport = value;
-                                      attemptSaveTranspose();
+                                    initialTransposedExport: transposedExport,
+                                    initialExportHeaders: exportHeaders,
+                                    initialEventId: eventId,
+                                    initialDevMode: devMode,
+                                    cheeringStrings: customCheeringStrings,
+                                    onTransposeChanged: (value) {
+                                      setState(() {
+                                        transposedExport = value;
+                                        attemptSaveTranspose();
+                                      });
+                                    },
+                                    onExportHeadersChanged: (value) {
+                                      setState(() {
+                                        exportHeaders = value;
+                                        attemptSaveHeaders();
+                                      });
+                                    },
+                                    onEventIdChanged: (value) {
+                                      setState(() {
+                                        eventId = value;
+                                        attemptSaveEventId();
+                                      });
+                                    },
+                                    onResetPrefs: () {
+                                      resetPrefs();
+                                      loadPrefs();
+                                      Navigator.pop(context);
+                                    },
+                                    onDevModeChanged: (value) {
+                                      setState(() {
+                                        devMode = value;
+                                        attemptSaveDevMode();
+                                      });
+                                    },
+                                    onCheeringStringsChanged: (value) {
+                                      setState(() {
+                                        customCheeringStrings = value;
+                                        attemptSaveCheeringStrings();
+                                      });
                                     });
-                                  },
-                                  onExportHeadersChanged: (value) {
-                                    setState(() {
-                                      exportHeaders = value;
-                                      attemptSaveHeaders();
-                                    });
-                                  },
-                                  onEventIdChanged: (value) {
-                                    setState(() {
-                                      eventId = value;
-                                      attemptSaveEventId();
-                                    });
-                                  },
-                                  onResetPrefs: () {
-                                    resetPrefs();
-                                    loadPrefs();
-                                    Navigator.pop(context);
-                                  },
-                                  onDevModeChanged: (value) {
-                                    setState(() {
-                                      devMode = value;
-                                      attemptSaveDevMode();
-                                    });
-                                  },
-                                );
                               });
                         },
                         icon: const Icon(Icons.settings_outlined)),
@@ -1478,398 +1486,431 @@ class _FormAppPageState extends State<FormAppPage> {
                     const SizedBox(
                       height: 8.0,
                     ),
-                    Row(
-                      children: [
-                        // const Spacer(
-                        //   flex: 2,
-                        // ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            spacing: 8.0,
-                            children: [
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8.0)),
-                                  ),
-                                  backgroundColor:
-                                      Colors.white, // Custom primary color
-                                  foregroundColor:
-                                      Colors.black, // Ensure good contrast
-                                ),
-                                onPressed: () {
-                                  showFullscreenLetter(
-                                      "G",
-                                      cheeringAlliance == Alliance.red
-                                          ? Colors.red
-                                          : Colors.blue);
-                                },
-                                child: const Text(
-                                  "G",
-                                  softWrap: false,
-                                  style: TextStyle(fontSize: 46),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 8.0,
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8.0)),
-                                  ),
-                                  backgroundColor:
-                                      Colors.white, // Custom primary color
-                                  foregroundColor:
-                                      Colors.black, // Ensure good contrast
-                                ),
-                                onPressed: () {
-                                  showFullscreenLetter(
-                                      "O",
-                                      cheeringAlliance == Alliance.red
-                                          ? Colors.red
-                                          : Colors.blue);
-                                },
-                                child: const Text(
-                                  "O",
-                                  softWrap: false,
-                                  style: TextStyle(fontSize: 46),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 25.0,
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8.0)),
-                                  ),
-                                  backgroundColor:
-                                      Colors.white, // Custom primary color
-                                  foregroundColor:
-                                      Colors.black, // Ensure good contrast
-                                ),
-                                onPressed: () {
-                                  showFullscreenLetter(
-                                      "R",
-                                      cheeringAlliance == Alliance.red
-                                          ? Colors.red
-                                          : Colors.blue);
-                                },
-                                child: const Text(
-                                  "R",
-                                  softWrap: false,
-                                  style: TextStyle(fontSize: 46),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 8.0,
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8.0)),
-                                  ),
-                                  backgroundColor:
-                                      Colors.white, // Custom primary color
-                                  foregroundColor:
-                                      Colors.black, // Ensure good contrast
-                                ),
-                                onPressed: () {
-                                  showFullscreenLetter(
-                                      "E",
-                                      cheeringAlliance == Alliance.red
-                                          ? Colors.red
-                                          : Colors.blue);
-                                },
-                                child: const Text(
-                                  "E",
-                                  softWrap: false,
-                                  style: TextStyle(fontSize: 46),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 8.0,
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8.0)),
-                                  ),
-                                  backgroundColor:
-                                      Colors.white, // Custom primary color
-                                  foregroundColor:
-                                      Colors.black, // Ensure good contrast
-                                ),
-                                onPressed: () {
-                                  showFullscreenLetter(
-                                      "D",
-                                      cheeringAlliance == Alliance.red
-                                          ? Colors.red
-                                          : Colors.blue);
-                                },
-                                child: const Text(
-                                  "D",
-                                  softWrap: false,
-                                  style: TextStyle(fontSize: 46),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 8.0,
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8.0)),
-                                  ),
-                                  backgroundColor:
-                                      Colors.white, // Custom primary color
-                                  foregroundColor:
-                                      Colors.black, // Ensure good contrast
-                                ),
-                                onPressed: () {
-                                  showFullscreenLetter(
-                                      "!",
-                                      cheeringAlliance == Alliance.red
-                                          ? Colors.red
-                                          : Colors.blue);
-                                },
-                                child: const Text(
-                                  "!",
-                                  softWrap: false,
-                                  style: TextStyle(fontSize: 46),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            spacing: 8.0,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8.0)),
-                                  ),
-                                  backgroundColor:
-                                      Colors.white, // Custom primary color
-                                  foregroundColor:
-                                      Colors.black, // Ensure good contrast
-                                ),
-                                onPressed: () {
-                                  showFullscreenLetter(
-                                      "G",
-                                      cheeringAlliance == Alliance.red
-                                          ? Colors.red
-                                          : Colors.blue);
-                                },
-                                child: const Text(
-                                  "G",
-                                  softWrap: false,
-                                  style: TextStyle(fontSize: 46),
+                    ExpansionTile(title: Text("Alliance Cheering"), children: [
+                      cheeringAlliance == Alliance.red
+                          ? Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: [
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(8.0)),
+                                        ),
+                                        backgroundColor: Colors
+                                            .white, // Custom primary color
+                                        foregroundColor: Colors
+                                            .black, // Ensure good contrast
+                                      ),
+                                      onPressed: () {
+                                        showFullscreenLetter(
+                                            "G",
+                                            cheeringAlliance == Alliance.red
+                                                ? Colors.red
+                                                : Colors.blue);
+                                      },
+                                      child: const Text(
+                                        "G",
+                                        softWrap: false,
+                                        style: TextStyle(fontSize: 46),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(8.0)),
+                                        ),
+                                        backgroundColor: Colors
+                                            .white, // Custom primary color
+                                        foregroundColor: Colors
+                                            .black, // Ensure good contrast
+                                      ),
+                                      onPressed: () {
+                                        showFullscreenLetter(
+                                            "O",
+                                            cheeringAlliance == Alliance.red
+                                                ? Colors.red
+                                                : Colors.blue);
+                                      },
+                                      child: const Text(
+                                        "O",
+                                        softWrap: false,
+                                        style: TextStyle(fontSize: 46),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 25.0,
+                                    ),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(8.0)),
+                                        ),
+                                        backgroundColor: Colors
+                                            .white, // Custom primary color
+                                        foregroundColor: Colors
+                                            .black, // Ensure good contrast
+                                      ),
+                                      onPressed: () {
+                                        showFullscreenLetter(
+                                            "R",
+                                            cheeringAlliance == Alliance.red
+                                                ? Colors.red
+                                                : Colors.blue);
+                                      },
+                                      child: Text(
+                                        "R",
+                                        softWrap: false,
+                                        style: TextStyle(fontSize: 46),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(8.0)),
+                                        ),
+                                        backgroundColor: Colors
+                                            .white, // Custom primary color
+                                        foregroundColor: Colors
+                                            .black, // Ensure good contrast
+                                      ),
+                                      onPressed: () {
+                                        showFullscreenLetter(
+                                            "E",
+                                            cheeringAlliance == Alliance.red
+                                                ? Colors.red
+                                                : Colors.blue);
+                                      },
+                                      child: Text(
+                                        "E",
+                                        softWrap: false,
+                                        style: TextStyle(fontSize: 46),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(8.0)),
+                                        ),
+                                        backgroundColor: Colors
+                                            .white, // Custom primary color
+                                        foregroundColor: Colors
+                                            .black, // Ensure good contrast
+                                      ),
+                                      onPressed: () {
+                                        showFullscreenLetter(
+                                            "D",
+                                            cheeringAlliance == Alliance.red
+                                                ? Colors.red
+                                                : Colors.blue);
+                                      },
+                                      child: Text(
+                                        "D",
+                                        softWrap: false,
+                                        style: TextStyle(fontSize: 46),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(8.0)),
+                                        ),
+                                        backgroundColor: Colors
+                                            .white, // Custom primary color
+                                        foregroundColor: Colors
+                                            .black, // Ensure good contrast
+                                      ),
+                                      onPressed: () {
+                                        showFullscreenLetter(
+                                            "!",
+                                            cheeringAlliance == Alliance.red
+                                                ? Colors.red
+                                                : Colors.blue);
+                                      },
+                                      child: Text(
+                                        "!",
+                                        softWrap: false,
+                                        style: TextStyle(fontSize: 46),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                  ],
                                 ),
                               ),
-                              const SizedBox(
-                                width: 8.0,
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8.0)),
-                                  ),
-                                  backgroundColor:
-                                      Colors.white, // Custom primary color
-                                  foregroundColor:
-                                      Colors.black, // Ensure good contrast
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: [
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(8.0)),
+                                        ),
+                                        backgroundColor: Colors
+                                            .white, // Custom primary color
+                                        foregroundColor: Colors
+                                            .black, // Ensure good contrast
+                                      ),
+                                      onPressed: () {
+                                        showFullscreenLetter(
+                                            "G",
+                                            cheeringAlliance == Alliance.red
+                                                ? Colors.red
+                                                : Colors.blue);
+                                      },
+                                      child: const Text(
+                                        "G",
+                                        softWrap: false,
+                                        style: TextStyle(fontSize: 46),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(8.0)),
+                                        ),
+                                        backgroundColor: Colors
+                                            .white, // Custom primary color
+                                        foregroundColor: Colors
+                                            .black, // Ensure good contrast
+                                      ),
+                                      onPressed: () {
+                                        showFullscreenLetter(
+                                            "O",
+                                            cheeringAlliance == Alliance.red
+                                                ? Colors.red
+                                                : Colors.blue);
+                                      },
+                                      child: const Text(
+                                        "O",
+                                        softWrap: false,
+                                        style: TextStyle(fontSize: 46),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 25.0,
+                                    ),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(8.0)),
+                                        ),
+                                        backgroundColor: Colors
+                                            .white, // Custom primary color
+                                        foregroundColor: Colors
+                                            .black, // Ensure good contrast
+                                      ),
+                                      onPressed: () {
+                                        showFullscreenLetter(
+                                            "B",
+                                            cheeringAlliance == Alliance.red
+                                                ? Colors.red
+                                                : Colors.blue);
+                                      },
+                                      child: Text(
+                                        "B",
+                                        softWrap: false,
+                                        style: TextStyle(fontSize: 46),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(8.0)),
+                                        ),
+                                        backgroundColor: Colors
+                                            .white, // Custom primary color
+                                        foregroundColor: Colors
+                                            .black, // Ensure good contrast
+                                      ),
+                                      onPressed: () {
+                                        showFullscreenLetter(
+                                            "L",
+                                            cheeringAlliance == Alliance.red
+                                                ? Colors.red
+                                                : Colors.blue);
+                                      },
+                                      child: Text(
+                                        "L",
+                                        softWrap: false,
+                                        style: TextStyle(fontSize: 46),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(8.0)),
+                                        ),
+                                        backgroundColor: Colors
+                                            .white, // Custom primary color
+                                        foregroundColor: Colors
+                                            .black, // Ensure good contrast
+                                      ),
+                                      onPressed: () {
+                                        showFullscreenLetter(
+                                            "U",
+                                            cheeringAlliance == Alliance.red
+                                                ? Colors.red
+                                                : Colors.blue);
+                                      },
+                                      child: Text(
+                                        "U",
+                                        softWrap: false,
+                                        style: TextStyle(fontSize: 46),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(8.0)),
+                                        ),
+                                        backgroundColor: Colors
+                                            .white, // Custom primary color
+                                        foregroundColor: Colors
+                                            .black, // Ensure good contrast
+                                      ),
+                                      onPressed: () {
+                                        showFullscreenLetter(
+                                            "E",
+                                            cheeringAlliance == Alliance.red
+                                                ? Colors.red
+                                                : Colors.blue);
+                                      },
+                                      child: Text(
+                                        "E",
+                                        softWrap: false,
+                                        style: TextStyle(fontSize: 46),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(8.0)),
+                                        ),
+                                        backgroundColor: Colors
+                                            .white, // Custom primary color
+                                        foregroundColor: Colors
+                                            .black, // Ensure good contrast
+                                      ),
+                                      onPressed: () {
+                                        showFullscreenLetter(
+                                            "!",
+                                            cheeringAlliance == Alliance.red
+                                                ? Colors.red
+                                                : Colors.blue);
+                                      },
+                                      child: Text(
+                                        "!",
+                                        softWrap: false,
+                                        style: TextStyle(fontSize: 46),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                onPressed: () {
-                                  showFullscreenLetter(
-                                      "O",
-                                      cheeringAlliance == Alliance.red
-                                          ? Colors.red
-                                          : Colors.blue);
-                                },
-                                child: const Text(
-                                  "O",
-                                  softWrap: false,
-                                  style: TextStyle(fontSize: 46),
-                                ),
                               ),
-                              const SizedBox(
-                                height: 25.0,
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8.0)),
-                                  ),
-                                  backgroundColor:
-                                      Colors.white, // Custom primary color
-                                  foregroundColor:
-                                      Colors.black, // Ensure good contrast
-                                ),
-                                onPressed: () {
-                                  showFullscreenLetter(
-                                      appTeamNum.toString().substring(0, 1),
-                                      cheeringAlliance == Alliance.red
-                                          ? Colors.red
-                                          : Colors.blue);
-                                },
-                                child: Text(
-                                  appTeamNum.toString().substring(0, 1),
-                                  softWrap: false,
-                                  style: TextStyle(fontSize: 46),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 8.0,
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8.0)),
-                                  ),
-                                  backgroundColor:
-                                      Colors.white, // Custom primary color
-                                  foregroundColor:
-                                      Colors.black, // Ensure good contrast
-                                ),
-                                onPressed: () {
-                                  showFullscreenLetter(
-                                      appTeamNum.toString().length >= 4
-                                          ? appTeamNum
-                                              .toString()
-                                              .substring(1, 2)
-                                          : "!",
-                                      cheeringAlliance == Alliance.red
-                                          ? Colors.red
-                                          : Colors.blue);
-                                },
-                                child: Text(
-                                  appTeamNum.toString().length >= 4
-                                      ? appTeamNum.toString().substring(1, 2)
-                                      : "!",
-                                  softWrap: false,
-                                  style: TextStyle(fontSize: 46),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 8.0,
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8.0)),
-                                  ),
-                                  backgroundColor:
-                                      Colors.white, // Custom primary color
-                                  foregroundColor:
-                                      Colors.black, // Ensure good contrast
-                                ),
-                                onPressed: () {
-                                  showFullscreenLetter(
-                                      appTeamNum.toString().length >= 4
-                                          ? appTeamNum
-                                              .toString()
-                                              .substring(2, 3)
-                                          : "!",
-                                      cheeringAlliance == Alliance.red
-                                          ? Colors.red
-                                          : Colors.blue);
-                                },
-                                child: Text(
-                                  appTeamNum.toString().length >= 4
-                                      ? appTeamNum.toString().substring(2, 3)
-                                      : "!",
-                                  softWrap: false,
-                                  style: TextStyle(fontSize: 46),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 8.0,
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8.0)),
-                                  ),
-                                  backgroundColor:
-                                      Colors.white, // Custom primary color
-                                  foregroundColor:
-                                      Colors.black, // Ensure good contrast
-                                ),
-                                onPressed: () {
-                                  showFullscreenLetter(
-                                      appTeamNum.toString().length >= 4
-                                          ? appTeamNum
-                                              .toString()
-                                              .substring(3, 4)
-                                          : "!",
-                                      cheeringAlliance == Alliance.red
-                                          ? Colors.red
-                                          : Colors.blue);
-                                },
-                                child: Text(
-                                  appTeamNum.toString().length >= 4
-                                      ? appTeamNum.toString().substring(3, 4)
-                                      : "!",
-                                  softWrap: false,
-                                  style: TextStyle(fontSize: 46),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 8.0,
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8.0)),
-                                  ),
-                                  backgroundColor:
-                                      Colors.white, // Custom primary color
-                                  foregroundColor:
-                                      Colors.black, // Ensure good contrast
-                                ),
-                                onPressed: () {
-                                  showFullscreenLetter(
-                                      appTeamNum.toString().length >= 5
-                                          ? appTeamNum
-                                              .toString()
-                                              .substring(4, 5)
-                                          : "!",
-                                      cheeringAlliance == Alliance.red
-                                          ? Colors.red
-                                          : Colors.blue);
-                                },
-                                child: Text(
-                                  appTeamNum.toString().length >= 5
-                                      ? appTeamNum.toString().substring(4, 5)
-                                      : "!",
-                                  softWrap: false,
-                                  style: TextStyle(fontSize: 46),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                            ),
+                    ]),
+                    const SizedBox(
+                      height: 8.0,
                     ),
+                    ExpansionTile(title: Text("Team Cheering"), children: [
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              for (String cheer in customCheeringStrings)
+                                Row(
+                                  children: [
+                                    for (String letter in cheer.split(","))
+                                      Row(
+                                        children: [
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(8.0)),
+                                              ),
+                                              backgroundColor: Colors
+                                                  .white, // Custom primary color
+                                              foregroundColor: Colors
+                                                  .black, // Ensure good contrast
+                                            ),
+                                            onPressed: () {
+                                              showFullscreenLetter(
+                                                  letter.replaceAll("*", "\n"),
+                                                  cheeringAlliance ==
+                                                          Alliance.red
+                                                      ? Colors.red
+                                                      : Colors.blue);
+                                            },
+                                            child: Text(
+                                              letter.replaceAll("*", "\n"),
+                                              softWrap: false,
+                                              style: TextStyle(fontSize: 46),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 8.0,
+                                          ),
+                                        ],
+                                      ),
+                                  ],
+                                ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ]),
                   ],
                 ),
               )
@@ -2352,6 +2393,13 @@ class _FormAppPageState extends State<FormAppPage> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       prefs.setBool('develMode', devMode);
+    });
+  }
+
+  Future<void> attemptSaveCheeringStrings() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      prefs.setStringList('customCheeringStrings', customCheeringStrings);
     });
   }
 

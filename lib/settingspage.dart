@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mercs_scout/data_maps.dart';
 
 class SettingsPage extends StatefulWidget {
   final bool initialTransposedExport;
   final bool initialExportHeaders;
   final String initialEventId;
   final bool initialDevMode;
+  final List<String> cheeringStrings;
   final ValueChanged<bool> onTransposeChanged;
   final ValueChanged<bool> onExportHeadersChanged;
   final ValueChanged<bool> onDevModeChanged;
   final ValueChanged<String> onEventIdChanged;
+  final ValueChanged<List<String>> onCheeringStringsChanged;
   final Function onResetPrefs;
 
   const SettingsPage({
@@ -19,10 +20,12 @@ class SettingsPage extends StatefulWidget {
     required this.initialExportHeaders,
     required this.initialEventId,
     required this.initialDevMode,
+    required this.cheeringStrings,
     required this.onTransposeChanged,
     required this.onExportHeadersChanged,
     required this.onDevModeChanged,
     required this.onEventIdChanged,
+    required this.onCheeringStringsChanged,
     required this.onResetPrefs,
   });
 
@@ -35,6 +38,7 @@ class SettingsPageState extends State<SettingsPage> {
   late bool exportHeaders;
   late String eventId;
   late bool devMode;
+  late List<String> cheeringStrings;
 
   @override
   void initState() {
@@ -43,6 +47,7 @@ class SettingsPageState extends State<SettingsPage> {
     exportHeaders = widget.initialExportHeaders;
     eventId = widget.initialEventId;
     devMode = widget.initialDevMode;
+    cheeringStrings = widget.cheeringStrings;
   }
 
   @override
@@ -83,6 +88,58 @@ class SettingsPageState extends State<SettingsPage> {
               widget.onExportHeadersChanged(value);
             },
           ),
+          const SizedBox(height: 8.0),
+          Row(
+            children: [
+              const Text("Cheering Strings"),
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.only(left: 10.0, right: 15.0),
+                  child: const Divider(),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8.0),
+          Expanded(
+            child: ListView.builder(
+              itemCount: cheeringStrings.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Cheering String',
+                    ),
+                    onChanged: (value) {
+                      cheeringStrings[index] = value;
+                      widget.onCheeringStringsChanged(cheeringStrings);
+                    },
+                    controller:
+                        TextEditingController(text: cheeringStrings[index]),
+                  ),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.red),
+                    onPressed: () {
+                      setState(() {
+                        cheeringStrings.removeAt(index);
+                        widget.onCheeringStringsChanged(cheeringStrings);
+                      });
+                    },
+                  ),
+                );
+              },
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                cheeringStrings.add('');
+                widget.onCheeringStringsChanged(cheeringStrings);
+              });
+            },
+            child: const Text("Add Cheering String"),
+          ),
           Row(
             children: [
               const Text("Game Options"),
@@ -94,25 +151,6 @@ class SettingsPageState extends State<SettingsPage> {
               ),
             ],
           ),
-          const SizedBox(height: 8.0),
-          TextField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Team Number (For Cheering)',
-              ),
-              inputFormatters: <TextInputFormatter>[
-                LengthLimitingTextInputFormatter(5),
-                FilteringTextInputFormatter.digitsOnly,
-              ],
-              keyboardType: TextInputType.numberWithOptions(
-                  signed: false, decimal: false),
-              onChanged: (value) {
-                appTeamNum = int.tryParse(value);
-                appTeamNum ??= 9999;
-              },
-              controller: TextEditingController(
-                text: appTeamNum == null ? '' : appTeamNum.toString(),
-              )),
           const SizedBox(height: 8.0),
           TextField(
             decoration: const InputDecoration(

@@ -2,8 +2,6 @@ import 'datatypes.dart';
 
 bool colorDebug = false;
 
-int? appTeamNum = 9999;
-
 Map<String, dynamic> getPitDataMap() {
   return {
     "form": "pit",
