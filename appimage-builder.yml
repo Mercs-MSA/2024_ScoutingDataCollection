@@ -57,8 +57,7 @@ AppDir:
       - perl
   apt:
     arch: amd64
-    sources:
-      - sourceline: "deb http://archive.ubuntu.com/ubuntu focal main universe"
+    sources: []
     include:
       - libgtk-3-0
       - python3
