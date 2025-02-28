@@ -1860,12 +1860,13 @@ class _FormAppPageState extends State<FormAppPage> {
                     const SizedBox(
                       height: 8.0,
                     ),
-                    ExpansionTile(title: Text("Team Cheering"), children: [
+                    ExpansionTile(title: Text("Custom Cheering"), children: [
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
+                            spacing: 8,
                             children: [
                               for (String cheer in customCheeringStrings)
                                 Row(
