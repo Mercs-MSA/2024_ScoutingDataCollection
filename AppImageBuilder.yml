@@ -1,0 +1,68 @@
+# appimage-builder recipe
+# see https://appimage-builder.readthedocs.io for details
+version: 1
+script:
+  - rm -rf AppDir | true
+  - mkdir AppDir
+AppDir:
+  path: /home/kevin/Code/FRC/2024_ScoutingDataCollection/AppDir
+  app_info:
+    id: com.mercenaryrobotics.scouting
+    name: Sleepy Ron
+    icon: sleepyron
+    version: latest
+    exec: mercs_scout
+    exec_args: $@
+  files:
+    include:
+      - /usr/share/locale/locale.alias
+      - lib64/ld-linux-x86-64.so.2
+    exclude:
+      - usr/share/man
+      - usr/share/doc/*/README.*
+      - usr/share/doc/*/changelog.*
+      - usr/share/doc/*/NEWS.*
+      - usr/share/doc/*/TODO.*
+  test:
+    fedora-30:
+      image: appimagecrafters/tests-env:fedora-30
+      command: ./AppRun
+    debian-stable:
+      image: appimagecrafters/tests-env:debian-stable
+      command: ./AppRun
+    archlinux-latest:
+      image: appimagecrafters/tests-env:archlinux-latest
+      command: ./AppRun
+    centos-7:
+      image: appimagecrafters/tests-env:centos-7
+      command: ./AppRun
+    ubuntu-xenial:
+      image: appimagecrafters/tests-env:ubuntu-xenial
+      command: ./AppRun
+  after_bundle:
+    - cp build/linux/x64/release/bundle/mercs_scout AppDir
+    - cp -r build/linux/x64/release/bundle/lib/. AppDir/lib
+    - cp -r build/linux/x64/release/bundle/data AppDir
+    - cp sleepyron.png AppDir/usr/share/icons/
+  pacman:
+    Architecture: x86_64
+    repositories:
+      core:
+        - https://mirror.rackspace.com/archlinux/$repo/os/$arch
+      extra:
+        - https://mirror.rackspace.com/archlinux/$repo/os/$arch
+    include:
+      - gtk3
+      - python
+      - perl
+  apt:
+    arch: amd64
+    sources:
+      - sourceline: "deb http://archive.ubuntu.com/ubuntu focal main universe"
+    include:
+      - libgtk-3-0
+      - python3
+      - perl
+AppImage:
+  arch: x86_64
+  update-information: guess
