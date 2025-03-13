@@ -50,18 +50,19 @@ class _MatchFormState extends State<MatchForm>
         if (widget.teamNumberPresent)
           Scaffold(
             appBar: TabBar(
+              labelColor: Colors.white,
               controller: _tabController,
               tabs: <Widget>[
                 Tab(
-                  icon: Icon(Icons.auto_awesome),
+                  icon: Icon(Icons.auto_awesome, color: Colors.blue),
                   text: "Auton",
                 ),
                 Tab(
-                  icon: Icon(Icons.videogame_asset_rounded),
+                  icon: Icon(Icons.videogame_asset_rounded, color: Colors.orange),
                   text: "Teleop",
                 ),
                 Tab(
-                  icon: Icon(Icons.bolt),
+                  icon: Icon(Icons.bolt, color: Colors.green),
                   text: "Endgame",
                 ),
               ],
