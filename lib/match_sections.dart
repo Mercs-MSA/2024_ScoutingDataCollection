@@ -1236,9 +1236,14 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
           ),
           NumberInput(title: "Penalties", value: widget.form.formData["penalties"], onValueAdd: () {
             setState(() {
-              widget.form.onDataChanged({"penalties": widget.form.formData["penalties"]})
+              widget.form.onDataChanged({"penalties": widget.form.formData["penalties"] + 1});
             });
-          }, onValueSubtract: onValueSubtract)
+          }, onValueSubtract: () {
+            setState(() {
+              widget.form.onDataChanged({"penalties": widget.form.formData["penalties"] - 1});
+            });
+          },
+          enableSpacer: true)
         ],
       ),
     );
