@@ -1231,6 +1231,18 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                         });
                       },
                     )),
+                Expanded(
+                    flex: 2,
+                    child: CheckboxListTile(
+                        title: Text("Mark for Review?"),
+                        value: widget.form.formData["isMarkedForReview"], 
+                        onChanged:  (bool? newValue) {
+                            setState(() {
+                                widget.form.onDataChanged({"isMarkedForReview": newValue});
+                            });
+                        }
+                    )
+                )
               ],
             ),
           ),
@@ -1243,7 +1255,8 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
               widget.form.onDataChanged({"penalties": widget.form.formData["penalties"] - 1});
             });
           },
-          enableSpacer: true)
+          enableSpacer: true),
+
         ],
       ),
     );

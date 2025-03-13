@@ -91,6 +91,7 @@ Map<String, dynamic> getMatchDataMap() {
     "noShow": false,
     "disabled": false,
     "penalties": 0,
+    "isMarkedForReview": false,
     // "comments":
     //     "", // We will leave this here if the transfer person wants to add after scanning
   };
