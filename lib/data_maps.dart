@@ -92,8 +92,8 @@ Map<String, dynamic> getMatchDataMap() {
     "disabled": false,
     "penalties": 0,
     "isMarkedForReview": false,
-    // "comments":
-    //     "", // We will leave this here if the transfer person wants to add after scanning
+    "comments": // DO NOT COMMENT OR REMOVE
+        "", // We will leave this here if the transfer person wants to add after scanning
   };
 }
 
