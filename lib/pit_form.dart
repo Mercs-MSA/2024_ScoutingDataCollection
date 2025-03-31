@@ -495,6 +495,21 @@ class _PitFormState extends State<PitForm> {
                     ],
                   ),
                   const SizedBox(height: 8.0),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  CheckboxListTile(
+                    title: Text("Ground intake?"),
+                    value: widget.formData["groundIntake"],
+                    onChanged: (bool? newValue) {
+                      setState(() {
+                        widget.onDataChanged({"groundIntake": newValue});
+                      });
+                    },
+                  ),
+                  // ],
+                  // ),
+                  const SizedBox(height: 8.0),
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [

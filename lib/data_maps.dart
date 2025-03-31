@@ -19,6 +19,7 @@ Map<String, dynamic> getPitDataMap() {
     "descore": false,
     "deepClimb": false,
     "shallowClimb": false,
+    "groundIntake": false,
     "coralCycle": false,
     "algaeCycle": false,
     "defense": false,
@@ -58,6 +59,7 @@ Map<String, dynamic> getMatchDataMap() {
     "alliance": "blue",
     "match": null,
     "startPos": "middle",
+    "autoLeave": true,
     "autoL4Scored": 0,
     "autoL4Missed": 0,
     "autoL3Scored": 0,
@@ -90,6 +92,7 @@ Map<String, dynamic> getMatchDataMap() {
     "redCard": false,
     "noShow": false,
     "disabled": false,
+    "performedDefense": false,
     "penalties": 0,
     // "comments":
     //     "", // We will leave this here if the transfer person wants to add after scanning

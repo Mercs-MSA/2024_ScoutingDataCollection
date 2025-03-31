@@ -27,6 +27,24 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
         shrinkWrap: true,
         children: [
           Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              SectionHeader(
+                  title: "Auto", color: Theme.of(context).dividerColor)
+            ],
+          ),
+          Expanded(
+            child: CheckboxListTile(
+              title: Text("Has Leave?"),
+              value: widget.form.formData["autoLeave"],
+              onChanged: (bool? newValue) {
+                setState(() {
+                  widget.form.onDataChanged({"autoLeave": newValue});
+                });
+              },
+            ),
+          ),
+          Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
@@ -255,7 +273,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
             mainAxisSize: MainAxisSize.max,
             children: [
               SectionHeader(
-                  title: "Algae Descore", color: Theme.of(context).dividerColor),
+                  title: "Algae Descore",
+                  color: Theme.of(context).dividerColor),
             ],
           ),
           Row(
@@ -283,8 +302,9 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                       }
                     });
                   },
-                  inputType:
-                      (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                  inputType: (widget.colorDebug)
+                      ? InputType.algae
+                      : InputType.altAlgae,
                   enableSpacer: true,
                 ),
               ),
@@ -322,8 +342,9 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                     });
                   },
                   enableSpacer: true,
-                  inputType:
-                      (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                  inputType: (widget.colorDebug)
+                      ? InputType.algae
+                      : InputType.altAlgae,
                 ),
               ),
               Expanded(
@@ -349,8 +370,9 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                     });
                   },
                   enableSpacer: true,
-                  inputType:
-                      (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                  inputType: (widget.colorDebug)
+                      ? InputType.algae
+                      : InputType.altAlgae,
                 ),
               )
             ],
@@ -370,7 +392,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                   onValueAdd: () {
                     setState(() {
                       widget.form.onDataChanged({
-                        "autoNetScored": widget.form.formData["autoNetScored"] + 1
+                        "autoNetScored":
+                            widget.form.formData["autoNetScored"] + 1
                       });
                     });
                   },
@@ -387,8 +410,9 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                     });
                   },
                   enableSpacer: true,
-                  inputType:
-                      (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                  inputType: (widget.colorDebug)
+                      ? InputType.algae
+                      : InputType.altAlgae,
                 ),
               ),
               Expanded(
@@ -396,7 +420,8 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                   onValueAdd: () {
                     setState(() {
                       widget.form.onDataChanged({
-                        "autoNetMissed": widget.form.formData["autoNetMissed"] + 1
+                        "autoNetMissed":
+                            widget.form.formData["autoNetMissed"] + 1
                       });
                     });
                   },
@@ -413,8 +438,9 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                     });
                   },
                   enableSpacer: true,
-                  inputType:
-                      (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                  inputType: (widget.colorDebug)
+                      ? InputType.algae
+                      : InputType.altAlgae,
                 ),
               ),
             ],
@@ -443,7 +469,6 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
     return Container(
       color: const HSVColor.fromAHSV(1, 30, 1, 0.2).toColor(),
       child: ListView(
-        
         shrinkWrap: true,
         children: [
           // Row(
@@ -775,7 +800,8 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
             mainAxisSize: MainAxisSize.max,
             children: [
               SectionHeader(
-                  title: "Algae Descore", color: Theme.of(context).dividerColor),
+                  title: "Algae Descore",
+                  color: Theme.of(context).dividerColor),
             ],
           ),
           Row(
@@ -805,8 +831,9 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                     });
                   },
                   enableSpacer: true,
-                  inputType:
-                      (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                  inputType: (widget.colorDebug)
+                      ? InputType.algae
+                      : InputType.altAlgae,
                 ),
               )
             ],
@@ -843,8 +870,9 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                     });
                   },
                   enableSpacer: true,
-                  inputType:
-                      (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                  inputType: (widget.colorDebug)
+                      ? InputType.algae
+                      : InputType.altAlgae,
                 ),
               ),
               Expanded(
@@ -870,8 +898,9 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                     });
                   },
                   enableSpacer: true,
-                  inputType:
-                      (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                  inputType: (widget.colorDebug)
+                      ? InputType.algae
+                      : InputType.altAlgae,
                 ),
               )
             ],
@@ -891,7 +920,8 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   onValueAdd: () {
                     setState(() {
                       widget.form.onDataChanged({
-                        "teleNetScored": widget.form.formData["teleNetScored"] + 1
+                        "teleNetScored":
+                            widget.form.formData["teleNetScored"] + 1
                       });
                     });
                   },
@@ -909,8 +939,9 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                     });
                   },
                   enableSpacer: true,
-                  inputType:
-                      (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                  inputType: (widget.colorDebug)
+                      ? InputType.algae
+                      : InputType.altAlgae,
                 ),
               ),
               Expanded(
@@ -918,7 +949,8 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   onValueAdd: () {
                     setState(() {
                       widget.form.onDataChanged({
-                        "teleNetMissed": widget.form.formData["teleNetMissed"] + 1
+                        "teleNetMissed":
+                            widget.form.formData["teleNetMissed"] + 1
                       });
                     });
                   },
@@ -936,8 +968,9 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                     });
                   },
                   enableSpacer: true,
-                  inputType:
-                      (widget.colorDebug) ? InputType.algae : InputType.altAlgae,
+                  inputType: (widget.colorDebug)
+                      ? InputType.algae
+                      : InputType.altAlgae,
                 ),
               ),
             ],
@@ -966,14 +999,14 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
     return Container(
       color: const HSVColor.fromAHSV(1, 110, 1, 0.2).toColor(),
       child: ListView(
-        
         shrinkWrap: true,
         children: [
           Row(
             mainAxisSize: MainAxisSize.max,
             children: [
               SectionHeader(
-                  title: "Algae Descore", color: Theme.of(context).dividerColor),
+                  title: "Endgame Position",
+                  color: Theme.of(context).dividerColor),
             ],
           ),
           Row(
@@ -993,11 +1026,11 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                     emptySelectionAllowed: true,
                     multiSelectionEnabled: false,
                     segments: <ButtonSegment<EndgamePositions>>[
-                      
                       ButtonSegment(
                         value: EndgamePositions.shallow,
                         label: Text("Shallow Climb",
-                            style: TextStyle(color: Colors.white, fontSize: 15)),
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 15)),
                         icon: Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: Image(
@@ -1011,10 +1044,10 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                         ),
                       ),
                       ButtonSegment(
-                        
                         value: EndgamePositions.deep,
                         label: Text("Deep Climb",
-                            style: TextStyle(color: Colors.white, fontSize: 15)),
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 15)),
                         icon: Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: Image(
@@ -1106,8 +1139,9 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
               ),
               Expanded(
                 child: NumberInput(
-                  isDisabled: !(widget.form.formData["endgamePos"] == "shallow" ||
-                      widget.form.formData["endgamePos"] == "deep"),
+                  isDisabled:
+                      !(widget.form.formData["endgamePos"] == "shallow" ||
+                          widget.form.formData["endgamePos"] == "deep"),
                   disabledText: "N/A",
                   inputType: InputType.def,
                   title: "Approx. Climb Time",
@@ -1129,8 +1163,9 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                   onValueSubtract: () {
                     if (widget.form.formData["climbTime"] > 0) {
                       setState(() {
-                        widget.form.onDataChanged(
-                            {"climbTime": widget.form.formData["climbTime"] - 1});
+                        widget.form.onDataChanged({
+                          "climbTime": widget.form.formData["climbTime"] - 1
+                        });
                       });
                     }
                   },
@@ -1205,6 +1240,17 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                   title: "Extras", color: Theme.of(context).dividerColor),
             ],
           ),
+          Expanded(
+              flex: 2,
+              child: CheckboxListTile(
+                title: Text("Did they do any defense?"),
+                value: widget.form.formData["performedDefense"],
+                onChanged: (bool? newValue) {
+                  setState(() {
+                    widget.form.onDataChanged({"performedDefense": newValue});
+                  });
+                },
+              )),
           Padding(
             padding: const EdgeInsets.only(bottom: 15),
             child: Row(
@@ -1234,16 +1280,22 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
               ],
             ),
           ),
-          NumberInput(title: "Penalties", value: widget.form.formData["penalties"], onValueAdd: () {
-            setState(() {
-              widget.form.onDataChanged({"penalties": widget.form.formData["penalties"] + 1});
-            });
-          }, onValueSubtract: () {
-            setState(() {
-              widget.form.onDataChanged({"penalties": widget.form.formData["penalties"] - 1});
-            });
-          },
-          enableSpacer: true)
+          NumberInput(
+              title: "Penalties",
+              value: widget.form.formData["penalties"],
+              onValueAdd: () {
+                setState(() {
+                  widget.form.onDataChanged(
+                      {"penalties": widget.form.formData["penalties"] + 1});
+                });
+              },
+              onValueSubtract: () {
+                setState(() {
+                  widget.form.onDataChanged(
+                      {"penalties": widget.form.formData["penalties"] - 1});
+                });
+              },
+              enableSpacer: true)
         ],
       ),
     );
