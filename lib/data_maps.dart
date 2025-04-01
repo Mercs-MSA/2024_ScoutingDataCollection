@@ -94,8 +94,9 @@ Map<String, dynamic> getMatchDataMap() {
     "disabled": false,
     "performedDefense": false,
     "penalties": 0,
-    // "comments":
-    //     "", // We will leave this here if the transfer person wants to add after scanning
+    "isMarkedForReview": false,
+    "comments": // ** DO NOT REMOVE ** //
+        "", // We will leave this here if the transfer person wants to add after scanning
   };
 }
 

@@ -1239,6 +1239,14 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
             ],
           ),
           CheckboxListTile(
+              title: Text("Mark for Review?"),
+              value: widget.form.formData["isMarkedForReview"],
+              onChanged: (bool? newValue) {
+                setState(() {
+                  widget.form.onDataChanged({"isMarkedForReview": newValue});
+                });
+              }),
+          CheckboxListTile(
             title: Text("Did they do any defense?"),
             value: widget.form.formData["performedDefense"],
             onChanged: (bool? newValue) {
