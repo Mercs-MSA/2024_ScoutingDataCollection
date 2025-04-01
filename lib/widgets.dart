@@ -365,8 +365,7 @@ class LabeledSwitch extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
-          side: BorderSide(
-              width: 1, color: const Color.fromARGB(255, 214, 173, 170)),
+          side: BorderSide(width: 1, color: Theme.of(context).dividerColor),
           borderRadius: BorderRadius.circular(5.0),
         ),
         backgroundColor: value ? selectedColor : Colors.transparent,

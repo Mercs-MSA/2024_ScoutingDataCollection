@@ -33,16 +33,14 @@ class _MatchAutonSectionState extends State<MatchAutonSection> {
                   title: "Auto", color: Theme.of(context).dividerColor)
             ],
           ),
-          Expanded(
-            child: CheckboxListTile(
-              title: Text("Has Leave?"),
-              value: widget.form.formData["autoLeave"],
-              onChanged: (bool? newValue) {
-                setState(() {
-                  widget.form.onDataChanged({"autoLeave": newValue});
-                });
-              },
-            ),
+          CheckboxListTile(
+            title: Text("Has Leave?"),
+            value: widget.form.formData["autoLeave"],
+            onChanged: (bool? newValue) {
+              setState(() {
+                widget.form.onDataChanged({"autoLeave": newValue});
+              });
+            },
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1240,17 +1238,15 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                   title: "Extras", color: Theme.of(context).dividerColor),
             ],
           ),
-          Expanded(
-              flex: 2,
-              child: CheckboxListTile(
-                title: Text("Did they do any defense?"),
-                value: widget.form.formData["performedDefense"],
-                onChanged: (bool? newValue) {
-                  setState(() {
-                    widget.form.onDataChanged({"performedDefense": newValue});
-                  });
-                },
-              )),
+          CheckboxListTile(
+            title: Text("Did they do any defense?"),
+            value: widget.form.formData["performedDefense"],
+            onChanged: (bool? newValue) {
+              setState(() {
+                widget.form.onDataChanged({"performedDefense": newValue});
+              });
+            },
+          ),
           Padding(
             padding: const EdgeInsets.only(bottom: 15),
             child: Row(
