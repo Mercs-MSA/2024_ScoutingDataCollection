@@ -1241,6 +1241,64 @@ class _FormAppPageState extends State<FormAppPage> {
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
+                                  if (matchScoutingData["isMarkedForReview"] ==
+                                      true)
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Card(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            children: [
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                              Icon(
+                                                Icons.flag_rounded,
+                                                size: 64,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onTertiary,
+                                              ),
+                                              const Spacer(),
+                                              Column(
+                                                children: [
+                                                  Text(
+                                                    "Review Session",
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                      fontSize: 32,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .onTertiary,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "This session is marked for review",
+                                                    style: TextStyle(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .onTertiary,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const Spacer(),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   Flexible(
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
