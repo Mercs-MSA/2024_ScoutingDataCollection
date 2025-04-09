@@ -1102,7 +1102,7 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                         value: EndgamePositions.park,
                         icon: Icon(Icons.local_parking_rounded),
                         label: Padding(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: Text("Park",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 15)),
@@ -1111,7 +1111,7 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                         value: EndgamePositions.none,
                         icon: Icon(Icons.not_interested_rounded),
                         label: Padding(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: Text("No Park/Climb",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 15)),

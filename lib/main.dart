@@ -876,10 +876,12 @@ class _FormAppPageState extends State<FormAppPage> {
                                   ),
                                   FilledButton(
                                     onPressed: () {
-                                      setState(() {
-                                        pitPageIndex = 0;
+                                      resetPrompt(() {
+                                        setState(() {
+                                          pitPageIndex = 0;
+                                        });
+                                        resetPit();
                                       });
-                                      resetPit();
                                     },
                                     child: const Text(
                                       "Reset Data",
@@ -1450,10 +1452,12 @@ class _FormAppPageState extends State<FormAppPage> {
                                   ),
                                   FilledButton(
                                     onPressed: () {
-                                      setState(() {
-                                        matchPageIndex = 0;
+                                      resetPrompt(() {
+                                        setState(() {
+                                          matchPageIndex = 0;
+                                        });
+                                        resetMatch();
                                       });
-                                      resetMatch();
                                     },
                                     child: const Text(
                                       "Reset Data",
@@ -1983,6 +1987,39 @@ class _FormAppPageState extends State<FormAppPage> {
 
   double randomInRange(double min, double max) {
     return min + Random().nextDouble() * (max - min);
+  }
+
+  void resetPrompt(Function onReset) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Reset Data?'),
+        icon: Icon(
+          Icons.app_registration_rounded,
+          size: 64,
+        ),
+        content: const Text(
+            'Are you sure you want to clear the current session?\nTHIS IS NOT RECOVERABLE!'),
+        actions: <Widget>[
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text("Cancel"),
+          ),
+          FilledButton(
+            onPressed: () {
+              onReset();
+              Navigator.of(context).pop();
+            },
+            child: const Text(
+              "Reset",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   void showFullscreenLetter(String letter, Color background) {
