@@ -197,7 +197,7 @@ class NumberInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        padding: const EdgeInsets.all(4.0),
+        padding: const EdgeInsets.all(2.0),
         decoration: BoxDecoration(
           border: Border.all(
             color: Theme.of(context).dividerColor,
@@ -216,7 +216,7 @@ class NumberInput extends StatelessWidget {
                       fontSize: 16,
                     ),
                   ),
-                  Divider()
+                  // Divider()
                 ],
               ),
             Row(
