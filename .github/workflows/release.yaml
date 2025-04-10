@@ -1,4 +1,4 @@
-name: Release Flutter APK
+name: Release Application
 
 on:
   push:
@@ -81,7 +81,7 @@ jobs:
         with:
           flutter-version: "3.x"
           channel: "stable"
-          
+
       - name: Install dependencies
         run: |
           sudo apt-get update
@@ -91,7 +91,7 @@ jobs:
             ninja-build pkg-config \
             libgtk-3-dev liblzma-dev \
             libstdc++-12-dev
-            
+
       - name: Enable Linux Support
         run: flutter config --enable-linux-desktop
 
@@ -113,9 +113,43 @@ jobs:
           name: release-linux
           path: linux-x86_64-${{ github.ref_name }}.tar.gz
 
+  build_macos:
+    name: Build macOS App
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.x"
+          channel: "stable"
+
+      - name: Enable macOS Support
+        run: flutter config --enable-macos-desktop
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Build macOS App
+        run: flutter build macos --release --verbose
+
+      - name: Zip macOS Files
+        run: |
+          VERSION="${{ github.ref_name }}"
+          ditto -c -k --sequesterRsrc --keepParent build/macos/Build/Products/Release/*.app macos-x86_64-${VERSION}.zip
+
+      - name: Upload macOS Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-macos
+          path: macos-x86_64-${{ github.ref_name }}.zip
+
   release:
     name: Create GitHub Release
-    needs: [build_apk, build_windows, build_linux]
+    needs: [build_apk, build_windows, build_linux, build_macos]
     runs-on: ubuntu-latest
 
     steps:
@@ -131,10 +165,16 @@ jobs:
           name: release-windows
           path: artifacts
 
-      - name: Download Windows App from Artifacts
+      - name: Download Linux App from Artifacts
         uses: actions/download-artifact@v4
         with:
           name: release-linux
+          path: artifacts
+
+      - name: Download macOS App from Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: release-macos
           path: artifacts
 
       - name: Create GitHub Release
@@ -145,5 +185,6 @@ jobs:
             artifacts/app-release.apk.sha1
             artifacts/windows-x86_64-${{ github.ref_name }}.zip
             artifacts/linux-x86_64-${{ github.ref_name }}.tar.gz
+            artifacts/macos-x86_64-${{ github.ref_name }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
