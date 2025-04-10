@@ -85,18 +85,6 @@ class SettingsPageState extends State<SettingsPage> {
           const SizedBox(height: 8.0),
           Row(
             children: [
-              const Text("Cheering Strings"),
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.only(left: 10.0, right: 15.0),
-                  child: const Divider(),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8.0),
-          Row(
-            children: [
               const Text("Game Options"),
               Expanded(
                 child: Container(
