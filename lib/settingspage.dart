@@ -6,12 +6,10 @@ class SettingsPage extends StatefulWidget {
   final bool initialExportHeaders;
   final String initialEventId;
   final bool initialDevMode;
-  final List<String> cheeringStrings;
   final ValueChanged<bool> onTransposeChanged;
   final ValueChanged<bool> onExportHeadersChanged;
   final ValueChanged<bool> onDevModeChanged;
   final ValueChanged<String> onEventIdChanged;
-  final ValueChanged<List<String>> onCheeringStringsChanged;
   final Function onResetPrefs;
 
   const SettingsPage({
@@ -20,12 +18,10 @@ class SettingsPage extends StatefulWidget {
     required this.initialExportHeaders,
     required this.initialEventId,
     required this.initialDevMode,
-    required this.cheeringStrings,
     required this.onTransposeChanged,
     required this.onExportHeadersChanged,
     required this.onDevModeChanged,
     required this.onEventIdChanged,
-    required this.onCheeringStringsChanged,
     required this.onResetPrefs,
   });
 
@@ -38,7 +34,6 @@ class SettingsPageState extends State<SettingsPage> {
   late bool exportHeaders;
   late String eventId;
   late bool devMode;
-  late List<String> cheeringStrings;
 
   @override
   void initState() {
@@ -47,7 +42,6 @@ class SettingsPageState extends State<SettingsPage> {
     exportHeaders = widget.initialExportHeaders;
     eventId = widget.initialEventId;
     devMode = widget.initialDevMode;
-    cheeringStrings = widget.cheeringStrings;
   }
 
   @override
@@ -101,45 +95,6 @@ class SettingsPageState extends State<SettingsPage> {
             ],
           ),
           const SizedBox(height: 8.0),
-          Expanded(
-            child: ListView.builder(
-              itemCount: cheeringStrings.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: TextField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Cheering String',
-                    ),
-                    onChanged: (value) {
-                      cheeringStrings[index] = value;
-                      widget.onCheeringStringsChanged(cheeringStrings);
-                    },
-                    controller:
-                        TextEditingController(text: cheeringStrings[index]),
-                  ),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete, color: Colors.red),
-                    onPressed: () {
-                      setState(() {
-                        cheeringStrings.removeAt(index);
-                        widget.onCheeringStringsChanged(cheeringStrings);
-                      });
-                    },
-                  ),
-                );
-              },
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              setState(() {
-                cheeringStrings.add('');
-                widget.onCheeringStringsChanged(cheeringStrings);
-              });
-            },
-            child: const Text("Add Cheering String"),
-          ),
           Row(
             children: [
               const Text("Game Options"),
@@ -233,6 +188,98 @@ class SettingsPageState extends State<SettingsPage> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class CheeringStringPage extends StatefulWidget {
+  final List<String> cheeringStrings;
+  final ValueChanged<List<String>> onCheeringStringsChanged;
+
+  const CheeringStringPage({
+    super.key,
+    required this.cheeringStrings,
+    required this.onCheeringStringsChanged,
+  });
+
+  @override
+  State<CheeringStringPage> createState() => _CheeringStringPageState();
+}
+
+class _CheeringStringPageState extends State<CheeringStringPage> {
+  late List<String> cheeringStrings;
+
+  @override
+  void initState() {
+    super.initState();
+    cheeringStrings = widget.cheeringStrings;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Text(
+                  "String Format",
+                  style: TextStyle(fontSize: 18),
+                ),
+                Text(
+                  ", == delimeter\n* == newline",
+                  style: TextStyle(fontFamily: "RobotoMono"),
+                )
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 8.0,
+        ),
+        ListView.builder(
+          itemCount: cheeringStrings.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: TextField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Cheering String',
+                ),
+                onChanged: (value) {
+                  cheeringStrings[index] = value;
+                  widget.onCheeringStringsChanged(cheeringStrings);
+                },
+                controller: TextEditingController(text: cheeringStrings[index]),
+              ),
+              trailing: IconButton(
+                icon: const Icon(Icons.delete, color: Colors.red),
+                onPressed: () {
+                  setState(() {
+                    cheeringStrings.removeAt(index);
+                    widget.onCheeringStringsChanged(cheeringStrings);
+                  });
+                },
+              ),
+            );
+          },
+        ),
+        ElevatedButton(
+          onPressed: () {
+            setState(() {
+              cheeringStrings.add('');
+              widget.onCheeringStringsChanged(cheeringStrings);
+            });
+          },
+          child: const Text("Add Cheering String"),
+        ),
+        const SizedBox(
+          height: 8.0,
+        ),
+      ],
     );
   }
 }
