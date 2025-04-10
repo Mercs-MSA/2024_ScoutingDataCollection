@@ -1495,7 +1495,7 @@ class _FormAppPageState extends State<FormAppPage> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         SectionHeader(
-                            title: "Choose a letter and hold your tablet up!"),
+                            title: "Choose a letter and hold your device up!"),
                       ],
                     ),
                     SegmentedButton<Alliance>(
