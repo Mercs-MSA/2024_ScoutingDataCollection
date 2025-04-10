@@ -2291,7 +2291,7 @@ class _FormAppPageState extends State<FormAppPage> {
           size: 64,
         ),
         content: const Text(
-            'Are you sure you want to clear the current session?\nTHIS IS NOT RECOVERABLE!'),
+            'Have you screenshotted the QR Code?\nRESET DATA IS NOT RECOVERABLE OTHERWISE!'),
         actions: <Widget>[
           ElevatedButton(
             onPressed: () {
@@ -2305,7 +2305,7 @@ class _FormAppPageState extends State<FormAppPage> {
               Navigator.of(context).pop();
             },
             child: const Text(
-              "Reset",
+              "Yes, Reset Data",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
