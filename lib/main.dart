@@ -350,182 +350,431 @@ class _FormAppPageState extends State<FormAppPage> {
                         icon: const Icon(Icons.info_outline_rounded))
                   ],
                 ),
-                body: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Flexible(
-                        fit: FlexFit.tight,
-                        flex: 2,
-                        child: FilledButton(
-                          onPressed: () {
-                            setState(() {
-                              appMode = 1;
-                              setAppModePref(appMode);
-                              // pit
-                              if (devMode) {
-                                pitTeamNumber = 9999;
-                                pitScoutingData["team"] = 9999;
-                                pitScouters = ["RonCollins", "RonCollins"];
-                                pitScoutingData["scouters"] =
-                                    "RonCollins,RonCollins";
-                              }
-                            });
-                          },
-                          style: ButtonStyle(
-                            minimumSize: WidgetStateProperty.all(
-                                const Size.fromHeight(150)),
-                            maximumSize: WidgetStateProperty.all(
-                                const Size.fromHeight(200)),
-                            shape:
-                                WidgetStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16.0),
-                              ),
-                            ),
-                          ),
-                          child: const Row(
-                            children: [
-                              Icon(
-                                Icons.smart_toy_outlined,
-                                size: 72,
-                              ),
-                              Spacer(),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Pit Scouting",
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
+                body: LayoutBuilder(
+                  builder: (context, constraints) {
+                    if (constraints.maxWidth < 720) {
+                      // Use BottomNavigationBar for small screens
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Flexible(
+                              fit: FlexFit.tight,
+                              flex: 2,
+                              child: FilledButton(
+                                onPressed: () {
+                                  setState(() {
+                                    appMode = 1;
+                                    setAppModePref(appMode);
+                                    // pit
+                                    if (devMode) {
+                                      pitTeamNumber = 9999;
+                                      pitScoutingData["team"] = 9999;
+                                      pitScouters = [
+                                        "RonCollins",
+                                        "RonCollins"
+                                      ];
+                                      pitScoutingData["scouters"] =
+                                          "RonCollins,RonCollins";
+                                    }
+                                  });
+                                },
+                                style: ButtonStyle(
+                                  minimumSize: WidgetStateProperty.all(
+                                      const Size.fromHeight(150)),
+                                  maximumSize: WidgetStateProperty.all(
+                                      const Size.fromHeight(200)),
+                                  shape: WidgetStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16.0),
                                     ),
                                   ),
-                                  Text("Enter pit scouting mode.")
-                                ],
-                              ),
-                              Spacer(),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 8.0),
-                      Flexible(
-                        fit: FlexFit.tight,
-                        flex: 2,
-                        child: FilledButton(
-                          onPressed: () {
-                            setState(() {
-                              appMode = 2;
-                              setAppModePref(appMode);
-                              // match
-                              if (devMode) {
-                                matchTeamNumber = 9999;
-                                matchScoutingData["match"] = 1;
-                                matchScoutingData["team"] = 9999;
-                                matchScoutingData["scouter"] = "RonCollins";
-                              }
-                            });
-                          },
-                          style: ButtonStyle(
-                            minimumSize: WidgetStateProperty.all(
-                                const Size.fromHeight(150)),
-                            maximumSize: WidgetStateProperty.all(
-                                const Size.fromHeight(200)),
-                            shape:
-                                WidgetStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16.0),
+                                ),
+                                child: const Row(
+                                  children: [
+                                    Icon(
+                                      Icons.smart_toy_outlined,
+                                      size: 72,
+                                    ),
+                                    Spacer(),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Pit Scouting",
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text("Enter pit scouting mode.")
+                                      ],
+                                    ),
+                                    Spacer(),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.flag_rounded,
-                                size: 72,
-                              ),
-                              Spacer(),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Match Scouting",
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
+                            const SizedBox(height: 8.0),
+                            Flexible(
+                              fit: FlexFit.tight,
+                              flex: 2,
+                              child: FilledButton(
+                                onPressed: () {
+                                  setState(() {
+                                    appMode = 2;
+                                    setAppModePref(appMode);
+                                    // match
+                                    if (devMode) {
+                                      matchTeamNumber = 9999;
+                                      matchScoutingData["match"] = 1;
+                                      matchScoutingData["team"] = 9999;
+                                      matchScoutingData["scouter"] =
+                                          "RonCollins";
+                                    }
+                                  });
+                                },
+                                style: ButtonStyle(
+                                  minimumSize: WidgetStateProperty.all(
+                                      const Size.fromHeight(150)),
+                                  maximumSize: WidgetStateProperty.all(
+                                      const Size.fromHeight(200)),
+                                  shape: WidgetStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16.0),
                                     ),
                                   ),
-                                  Text("Enter match scouting mode.")
-                                ],
-                              ),
-                              Spacer(),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 8.0),
-                      Flexible(
-                        fit: FlexFit.tight,
-                        flex: 2,
-                        child: FilledButton(
-                          onPressed: () {
-                            setState(() {
-                              appMode = 3;
-                              setAppModePref(appMode);
-                            });
-                          },
-                          style: ButtonStyle(
-                            minimumSize: WidgetStateProperty.all(
-                                const Size.fromHeight(150)),
-                            maximumSize: WidgetStateProperty.all(
-                                const Size.fromHeight(200)),
-                            shape:
-                                WidgetStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16.0),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.flag_rounded,
+                                      size: 72,
+                                    ),
+                                    Spacer(),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Match Scouting",
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text("Enter match scouting mode.")
+                                      ],
+                                    ),
+                                    Spacer(),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.celebration_rounded,
-                                size: 72,
-                              ),
-                              Spacer(),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Playoff Cheering",
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
+                            const SizedBox(height: 8.0),
+                            Flexible(
+                              fit: FlexFit.tight,
+                              flex: 2,
+                              child: FilledButton(
+                                onPressed: () {
+                                  setState(() {
+                                    appMode = 3;
+                                    setAppModePref(appMode);
+                                  });
+                                },
+                                style: ButtonStyle(
+                                  minimumSize: WidgetStateProperty.all(
+                                      const Size.fromHeight(150)),
+                                  maximumSize: WidgetStateProperty.all(
+                                      const Size.fromHeight(200)),
+                                  shape: WidgetStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16.0),
                                     ),
                                   ),
-                                  Text("Enter playoff cheering mode")
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.celebration_rounded,
+                                      size: 72,
+                                    ),
+                                    Spacer(),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Playoff Cheering",
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text("Enter playoff cheering mode")
+                                      ],
+                                    ),
+                                    Spacer(),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            const Spacer(),
+                            const Image(
+                              image: AssetImage('images/mercs.png'),
+                              fit: BoxFit.scaleDown,
+                              width: 300,
+                              isAntiAlias: true,
+                            ),
+                            const Spacer(),
+                          ],
+                        ),
+                      );
+                    } else {
+                      // Use NavigationRail for larger screens
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: <Widget>[
+                            Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.chevron_right,
+                                      size: 56,
+                                    ),
+                                    const SizedBox(
+                                      width: 16.0,
+                                    ),
+                                    Text(
+                                      "Welcome!",
+                                      style: TextStyle(
+                                          fontSize: 56,
+                                          fontWeight: FontWeight.w200),
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  "Choose a mode to get started",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                                const Spacer(),
+                                Expanded(
+                                  flex: 2,
+                                  child: const Image(
+                                    image: AssetImage('images/mercs.png'),
+                                    fit: BoxFit.scaleDown,
+                                    width: 300,
+                                    isAntiAlias: true,
+                                  ),
+                                ),
+                                const Spacer(),
+                              ],
+                            ),
+                            const SizedBox(
+                              width: 24.0,
+                            ),
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  Flexible(
+                                    fit: FlexFit.tight,
+                                    flex: 2,
+                                    child: FilledButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          appMode = 1;
+                                          setAppModePref(appMode);
+                                          // pit
+                                          if (devMode) {
+                                            pitTeamNumber = 9999;
+                                            pitScoutingData["team"] = 9999;
+                                            pitScouters = [
+                                              "RonCollins",
+                                              "RonCollins"
+                                            ];
+                                            pitScoutingData["scouters"] =
+                                                "RonCollins,RonCollins";
+                                          }
+                                        });
+                                      },
+                                      style: ButtonStyle(
+                                        minimumSize: WidgetStateProperty.all(
+                                            const Size.fromHeight(150)),
+                                        maximumSize: WidgetStateProperty.all(
+                                            const Size.fromHeight(200)),
+                                        shape: WidgetStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(16.0),
+                                          ),
+                                        ),
+                                      ),
+                                      child: const Row(
+                                        children: [
+                                          Icon(
+                                            Icons.smart_toy_outlined,
+                                            size: 72,
+                                          ),
+                                          Spacer(),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "Pit Scouting",
+                                                style: TextStyle(
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Text("Enter pit scouting mode.")
+                                            ],
+                                          ),
+                                          Spacer(),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8.0),
+                                  Flexible(
+                                    fit: FlexFit.tight,
+                                    flex: 2,
+                                    child: FilledButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          appMode = 2;
+                                          setAppModePref(appMode);
+                                          // match
+                                          if (devMode) {
+                                            matchTeamNumber = 9999;
+                                            matchScoutingData["match"] = 1;
+                                            matchScoutingData["team"] = 9999;
+                                            matchScoutingData["scouter"] =
+                                                "RonCollins";
+                                          }
+                                        });
+                                      },
+                                      style: ButtonStyle(
+                                        minimumSize: WidgetStateProperty.all(
+                                            const Size.fromHeight(150)),
+                                        maximumSize: WidgetStateProperty.all(
+                                            const Size.fromHeight(200)),
+                                        shape: WidgetStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(16.0),
+                                          ),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.flag_rounded,
+                                            size: 72,
+                                          ),
+                                          Spacer(),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "Match Scouting",
+                                                style: TextStyle(
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Text("Enter match scouting mode.")
+                                            ],
+                                          ),
+                                          Spacer(),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8.0),
+                                  Flexible(
+                                    fit: FlexFit.tight,
+                                    flex: 2,
+                                    child: FilledButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          appMode = 3;
+                                          setAppModePref(appMode);
+                                        });
+                                      },
+                                      style: ButtonStyle(
+                                        minimumSize: WidgetStateProperty.all(
+                                            const Size.fromHeight(150)),
+                                        maximumSize: WidgetStateProperty.all(
+                                            const Size.fromHeight(200)),
+                                        shape: WidgetStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(16.0),
+                                          ),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.celebration_rounded,
+                                            size: 72,
+                                          ),
+                                          Spacer(),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "Playoff Cheering",
+                                                style: TextStyle(
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Text(
+                                                  "Enter playoff cheering mode")
+                                            ],
+                                          ),
+                                          Spacer(),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8.0),
                                 ],
                               ),
-                              Spacer(),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(height: 8.0),
-                      const Spacer(),
-                      const Image(
-                        image: AssetImage('images/mercs.png'),
-                        fit: BoxFit.scaleDown,
-                        width: 300,
-                        isAntiAlias: true,
-                      ),
-                      const Spacer(),
-                    ],
-                  ),
+                      );
+                    }
+                  },
                 ),
               )
             else
