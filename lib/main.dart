@@ -1008,7 +1008,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                   child: TextField(
                                     decoration: const InputDecoration(
                                       border: OutlineInputBorder(),
-                                      labelText: 'Scouter Initials',
+                                      labelText: 'Scouter Name',
                                     ),
                                     inputFormatters: <TextInputFormatter>[
                                       LengthLimitingTextInputFormatter(30),
