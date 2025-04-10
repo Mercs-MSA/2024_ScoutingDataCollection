@@ -287,53 +287,48 @@ class _FormAppPageState extends State<FormAppPage> {
                     IconButton(
                         onPressed: () {
                           showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              showDragHandle: true,
-                              useSafeArea: true,
-                              builder: (BuildContext context) {
-                                return SettingsPage(
-                                    initialTransposedExport: transposedExport,
-                                    initialExportHeaders: exportHeaders,
-                                    initialEventId: eventId,
-                                    initialDevMode: devMode,
-                                    cheeringStrings: customCheeringStrings,
-                                    onTransposeChanged: (value) {
-                                      setState(() {
-                                        transposedExport = value;
-                                        attemptSaveTranspose();
-                                      });
-                                    },
-                                    onExportHeadersChanged: (value) {
-                                      setState(() {
-                                        exportHeaders = value;
-                                        attemptSaveHeaders();
-                                      });
-                                    },
-                                    onEventIdChanged: (value) {
-                                      setState(() {
-                                        eventId = value;
-                                        attemptSaveEventId();
-                                      });
-                                    },
-                                    onResetPrefs: () {
-                                      resetPrefs();
-                                      loadPrefs();
-                                      Navigator.pop(context);
-                                    },
-                                    onDevModeChanged: (value) {
-                                      setState(() {
-                                        devMode = value;
-                                        attemptSaveDevMode();
-                                      });
-                                    },
-                                    onCheeringStringsChanged: (value) {
-                                      setState(() {
-                                        customCheeringStrings = value;
-                                        attemptSaveCheeringStrings();
-                                      });
-                                    });
-                              });
+                            context: context,
+                            isScrollControlled: false,
+                            showDragHandle: true,
+                            useSafeArea: true,
+                            builder: (BuildContext context) {
+                              return SettingsPage(
+                                initialTransposedExport: transposedExport,
+                                initialExportHeaders: exportHeaders,
+                                initialEventId: eventId,
+                                initialDevMode: devMode,
+                                onTransposeChanged: (value) {
+                                  setState(() {
+                                    transposedExport = value;
+                                    attemptSaveTranspose();
+                                  });
+                                },
+                                onExportHeadersChanged: (value) {
+                                  setState(() {
+                                    exportHeaders = value;
+                                    attemptSaveHeaders();
+                                  });
+                                },
+                                onEventIdChanged: (value) {
+                                  setState(() {
+                                    eventId = value;
+                                    attemptSaveEventId();
+                                  });
+                                },
+                                onResetPrefs: () {
+                                  resetPrefs();
+                                  loadPrefs();
+                                  Navigator.pop(context);
+                                },
+                                onDevModeChanged: (value) {
+                                  setState(() {
+                                    devMode = value;
+                                    attemptSaveDevMode();
+                                  });
+                                },
+                              );
+                            },
+                          );
                         },
                         icon: const Icon(Icons.settings_outlined)),
                     IconButton(
@@ -1013,7 +1008,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                   child: TextField(
                                     decoration: const InputDecoration(
                                       border: OutlineInputBorder(),
-                                      labelText: 'Scouter Initials',
+                                      labelText: 'Scouter Name',
                                     ),
                                     inputFormatters: <TextInputFormatter>[
                                       LengthLimitingTextInputFormatter(30),
@@ -1500,7 +1495,7 @@ class _FormAppPageState extends State<FormAppPage> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         SectionHeader(
-                            title: "Choose a letter and hold your tablet up!"),
+                            title: "Choose a letter and hold your device up!"),
                       ],
                     ),
                     SegmentedButton<Alliance>(
@@ -1548,432 +1543,480 @@ class _FormAppPageState extends State<FormAppPage> {
                     const SizedBox(
                       height: 8.0,
                     ),
-                    ExpansionTile(title: Text("Alliance Cheering"), children: [
-                      cheeringAlliance == Alliance.red
-                          ? Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: [
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(8.0)),
-                                        ),
-                                        backgroundColor: Colors
-                                            .white, // Custom primary color
-                                        foregroundColor: Colors
-                                            .black, // Ensure good contrast
-                                      ),
-                                      onPressed: () {
-                                        showFullscreenLetter(
+                    ExpansionTile(
+                        title: Row(
+                          children: [
+                            Icon(Icons.celebration),
+                            const SizedBox(width: 8.0),
+                            Text("Alliance Cheering"),
+                          ],
+                        ),
+                        children: [
+                          cheeringAlliance == Alliance.red
+                              ? Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      children: [
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8.0)),
+                                            ),
+                                            backgroundColor: Colors
+                                                .white, // Custom primary color
+                                            foregroundColor: Colors
+                                                .black, // Ensure good contrast
+                                          ),
+                                          onPressed: () {
+                                            showFullscreenLetter(
+                                                "G",
+                                                cheeringAlliance == Alliance.red
+                                                    ? Colors.red
+                                                    : Colors.blue);
+                                          },
+                                          child: const Text(
                                             "G",
-                                            cheeringAlliance == Alliance.red
-                                                ? Colors.red
-                                                : Colors.blue);
-                                      },
-                                      child: const Text(
-                                        "G",
-                                        softWrap: false,
-                                        style: TextStyle(fontSize: 46),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 8.0,
-                                    ),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(8.0)),
+                                            softWrap: false,
+                                            style: TextStyle(fontSize: 46),
+                                          ),
                                         ),
-                                        backgroundColor: Colors
-                                            .white, // Custom primary color
-                                        foregroundColor: Colors
-                                            .black, // Ensure good contrast
-                                      ),
-                                      onPressed: () {
-                                        showFullscreenLetter(
+                                        const SizedBox(
+                                          width: 8.0,
+                                        ),
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8.0)),
+                                            ),
+                                            backgroundColor: Colors
+                                                .white, // Custom primary color
+                                            foregroundColor: Colors
+                                                .black, // Ensure good contrast
+                                          ),
+                                          onPressed: () {
+                                            showFullscreenLetter(
+                                                "O",
+                                                cheeringAlliance == Alliance.red
+                                                    ? Colors.red
+                                                    : Colors.blue);
+                                          },
+                                          child: const Text(
                                             "O",
-                                            cheeringAlliance == Alliance.red
-                                                ? Colors.red
-                                                : Colors.blue);
-                                      },
-                                      child: const Text(
-                                        "O",
-                                        softWrap: false,
-                                        style: TextStyle(fontSize: 46),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 25.0,
-                                    ),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(8.0)),
+                                            softWrap: false,
+                                            style: TextStyle(fontSize: 46),
+                                          ),
                                         ),
-                                        backgroundColor: Colors
-                                            .white, // Custom primary color
-                                        foregroundColor: Colors
-                                            .black, // Ensure good contrast
-                                      ),
-                                      onPressed: () {
-                                        showFullscreenLetter(
+                                        const SizedBox(
+                                          width: 25.0,
+                                        ),
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8.0)),
+                                            ),
+                                            backgroundColor: Colors
+                                                .white, // Custom primary color
+                                            foregroundColor: Colors
+                                                .black, // Ensure good contrast
+                                          ),
+                                          onPressed: () {
+                                            showFullscreenLetter(
+                                                "R",
+                                                cheeringAlliance == Alliance.red
+                                                    ? Colors.red
+                                                    : Colors.blue);
+                                          },
+                                          child: Text(
                                             "R",
-                                            cheeringAlliance == Alliance.red
-                                                ? Colors.red
-                                                : Colors.blue);
-                                      },
-                                      child: Text(
-                                        "R",
-                                        softWrap: false,
-                                        style: TextStyle(fontSize: 46),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 8.0,
-                                    ),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(8.0)),
+                                            softWrap: false,
+                                            style: TextStyle(fontSize: 46),
+                                          ),
                                         ),
-                                        backgroundColor: Colors
-                                            .white, // Custom primary color
-                                        foregroundColor: Colors
-                                            .black, // Ensure good contrast
-                                      ),
-                                      onPressed: () {
-                                        showFullscreenLetter(
+                                        const SizedBox(
+                                          width: 8.0,
+                                        ),
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8.0)),
+                                            ),
+                                            backgroundColor: Colors
+                                                .white, // Custom primary color
+                                            foregroundColor: Colors
+                                                .black, // Ensure good contrast
+                                          ),
+                                          onPressed: () {
+                                            showFullscreenLetter(
+                                                "E",
+                                                cheeringAlliance == Alliance.red
+                                                    ? Colors.red
+                                                    : Colors.blue);
+                                          },
+                                          child: Text(
                                             "E",
-                                            cheeringAlliance == Alliance.red
-                                                ? Colors.red
-                                                : Colors.blue);
-                                      },
-                                      child: Text(
-                                        "E",
-                                        softWrap: false,
-                                        style: TextStyle(fontSize: 46),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 8.0,
-                                    ),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(8.0)),
+                                            softWrap: false,
+                                            style: TextStyle(fontSize: 46),
+                                          ),
                                         ),
-                                        backgroundColor: Colors
-                                            .white, // Custom primary color
-                                        foregroundColor: Colors
-                                            .black, // Ensure good contrast
-                                      ),
-                                      onPressed: () {
-                                        showFullscreenLetter(
+                                        const SizedBox(
+                                          width: 8.0,
+                                        ),
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8.0)),
+                                            ),
+                                            backgroundColor: Colors
+                                                .white, // Custom primary color
+                                            foregroundColor: Colors
+                                                .black, // Ensure good contrast
+                                          ),
+                                          onPressed: () {
+                                            showFullscreenLetter(
+                                                "D",
+                                                cheeringAlliance == Alliance.red
+                                                    ? Colors.red
+                                                    : Colors.blue);
+                                          },
+                                          child: Text(
                                             "D",
-                                            cheeringAlliance == Alliance.red
-                                                ? Colors.red
-                                                : Colors.blue);
-                                      },
-                                      child: Text(
-                                        "D",
-                                        softWrap: false,
-                                        style: TextStyle(fontSize: 46),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 8.0,
-                                    ),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(8.0)),
+                                            softWrap: false,
+                                            style: TextStyle(fontSize: 46),
+                                          ),
                                         ),
-                                        backgroundColor: Colors
-                                            .white, // Custom primary color
-                                        foregroundColor: Colors
-                                            .black, // Ensure good contrast
-                                      ),
-                                      onPressed: () {
-                                        showFullscreenLetter(
+                                        const SizedBox(
+                                          width: 8.0,
+                                        ),
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8.0)),
+                                            ),
+                                            backgroundColor: Colors
+                                                .white, // Custom primary color
+                                            foregroundColor: Colors
+                                                .black, // Ensure good contrast
+                                          ),
+                                          onPressed: () {
+                                            showFullscreenLetter(
+                                                "!",
+                                                cheeringAlliance == Alliance.red
+                                                    ? Colors.red
+                                                    : Colors.blue);
+                                          },
+                                          child: Text(
                                             "!",
-                                            cheeringAlliance == Alliance.red
-                                                ? Colors.red
-                                                : Colors.blue);
-                                      },
-                                      child: Text(
-                                        "!",
-                                        softWrap: false,
-                                        style: TextStyle(fontSize: 46),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 8.0,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: [
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(8.0)),
+                                            softWrap: false,
+                                            style: TextStyle(fontSize: 46),
+                                          ),
                                         ),
-                                        backgroundColor: Colors
-                                            .white, // Custom primary color
-                                        foregroundColor: Colors
-                                            .black, // Ensure good contrast
-                                      ),
-                                      onPressed: () {
-                                        showFullscreenLetter(
+                                        const SizedBox(
+                                          width: 8.0,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      children: [
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8.0)),
+                                            ),
+                                            backgroundColor: Colors
+                                                .white, // Custom primary color
+                                            foregroundColor: Colors
+                                                .black, // Ensure good contrast
+                                          ),
+                                          onPressed: () {
+                                            showFullscreenLetter(
+                                                "G",
+                                                cheeringAlliance == Alliance.red
+                                                    ? Colors.red
+                                                    : Colors.blue);
+                                          },
+                                          child: const Text(
                                             "G",
-                                            cheeringAlliance == Alliance.red
-                                                ? Colors.red
-                                                : Colors.blue);
-                                      },
-                                      child: const Text(
-                                        "G",
-                                        softWrap: false,
-                                        style: TextStyle(fontSize: 46),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 8.0,
-                                    ),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(8.0)),
+                                            softWrap: false,
+                                            style: TextStyle(fontSize: 46),
+                                          ),
                                         ),
-                                        backgroundColor: Colors
-                                            .white, // Custom primary color
-                                        foregroundColor: Colors
-                                            .black, // Ensure good contrast
-                                      ),
-                                      onPressed: () {
-                                        showFullscreenLetter(
+                                        const SizedBox(
+                                          width: 8.0,
+                                        ),
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8.0)),
+                                            ),
+                                            backgroundColor: Colors
+                                                .white, // Custom primary color
+                                            foregroundColor: Colors
+                                                .black, // Ensure good contrast
+                                          ),
+                                          onPressed: () {
+                                            showFullscreenLetter(
+                                                "O",
+                                                cheeringAlliance == Alliance.red
+                                                    ? Colors.red
+                                                    : Colors.blue);
+                                          },
+                                          child: const Text(
                                             "O",
-                                            cheeringAlliance == Alliance.red
-                                                ? Colors.red
-                                                : Colors.blue);
-                                      },
-                                      child: const Text(
-                                        "O",
-                                        softWrap: false,
-                                        style: TextStyle(fontSize: 46),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 25.0,
-                                    ),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(8.0)),
+                                            softWrap: false,
+                                            style: TextStyle(fontSize: 46),
+                                          ),
                                         ),
-                                        backgroundColor: Colors
-                                            .white, // Custom primary color
-                                        foregroundColor: Colors
-                                            .black, // Ensure good contrast
-                                      ),
-                                      onPressed: () {
-                                        showFullscreenLetter(
+                                        const SizedBox(
+                                          width: 25.0,
+                                        ),
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8.0)),
+                                            ),
+                                            backgroundColor: Colors
+                                                .white, // Custom primary color
+                                            foregroundColor: Colors
+                                                .black, // Ensure good contrast
+                                          ),
+                                          onPressed: () {
+                                            showFullscreenLetter(
+                                                "B",
+                                                cheeringAlliance == Alliance.red
+                                                    ? Colors.red
+                                                    : Colors.blue);
+                                          },
+                                          child: Text(
                                             "B",
-                                            cheeringAlliance == Alliance.red
-                                                ? Colors.red
-                                                : Colors.blue);
-                                      },
-                                      child: Text(
-                                        "B",
-                                        softWrap: false,
-                                        style: TextStyle(fontSize: 46),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 8.0,
-                                    ),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(8.0)),
+                                            softWrap: false,
+                                            style: TextStyle(fontSize: 46),
+                                          ),
                                         ),
-                                        backgroundColor: Colors
-                                            .white, // Custom primary color
-                                        foregroundColor: Colors
-                                            .black, // Ensure good contrast
-                                      ),
-                                      onPressed: () {
-                                        showFullscreenLetter(
+                                        const SizedBox(
+                                          width: 8.0,
+                                        ),
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8.0)),
+                                            ),
+                                            backgroundColor: Colors
+                                                .white, // Custom primary color
+                                            foregroundColor: Colors
+                                                .black, // Ensure good contrast
+                                          ),
+                                          onPressed: () {
+                                            showFullscreenLetter(
+                                                "L",
+                                                cheeringAlliance == Alliance.red
+                                                    ? Colors.red
+                                                    : Colors.blue);
+                                          },
+                                          child: Text(
                                             "L",
-                                            cheeringAlliance == Alliance.red
-                                                ? Colors.red
-                                                : Colors.blue);
-                                      },
-                                      child: Text(
-                                        "L",
-                                        softWrap: false,
-                                        style: TextStyle(fontSize: 46),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 8.0,
-                                    ),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(8.0)),
+                                            softWrap: false,
+                                            style: TextStyle(fontSize: 46),
+                                          ),
                                         ),
-                                        backgroundColor: Colors
-                                            .white, // Custom primary color
-                                        foregroundColor: Colors
-                                            .black, // Ensure good contrast
-                                      ),
-                                      onPressed: () {
-                                        showFullscreenLetter(
+                                        const SizedBox(
+                                          width: 8.0,
+                                        ),
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8.0)),
+                                            ),
+                                            backgroundColor: Colors
+                                                .white, // Custom primary color
+                                            foregroundColor: Colors
+                                                .black, // Ensure good contrast
+                                          ),
+                                          onPressed: () {
+                                            showFullscreenLetter(
+                                                "U",
+                                                cheeringAlliance == Alliance.red
+                                                    ? Colors.red
+                                                    : Colors.blue);
+                                          },
+                                          child: Text(
                                             "U",
-                                            cheeringAlliance == Alliance.red
-                                                ? Colors.red
-                                                : Colors.blue);
-                                      },
-                                      child: Text(
-                                        "U",
-                                        softWrap: false,
-                                        style: TextStyle(fontSize: 46),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 8.0,
-                                    ),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(8.0)),
+                                            softWrap: false,
+                                            style: TextStyle(fontSize: 46),
+                                          ),
                                         ),
-                                        backgroundColor: Colors
-                                            .white, // Custom primary color
-                                        foregroundColor: Colors
-                                            .black, // Ensure good contrast
-                                      ),
-                                      onPressed: () {
-                                        showFullscreenLetter(
+                                        const SizedBox(
+                                          width: 8.0,
+                                        ),
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8.0)),
+                                            ),
+                                            backgroundColor: Colors
+                                                .white, // Custom primary color
+                                            foregroundColor: Colors
+                                                .black, // Ensure good contrast
+                                          ),
+                                          onPressed: () {
+                                            showFullscreenLetter(
+                                                "E",
+                                                cheeringAlliance == Alliance.red
+                                                    ? Colors.red
+                                                    : Colors.blue);
+                                          },
+                                          child: Text(
                                             "E",
-                                            cheeringAlliance == Alliance.red
-                                                ? Colors.red
-                                                : Colors.blue);
-                                      },
-                                      child: Text(
-                                        "E",
-                                        softWrap: false,
-                                        style: TextStyle(fontSize: 46),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 8.0,
-                                    ),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(8.0)),
+                                            softWrap: false,
+                                            style: TextStyle(fontSize: 46),
+                                          ),
                                         ),
-                                        backgroundColor: Colors
-                                            .white, // Custom primary color
-                                        foregroundColor: Colors
-                                            .black, // Ensure good contrast
-                                      ),
-                                      onPressed: () {
-                                        showFullscreenLetter(
+                                        const SizedBox(
+                                          width: 8.0,
+                                        ),
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8.0)),
+                                            ),
+                                            backgroundColor: Colors
+                                                .white, // Custom primary color
+                                            foregroundColor: Colors
+                                                .black, // Ensure good contrast
+                                          ),
+                                          onPressed: () {
+                                            showFullscreenLetter(
+                                                "!",
+                                                cheeringAlliance == Alliance.red
+                                                    ? Colors.red
+                                                    : Colors.blue);
+                                          },
+                                          child: Text(
                                             "!",
-                                            cheeringAlliance == Alliance.red
-                                                ? Colors.red
-                                                : Colors.blue);
-                                      },
-                                      child: Text(
-                                        "!",
-                                        softWrap: false,
-                                        style: TextStyle(fontSize: 46),
-                                      ),
+                                            softWrap: false,
+                                            style: TextStyle(fontSize: 46),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                    ]),
+                        ]),
                     const SizedBox(
                       height: 8.0,
                     ),
-                    ExpansionTile(title: Text("Custom Cheering"), children: [
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            spacing: 8,
-                            children: [
-                              for (String cheer in customCheeringStrings)
-                                Row(
-                                  children: [
-                                    for (String letter in cheer.split(","))
-                                      Row(
-                                        children: [
-                                          ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(8.0)),
+                    ExpansionTile(
+                      title: Row(
+                        children: [
+                          Icon(Icons.dashboard_customize),
+                          const SizedBox(width: 8.0),
+                          Text("Custom Cheering"),
+                        ],
+                      ),
+                      children: [
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              spacing: 8,
+                              children: [
+                                for (String cheer in customCheeringStrings)
+                                  Row(
+                                    children: [
+                                      for (String letter in cheer.split(","))
+                                        Row(
+                                          children: [
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                shape:
+                                                    const RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(8.0)),
+                                                ),
+                                                backgroundColor: Colors
+                                                    .white, // Custom primary color
+                                                foregroundColor: Colors
+                                                    .black, // Ensure good contrast
                                               ),
-                                              backgroundColor: Colors
-                                                  .white, // Custom primary color
-                                              foregroundColor: Colors
-                                                  .black, // Ensure good contrast
+                                              onPressed: () {
+                                                showFullscreenLetter(
+                                                    letter.replaceAll(
+                                                        "*", "\n"),
+                                                    cheeringAlliance ==
+                                                            Alliance.red
+                                                        ? Colors.red
+                                                        : Colors.blue);
+                                              },
+                                              child: Text(
+                                                letter.replaceAll("*", "\n"),
+                                                softWrap: false,
+                                                style: TextStyle(fontSize: 46),
+                                              ),
                                             ),
-                                            onPressed: () {
-                                              showFullscreenLetter(
-                                                  letter.replaceAll("*", "\n"),
-                                                  cheeringAlliance ==
-                                                          Alliance.red
-                                                      ? Colors.red
-                                                      : Colors.blue);
-                                            },
-                                            child: Text(
-                                              letter.replaceAll("*", "\n"),
-                                              softWrap: false,
-                                              style: TextStyle(fontSize: 46),
+                                            const SizedBox(
+                                              width: 8.0,
                                             ),
-                                          ),
-                                          const SizedBox(
-                                            width: 8.0,
-                                          ),
-                                        ],
-                                      ),
-                                  ],
-                                ),
+                                          ],
+                                        ),
+                                    ],
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                    ExpansionTile(
+                      title: Row(
+                        children: [
+                          Icon(Icons.settings),
+                          const SizedBox(width: 8.0),
+                          Text("Custom Cheering Config"),
+                        ],
+                      ),
+                      children: [
+                        SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              CheeringStringPage(
+                                cheeringStrings: customCheeringStrings,
+                                onCheeringStringsChanged: (value) {
+                                  setState(() {
+                                    customCheeringStrings = value;
+                                    attemptSaveCheeringStrings();
+                                  });
+                                },
+                              ),
                             ],
                           ),
                         ),
-                      ),
-                    ]),
+                      ],
+                    ),
                   ],
                 ),
               )
