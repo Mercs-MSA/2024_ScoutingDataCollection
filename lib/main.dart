@@ -2705,15 +2705,12 @@ class _FormAppPageState extends State<FormAppPage> {
   }
 
   Future<void> saveFileNative(Uint8List data, String fileName) async {
-    String? outputFile = await FilePicker.platform.saveFile(
+    await FilePicker.platform.saveFile(
       dialogTitle: 'Export data',
       fileName: fileName,
+      bytes: data,
     );
 
-    if (outputFile != null) {
-      File file = File(outputFile);
-      file.writeAsBytes(data);
-    }
     setState(() {
       saveDisabled = false;
     });
