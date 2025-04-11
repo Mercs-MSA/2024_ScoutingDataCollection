@@ -45,6 +45,7 @@ dependencies:
   url_launcher_web: ^2.4.0
   url_launcher: ^6.3.1
   collection: ^1.19.0
+  widgets_to_image: ^1.0.0
 
 
 dev_dependencies:

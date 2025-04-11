@@ -2,12 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'dart:ui';
 import 'package:collection/collection.dart';
 
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:widgets_to_image/widgets_to_image.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_confetti/flutter_confetti.dart';
 import 'package:mercs_scout/data_maps.dart';
@@ -118,6 +120,8 @@ class _FormAppPageState extends State<FormAppPage> {
 
   Alliance cheeringAlliance = Alliance.red;
   List<String> customCheeringStrings = [];
+
+  WidgetsToImageController pitPngController = WidgetsToImageController();
 
   @override
   void initState() {
@@ -975,18 +979,31 @@ class _FormAppPageState extends State<FormAppPage> {
                                       child: LayoutBuilder(
                                         builder: (BuildContext context,
                                             BoxConstraints constraints) {
-                                          return QrImageView(
-                                            data: getPitKVFormattedData(
-                                                    transpose: true,
-                                                    header: false)[0]
-                                                .join("||"),
-                                            backgroundColor: Colors.white,
-                                            size: min(constraints.maxHeight,
-                                                constraints.maxWidth),
+                                          return WidgetsToImage(
+                                            controller: pitPngController,
+                                            child: QrImageView(
+                                              data: getPitKVFormattedData(
+                                                      transpose: true,
+                                                      header: false)[0]
+                                                  .join("||"),
+                                              backgroundColor: Colors.white,
+                                              size: min(constraints.maxHeight,
+                                                  constraints.maxWidth),
+                                            ),
                                           );
                                         },
                                       ),
                                     ),
+                                  ),
+                                  ElevatedButton.icon(
+                                    onPressed: saveDisabled == false
+                                        ? onPitScoutQrSave
+                                        : null,
+                                    label: const Text("Export QR Code PNG"),
+                                    icon: const Icon(Icons.save),
+                                  ),
+                                  const SizedBox(
+                                    width: 8.0,
                                   ),
                                   const Row(
                                     children: [
@@ -2475,6 +2492,18 @@ class _FormAppPageState extends State<FormAppPage> {
     return transposedData;
   }
 
+  void onPitScoutQrSave() async {
+    final pngBytes = await pitPngController.capture();
+
+    if (kIsWeb) {
+      saveFileWeb(pngBytes!,
+          "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_pit.png");
+    } else {
+      saveFileNative(pngBytes!,
+          "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_pit.png");
+    }
+  }
+
   void onPitScoutSave() async {
     if (pitTeamNumber == null) {
       if (!mounted) return;
@@ -2705,11 +2734,16 @@ class _FormAppPageState extends State<FormAppPage> {
   }
 
   Future<void> saveFileNative(Uint8List data, String fileName) async {
-    await FilePicker.platform.saveFile(
+    String? outputFile = await FilePicker.platform.saveFile(
       dialogTitle: 'Export data',
       fileName: fileName,
       bytes: data,
     );
+
+    if (outputFile != null) {
+      File file = File(outputFile);
+      file.writeAsBytes(data);
+    }
 
     setState(() {
       saveDisabled = false;
