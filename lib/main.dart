@@ -122,6 +122,7 @@ class _FormAppPageState extends State<FormAppPage> {
   List<String> customCheeringStrings = [];
 
   WidgetsToImageController pitPngController = WidgetsToImageController();
+  WidgetsToImageController matchPngController = WidgetsToImageController();
 
   @override
   void initState() {
@@ -356,7 +357,7 @@ class _FormAppPageState extends State<FormAppPage> {
                 ),
                 body: LayoutBuilder(
                   builder: (context, constraints) {
-                    if (constraints.maxWidth < 720) {
+                    if (constraints.maxWidth < 770) {
                       // Use BottomNavigationBar for small screens
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -1568,18 +1569,28 @@ class _FormAppPageState extends State<FormAppPage> {
                                       child: LayoutBuilder(
                                         builder: (BuildContext context,
                                             BoxConstraints constraints) {
-                                          return QrImageView(
-                                            data: getMatchKVFormattedData(
-                                                    transpose: true,
-                                                    header: false)[0]
-                                                .join("||"),
-                                            backgroundColor: Colors.white,
-                                            size: min(constraints.maxHeight,
-                                                constraints.maxWidth),
+                                          return WidgetsToImage(
+                                            controller: matchPngController,
+                                            child: QrImageView(
+                                              data: getMatchKVFormattedData(
+                                                      transpose: true,
+                                                      header: false)[0]
+                                                  .join("||"),
+                                              backgroundColor: Colors.white,
+                                              size: min(constraints.maxHeight,
+                                                  constraints.maxWidth),
+                                            ),
                                           );
                                         },
                                       ),
                                     ),
+                                  ),
+                                  ElevatedButton.icon(
+                                    onPressed: saveDisabled == false
+                                        ? onMatchScoutQrSave
+                                        : null,
+                                    label: const Text("Export QR Code PNG"),
+                                    icon: const Icon(Icons.save),
                                   ),
                                   const Row(
                                     children: [
@@ -2504,6 +2515,18 @@ class _FormAppPageState extends State<FormAppPage> {
     }
   }
 
+  void onMatchScoutQrSave() async {
+    final pngBytes = await matchPngController.capture();
+
+    if (kIsWeb) {
+      saveFileWeb(pngBytes!,
+          "${eventId}_frc${matchTeamNumber}_match/${eventId}_frc${matchTeamNumber}_match${matchScoutingData['match']}.png");
+    } else {
+      saveFileNative(pngBytes!,
+          "${eventId}_frc${matchTeamNumber}_match/${eventId}_frc${matchTeamNumber}_match${matchScoutingData['match']}.png");
+    }
+  }
+
   void onPitScoutSave() async {
     if (pitTeamNumber == null) {
       if (!mounted) return;
@@ -2692,10 +2715,10 @@ class _FormAppPageState extends State<FormAppPage> {
 
     if (kIsWeb) {
       saveFileWeb(Uint8List.fromList(fileData.codeUnits),
-          "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_pit.csv");
+          "${eventId}_frc${matchTeamNumber}_match/${eventId}_frc${matchTeamNumber}_match${matchScoutingData['match']}.csv");
     } else {
       saveFileNative(Uint8List.fromList(fileData.codeUnits),
-          "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_pit.csv");
+          "${eventId}_frc${matchTeamNumber}_match/${eventId}_frc${matchTeamNumber}_match${matchScoutingData['match']}.csv");
     }
 
     if (!mounted) return;
