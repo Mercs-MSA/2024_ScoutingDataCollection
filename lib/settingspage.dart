@@ -196,11 +196,40 @@ class CheeringStringPage extends StatefulWidget {
 
 class _CheeringStringPageState extends State<CheeringStringPage> {
   late List<String> cheeringStrings;
+  final List<TextEditingController> controllers = [];
 
   @override
   void initState() {
     super.initState();
-    cheeringStrings = widget.cheeringStrings;
+    cheeringStrings = List.from(widget.cheeringStrings);
+    controllers.addAll(
+      cheeringStrings.map((s) => TextEditingController(text: s)),
+    );
+  }
+
+  @override
+  void dispose() {
+    for (final controller in controllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  void _addCheeringString() {
+    setState(() {
+      cheeringStrings.add('');
+      controllers.add(TextEditingController());
+      widget.onCheeringStringsChanged(cheeringStrings);
+    });
+  }
+
+  void _removeCheeringString(int index) {
+    setState(() {
+      cheeringStrings.removeAt(index);
+      controllers[index].dispose();
+      controllers.removeAt(index);
+      widget.onCheeringStringsChanged(cheeringStrings);
+    });
   }
 
   @override
@@ -211,28 +240,22 @@ class _CheeringStringPageState extends State<CheeringStringPage> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
-              children: [
-                Text(
-                  "String Format",
-                  style: TextStyle(fontSize: 18),
-                ),
-                Text(
-                  ", == delimeter\n* == newline",
-                  style: TextStyle(fontFamily: "RobotoMono"),
-                )
+              children: const [
+                Text("String Format", style: TextStyle(fontSize: 18)),
+                Text(", == delimeter\n* == newline",
+                    style: TextStyle(fontFamily: "RobotoMono")),
               ],
             ),
           ),
         ),
-        const SizedBox(
-          height: 8.0,
-        ),
+        const SizedBox(height: 8.0),
         ListView.builder(
           itemCount: cheeringStrings.length,
           shrinkWrap: true,
           itemBuilder: (context, index) {
             return ListTile(
               title: TextField(
+                controller: controllers[index],
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Cheering String',
@@ -241,32 +264,19 @@ class _CheeringStringPageState extends State<CheeringStringPage> {
                   cheeringStrings[index] = value;
                   widget.onCheeringStringsChanged(cheeringStrings);
                 },
-                controller: TextEditingController(text: cheeringStrings[index]),
               ),
               trailing: IconButton(
                 icon: const Icon(Icons.delete, color: Colors.red),
-                onPressed: () {
-                  setState(() {
-                    cheeringStrings.removeAt(index);
-                    widget.onCheeringStringsChanged(cheeringStrings);
-                  });
-                },
+                onPressed: () => _removeCheeringString(index),
               ),
             );
           },
         ),
         ElevatedButton(
-          onPressed: () {
-            setState(() {
-              cheeringStrings.add('');
-              widget.onCheeringStringsChanged(cheeringStrings);
-            });
-          },
+          onPressed: _addCheeringString,
           child: const Text("Add Cheering String"),
         ),
-        const SizedBox(
-          height: 8.0,
-        ),
+        const SizedBox(height: 8.0),
       ],
     );
   }
