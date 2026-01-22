@@ -380,72 +380,6 @@ class _PitFormState extends State<PitForm> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Coral"),
-                      const SizedBox(width: 8.0),
-                      SegmentedButton<CoralPositions>(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              WidgetStateProperty.resolveWith<Color>(
-                            (Set<WidgetState> states) {
-                              if (states.contains(WidgetState.selected)) {
-                                return ColorScheme.fromSeed(
-                                        seedColor: Colors.purple)
-                                    .primary;
-                              }
-                              return Colors.transparent;
-                            },
-                          ),
-                          padding: WidgetStateProperty.all(
-                            EdgeInsets.all(18.0),
-                          ),
-                        ),
-                        segments: <ButtonSegment<CoralPositions>>[
-                          ButtonSegment(
-                              value: CoralPositions.lOne, label: Text('L1')),
-                          ButtonSegment(
-                              value: CoralPositions.lTwo, label: Text('L2')),
-                          ButtonSegment(
-                              value: CoralPositions.lThree, label: Text('L3')),
-                          ButtonSegment(
-                              value: CoralPositions.lFour, label: Text('L4')),
-                        ],
-                        selected: {
-                          if (widget.formData["lOne"] != null &&
-                              widget.formData["lOne"])
-                            CoralPositions.lOne,
-                          if (widget.formData["lTwo"] != null &&
-                              widget.formData["lTwo"])
-                            CoralPositions.lTwo,
-                          if (widget.formData["lThree"] != null &&
-                              widget.formData["lThree"])
-                            CoralPositions.lThree,
-                          if (widget.formData["lFour"] != null &&
-                              widget.formData["lFour"])
-                            CoralPositions.lFour,
-                        },
-                        onSelectionChanged: (Set<CoralPositions> newSelection) {
-                          setState(() {
-                            widget.onDataChanged({
-                              "lOne":
-                                  newSelection.contains(CoralPositions.lOne),
-                              "lTwo":
-                                  newSelection.contains(CoralPositions.lTwo),
-                              "lThree":
-                                  newSelection.contains(CoralPositions.lThree),
-                              "lFour":
-                                  newSelection.contains(CoralPositions.lFour)
-                            });
-                          });
-                        },
-                        multiSelectionEnabled: true,
-                        emptySelectionAllowed: true,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
                       const Text("Climbing"),
                       const SizedBox(width: 8.0),
                       SegmentedButton<ClimbPositions>(
@@ -465,27 +399,27 @@ class _PitFormState extends State<PitForm> {
                                 WidgetStateProperty.all(EdgeInsets.all(18.0))),
                         segments: <ButtonSegment<ClimbPositions>>[
                           ButtonSegment(
-                              value: ClimbPositions.shallow,
+                              value: ClimbPositions.one,
                               label: Text('Shallow Climb')),
                           ButtonSegment(
-                              value: ClimbPositions.deep,
+                              value: ClimbPositions.two,
                               label: Text('Deep Climb')),
                         ],
                         selected: {
                           if (widget.formData["shallowClimb"] != null &&
                               widget.formData["shallowClimb"])
-                            ClimbPositions.shallow,
+                            ClimbPositions.one,
                           if (widget.formData["deepClimb"] != null &&
                               widget.formData["deepClimb"])
-                            ClimbPositions.deep,
+                            ClimbPositions.two,
                         },
                         onSelectionChanged: (Set<ClimbPositions> newSelection) {
                           setState(() {
                             widget.onDataChanged({
                               "shallowClimb":
-                                  newSelection.contains(ClimbPositions.shallow),
+                                  newSelection.contains(ClimbPositions.one),
                               "deepClimb":
-                                  newSelection.contains(ClimbPositions.deep),
+                                  newSelection.contains(ClimbPositions.two),
                             });
                           });
                         },
@@ -535,9 +469,7 @@ class _PitFormState extends State<PitForm> {
                                 WidgetStateProperty.all(EdgeInsets.all(18.0))),
                         segments: <ButtonSegment<TeleopRole>>[
                           ButtonSegment(
-                              value: TeleopRole.coral, label: Text('Coral')),
-                          ButtonSegment(
-                              value: TeleopRole.algae, label: Text('Algae')),
+                              value: TeleopRole.shooter, label: Text('Coral')),
                           ButtonSegment(
                               value: TeleopRole.defense,
                               label: Text('Defense')),
@@ -547,10 +479,7 @@ class _PitFormState extends State<PitForm> {
                         selected: {
                           if (widget.formData["coralCycle"] != null &&
                               widget.formData["coralCycle"])
-                            TeleopRole.coral,
-                          if (widget.formData["algaeCycle"] != null &&
-                              widget.formData["algaeCycle"])
-                            TeleopRole.algae,
+                            TeleopRole.shooter,
                           if (widget.formData["defense"] != null &&
                               widget.formData["defense"])
                             TeleopRole.defense,
@@ -561,10 +490,8 @@ class _PitFormState extends State<PitForm> {
                         onSelectionChanged: (Set<TeleopRole> newSelection) {
                           setState(() {
                             widget.onDataChanged({
-                              "coralCycle":
-                                  newSelection.contains(TeleopRole.coral),
-                              "algaeCycle":
-                                  newSelection.contains(TeleopRole.algae),
+                              "shooter":
+                                  newSelection.contains(TeleopRole.shooter),
                               "defense":
                                   newSelection.contains(TeleopRole.defense),
                               "feed": newSelection.contains(TeleopRole.feed),

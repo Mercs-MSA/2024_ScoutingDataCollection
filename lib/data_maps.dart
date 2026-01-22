@@ -10,18 +10,12 @@ Map<String, dynamic> getPitDataMap() {
     "width": null,
     "length": null,
     "weight": null,
-    "lOne": false,
-    "lTwo": false,
-    "lThree": false,
-    "lFour": false,
-    "processor": false,
-    "barge": false,
-    "descore": false,
-    "deepClimb": false,
-    "shallowClimb": false,
+    "canShoot": false,
+    "climbLevelOne": false,
+    "climbLevelTwo": false,
+    "climbLevelThree": false,
     "groundIntake": false,
-    "coralCycle": false,
-    "algaeCycle": false,
+    "shooter": false,
     "defense": false,
     "feed": false,
     "driverYears": null,
@@ -48,6 +42,27 @@ Map<String, dynamic> getPitDataMap() {
     "autonNetScore": 0,
     "kitbotType": "not",
     "isModifiedKit": false,
+  };
+}
+
+Map<String, dynamic> getAutonDataMap() {
+  return {
+    "form": "auton",
+    "team": null,
+    "scouter": "",
+    "match": null,
+    "alliance": "blue",
+
+    "startPos": "middle",
+    "autoLeave": true,
+    "depotDisrupted": false,
+    "outpostDisrupted": false,
+    "topDisrupted": false,
+    "middleDisrupted": false,
+    "bottomDisrupted": false,
+    "autoCycles": 0,
+    "climb": false,
+    "centerLineCrossed": false,
   };
 }
 

@@ -30,7 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  
+  collection: ^1.19.0
   flutter_rating_bar: ^4.0.1
   flutter_file_dialog: ^3.0.0
   flutter_staggered_grid_view: ^0.7.0
@@ -44,7 +45,6 @@ dependencies:
   flutter_confetti: ^0.3.4
   url_launcher_web: ^2.4.0
   url_launcher: ^6.3.1
-  collection: ^1.19.0
   widgets_to_image: ^1.0.0
 
 
@@ -87,6 +87,8 @@ flutter:
     - images/shallow_cage_b.png
     - images/shallow_cage_r.png
     - images/ron.png
+    - images/blue_field_2026.png
+    - images/red_field_2026.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

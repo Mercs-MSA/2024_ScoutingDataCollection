@@ -8,6 +8,7 @@ import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mercs_scout/auton_form.dart';
 import 'package:widgets_to_image/widgets_to_image.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_confetti/flutter_confetti.dart';
@@ -79,6 +80,7 @@ class FormAppPage extends StatefulWidget {
 
 class _FormAppPageState extends State<FormAppPage> {
   int pitPageIndex = 0;
+  int autonPageIndex = 0;
   int matchPageIndex = 0;
   int appMode = 0;
 
@@ -91,12 +93,19 @@ class _FormAppPageState extends State<FormAppPage> {
   int? pitTeamNumber;
   List<String> pitScouters = ["", ""];
 
+  int? autonTeamNumber;
+  String? autonScouter;
+  String autonAllianceColor = "blue";
+
   int? matchTeamNumber;
 
   final bool colorDebug = Random.secure().nextBool();
 
   Map<String, dynamic> pitScoutingDefaultData = getPitDataMap();
   Map<String, dynamic> pitScoutingData = getPitDataMap();
+
+  Map<String, dynamic> autonScoutingDefaultData = getAutonDataMap();
+  Map<String, dynamic> autonScoutingData = getAutonDataMap();
 
   Map<String, dynamic> matchScoutingDefaultData = getMatchDataMap();
   Map<String, dynamic> matchScoutingData = getMatchDataMap();
@@ -237,6 +246,8 @@ class _FormAppPageState extends State<FormAppPage> {
     return ReassembleListener(
       onReassemble: () {
         if (const ListEquality().equals(matchScoutingData.keys.toList(),
+                getMatchDataMap().keys.toList()) &&
+            const ListEquality().equals(autonScoutingData.keys.toList(),
                 getMatchDataMap().keys.toList()) &&
             const ListEquality().equals(
                 getPitDataMap().keys.toList(), pitScoutingData.keys.toList())) {
@@ -432,6 +443,62 @@ class _FormAppPageState extends State<FormAppPage> {
                                   setState(() {
                                     appMode = 2;
                                     setAppModePref(appMode);
+                                    // pit
+                                    if (devMode) {
+                                      autonTeamNumber = 9999;
+                                      autonScoutingData["team"] = 9999;
+                                    }
+                                  });
+                                },
+                                style: ButtonStyle(
+                                  minimumSize: WidgetStateProperty.all(
+                                      const Size.fromHeight(150)),
+                                  maximumSize: WidgetStateProperty.all(
+                                      const Size.fromHeight(200)),
+                                  shape: WidgetStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16.0),
+                                    ),
+                                  ),
+                                ),
+                                child: const Row(
+                                  children: [
+                                    Icon(
+                                      Icons.smart_toy_outlined,
+                                      size: 72,
+                                    ),
+                                    Spacer(),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Auton Scouting",
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text("Enter auton scouting mode.")
+                                      ],
+                                    ),
+                                    Spacer(),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            Flexible(
+                              fit: FlexFit.tight,
+                              flex: 2,
+                              child: FilledButton(
+                                onPressed: () {
+                                  setState(() {
+                                    appMode = 3;
+                                    setAppModePref(appMode);
                                     // match
                                     if (devMode) {
                                       matchTeamNumber = 9999;
@@ -489,7 +556,7 @@ class _FormAppPageState extends State<FormAppPage> {
                               child: FilledButton(
                                 onPressed: () {
                                   setState(() {
-                                    appMode = 3;
+                                    appMode = 4;
                                     setAppModePref(appMode);
                                   });
                                 },
@@ -666,6 +733,69 @@ class _FormAppPageState extends State<FormAppPage> {
                                         setState(() {
                                           appMode = 2;
                                           setAppModePref(appMode);
+                                          // pit
+                                          if (devMode) {
+                                            pitTeamNumber = 9999;
+                                            pitScoutingData["team"] = 9999;
+                                            pitScouters = [
+                                              "RonCollins",
+                                              "RonCollins"
+                                            ];
+                                            pitScoutingData["scouters"] =
+                                                "RonCollins,RonCollins";
+                                          }
+                                        });
+                                      },
+                                      style: ButtonStyle(
+                                        minimumSize: WidgetStateProperty.all(
+                                            const Size.fromHeight(150)),
+                                        maximumSize: WidgetStateProperty.all(
+                                            const Size.fromHeight(200)),
+                                        shape: WidgetStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(16.0),
+                                          ),
+                                        ),
+                                      ),
+                                      child: const Row(
+                                        children: [
+                                          Icon(
+                                            Icons.smart_toy_outlined,
+                                            size: 72,
+                                          ),
+                                          Spacer(),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "Auton Scouting",
+                                                style: TextStyle(
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Text("Enter auton scouting mode.")
+                                            ],
+                                          ),
+                                          Spacer(),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8.0),
+                                  Flexible(
+                                    fit: FlexFit.tight,
+                                    flex: 2,
+                                    child: FilledButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          appMode = 3;
+                                          setAppModePref(appMode);
                                           // match
                                           if (devMode) {
                                             matchTeamNumber = 9999;
@@ -724,7 +854,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                     child: FilledButton(
                                       onPressed: () {
                                         setState(() {
-                                          appMode = 3;
+                                          appMode = 4;
                                           setAppModePref(appMode);
                                         });
                                       },
@@ -1165,7 +1295,216 @@ class _FormAppPageState extends State<FormAppPage> {
             else
               const SizedBox(),
             if (appMode == 2)
-              // Pit Scouting
+              // Auton Scouting
+              Scaffold(
+                appBar: AppBar(
+                  title: const Text('Auton Data Collection'),
+                  leading: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          appMode = 0;
+                          autonPageIndex = 0;
+                          setAppModePref(appMode);
+                        });
+                      },
+                      icon: const Icon(Icons.home)),
+                ),
+                bottomNavigationBar: NavigationBar(
+                  destinations: const <NavigationDestination>[
+                    NavigationDestination(
+                      icon: Icon(Icons.flag),
+                      label: 'Start',
+                    ),
+                    NavigationDestination(
+                      icon: Icon(Icons.list_alt),
+                      label: 'Data',
+                    ),
+                    NavigationDestination(
+                      icon: Icon(Icons.save),
+                      label: 'Export',
+                    )
+                  ],
+                  selectedIndex: autonPageIndex,
+                  onDestinationSelected: (int index) {
+                    setState(() {
+                      autonPageIndex = index;
+                    });
+                  },
+                ),
+                body: IndexedStack(
+                  index: autonPageIndex,
+                  children: [
+                    if (autonPageIndex == 0)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextField(
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Team Number',
+                              ),
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                                LengthLimitingTextInputFormatter(5),
+                              ],
+                              onChanged: (value) {
+                                autonTeamNumber = int.tryParse(value);
+                                autonScoutingData["team"] = int.tryParse(value);
+                              },
+                              controller: TextEditingController(
+                                text: autonTeamNumber == null
+                                    ? ''
+                                    : autonTeamNumber.toString(),
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            Row(
+                              children: [
+                                Flexible(
+                                  child: TextField(
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: 'Scouter Name',
+                                    ),
+                                    inputFormatters: <TextInputFormatter>[
+                                      LengthLimitingTextInputFormatter(30),
+                                      FilteringTextInputFormatter(
+                                        RegExp(r'[a-zA-Z]'),
+                                        allow: true,
+                                      ),
+                                    ],
+                                    onChanged: (value) {
+                                      autonScoutingData["scouter"] = value;
+                                    },
+                                    controller: TextEditingController(
+                                      text: autonScoutingData["scouter"],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 8.0),
+                                Flexible(
+                                  child: TextField(
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: 'Match Number',
+                                    ),
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      LengthLimitingTextInputFormatter(3),
+                                    ],
+                                    onChanged: (value) {
+                                      autonScoutingData["match"] =
+                                          int.tryParse(value);
+                                    },
+                                    controller: TextEditingController(
+                                      text: autonScoutingData["match"] == null
+                                          ? ''
+                                          : autonScoutingData["match"]
+                                              .toString(),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8.0),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: SegmentedButton<Alliance>(
+                                    style: ButtonStyle(
+                                      backgroundColor: WidgetStateProperty
+                                          .resolveWith<Color>(
+                                        (Set<WidgetState> states) {
+                                          if (states
+                                              .contains(WidgetState.selected)) {
+                                            return ColorScheme.fromSeed(
+                                                    seedColor: autonScoutingData[
+                                                                "alliance"] ==
+                                                            "red"
+                                                        ? Colors.red
+                                                        : Colors.blue)
+                                                .primary;
+                                          }
+                                          return Colors.transparent;
+                                        },
+                                      ),
+                                      padding: WidgetStateProperty.all(
+                                        EdgeInsets.all(40.0),
+                                      ),
+                                      shape: WidgetStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(4)),
+                                        ),
+                                      ),
+                                    ),
+                                    segments: [
+                                      ButtonSegment(
+                                        value: Alliance.blue,
+                                        label: Text("Blue"),
+                                      ),
+                                      ButtonSegment(
+                                        value: Alliance.red,
+                                        label: Text("Red"),
+                                      ),
+                                    ],
+                                    selected:
+                                        autonScoutingData["alliance"] == "red"
+                                            ? {Alliance.red}
+                                            : {Alliance.blue},
+                                    onSelectionChanged: (selection) {
+                                      setState(() {
+                                        autonAllianceColor =
+                                            selection.first == Alliance.red
+                                                ? "red"
+                                                : "blue";
+                                        autonScoutingData["alliance"] =
+                                            selection.first == Alliance.red
+                                                ? "red"
+                                                : "blue";
+                                      });
+                                    },
+                                    multiSelectionEnabled: false,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                    else
+                      const SizedBox(),
+                    if (autonPageIndex == 1)
+                      AutonForm(
+                        teamNumberPresent:
+                            (autonTeamNumber == null ? false : true) &&
+                                !(autonScoutingData["scouter"] == ""),
+                        formData: autonScoutingData,
+                        onDataChanged: (data) {
+                          data.forEach((k, v) {
+                            autonScoutingData[k] = v;
+                          });
+                        },
+                        allianceColor: autonAllianceColor,
+                      )
+                    else
+                      const SizedBox(),
+                    if (autonPageIndex == 2)
+                      const SizedBox()
+                    else
+                      const SizedBox(),
+                  ],
+                )
+              )
+            else
+              const SizedBox(),
+            if (appMode == 3)
+              // Match Scouting
               Scaffold(
                 appBar: AppBar(
                   title: const Text('Match Data Collection'),
@@ -1196,43 +1535,6 @@ class _FormAppPageState extends State<FormAppPage> {
                   ],
                   selectedIndex: matchPageIndex,
                   onDestinationSelected: (int index) {
-                    // if (index == 2 &&
-                    //     !(matchTeamNumber == null ||
-                    //         matchScoutingData["scouter"] == "") &&
-                    //     matchPageIndex != 2) {
-                    //   var count = 0;
-
-                    //   for (var element in killableConfetti.reversed) {
-                    //     element.kill();
-                    //   }
-                    //   killableConfetti.clear();
-
-                    //   Timer.periodic(Duration(milliseconds: 120), (timer) {
-                    //     if (count > 4) {
-                    //       timer.cancel();
-                    //     }
-
-                    //     final c = Confetti.launch(
-                    //       context,
-                    //       options: ConfettiOptions(
-                    //         particleCount: 20,
-                    //         spread: 85,
-                    //         y: 1,
-                    //         flat: true,
-                    //         decay: 0.82,
-                    //         colors: [
-                    //           matchScoutingData["alliance"] == "red"
-                    //               ? Colors.red
-                    //               : Colors.blue,
-                    //           Colors.black,
-                    //           Colors.white
-                    //         ],
-                    //       ),
-                    //     );
-                    //     killableConfetti.add(c);
-                    //     count++;
-                    //   });
-                    // }
                     setState(() {
                       matchPageIndex = index;
                     });
@@ -1750,8 +2052,8 @@ class _FormAppPageState extends State<FormAppPage> {
               )
             else
               const SizedBox(),
-            if (appMode == 3)
-              // Pit Scouting
+            if (appMode == 4)
+              // Cheering
               Scaffold(
                 appBar: AppBar(
                   title: const Text('Cheering'),
