@@ -98,6 +98,7 @@ class _FormAppPageState extends State<FormAppPage> {
   String autonAllianceColor = "blue";
 
   int? matchTeamNumber;
+  int? matchNumber;
 
   final bool colorDebug = Random.secure().nextBool();
 
@@ -130,6 +131,7 @@ class _FormAppPageState extends State<FormAppPage> {
   List<String> customCheeringStrings = [];
 
   WidgetsToImageController pitPngController = WidgetsToImageController();
+  WidgetsToImageController autonPngController = WidgetsToImageController();
   WidgetsToImageController matchPngController = WidgetsToImageController();
 
   @override
@@ -1474,6 +1476,95 @@ class _FormAppPageState extends State<FormAppPage> {
                                 ),
                               ],
                             ),
+                            SizedBox(height: 8),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 2, right: 8),
+                                  child: Column(
+                                    children: [
+                                      Text("Auto Start"),
+                                      Text("Position")
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: SegmentedButton<MatchStartPos>(
+                                    style: ButtonStyle(
+                                      backgroundColor: WidgetStateProperty
+                                          .resolveWith<Color>(
+                                        (Set<WidgetState> states) {
+                                          if (states
+                                              .contains(WidgetState.selected)) {
+                                            return ColorScheme.fromSeed(
+                                                    seedColor: autonScoutingData["alliance"] ==
+                                                            "red"
+                                                        ? Colors.red
+                                                        : Colors.blue)
+                                                .primary;
+                                          }
+                                          return Colors.transparent;
+                                        },
+                                      ),
+                                      padding: WidgetStateProperty.all(
+                                        EdgeInsets.all(24.0),
+                                      ),
+                                      shape: WidgetStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(4)),
+                                        ),
+                                      ),
+                                    ),
+                                    emptySelectionAllowed: false,
+                                    multiSelectionEnabled: false,
+                                    segments: <ButtonSegment<MatchStartPos>>[
+                                      ButtonSegment(
+                                          value: MatchStartPos.left,
+                                          label: Text("Left")),
+                                      ButtonSegment(
+                                          value: MatchStartPos.middle,
+                                          label: Text("Middle")),
+                                      ButtonSegment(
+                                          value: MatchStartPos.right,
+                                          label: Text("Right"))
+                                    ],
+                                    selected: {
+                                      if (autonScoutingData["startPos"] ==
+                                          "left")
+                                        MatchStartPos.left,
+                                      if (autonScoutingData["startPos"] ==
+                                          "middle")
+                                        MatchStartPos.middle,
+                                      if (autonScoutingData["startPos"] ==
+                                          "right")
+                                        MatchStartPos.right,
+                                    },
+                                    onSelectionChanged: (selection) {
+                                      setState(() {
+                                        if (selection.first ==
+                                            MatchStartPos.left) {
+                                          autonScoutingData["startPos"] =
+                                              "left";
+                                        }
+                                        if (selection.first ==
+                                            MatchStartPos.right) {
+                                          autonScoutingData["startPos"] =
+                                              "right";
+                                        }
+                                        if (selection.first ==
+                                            MatchStartPos.middle) {
+                                          autonScoutingData["startPos"] =
+                                              "middle";
+                                        }
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       )
@@ -1495,7 +1586,204 @@ class _FormAppPageState extends State<FormAppPage> {
                     else
                       const SizedBox(),
                     if (autonPageIndex == 2)
-                      const SizedBox()
+                      IndexedStack(
+                        index: (autonTeamNumber == null)
+                                ? 0
+                                : 1,
+                        children: [
+                          if (autonTeamNumber == null)
+                            const Center(child: TeamNumberError())
+                          else
+                            const SizedBox(),
+                          if (autonTeamNumber != null)
+                            Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: LayoutBuilder(
+                                        builder: (BuildContext context,
+                                            BoxConstraints constraints) {
+                                          return WidgetsToImage(
+                                            controller: autonPngController,
+                                            child: QrImageView(
+                                              data: getAutonKVFormattedData(
+                                                      transpose: true,
+                                                      header: false)[0]
+                                                  .join("||"),
+                                              backgroundColor: Colors.white,
+                                              size: min(constraints.maxHeight,
+                                                  constraints.maxWidth),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  ElevatedButton.icon(
+                                    onPressed: saveDisabled == false
+                                        ? onAutonScoutQrSave
+                                        : null,
+                                    label: const Text("Export QR Code PNG"),
+                                    icon: const Icon(Icons.save),
+                                  ),
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  const Row(
+                                    children: [
+                                      Expanded(child: Divider()),
+                                      Padding(
+                                          padding: EdgeInsets.only(right: 8.0)),
+                                      Text("or"),
+                                      Padding(
+                                          padding: EdgeInsets.only(left: 8.0)),
+                                      Expanded(child: Divider()),
+                                    ],
+                                  ),
+                                  // Row(
+                                  //   mainAxisAlignment: MainAxisAlignment.center,
+                                  //   children: [
+                                  //     ElevatedButton.icon(
+                                  //       onPressed: saveDisabled == false
+                                  //           ? onPitScoutSave
+                                  //           : null,
+                                  //       label: const Text("Export CSV"),
+                                  //       icon: const Icon(Icons.save),
+                                  //     ),
+                                  //     const SizedBox(
+                                  //       width: 8.0,
+                                  //     ),
+                                  //     ElevatedButton.icon(
+                                  //       onPressed: () {
+                                  //         Navigator.push(
+                                  //           context,
+                                  //           MaterialPageRoute(
+                                  //             barrierDismissible: true,
+                                  //             builder: (context) {
+                                  //               return Scaffold(
+                                  //                 appBar: AppBar(
+                                  //                   title: Text(
+                                  //                       "Debug Information"),
+                                  //                 ),
+                                  //                 body: Column(
+                                  //                   children: [
+                                  //                     Padding(
+                                  //                       padding:
+                                  //                           const EdgeInsets
+                                  //                               .all(8.0),
+                                  //                       child: TextField(
+                                  //                         decoration:
+                                  //                             const InputDecoration(
+                                  //                           border:
+                                  //                               OutlineInputBorder(),
+                                  //                           fillColor: Color(
+                                  //                               0xff0d0d0d),
+                                  //                           filled: true,
+                                  //                           labelText:
+                                  //                               'JSON Data',
+                                  //                         ),
+                                  //                         readOnly: true,
+                                  //                         minLines: 2,
+                                  //                         maxLines: 20,
+                                  //                         style: TextStyle(
+                                  //                           color: Color(
+                                  //                               0xffffffff),
+                                  //                           fontFamily:
+                                  //                               "RobotoMono",
+                                  //                         ),
+                                  //                         controller: TextEditingController(
+                                  //                             text: JsonEncoder
+                                  //                                     .withIndent(
+                                  //                                         " " *
+                                  //                                             4)
+                                  //                                 .convert(
+                                  //                                     pitScoutingData)),
+                                  //                       ),
+                                  //                     ),
+                                  //                     Padding(
+                                  //                       padding:
+                                  //                           const EdgeInsets
+                                  //                               .all(8.0),
+                                  //                       child: TextField(
+                                  //                         decoration:
+                                  //                             const InputDecoration(
+                                  //                           border:
+                                  //                               OutlineInputBorder(),
+                                  //                           fillColor: Color(
+                                  //                               0xff0d0d0d),
+                                  //                           filled: true,
+                                  //                           labelText:
+                                  //                               'KV/QR Data',
+                                  //                         ),
+                                  //                         readOnly: true,
+                                  //                         minLines: 2,
+                                  //                         maxLines: 5,
+                                  //                         style: TextStyle(
+                                  //                           color: Color(
+                                  //                               0xffffffff),
+                                  //                           fontFamily:
+                                  //                               "RobotoMono",
+                                  //                         ),
+                                  //                         controller:
+                                  //                             TextEditingController(
+                                  //                           text: getAutonKVFormattedData(
+                                  //                                   transpose:
+                                  //                                       true,
+                                  //                                   header:
+                                  //                                       false)[0]
+                                  //                               .join("||"),
+                                  //                         ),
+                                  //                       ),
+                                  //                     ),
+                                  //                   ],
+                                  //                 ),
+                                  //               );
+                                  //             },
+                                  //           ),
+                                  //         );
+                                  //       },
+                                  //       label: const Text("Show Debug Data"),
+                                  //       icon: const Icon(Icons.bug_report),
+                                  //     ),
+                                  //   ],
+                                  // ),
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  const SizedBox(
+                                    height: 8.0,
+                                  ),
+                                  const Divider(
+                                    thickness: 4.0,
+                                  ),
+                                  const SizedBox(
+                                    height: 8.0,
+                                  ),
+                                  FilledButton(
+                                    onPressed: () {
+                                      resetPrompt(() {
+                                        setState(() {
+                                          autonPageIndex = 0;
+                                        });
+                                        resetAuton();
+                                      });
+                                    },
+                                    child: const Text(
+                                      "Reset Data",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          else
+                            const SizedBox(),
+                        ],
+                      )
                     else
                       const SizedBox(),
                   ],
@@ -2816,6 +3104,37 @@ class _FormAppPageState extends State<FormAppPage> {
     }
   }
 
+  List<List> getAutonKVFormattedData(
+      {bool transpose = false, bool header = true}) {
+    List<List<dynamic>> data = [];
+    autonScoutingData.forEach((key, value) {
+      data.add([key, (value is List ? value.join(",") : value.toString())]);
+    });
+
+    if (!header) {
+      data = data.map((row) => row.sublist(1)).toList();
+    }
+
+    if (!transpose) return data;
+
+    List<List> transposedData = List.generate(
+        data[0].length, (i) => List.generate(data.length, (j) => data[j][i]));
+
+    return transposedData;
+  }
+
+  void onAutonScoutQrSave() async {
+    final pngBytes = await autonPngController.capture();
+
+    if (kIsWeb) {
+      saveFileWeb(pngBytes!,
+          "${eventId}_frc${autonTeamNumber}_pit/${eventId}_frc${autonTeamNumber}_pit.png");
+    } else {
+      saveFileNative(pngBytes!,
+          "${eventId}_frc${autonTeamNumber}_pit/${eventId}_frc${autonTeamNumber}_pit.png");
+    }
+  }
+
   void onMatchScoutQrSave() async {
     final pngBytes = await matchPngController.capture();
 
@@ -3103,6 +3422,14 @@ class _FormAppPageState extends State<FormAppPage> {
     pitScoutingData = Map.from(pitScoutingDefaultData);
     setState(() {
       pitPageIndex = 0;
+    });
+  }
+
+  void resetAuton() {
+    autonTeamNumber = null;
+    autonScoutingData = Map.from(autonScoutingDefaultData);
+    setState(() {
+      autonPageIndex = 0;
     });
   }
 

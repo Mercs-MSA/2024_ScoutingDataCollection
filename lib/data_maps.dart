@@ -52,8 +52,8 @@ Map<String, dynamic> getAutonDataMap() {
     "scouter": "",
     "match": null,
     "alliance": "blue",
-
     "startPos": "middle",
+
     "autoLeave": true,
     "depotDisrupted": false,
     "outpostDisrupted": false,
@@ -61,8 +61,11 @@ Map<String, dynamic> getAutonDataMap() {
     "middleDisrupted": false,
     "bottomDisrupted": false,
     "autoCycles": 0,
+    "estimatedFuel": 0,
     "climb": false,
     "centerLineCrossed": false,
+    "overBumb": false,
+    "underTrench": false,
   };
 }
 

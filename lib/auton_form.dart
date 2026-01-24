@@ -34,7 +34,7 @@ class _AutonFormState extends State<AutonForm>{
         else
           const SizedBox(),
         if (widget.teamNumberPresent)
-          Center(
+          SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(12.0), 
               child: Column(
@@ -58,11 +58,11 @@ class _AutonFormState extends State<AutonForm>{
                         child: Stack(
                           children: [
                             Align(
-                              alignment: Alignment.topLeft,
+                              alignment: Alignment.topCenter,
                               child: Image.asset(
                                 'images/blue_field_2026.png',
                                 fit: BoxFit.scaleDown,
-                                // width: 400,
+                                width: 500,
                                 isAntiAlias: true,
                                 errorBuilder: (context, error, stackTrace) => SizedBox(width: 500, height: 300),
                               ),
@@ -141,10 +141,10 @@ class _AutonFormState extends State<AutonForm>{
                           child: Stack(
                             children: [
                               Align(
-                                alignment: Alignment.topLeft,
+                                alignment: Alignment.topCenter,
                                 child: Image.asset(
                                   'images/red_field_2026.png',
-                                  // width: 400,
+                                  width: 500,
                                   fit: BoxFit.scaleDown,
                                   isAntiAlias: true,
                                   errorBuilder: (context, error, stackTrace) => SizedBox(width: 500, height: 300),
@@ -219,62 +219,132 @@ class _AutonFormState extends State<AutonForm>{
                           ),
                         ),
                       const SizedBox(height: 8.0),
-                      NumberInput(
-                        title: "Cycles",
-                        enableSpacer: true,
-                        value: widget.formData["autoCycles"],
-                        onValueAdd: () {
-                          setState(() {
-                            widget.onDataChanged({
-                              "autoCycles": widget.formData[
-                                      "autoCycles"] +
-                                  1
-                            });
-                          });
-                        },
-                        onValueSubtract: () {
-                          setState(() {
-                            if (widget
-                                    .formData["autoCycles"] >
-                                0) {
-                              widget.onDataChanged({
-                                "autoCycles": widget.formData[
-                                        "autoCycles"] -
-                                    1
-                              });
-                            } else {
-                              widget.onDataChanged(
-                                  {"autoCycles": 0});
-                            }
-                          });
-                        },
+                      Row(
+                        children: [
+                          Flexible(
+                            child: NumberInput(
+                              title: "Cycles",
+                              enableSpacer: true,
+                              value: widget.formData["autoCycles"],
+                              onValueAdd: () {
+                                setState(() {
+                                  widget.onDataChanged({
+                                    "autoCycles": widget.formData[
+                                            "autoCycles"] +
+                                        1
+                                  });
+                                });
+                              },
+                              onValueSubtract: () {
+                                setState(() {
+                                  if (widget
+                                          .formData["autoCycles"] >
+                                      0) {
+                                    widget.onDataChanged({
+                                      "autoCycles": widget.formData[
+                                              "autoCycles"] -
+                                          1
+                                    });
+                                  } else {
+                                    widget.onDataChanged(
+                                        {"autoCycles": 0});
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                          Flexible(
+                            child: NumberInput(
+                              title: "Fuel Scored",
+                              enableSpacer: true,
+                              value: widget.formData["estimatedFuel"],
+                              onValueAdd: () {
+                                setState(() {
+                                  widget.onDataChanged({
+                                    "estimatedFuel": widget.formData[
+                                            "estimatedFuel"] +
+                                        2
+                                  });
+                                });
+                              },
+                              onValueSubtract: () {
+                                setState(() {
+                                  if (widget
+                                          .formData["estimatedFuel"] >
+                                      0) {
+                                    widget.onDataChanged({
+                                      "estimatedFuel": widget.formData[
+                                              "estimatedFuel"] -
+                                          2
+                                    });
+                                  } else {
+                                    widget.onDataChanged(
+                                        {"estimatedFuel": 0});
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 8.0),
-                      // Row (
-                      //   children: [
-                          CheckboxListTile(
-                            title: const Text('Climb?'),
-                            tristate: true,
-                            value: widget.formData['climb'], 
-                            onChanged: (value) {
-                              setState(() {
-                                widget
-                                    .onDataChanged({"climb": value});
-                              });
-                            }
+                      Row (
+                        children: [
+                          Flexible(
+                            child: CheckboxListTile(
+                              title: const Text('Went Over Bump?'),
+                              value: widget.formData['overBumb'], 
+                              onChanged: (value) {
+                                setState(() {
+                                  widget
+                                      .onDataChanged({"overBumb": value});
+                                });
+                              }
+                            ),
                           ),
-                          CheckboxListTile(
-                            title: const Text('Crossed Center Line?'),
-                            value: widget.formData['centerLineCrossed'], 
-                            onChanged: (value) {
-                              setState(() {
-                                widget
-                                    .onDataChanged({"centerLineCrossed": value});
-                              });
-                            }
+                          Flexible(
+                            child: CheckboxListTile(
+                              title: const Text('Went Under Trench?'),
+                              value: widget.formData['underTrench'], 
+                              onChanged: (value) {
+                                setState(() {
+                                  widget
+                                      .onDataChanged({"underTrench": value});
+                                });
+                              }
+                            ),
                           ),
-                      //   ]
-                      // ),
+                        ]
+                      ),
+                      Row (
+                        children: [
+                          Flexible(
+                            child: CheckboxListTile(
+                              title: const Text('Climb?'),
+                              tristate: true,
+                              value: widget.formData['climb'], 
+                              onChanged: (value) {
+                                setState(() {
+                                  widget
+                                      .onDataChanged({"climb": value});
+                                });
+                              }
+                            ),
+                          ),
+                          Flexible(
+                            child: CheckboxListTile(
+                              title: const Text('Crossed Center Line?'),
+                              value: widget.formData['centerLineCrossed'], 
+                              onChanged: (value) {
+                                setState(() {
+                                  widget
+                                      .onDataChanged({"centerLineCrossed": value});
+                                });
+                              }
+                            ),
+                          ),
+                        ]
+                      ),
                   ] else 
                     const SizedBox(height: 1),
                 ],
