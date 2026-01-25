@@ -132,6 +132,60 @@ class _AutonFormState extends State<AutonForm>{
                                   }
                               ),
                             ),
+                            Positioned(
+                              left: 370,
+                              top: 228,
+                              child: Checkbox(
+                                value: widget.formData['rightClimb'], 
+                                tristate: true,
+                                onChanged: (value) {
+                                    setState(() {
+                                      widget
+                                          .onDataChanged({"rightClimb": value});
+                                      if (value != false) {
+                                        widget.onDataChanged({"leftClimb": false});
+                                        widget.onDataChanged({"middleClimb": false});
+                                      }
+                                    });
+                                  }
+                                ),
+                              ),
+                              Positioned(
+                              left: 370,
+                              top: 208,
+                              child: Checkbox(
+                                value: widget.formData['middleClimb'], 
+                                tristate: true,
+                                onChanged: (value) {
+                                    setState(() {
+                                      widget
+                                          .onDataChanged({"middleClimb": value});
+                                      if (value != false) {
+                                        widget.onDataChanged({"leftClimb": false});
+                                        widget.onDataChanged({"rightClimb": false});
+                                      }
+                                    });
+                                  }
+                                ),
+                              ),
+                              Positioned(
+                              left: 370,
+                              top: 188,
+                              child: Checkbox(
+                                value: widget.formData['leftClimb'], 
+                                tristate: true,
+                                onChanged: (value) {
+                                    setState(() {
+                                      widget
+                                          .onDataChanged({"leftClimb": value});
+                                      if (value != false) {
+                                        widget.onDataChanged({"rightClimb": false});
+                                        widget.onDataChanged({"middleClimb": false});
+                                      }
+                                    });
+                                  }
+                                ),
+                              ),
                             ],
                           ),
                         )
@@ -213,6 +267,60 @@ class _AutonFormState extends State<AutonForm>{
                                             .onDataChanged({"bottomDisrupted": value});
                                       });
                                     }
+                                ),
+                              ),
+                              Positioned(
+                              right: 370,
+                              bottom: 228,
+                              child: Checkbox(
+                                value: widget.formData['rightClimb'], 
+                                tristate: true,
+                                onChanged: (value) {
+                                    setState(() {
+                                      widget
+                                          .onDataChanged({"rightClimb": value});
+                                      if (value != false) {
+                                        widget.onDataChanged({"leftClimb": false});
+                                        widget.onDataChanged({"middleClimb": false});
+                                      }
+                                    });
+                                  }
+                                ),
+                              ),
+                              Positioned(
+                              right: 370,
+                              bottom: 208,
+                              child: Checkbox(
+                                value: widget.formData['middleClimb'], 
+                                tristate: true,
+                                onChanged: (value) {
+                                    setState(() {
+                                      widget
+                                          .onDataChanged({"middleClimb": value});
+                                      if (value != false) {
+                                        widget.onDataChanged({"leftClimb": false});
+                                        widget.onDataChanged({"rightClimb": false});
+                                      }
+                                    });
+                                  }
+                                ),
+                              ),
+                              Positioned(
+                              right: 370,
+                              bottom: 188,
+                              child: Checkbox(
+                                value: widget.formData['leftClimb'], 
+                                tristate: true,
+                                onChanged: (value) {
+                                    setState(() {
+                                      widget
+                                          .onDataChanged({"leftClimb": value});
+                                      if (value != false) {
+                                        widget.onDataChanged({"rightClimb": false});
+                                        widget.onDataChanged({"middleClimb": false});
+                                      }
+                                    });
+                                  }
                                 ),
                               ),
                             ],
@@ -316,34 +424,16 @@ class _AutonFormState extends State<AutonForm>{
                           ),
                         ]
                       ),
-                      Row (
-                        children: [
-                          Flexible(
-                            child: CheckboxListTile(
-                              title: const Text('Climb?'),
-                              tristate: true,
-                              value: widget.formData['climb'], 
-                              onChanged: (value) {
-                                setState(() {
-                                  widget
-                                      .onDataChanged({"climb": value});
-                                });
-                              }
-                            ),
-                          ),
-                          Flexible(
-                            child: CheckboxListTile(
-                              title: const Text('Crossed Center Line?'),
-                              value: widget.formData['centerLineCrossed'], 
-                              onChanged: (value) {
-                                setState(() {
-                                  widget
-                                      .onDataChanged({"centerLineCrossed": value});
-                                });
-                              }
-                            ),
-                          ),
-                        ]
+                      const SizedBox(height: 8.0),
+                      CheckboxListTile(
+                        title: const Text('Crossed Center Line?'),
+                        value: widget.formData['centerLineCrossed'], 
+                        onChanged: (value) {
+                          setState(() {
+                            widget
+                                .onDataChanged({"centerLineCrossed": value});
+                          });
+                        }
                       ),
                   ] else 
                     const SizedBox(height: 1),

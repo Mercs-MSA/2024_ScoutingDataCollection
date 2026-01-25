@@ -7,12 +7,14 @@ class MatchForm extends StatefulWidget {
   const MatchForm({
     super.key,
     required this.teamNumberPresent,
+    required this.matchNumber,
     required this.onDataChanged,
     required this.formData,
     required this.colorDebug
   });
 
   final bool teamNumberPresent;
+  final int matchNumber;
 
   final Function(Map<String, dynamic>) onDataChanged;
   final Map formData;
@@ -23,10 +25,6 @@ class MatchForm extends StatefulWidget {
   State<MatchForm> createState() => _MatchFormState();
 }
 
-class TabState extends ChangeNotifier {
-  var tabController = TabController(vsync: _MatchFormState(), length: 5);
-}
-
 class _MatchFormState extends State<MatchForm>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
@@ -35,7 +33,7 @@ class _MatchFormState extends State<MatchForm>
   void initState() {
     super.initState();
 
-    _tabController = TabController(vsync: this, length: 3);
+    _tabController = TabController(vsync: this, length: 2);
   }
 
   @override
@@ -54,10 +52,6 @@ class _MatchFormState extends State<MatchForm>
               controller: _tabController,
               tabs: <Widget>[
                 Tab(
-                  icon: Icon(Icons.auto_awesome, color: Colors.blue),
-                  text: "Auton",
-                ),
-                Tab(
                   icon: Icon(Icons.videogame_asset_rounded, color: Colors.orange),
                   text: "Teleop",
                 ),
@@ -70,7 +64,6 @@ class _MatchFormState extends State<MatchForm>
             body: TabBarView(
               controller: _tabController,
               children: [
-                MatchAutonSection(form: widget, colorDebug: widget.colorDebug),
                 MatchTeleopSection(form: widget, colorDebug: widget.colorDebug),
                 MatchEndgameSection(form: widget, colorDebug: widget.colorDebug),
               ],

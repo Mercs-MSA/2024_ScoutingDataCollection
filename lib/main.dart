@@ -97,7 +97,10 @@ class _FormAppPageState extends State<FormAppPage> {
   String? autonScouter;
   String autonAllianceColor = "blue";
 
-  int? matchTeamNumber;
+  int? match1TeamNumber;
+  int? match2TeamNumber;
+  int? match3TeamNumber;
+
   int? matchNumber;
 
   final bool colorDebug = Random.secure().nextBool();
@@ -503,9 +506,14 @@ class _FormAppPageState extends State<FormAppPage> {
                                     setAppModePref(appMode);
                                     // match
                                     if (devMode) {
-                                      matchTeamNumber = 9999;
+                                      matchNumber = 1;
+                                      match1TeamNumber = 6767;
+                                      match2TeamNumber = 4141;
+                                      match3TeamNumber = 2121;
                                       matchScoutingData["match"] = 1;
-                                      matchScoutingData["team"] = 9999;
+                                      matchScoutingData["team1"] = 6767;
+                                      matchScoutingData["team2"] = 4141;
+                                      matchScoutingData["team3"] = 2121;
                                       matchScoutingData["scouter"] =
                                           "RonCollins";
                                     }
@@ -800,9 +808,14 @@ class _FormAppPageState extends State<FormAppPage> {
                                           setAppModePref(appMode);
                                           // match
                                           if (devMode) {
-                                            matchTeamNumber = 9999;
+                                            matchNumber = 1;
+                                            match1TeamNumber = 6767;
+                                            match2TeamNumber = 4141;
+                                            match3TeamNumber = 2121;
                                             matchScoutingData["match"] = 1;
-                                            matchScoutingData["team"] = 9999;
+                                            matchScoutingData["team1"] = 6767;
+                                            matchScoutingData["team2"] = 4141;
+                                            matchScoutingData["team3"] = 2121;
                                             matchScoutingData["scouter"] =
                                                 "RonCollins";
                                           }
@@ -1837,25 +1850,77 @@ class _FormAppPageState extends State<FormAppPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            TextField(
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Team Number',
-                              ),
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly,
-                                LengthLimitingTextInputFormatter(5),
+                            Row(
+                              children: [
+                                Flexible(
+                                  child: TextField(
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: 'Team 1 Number',
+                                    ),
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      LengthLimitingTextInputFormatter(5),
+                                    ],
+                                    onChanged: (value) {
+                                      match1TeamNumber = int.tryParse(value);
+                                      matchScoutingData["team1"] = int.tryParse(value);
+                                    },
+                                    controller: TextEditingController(
+                                      text: match1TeamNumber == null
+                                          ? ''
+                                          : match1TeamNumber.toString(),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 4.0),
+                                Flexible(
+                                  child: TextField(
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: 'Team 2 Number',
+                                    ),
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      LengthLimitingTextInputFormatter(5),
+                                    ],
+                                    onChanged: (value) {
+                                      match2TeamNumber = int.tryParse(value);
+                                      matchScoutingData["team2"] = int.tryParse(value);
+                                    },
+                                    controller: TextEditingController(
+                                      text: match2TeamNumber == null
+                                          ? ''
+                                          : match2TeamNumber.toString(),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 4.0),
+                                Flexible(
+                                  child: TextField(
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: 'Team 3 Number',
+                                    ),
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      LengthLimitingTextInputFormatter(5),
+                                    ],
+                                    onChanged: (value) {
+                                      match3TeamNumber = int.tryParse(value);
+                                      matchScoutingData["team3"] = int.tryParse(value);
+                                    },
+                                    controller: TextEditingController(
+                                      text: match3TeamNumber == null
+                                          ? ''
+                                          : match3TeamNumber.toString(),
+                                    ),
+                                  ),
+                                )
                               ],
-                              onChanged: (value) {
-                                matchTeamNumber = int.tryParse(value);
-                                matchScoutingData["team"] = int.tryParse(value);
-                              },
-                              controller: TextEditingController(
-                                text: matchTeamNumber == null
-                                    ? ''
-                                    : matchTeamNumber.toString(),
-                              ),
                             ),
                             const SizedBox(height: 8.0),
                             Row(
@@ -1894,6 +1959,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                       LengthLimitingTextInputFormatter(3),
                                     ],
                                     onChanged: (value) {
+                                      matchNumber = int.tryParse(value);
                                       matchScoutingData["match"] =
                                           int.tryParse(value);
                                     },
@@ -1967,96 +2033,6 @@ class _FormAppPageState extends State<FormAppPage> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 8),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 2, right: 8),
-                                  child: Column(
-                                    children: [
-                                      Text("Auto Start"),
-                                      Text("Position")
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  child: SegmentedButton<MatchStartPos>(
-                                    style: ButtonStyle(
-                                      backgroundColor: WidgetStateProperty
-                                          .resolveWith<Color>(
-                                        (Set<WidgetState> states) {
-                                          if (states
-                                              .contains(WidgetState.selected)) {
-                                            return ColorScheme.fromSeed(
-                                                    seedColor: matchScoutingData[
-                                                                "alliance"] ==
-                                                            "red"
-                                                        ? Colors.red
-                                                        : Colors.blue)
-                                                .primary;
-                                          }
-                                          return Colors.transparent;
-                                        },
-                                      ),
-                                      padding: WidgetStateProperty.all(
-                                        EdgeInsets.all(24.0),
-                                      ),
-                                      shape: WidgetStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(4)),
-                                        ),
-                                      ),
-                                    ),
-                                    emptySelectionAllowed: false,
-                                    multiSelectionEnabled: false,
-                                    segments: <ButtonSegment<MatchStartPos>>[
-                                      ButtonSegment(
-                                          value: MatchStartPos.left,
-                                          label: Text("Left")),
-                                      ButtonSegment(
-                                          value: MatchStartPos.middle,
-                                          label: Text("Middle")),
-                                      ButtonSegment(
-                                          value: MatchStartPos.right,
-                                          label: Text("Right"))
-                                    ],
-                                    selected: {
-                                      if (matchScoutingData["startPos"] ==
-                                          "left")
-                                        MatchStartPos.left,
-                                      if (matchScoutingData["startPos"] ==
-                                          "middle")
-                                        MatchStartPos.middle,
-                                      if (matchScoutingData["startPos"] ==
-                                          "right")
-                                        MatchStartPos.right,
-                                    },
-                                    onSelectionChanged: (selection) {
-                                      setState(() {
-                                        if (selection.first ==
-                                            MatchStartPos.left) {
-                                          matchScoutingData["startPos"] =
-                                              "left";
-                                        }
-                                        if (selection.first ==
-                                            MatchStartPos.right) {
-                                          matchScoutingData["startPos"] =
-                                              "right";
-                                        }
-                                        if (selection.first ==
-                                            MatchStartPos.middle) {
-                                          matchScoutingData["startPos"] =
-                                              "middle";
-                                        }
-                                      });
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
                           ],
                         ),
                       )
@@ -2065,8 +2041,11 @@ class _FormAppPageState extends State<FormAppPage> {
                     if (matchPageIndex == 1)
                       MatchForm(
                         teamNumberPresent:
-                            (matchTeamNumber == null ? false : true) &&
+                            (match1TeamNumber == null ? false : true) &&
+                            (match2TeamNumber == null ? false : true) &&
+                            (match3TeamNumber == null ? false : true) &&
                                 !(matchScoutingData["scouter"] == ""),
+                        matchNumber: matchNumber ?? 0,
                         formData: matchScoutingData,
                         onDataChanged: (data) {
                           data.forEach((k, v) {
@@ -2079,17 +2058,23 @@ class _FormAppPageState extends State<FormAppPage> {
                       const SizedBox(),
                     if (matchPageIndex == 2)
                       IndexedStack(
-                        index: (matchTeamNumber == null ||
+                        index: (((match1TeamNumber == null ? false : true) &&
+                            (match2TeamNumber == null ? false : true) &&
+                            (match3TeamNumber == null ? false : true)) ||
                                 matchScoutingData["scouter"] == "")
                             ? 0
                             : 1,
                         children: [
-                          if (matchTeamNumber == null ||
+                          if (((match1TeamNumber == null ? false : true) &&
+                            (match2TeamNumber == null ? false : true) &&
+                            (match3TeamNumber == null ? false : true)) ||
                               matchScoutingData["scouter"] == "")
                             const Center(child: TeamNumberError())
                           else
                             const SizedBox(),
-                          if (matchTeamNumber != null)
+                          if ((match1TeamNumber == null ? false : true) &&
+                            (match2TeamNumber == null ? false : true) &&
+                            (match3TeamNumber == null ? false : true))
                             Center(
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
@@ -3140,10 +3125,10 @@ class _FormAppPageState extends State<FormAppPage> {
 
     if (kIsWeb) {
       saveFileWeb(pngBytes!,
-          "${eventId}_frc${matchTeamNumber}_match/${eventId}_frc${matchTeamNumber}_match${matchScoutingData['match']}.png");
+          "${eventId}_frc${matchNumber}_match/${eventId}_frc${matchNumber}_match${matchScoutingData['match']}.png");
     } else {
       saveFileNative(pngBytes!,
-          "${eventId}_frc${matchTeamNumber}_match/${eventId}_frc${matchTeamNumber}_match${matchScoutingData['match']}.png");
+          "${eventId}_frc${matchNumber}_match/${eventId}_frc${matchNumber}_match${matchScoutingData['match']}.png");
     }
   }
 
@@ -3272,7 +3257,7 @@ class _FormAppPageState extends State<FormAppPage> {
   }
 
   void onMatchScoutSave() async {
-    if (matchTeamNumber == null) {
+    if (matchNumber == null) {
       if (!mounted) return;
       showDialog(
         context: context,
@@ -3335,10 +3320,10 @@ class _FormAppPageState extends State<FormAppPage> {
 
     if (kIsWeb) {
       saveFileWeb(Uint8List.fromList(fileData.codeUnits),
-          "${eventId}_frc${matchTeamNumber}_match/${eventId}_frc${matchTeamNumber}_match${matchScoutingData['match']}.csv");
+          "${eventId}_frc${matchNumber}_match/${eventId}_frc${matchNumber}_match${matchScoutingData['match']}.csv");
     } else {
       saveFileNative(Uint8List.fromList(fileData.codeUnits),
-          "${eventId}_frc${matchTeamNumber}_match/${eventId}_frc${matchTeamNumber}_match${matchScoutingData['match']}.csv");
+          "${eventId}_frc${matchNumber}_match/${eventId}_frc${matchNumber}_match${matchScoutingData['match']}.csv");
     }
 
     if (!mounted) return;
@@ -3434,7 +3419,10 @@ class _FormAppPageState extends State<FormAppPage> {
   }
 
   void resetMatch() {
-    matchTeamNumber = null;
+    match1TeamNumber = null;
+    match2TeamNumber = null;
+    match3TeamNumber = null;
+    matchNumber = null;
     matchScoutingData = Map.from(matchScoutingDefaultData);
     setState(() {
       matchPageIndex = 0;
