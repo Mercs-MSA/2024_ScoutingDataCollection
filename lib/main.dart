@@ -278,6 +278,7 @@ class _FormAppPageState extends State<FormAppPage> {
                   FilledButton(
                     onPressed: () {
                       resetPit();
+                      resetAuton();
                       resetMatch();
                       Navigator.of(context).pop();
                     },

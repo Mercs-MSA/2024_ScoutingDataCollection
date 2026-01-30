@@ -21,17 +21,9 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
   Widget build(BuildContext context) {
     return Container(
       color: const HSVColor.fromAHSV(1, 30, 1, 0.2).toColor(),
-      child: ListView(
-        shrinkWrap: true,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-
-            ],
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Row(
             children: [
               Expanded(
                 child: Column(
@@ -40,434 +32,156 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         SectionHeader(
-                            title: "Coral Scored",
-                            color: Theme.of(context).dividerColor)
-                      ],
-                    ),
-                    NumberInput(
-                      onValueAdd: () {
-                        setState(() {
-                          widget.form.onDataChanged({
-                            "teleL4Scored":
-                                widget.form.formData["teleL4Scored"] + 1
-                          });
-                        });
-                      },
-                      title: "L4",
-                      value: widget.form.formData["teleL4Scored"],
-                      onValueSubtract: () {
-                        setState(() {
-                          if (widget.form.formData["teleL4Scored"] > 0) {
-                            widget.form.onDataChanged({
-                              "teleL4Scored":
-                                  widget.form.formData["teleL4Scored"] - 1
-                            });
-                          }
-                        });
-                      },
-                      enableSpacer: true,
-                      inputType: InputType.coral,
-                    ),
-                    NumberInput(
-                      onValueAdd: () {
-                        setState(() {
-                          widget.form.onDataChanged({
-                            "teleL3Scored":
-                                widget.form.formData["teleL3Scored"] + 1
-                          });
-                        });
-                      },
-                      title: "L3",
-                      value: widget.form.formData["teleL3Scored"],
-                      onValueSubtract: () {
-                        setState(() {
-                          if (widget.form.formData["teleL3Scored"] > 0) {
-                            widget.form.onDataChanged({
-                              "teleL3Scored":
-                                  widget.form.formData["teleL3Scored"] - 1
-                            });
-                          }
-                        });
-                      },
-                      enableSpacer: true,
-                      inputType: InputType.coral,
-                    ),
-                    NumberInput(
-                      onValueAdd: () {
-                        setState(() {
-                          widget.form.onDataChanged({
-                            "teleL2Scored":
-                                widget.form.formData["teleL2Scored"] + 1
-                          });
-                        });
-                      },
-                      title: "L2",
-                      value: widget.form.formData["teleL2Scored"],
-                      onValueSubtract: () {
-                        setState(() {
-                          if (widget.form.formData["teleL2Scored"] > 0) {
-                            widget.form.onDataChanged({
-                              "teleL2Scored":
-                                  widget.form.formData["teleL2Scored"] - 1
-                            });
-                          }
-                        });
-                      },
-                      enableSpacer: true,
-                      inputType: InputType.coral,
-                    ),
-                    NumberInput(
-                      onValueAdd: () {
-                        setState(() {
-                          widget.form.onDataChanged({
-                            "teleL1Scored":
-                                widget.form.formData["teleL1Scored"] + 1
-                          });
-                        });
-                      },
-                      title: "L1",
-                      value: widget.form.formData["teleL1Scored"],
-                      onValueSubtract: () {
-                        setState(() {
-                          if (widget.form.formData["teleL1Scored"] > 0) {
-                            widget.form.onDataChanged({
-                              "teleL1Scored":
-                                  widget.form.formData["teleL1Scored"] - 1
-                            });
-                          }
-                        });
-                      },
-                      enableSpacer: true,
-                      inputType: InputType.coral,
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        SectionHeader(
-                            title: "Coral Missed",
+                            title: "Team ${widget.form.formData["team1"]}",
                             color: Theme.of(context).dividerColor),
                       ],
                     ),
-                    NumberInput(
-                      onValueAdd: () {
-                        setState(() {
-                          widget.form.onDataChanged({
-                            "teleL4Missed":
-                                widget.form.formData["teleL4Missed"] + 1
-                          });
-                        });
-                      },
-                      title: "L4",
-                      value: widget.form.formData["teleL4Missed"],
-                      onValueSubtract: () {
-                        setState(() {
-                          if (widget.form.formData["teleL4Missed"] > 0) {
-                            widget.form.onDataChanged({
-                              "teleL4Missed":
-                                  widget.form.formData["teleL4Missed"] - 1
-                            });
-                          }
-                        });
-                      },
-                      enableSpacer: true,
-                      inputType: InputType.coral,
+                  ]
+                )
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        SectionHeader(
+                            title: "Team ${widget.form.formData["team2"]}",
+                            color: Theme.of(context).dividerColor),
+                      ],
                     ),
-                    NumberInput(
-                      onValueAdd: () {
-                        setState(() {
-                          widget.form.onDataChanged({
-                            "teleL3Missed":
-                                widget.form.formData["teleL3Missed"] + 1
-                          });
-                        });
-                      },
-                      title: "L3",
-                      value: widget.form.formData["teleL3Missed"],
-                      onValueSubtract: () {
-                        setState(() {
-                          if (widget.form.formData["teleL3Missed"] > 0) {
-                            widget.form.onDataChanged({
-                              "teleL3Missed":
-                                  widget.form.formData["teleL3Missed"] - 1
-                            });
-                          }
-                        });
-                      },
-                      enableSpacer: true,
-                      inputType: InputType.coral,
+                  ]
+                )
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        SectionHeader(
+                            title: "Team ${widget.form.formData["team3"]}",
+                            color: Theme.of(context).dividerColor),
+                      ],
                     ),
-                    NumberInput(
-                      onValueAdd: () {
-                        setState(() {
-                          widget.form.onDataChanged({
-                            "teleL2Missed":
-                                widget.form.formData["teleL2Missed"] + 1
-                          });
-                        });
-                      },
-                      title: "L2",
-                      value: widget.form.formData["teleL2Missed"],
-                      onValueSubtract: () {
-                        setState(() {
-                          if (widget.form.formData["teleL2Missed"] > 0) {
-                            widget.form.onDataChanged({
-                              "teleL2Missed":
-                                  widget.form.formData["teleL2Missed"] - 1
-                            });
-                          }
-                        });
-                      },
-                      enableSpacer: true,
-                      inputType: InputType.coral,
-                    ),
-                    NumberInput(
-                      onValueAdd: () {
-                        setState(() {
-                          widget.form.onDataChanged({
-                            "teleL1Missed":
-                                widget.form.formData["teleL1Missed"] + 1
-                          });
-                        });
-                      },
-                      title: "L1",
-                      value: widget.form.formData["teleL1Missed"],
-                      onValueSubtract: () {
-                        setState(() {
-                          if (widget.form.formData["teleL1Missed"] > 0) {
-                            widget.form.onDataChanged({
-                              "teleL1Missed":
-                                  widget.form.formData["teleL1Missed"] - 1
-                            });
-                          }
-                        });
-                      },
-                      enableSpacer: true,
-                      inputType: InputType.coral,
-                    ),
-                  ],
-                ),
+                  ]
+                )
               ),
             ],
           ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     // Expanded(
-          //     Expanded(
-          //       child: NumberInput(
-          //         title: "Coral Dropped",
-          //         value: widget.form.formData["teleCoralDropped"],
-          //         onValueAdd: () {
-          //           setState(() {
-          //             widget.form.onDataChanged({
-          //               "teleCoralDropped":
-          //                   widget.form.formData["teleCoralDropped"] + 1
-          //             });
-          //           });
-          //         },
-          //         onValueSubtract: () {
-          //           setState(() {
-          //             if (widget.form.formData["teleCoralDropped"] > 0) {
-          //               widget.form.onDataChanged({
-          //                 "teleCoralDropped":
-          //                     widget.form.formData["teleCoralDropped"] - 1
-          //               });
-          //             }
-          //           });
-          //         },
-          //         enableSpacer: true,
-          //         inputType: InputType.coral,
-          //       ),
-          //     )
-          //   ],
-          // ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
+        ),
+        body: SingleChildScrollView(
+          child: ListView(
+            shrinkWrap: true,
             children: [
-              SectionHeader(
-                  title: "Algae Descore",
-                  color: Theme.of(context).dividerColor),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Expanded(
-              Expanded(
-                child: NumberInput(
-                  title: "Algae De-scored",
-                  value: widget.form.formData["teleAlgaeDescored"],
-                  onValueAdd: () {
-                    setState(() {
-                      widget.form.onDataChanged({
-                        "teleAlgaeDescored":
-                            widget.form.formData["teleAlgaeDescored"] + 1
-                      });
-                    });
-                  },
-                  onValueSubtract: () {
-                    setState(() {
-                      if (widget.form.formData["teleAlgaeDescored"] > 0) {
-                        widget.form.onDataChanged({
-                          "teleAlgaeDescored":
-                              widget.form.formData["teleAlgaeDescored"] - 1
-                        });
-                      }
-                    });
-                  },
-                  enableSpacer: true,
-                  inputType: (widget.colorDebug)
-                      ? InputType.algae
-                      : InputType.altAlgae,
-                ),
-              )
-            ],
-          ),
-          Row(
-            children: [
-              SectionHeader(
-                  title: "Processor", color: Theme.of(context).dividerColor)
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: NumberInput(
-                  title: "Processor Scored",
-                  value: widget.form.formData["teleProcessorScored"],
-                  onValueAdd: () {
-                    setState(() {
-                      widget.form.onDataChanged({
-                        "teleProcessorScored":
-                            widget.form.formData["teleProcessorScored"] + 1
-                      });
-                    });
-                  },
-                  onValueSubtract: () {
-                    setState(() {
-                      if (widget.form.formData["teleProcessorScored"] > 0) {
-                        widget.form.onDataChanged({
-                          "teleProcessorScored":
-                              widget.form.formData["teleProcessorScored"] - 1
-                        });
-                      }
-                    });
-                  },
-                  enableSpacer: true,
-                  inputType: (widget.colorDebug)
-                      ? InputType.algae
-                      : InputType.altAlgae,
-                ),
-              ),
-              Expanded(
-                child: NumberInput(
-                  title: "Processor Missed",
-                  value: widget.form.formData["teleProcessorMissed"],
-                  onValueAdd: () {
-                    setState(() {
-                      widget.form.onDataChanged({
-                        "teleProcessorMissed":
-                            widget.form.formData["teleProcessorMissed"] + 1
-                      });
-                    });
-                  },
-                  onValueSubtract: () {
-                    setState(() {
-                      if (widget.form.formData["teleProcessorMissed"] > 0) {
-                        widget.form.onDataChanged({
-                          "teleProcessorMissed":
-                              widget.form.formData["teleProcessorMissed"] - 1
-                        });
-                      }
-                    });
-                  },
-                  enableSpacer: true,
-                  inputType: (widget.colorDebug)
-                      ? InputType.algae
-                      : InputType.altAlgae,
-                ),
-              )
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              SectionHeader(
-                  title: "Robot Net Scoring",
-                  color: Theme.of(context).dividerColor),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: NumberInput(
-                  onValueAdd: () {
-                    setState(() {
-                      widget.form.onDataChanged({
-                        "teleNetScored":
-                            widget.form.formData["teleNetScored"] + 1
-                      });
-                    });
-                  },
-                  prefix: Icon(Icons.precision_manufacturing),
-                  title: "Net Scored",
-                  value: widget.form.formData["teleNetScored"],
-                  onValueSubtract: () {
-                    setState(() {
-                      if (widget.form.formData["teleNetScored"] > 0) {
-                        widget.form.onDataChanged({
-                          "teleNetScored":
-                              widget.form.formData["teleNetScored"] - 1
-                        });
-                      }
-                    });
-                  },
-                  enableSpacer: true,
-                  inputType: (widget.colorDebug)
-                      ? InputType.algae
-                      : InputType.altAlgae,
-                ),
-              ),
-              Expanded(
-                child: NumberInput(
-                  onValueAdd: () {
-                    setState(() {
-                      widget.form.onDataChanged({
-                        "teleNetMissed":
-                            widget.form.formData["teleNetMissed"] + 1
-                      });
-                    });
-                  },
-                  prefix: Icon(Icons.precision_manufacturing),
-                  title: "Net Missed",
-                  value: widget.form.formData["teleNetMissed"],
-                  onValueSubtract: () {
-                    setState(() {
-                      if (widget.form.formData["teleNetMissed"] > 0) {
-                        widget.form.onDataChanged({
-                          "teleNetMissed":
-                              widget.form.formData["teleNetMissed"] - 1
-                        });
-                      }
-                    });
-                  },
-                  enableSpacer: true,
-                  inputType: (widget.colorDebug)
-                      ? InputType.algae
-                      : InputType.altAlgae,
-                ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        CheckboxListTile(
+                          title: Text("Shooter?"),
+                          value: widget.form.formData["team1Shooter"] ?? false, 
+                          onChanged: (value) {
+                            setState(() {
+                              widget.form.onDataChanged({"team1Shooter": value});
+                            });
+                          }
+                        ),
+                        CheckboxListTile(
+                          title: Text("Defender?"),
+                          value: widget.form.formData["team1Defender"] ?? false, 
+                          onChanged: (value) {
+                            setState(() {
+                              widget.form.onDataChanged({"team1Defender": value});
+                            });
+                          }
+                        ),
+                        CheckboxListTile(
+                          title: Text("Feeder?"),
+                          value: widget.form.formData["team1Feeder"] ?? false, 
+                          onChanged: (value) {
+                            setState(() {
+                              widget.form.onDataChanged({"team1Feeder": value});
+                            });
+                          }
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        CheckboxListTile(
+                          title: Text("Shooter?"),
+                          value: widget.form.formData["team2Shooter"] ?? false, 
+                          onChanged: (value) {
+                            setState(() {
+                              widget.form.onDataChanged({"team2Shooter": value});
+                            });
+                          }
+                        ),
+                        CheckboxListTile(
+                          title: Text("Defender?"),
+                          value: widget.form.formData["team2Defender"] ?? false, 
+                          onChanged: (value) {
+                            setState(() {
+                              widget.form.onDataChanged({"team2Defender": value});
+                            });
+                          }
+                        ),
+                        CheckboxListTile(
+                          title: Text("Feeder?"),
+                          value: widget.form.formData["team2Feeder"] ?? false, 
+                          onChanged: (value) {
+                            setState(() {
+                              widget.form.onDataChanged({"team2Feeder": value});
+                            });
+                          }
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        CheckboxListTile(
+                          title: Text("Shooter?"),
+                          value: widget.form.formData["team3Shooter"] ?? false, 
+                          onChanged: (value) {
+                            setState(() {
+                              widget.form.onDataChanged({"team3Shooter": value});
+                            });
+                          }
+                        ),
+                        CheckboxListTile(
+                          title: Text("Defender?"),
+                          value: widget.form.formData["team3Defender"] ?? false, 
+                          onChanged: (value) {
+                            setState(() {
+                              widget.form.onDataChanged({"team3Defender": value});
+                            });
+                          }
+                        ),
+                        CheckboxListTile(
+                          title: Text("Feeder?"),
+                          value: widget.form.formData["team3Feeder"] ?? false, 
+                          onChanged: (value) {
+                            setState(() {
+                              widget.form.onDataChanged({"team3Feeder": value});
+                            });
+                          }
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-        ],
-      ),
+        )
+      )
     );
   }
 }
