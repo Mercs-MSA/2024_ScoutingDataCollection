@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:mercs_scout/match_form.dart';
 
 class PitScoutSelection extends StatelessWidget {
   const PitScoutSelection({
@@ -83,10 +86,12 @@ class RatingInput extends StatelessWidget {
     required this.initialRating,
     this.itemCount = 5,
     this.enableHalves = true,
+    this.fontSize = 16,
   });
 
   final String title;
   final Function(double) onRatingUpdate;
+  final double fontSize;
   final double initialRating;
   final int itemCount;
   final bool enableHalves;
@@ -94,10 +99,10 @@ class RatingInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(title),
+      title: Text(title, style: TextStyle(fontSize: fontSize)),
       trailing: RatingBar.builder(
         initialRating: initialRating,
-        minRating: 1,
+        minRating: 0,
         itemBuilder: (context, _) => Icon(
           Icons.star_rounded,
           color: Theme.of(context).colorScheme.primary,
@@ -137,7 +142,7 @@ class ChoiceInput extends StatelessWidget {
           child: Text(value),
         );
       }).toList(),
-      value: choice,
+      initialValue: choice,
       onChanged: onChoiceUpdate,
     );
   }
@@ -384,6 +389,162 @@ class LabeledSwitch extends StatelessWidget {
                 onChanged(newValue);
               },
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ShooterEvaluation2026 extends StatelessWidget {
+  final int ratingRange;
+  final Function(double) onAccuracyChanged;
+  final Function(double) onSpeedChanged;
+
+  const ShooterEvaluation2026({
+    super.key,
+    required this.ratingRange,
+    required this.onAccuracyChanged,
+    required this.onSpeedChanged
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Container(
+        padding: EdgeInsets.all(8),
+        child: Column(
+          children: <Widget>[
+            Row(children: [
+              Expanded(child: Divider()),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text("Shooter Evaluation",
+                    style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic)),
+              ),
+              Expanded(child: Divider())
+            ]),
+            SizedBox(height: 8.0),
+            RatingInput(
+              title: "Accuracy", 
+              fontSize: 16,
+              onRatingUpdate: onAccuracyChanged,
+              initialRating: 0,
+              itemCount: max(1, ratingRange),
+              enableHalves: false
+            ),
+            SizedBox(height: 8.0),
+            RatingInput(
+              title: "Fire Rate", 
+              fontSize: 16,
+              onRatingUpdate: onSpeedChanged,
+              initialRating: 0,
+              itemCount: max(1, ratingRange),
+              enableHalves: false
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class FeederEvaluation2026 extends StatelessWidget {
+  final int ratingRange;
+  final Function(double) onAccuracyChanged;
+  final Function(double) onSpeedChanged;
+
+  const FeederEvaluation2026({
+    super.key,
+    required this.ratingRange,
+    required this.onAccuracyChanged,
+    required this.onSpeedChanged
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Container(
+        padding: EdgeInsets.all(8),
+        child: Column(
+          children: <Widget>[
+            Row(children: [
+              Expanded(child: Divider()),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text("Feeder Evaluation",
+                    style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic)),
+              ),
+              Expanded(child: Divider())
+            ]),
+            SizedBox(height: 8.0),
+            RatingInput(
+              title: "Accuracy", 
+              fontSize: 16,
+              onRatingUpdate: onAccuracyChanged,
+              initialRating: 0,
+              itemCount: max(1, ratingRange),
+              enableHalves: false
+            ),
+            SizedBox(height: 8.0),
+            RatingInput(
+              title: "Fire Rate", 
+              fontSize: 16,
+              onRatingUpdate: onSpeedChanged,
+              initialRating: 0,
+              itemCount: max(1, ratingRange),
+              enableHalves: false
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class DefenderEvaluation2026 extends StatelessWidget {
+  final int ratingRange;
+  final Function(double) onEfficiencyChanged;
+
+  const DefenderEvaluation2026({
+    super.key,
+    required this.ratingRange,
+    required this.onEfficiencyChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Container(
+        padding: EdgeInsets.all(8),
+        child: Column(
+          children: <Widget>[
+            Row(children: [
+              Expanded(child: Divider()),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text("Defender Evaluation",
+                    style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic)),
+              ),
+              Expanded(child: Divider())
+            ]),
+            SizedBox(height: 8.0),
+            RatingInput(
+              title: "Efficiency", 
+              fontSize: 16,
+              onRatingUpdate: onEfficiencyChanged,
+              initialRating: 0,
+              itemCount: max(1, ratingRange),
+              enableHalves: false
+            ),
+            // SizedBox(height: 8.0),
+            // Row(
+            //   children: [
+                
+            //   ],
+            // )
           ],
         ),
       ),

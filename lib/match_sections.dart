@@ -71,6 +71,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
           ),
         ),
         body: SingleChildScrollView(
+          padding: EdgeInsets.all(8),
           child: ListView(
             shrinkWrap: true,
             children: [
@@ -107,6 +108,43 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             });
                           }
                         ),
+                        if (widget.form.formData["team1Shooter"] == true) ... [
+                          SizedBox(height: 16.0),
+                          ShooterEvaluation2026(
+                            ratingRange: 3, 
+                            onAccuracyChanged: (newValue) {
+                              widget.form.onDataChanged({"team1ShootingAccuracy": newValue});
+                            },
+                            onSpeedChanged: (newValue) {
+                              widget.form.onDataChanged({"team1ShootingRate": newValue});
+                            },
+                          )
+                        ] else 
+                          SizedBox(),
+                        if (widget.form.formData["team1Defender"] == true) ... [
+                          SizedBox(height: 16.0),
+                          DefenderEvaluation2026(
+                            ratingRange: 3, 
+                            onEfficiencyChanged: (newValue) {
+                              widget.form.onDataChanged({"team1DefenderEfficiency": newValue});
+                            },
+                          )
+                        ] else 
+                          SizedBox(),
+                        if (widget.form.formData["team1Feeder"] == true) ... [
+                          SizedBox(height: 16.0),
+                          FeederEvaluation2026(
+                            ratingRange: 3, 
+                            onAccuracyChanged: (newValue) {
+                              widget.form.onDataChanged({"team1FeederAccuracy": newValue});
+                            },
+                            onSpeedChanged: (newValue) {
+                              widget.form.onDataChanged({"team1FeederRate": newValue});
+                            },
+                          )
+                        ] else 
+                          SizedBox(),
+
                       ],
                     ),
                   ),
@@ -140,6 +178,43 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             });
                           }
                         ),
+                        if (widget.form.formData["team2Shooter"] == true) ... [
+                          SizedBox(height: 16.0),
+                          ShooterEvaluation2026(
+                            ratingRange: 3, 
+                            onAccuracyChanged: (newValue) {
+                              widget.form.onDataChanged({"team2ShootingAccuracy": newValue});
+                            },
+                            onSpeedChanged: (newValue) {
+                              widget.form.onDataChanged({"team2ShootingRate": newValue});
+                            },
+                          )
+                        ] else 
+                          SizedBox(),
+                        if (widget.form.formData["team2Defender"] == true) ... [
+                          SizedBox(height: 16.0),
+                          DefenderEvaluation2026(
+                            ratingRange: 3, 
+                            onEfficiencyChanged: (newValue) {
+                              widget.form.onDataChanged({"team2DefenderEfficiency": newValue});
+                            },
+                          )
+                        ] else 
+                          SizedBox(),
+                        if (widget.form.formData["team2Feeder"] == true) ... [
+                          SizedBox(height: 16.0),
+                          FeederEvaluation2026(
+                            ratingRange: 3, 
+                            onAccuracyChanged: (newValue) {
+                              widget.form.onDataChanged({"team2FeederAccuracy": newValue});
+                            },
+                            onSpeedChanged: (newValue) {
+                              widget.form.onDataChanged({"team2FeederRate": newValue});
+                            },
+                          )
+                        ] else 
+                          SizedBox(),
+
                       ],
                     ),
                   ),
@@ -173,6 +248,43 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             });
                           }
                         ),
+                        if (widget.form.formData["team3Shooter"] == true) ... [
+                          SizedBox(height: 16.0),
+                          ShooterEvaluation2026(
+                            ratingRange: 3, 
+                            onAccuracyChanged: (newValue) {
+                              widget.form.onDataChanged({"team3ShootingAccuracy": newValue});
+                            },
+                            onSpeedChanged: (newValue) {
+                              widget.form.onDataChanged({"team3ShootingRate": newValue});
+                            },
+                          )
+                        ] else 
+                          SizedBox(),
+                        if (widget.form.formData["team3Defender"] == true) ... [
+                          SizedBox(height: 16.0),
+                          DefenderEvaluation2026(
+                            ratingRange: 3, 
+                            onEfficiencyChanged: (newValue) {
+                              widget.form.onDataChanged({"team3DefenderEfficiency": newValue});
+                            },
+                          )
+                        ] else 
+                          SizedBox(),
+                        if (widget.form.formData["team3Feeder"] == true) ... [
+                          SizedBox(height: 16.0),
+                          FeederEvaluation2026(
+                            ratingRange: 3, 
+                            onAccuracyChanged: (newValue) {
+                              widget.form.onDataChanged({"team3FeederAccuracy": newValue});
+                            },
+                            onSpeedChanged: (newValue) {
+                              widget.form.onDataChanged({"team3FeederRate": newValue});
+                            },
+                          )
+                        ] else 
+                          SizedBox(),
+
                       ],
                     ),
                   ),
