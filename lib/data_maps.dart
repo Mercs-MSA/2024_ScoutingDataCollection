@@ -109,24 +109,6 @@ Map<String, dynamic> getMatchDataMap() {
     "team2DefendLocations": [false, false, false, false, false],
     "team3DefendLocations": [false, false, false, false, false],
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
     "endgamePos": "none",
     "climbTime": 0,
     "yellowCard": false,

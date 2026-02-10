@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 
 import 'package:csv/csv.dart';
+import 'package:cbor/simple.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -79,6 +80,8 @@ class FormAppPage extends StatefulWidget {
 }
 
 class _FormAppPageState extends State<FormAppPage> {
+  bool cborTrue = true;
+
   int pitPageIndex = 0;
   int autonPageIndex = 0;
   int matchPageIndex = 0;
@@ -101,7 +104,8 @@ class _FormAppPageState extends State<FormAppPage> {
   int? match2TeamNumber;
   int? match3TeamNumber;
 
-  int? matchNumber;
+  int? teleopMatchNumber;
+  int? autonMatchNumber;
 
   final bool colorDebug = Random.secure().nextBool();
 
@@ -253,7 +257,7 @@ class _FormAppPageState extends State<FormAppPage> {
         if (const ListEquality().equals(matchScoutingData.keys.toList(),
                 getMatchDataMap().keys.toList()) &&
             const ListEquality().equals(autonScoutingData.keys.toList(),
-                getMatchDataMap().keys.toList()) &&
+                getAutonDataMap().keys.toList()) &&
             const ListEquality().equals(
                 getPitDataMap().keys.toList(), pitScoutingData.keys.toList())) {
           return;
@@ -316,6 +320,7 @@ class _FormAppPageState extends State<FormAppPage> {
                               return SettingsPage(
                                 initialTransposedExport: transposedExport,
                                 initialExportHeaders: exportHeaders,
+                                initialExportAsCBOR: cborTrue,
                                 initialEventId: eventId,
                                 initialDevMode: devMode,
                                 onTransposeChanged: (value) {
@@ -328,6 +333,11 @@ class _FormAppPageState extends State<FormAppPage> {
                                   setState(() {
                                     exportHeaders = value;
                                     attemptSaveHeaders();
+                                  });
+                                },
+                                onExportAsCBORChanged: (value) {
+                                  setState(() {
+                                    cborTrue = value;
                                   });
                                 },
                                 onEventIdChanged: (value) {
@@ -507,10 +517,11 @@ class _FormAppPageState extends State<FormAppPage> {
                                     setAppModePref(appMode);
                                     // match
                                     if (devMode) {
-                                      matchNumber = 1;
+                                      teleopMatchNumber = 1;
                                       match1TeamNumber = 6767;
                                       match2TeamNumber = 4141;
                                       match3TeamNumber = 2121;
+                                      
                                       matchScoutingData["match"] = 1;
                                       matchScoutingData["team1"] = 6767;
                                       matchScoutingData["team2"] = 4141;
@@ -809,7 +820,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                           setAppModePref(appMode);
                                           // match
                                           if (devMode) {
-                                            matchNumber = 1;
+                                            teleopMatchNumber = 1;
                                             match1TeamNumber = 6767;
                                             match2TeamNumber = 4141;
                                             match3TeamNumber = 2121;
@@ -1413,6 +1424,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                       LengthLimitingTextInputFormatter(3),
                                     ],
                                     onChanged: (value) {
+                                      autonMatchNumber = int.tryParse(value);
                                       autonScoutingData["match"] =
                                           int.tryParse(value);
                                     },
@@ -1657,113 +1669,113 @@ class _FormAppPageState extends State<FormAppPage> {
                                       Expanded(child: Divider()),
                                     ],
                                   ),
-                                  // Row(
-                                  //   mainAxisAlignment: MainAxisAlignment.center,
-                                  //   children: [
-                                  //     ElevatedButton.icon(
-                                  //       onPressed: saveDisabled == false
-                                  //           ? onPitScoutSave
-                                  //           : null,
-                                  //       label: const Text("Export CSV"),
-                                  //       icon: const Icon(Icons.save),
-                                  //     ),
-                                  //     const SizedBox(
-                                  //       width: 8.0,
-                                  //     ),
-                                  //     ElevatedButton.icon(
-                                  //       onPressed: () {
-                                  //         Navigator.push(
-                                  //           context,
-                                  //           MaterialPageRoute(
-                                  //             barrierDismissible: true,
-                                  //             builder: (context) {
-                                  //               return Scaffold(
-                                  //                 appBar: AppBar(
-                                  //                   title: Text(
-                                  //                       "Debug Information"),
-                                  //                 ),
-                                  //                 body: Column(
-                                  //                   children: [
-                                  //                     Padding(
-                                  //                       padding:
-                                  //                           const EdgeInsets
-                                  //                               .all(8.0),
-                                  //                       child: TextField(
-                                  //                         decoration:
-                                  //                             const InputDecoration(
-                                  //                           border:
-                                  //                               OutlineInputBorder(),
-                                  //                           fillColor: Color(
-                                  //                               0xff0d0d0d),
-                                  //                           filled: true,
-                                  //                           labelText:
-                                  //                               'JSON Data',
-                                  //                         ),
-                                  //                         readOnly: true,
-                                  //                         minLines: 2,
-                                  //                         maxLines: 20,
-                                  //                         style: TextStyle(
-                                  //                           color: Color(
-                                  //                               0xffffffff),
-                                  //                           fontFamily:
-                                  //                               "RobotoMono",
-                                  //                         ),
-                                  //                         controller: TextEditingController(
-                                  //                             text: JsonEncoder
-                                  //                                     .withIndent(
-                                  //                                         " " *
-                                  //                                             4)
-                                  //                                 .convert(
-                                  //                                     pitScoutingData)),
-                                  //                       ),
-                                  //                     ),
-                                  //                     Padding(
-                                  //                       padding:
-                                  //                           const EdgeInsets
-                                  //                               .all(8.0),
-                                  //                       child: TextField(
-                                  //                         decoration:
-                                  //                             const InputDecoration(
-                                  //                           border:
-                                  //                               OutlineInputBorder(),
-                                  //                           fillColor: Color(
-                                  //                               0xff0d0d0d),
-                                  //                           filled: true,
-                                  //                           labelText:
-                                  //                               'KV/QR Data',
-                                  //                         ),
-                                  //                         readOnly: true,
-                                  //                         minLines: 2,
-                                  //                         maxLines: 5,
-                                  //                         style: TextStyle(
-                                  //                           color: Color(
-                                  //                               0xffffffff),
-                                  //                           fontFamily:
-                                  //                               "RobotoMono",
-                                  //                         ),
-                                  //                         controller:
-                                  //                             TextEditingController(
-                                  //                           text: getAutonKVFormattedData(
-                                  //                                   transpose:
-                                  //                                       true,
-                                  //                                   header:
-                                  //                                       false)[0]
-                                  //                               .join("||"),
-                                  //                         ),
-                                  //                       ),
-                                  //                     ),
-                                  //                   ],
-                                  //                 ),
-                                  //               );
-                                  //             },
-                                  //           ),
-                                  //         );
-                                  //       },
-                                  //       label: const Text("Show Debug Data"),
-                                  //       icon: const Icon(Icons.bug_report),
-                                  //     ),
-                                  //   ],
-                                  // ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      ElevatedButton.icon(
+                                        onPressed: saveDisabled == false
+                                            ? onAutonScoutSave
+                                            : null,
+                                        label: const Text("Export CSV"),
+                                        icon: const Icon(Icons.save),
+                                      ),
+                                      const SizedBox(
+                                        width: 8.0,
+                                      ),
+                                      ElevatedButton.icon(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              barrierDismissible: true,
+                                              builder: (context) {
+                                                return Scaffold(
+                                                  appBar: AppBar(
+                                                    title: Text(
+                                                        "Debug Information"),
+                                                  ),
+                                                  body: Column(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: TextField(
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            border:
+                                                                OutlineInputBorder(),
+                                                            fillColor: Color(
+                                                                0xff0d0d0d),
+                                                            filled: true,
+                                                            labelText:
+                                                                'JSON Data',
+                                                          ),
+                                                          readOnly: true,
+                                                          minLines: 2,
+                                                          maxLines: 20,
+                                                          style: TextStyle(
+                                                            color: Color(
+                                                                0xffffffff),
+                                                            fontFamily:
+                                                                "RobotoMono",
+                                                          ),
+                                                          controller: TextEditingController(
+                                                              text: JsonEncoder
+                                                                      .withIndent(
+                                                                          " " *
+                                                                              4)
+                                                                  .convert(
+                                                                      pitScoutingData)),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: TextField(
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            border:
+                                                                OutlineInputBorder(),
+                                                            fillColor: Color(
+                                                                0xff0d0d0d),
+                                                            filled: true,
+                                                            labelText:
+                                                                'KV/QR Data',
+                                                          ),
+                                                          readOnly: true,
+                                                          minLines: 2,
+                                                          maxLines: 5,
+                                                          style: TextStyle(
+                                                            color: Color(
+                                                                0xffffffff),
+                                                            fontFamily:
+                                                                "RobotoMono",
+                                                          ),
+                                                          controller:
+                                                              TextEditingController(
+                                                            text: getAutonKVFormattedData(
+                                                                    transpose:
+                                                                        true,
+                                                                    header:
+                                                                        false)[0]
+                                                                .join("||"),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          );
+                                        },
+                                        label: const Text("Show Debug Data"),
+                                        icon: const Icon(Icons.bug_report),
+                                      ),
+                                    ],
+                                  ),
                                   const SizedBox(
                                     width: 8.0,
                                   ),
@@ -1960,7 +1972,7 @@ class _FormAppPageState extends State<FormAppPage> {
                                       LengthLimitingTextInputFormatter(3),
                                     ],
                                     onChanged: (value) {
-                                      matchNumber = int.tryParse(value);
+                                      teleopMatchNumber = int.tryParse(value);
                                       matchScoutingData["match"] =
                                           int.tryParse(value);
                                     },
@@ -2046,7 +2058,7 @@ class _FormAppPageState extends State<FormAppPage> {
                             (match2TeamNumber == null ? false : true) &&
                             (match3TeamNumber == null ? false : true) &&
                                 !(matchScoutingData["scouter"] == ""),
-                        matchNumber: matchNumber ?? 0,
+                        matchNumber: teleopMatchNumber ?? 0,
                         formData: matchScoutingData,
                         onDataChanged: (data) {
                           data.forEach((k, v) {
@@ -2059,16 +2071,16 @@ class _FormAppPageState extends State<FormAppPage> {
                       const SizedBox(),
                     if (matchPageIndex == 2)
                       IndexedStack(
-                        index: (((match1TeamNumber == null ? false : true) &&
-                            (match2TeamNumber == null ? false : true) &&
-                            (match3TeamNumber == null ? false : true)) ||
+                        index: (((match1TeamNumber == null ? true : false) &&
+                            (match2TeamNumber == null ? true : false) &&
+                            (match3TeamNumber == null ? true : false)) ||
                                 matchScoutingData["scouter"] == "")
                             ? 0
                             : 1,
                         children: [
-                          if (((match1TeamNumber == null ? false : true) &&
-                            (match2TeamNumber == null ? false : true) &&
-                            (match3TeamNumber == null ? false : true)) ||
+                          if (((match1TeamNumber == null ? true : false) &&
+                            (match2TeamNumber == null ? true : false) &&
+                            (match3TeamNumber == null ? true : false)) ||
                               matchScoutingData["scouter"] == "")
                             const Center(child: TeamNumberError())
                           else
@@ -3059,6 +3071,8 @@ class _FormAppPageState extends State<FormAppPage> {
     });
   }
 
+
+
   List<List> getPitKVFormattedData(
       {bool transpose = false, bool header = true}) {
     List<List<dynamic>> data = [];
@@ -3090,6 +3104,12 @@ class _FormAppPageState extends State<FormAppPage> {
     }
   }
 
+  List<int> getPitCBORFormattedData() {
+    List<int> data = cbor.encode({pitScoutingData});
+
+    return data;
+  }
+
   List<List> getAutonKVFormattedData(
       {bool transpose = false, bool header = true}) {
     List<List<dynamic>> data = [];
@@ -3109,15 +3129,21 @@ class _FormAppPageState extends State<FormAppPage> {
     return transposedData;
   }
 
+  List<int> getAutonCBORFormattedData() {
+    List<int> data = cbor.encode({autonScoutingData});
+
+    return data;
+  }
+
   void onAutonScoutQrSave() async {
     final pngBytes = await autonPngController.capture();
 
     if (kIsWeb) {
       saveFileWeb(pngBytes!,
-          "${eventId}_frc${autonTeamNumber}_pit/${eventId}_frc${autonTeamNumber}_pit.png");
+          "${eventId}_frc${autonTeamNumber}_match/${eventId}_frc${autonTeamNumber}_match${autonMatchNumber}.csv");
     } else {
       saveFileNative(pngBytes!,
-          "${eventId}_frc${autonTeamNumber}_pit/${eventId}_frc${autonTeamNumber}_pit.png");
+          "${eventId}_frc${autonTeamNumber}_match/${eventId}_frc${autonTeamNumber}_match${autonMatchNumber}.csv");
     }
   }
 
@@ -3126,10 +3152,10 @@ class _FormAppPageState extends State<FormAppPage> {
 
     if (kIsWeb) {
       saveFileWeb(pngBytes!,
-          "${eventId}_frc${matchNumber}_match/${eventId}_frc${matchNumber}_match${matchScoutingData['match']}.png");
+          "${eventId}_frc${matchScoutingData["alliance"]}_match/${eventId}_frc${match1TeamNumber}_${match2TeamNumber}_${match3TeamNumber}_match${teleopMatchNumber}.csv");
     } else {
       saveFileNative(pngBytes!,
-          "${eventId}_frc${matchNumber}_match/${eventId}_frc${matchNumber}_match${matchScoutingData['match']}.png");
+          "${eventId}_frc${matchScoutingData["alliance"]}_match/${eventId}_frc${match1TeamNumber}_${match2TeamNumber}_${match3TeamNumber}_match${teleopMatchNumber}.csv");
     }
   }
 
@@ -3188,19 +3214,28 @@ class _FormAppPageState extends State<FormAppPage> {
       return;
     }
 
-    final fileData = const ListToCsvConverter().convert(getPitKVFormattedData(
-        transpose: transposedExport, header: exportHeaders));
+    final fileData = ListToCsvConverter().convert(getPitKVFormattedData(transpose: transposedExport, header: exportHeaders));
 
     setState(() {
       saveDisabled = true;
     });
 
-    if (kIsWeb) {
-      saveFileWeb(Uint8List.fromList(fileData.codeUnits),
-          "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_pit.csv");
+    if (!cborTrue) {
+      if (kIsWeb) {
+        await saveFileWeb(Uint8List.fromList(fileData.codeUnits),
+            "${eventId}_frc${pitTeamNumber}_pit${eventId}_frc${pitTeamNumber}_pit.csv");
+      } else {
+        await saveFileNative(Uint8List.fromList(fileData.codeUnits),
+            "${eventId}_frc${pitTeamNumber}_pit${eventId}_frc${pitTeamNumber}_pit.csv");
+      }
     } else {
-      saveFileNative(Uint8List.fromList(fileData.codeUnits),
-          "${eventId}_frc${pitTeamNumber}_pit/${eventId}_frc${pitTeamNumber}_pit.csv");
+      if (kIsWeb) {
+        await saveFileWeb(Uint8List.fromList(getPitCBORFormattedData()),
+            "${eventId}_frc${pitTeamNumber}_pit${eventId}_frc${pitTeamNumber}_pit.cbor");
+      } else {
+        await saveFileNative(Uint8List.fromList(getPitCBORFormattedData()),
+            "${eventId}_frc${pitTeamNumber}_pit${eventId}_frc${pitTeamNumber}_pit.cbor");
+      }
     }
 
     if (!mounted) return;
@@ -3238,27 +3273,8 @@ class _FormAppPageState extends State<FormAppPage> {
     );
   }
 
-  List<List> getMatchKVFormattedData(
-      {bool transpose = false, bool header = true}) {
-    List<List<dynamic>> data = [];
-    matchScoutingData.forEach((key, value) {
-      data.add([key, (value is List ? value.join(",") : value.toString())]);
-    });
-
-    if (!header) {
-      data = data.map((row) => row.sublist(1)).toList();
-    }
-
-    if (!transpose) return data;
-
-    List<List> transposedData = List.generate(
-        data[0].length, (i) => List.generate(data.length, (j) => data[j][i]));
-
-    return transposedData;
-  }
-
-  void onMatchScoutSave() async {
-    if (matchNumber == null) {
+  void onAutonScoutSave() async {
+    if (autonTeamNumber == null) {
       if (!mounted) return;
       showDialog(
         context: context,
@@ -3312,19 +3328,169 @@ class _FormAppPageState extends State<FormAppPage> {
       return;
     }
 
-    final fileData = const ListToCsvConverter().convert(getPitKVFormattedData(
+    final fileData = const ListToCsvConverter().convert(getAutonKVFormattedData(
         transpose: transposedExport, header: exportHeaders));
 
     setState(() {
       saveDisabled = true;
     });
 
-    if (kIsWeb) {
-      saveFileWeb(Uint8List.fromList(fileData.codeUnits),
-          "${eventId}_frc${matchNumber}_match/${eventId}_frc${matchNumber}_match${matchScoutingData['match']}.csv");
+    if (!cborTrue) {
+      if (kIsWeb) {
+        await saveFileWeb(Uint8List.fromList(fileData.codeUnits),
+            "${eventId}_frc${autonTeamNumber}_match${eventId}_frc${autonTeamNumber}_match${autonMatchNumber}.csv");
+      } else {
+        await saveFileNative(Uint8List.fromList(fileData.codeUnits),
+            "${eventId}_frc${autonTeamNumber}_match${eventId}_frc${autonTeamNumber}_match${autonMatchNumber}.csv");
+      }
     } else {
-      saveFileNative(Uint8List.fromList(fileData.codeUnits),
-          "${eventId}_frc${matchNumber}_match/${eventId}_frc${matchNumber}_match${matchScoutingData['match']}.csv");
+      if (kIsWeb) {
+        await saveFileWeb(Uint8List.fromList(getAutonCBORFormattedData()),
+            "${eventId}_frc${autonTeamNumber}_match${eventId}_frc${autonTeamNumber}_match${autonMatchNumber}.cbor");
+      } else {
+        await saveFileNative(Uint8List.fromList(getAutonCBORFormattedData()),
+            "${eventId}_frc${autonTeamNumber}_match${eventId}_frc${autonTeamNumber}_match${autonMatchNumber}.cbor");
+      }
+    }
+
+    if (!mounted) return;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Completed?"),
+          icon: const Icon(
+            Icons.question_mark_rounded,
+            size: 72,
+          ),
+          content: const Text("Do you want to mark the task as complete?"),
+          actionsOverflowButtonSpacing: 20,
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("No"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  autonPageIndex = 0;
+                });
+                resetAuton();
+                Navigator.of(context).pop();
+              },
+              child: const Text("Yes"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  List<List> getMatchKVFormattedData(
+      {bool transpose = false, bool header = true}) {
+    List<List<dynamic>> data = [];
+    matchScoutingData.forEach((key, value) {
+      data.add([key, (value is List ? value.join(",") : value.toString())]);
+    });
+
+    if (!header) {
+      data = data.map((row) => row.sublist(1)).toList();
+    }
+
+    if (!transpose) return data;
+
+    List<List> transposedData = List.generate(
+        data[0].length, (i) => List.generate(data.length, (j) => data[j][i]));
+
+    return transposedData;
+  }
+
+  List<int> getMatchCBORFormattedData() {
+    List<int> data = cbor.encode({matchScoutingData});
+
+    return data;
+  }
+
+  void onMatchScoutSave() async {
+    if (match1TeamNumber == null || match2TeamNumber == null || match3TeamNumber == null) {
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Team Number Required"),
+            icon: const Icon(
+              Icons.numbers_rounded,
+              size: 72,
+            ),
+            content: const Text("Save operation cancelled"),
+            actionsOverflowButtonSpacing: 20,
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
+    if (eventId == "") {
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Event ID Required"),
+            icon: const Icon(
+              Icons.abc_rounded,
+              size: 72,
+            ),
+            content: const Text("Save operation cancelled"),
+            actionsOverflowButtonSpacing: 20,
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
+    final fileData = const ListToCsvConverter().convert(getMatchKVFormattedData(
+        transpose: transposedExport, header: exportHeaders));
+
+    setState(() {
+      saveDisabled = true;
+    });
+
+    if (!cborTrue) {
+      if (kIsWeb) {
+        await saveFileWeb(Uint8List.fromList(fileData.codeUnits),
+            "${eventId}_frc${matchScoutingData["alliance"]}_match${eventId}_frc${match1TeamNumber}_${match2TeamNumber}_${match3TeamNumber}_match${teleopMatchNumber}.csv");
+      } else {
+        await saveFileNative(Uint8List.fromList(fileData.codeUnits),
+            "${eventId}_frc${matchScoutingData["alliance"]}_match${eventId}_frc${match1TeamNumber}_${match2TeamNumber}_${match3TeamNumber}_match${teleopMatchNumber}.csv");
+      }
+    } else {
+      if (kIsWeb) {
+        await saveFileWeb(Uint8List.fromList(getMatchCBORFormattedData()),
+            "${eventId}_frc${matchScoutingData["alliance"]}_match${eventId}_frc${match1TeamNumber}_${match2TeamNumber}_${match3TeamNumber}_match${teleopMatchNumber}.cbor");
+      } else {
+        await saveFileNative(Uint8List.fromList(getMatchCBORFormattedData()),
+            "${eventId}_frc${matchScoutingData["alliance"]}_match${eventId}_frc${match1TeamNumber}_${match2TeamNumber}_${match3TeamNumber}_match${teleopMatchNumber}.cbor");
+      }
     }
 
     if (!mounted) return;
@@ -3351,7 +3517,7 @@ class _FormAppPageState extends State<FormAppPage> {
                 setState(() {
                   matchPageIndex = 0;
                 });
-                resetPit();
+                resetMatch();
                 Navigator.of(context).pop();
               },
               child: const Text("Yes"),
@@ -3423,7 +3589,7 @@ class _FormAppPageState extends State<FormAppPage> {
     match1TeamNumber = null;
     match2TeamNumber = null;
     match3TeamNumber = null;
-    matchNumber = null;
+    teleopMatchNumber = null;
     matchScoutingData = Map.from(matchScoutingDefaultData);
     setState(() {
       matchPageIndex = 0;

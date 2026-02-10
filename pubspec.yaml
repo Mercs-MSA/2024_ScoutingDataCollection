@@ -46,6 +46,7 @@ dependencies:
   url_launcher_web: ^2.4.0
   url_launcher: ^6.3.1
   widgets_to_image: ^1.0.0
+  cbor: ^6.5.0
 
 
 dev_dependencies:
