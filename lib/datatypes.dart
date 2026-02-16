@@ -4,7 +4,7 @@ enum Alliance { red, blue }
 
 enum MatchStartPos { left, middle, right }
 
-enum AlgaePositions { processor, barge, descore } /// To be deleted
+enum AlgaePositions { trench, bump }
 
 enum ClimbPositions { one, two, three }
 

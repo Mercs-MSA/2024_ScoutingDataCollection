@@ -128,6 +128,9 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             onEfficiencyChanged: (newValue) {
                               widget.form.onDataChanged({"team1DefenderEfficiency": newValue});
                             },
+                            form: widget.form.formData,
+                            onDataChanged: widget.form.onDataChanged,
+                            team: "team1"
                           )
                         ] else 
                           SizedBox(),
@@ -198,6 +201,9 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             onEfficiencyChanged: (newValue) {
                               widget.form.onDataChanged({"team2DefenderEfficiency": newValue});
                             },
+                            form: widget.form.formData,
+                            onDataChanged: widget.form.onDataChanged,
+                            team: "team2"
                           )
                         ] else 
                           SizedBox(),
@@ -268,6 +274,10 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             onEfficiencyChanged: (newValue) {
                               widget.form.onDataChanged({"team3DefenderEfficiency": newValue});
                             },
+                            form: widget.form.formData,
+                            onDataChanged: widget.form.onDataChanged,
+                            team: "team3"
+                            // defendLocations: widget.form.formData["team3DefendLocations"],
                           )
                         ] else 
                           SizedBox(),
@@ -284,7 +294,6 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                           )
                         ] else 
                           SizedBox(),
-
                       ],
                     ),
                   ),

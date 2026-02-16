@@ -504,15 +504,37 @@ class FeederEvaluation2026 extends StatelessWidget {
 }
 
 
-class DefenderEvaluation2026 extends StatelessWidget {
+class DefenderEvaluation2026 extends StatefulWidget {
   final int ratingRange;
   final Function(double) onEfficiencyChanged;
+
+  // final List<bool> defendLocations;
+  final onDataChanged;
+  final Map<dynamic, dynamic> form;
+  final String team;
 
   const DefenderEvaluation2026({
     super.key,
     required this.ratingRange,
     required this.onEfficiencyChanged,
+    required this.form,
+    required this.onDataChanged,
+    required this.team
+    // required this.defendLocations,
   });
+
+  @override
+  State<DefenderEvaluation2026> createState() => _DefenderEvaluation2026State();
+}
+
+class _DefenderEvaluation2026State extends State<DefenderEvaluation2026> {
+  late dynamic defendLocation = [false, false, false, false, false];
+
+  @override
+  void initState() {
+    super.initState();
+    // defendLocation = widget.form["team3DefendLocations"][0] ?? false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -534,17 +556,77 @@ class DefenderEvaluation2026 extends StatelessWidget {
             RatingInput(
               title: "Efficiency", 
               fontSize: 16,
-              onRatingUpdate: onEfficiencyChanged,
+              onRatingUpdate: widget.onEfficiencyChanged,
               initialRating: 0,
-              itemCount: max(1, ratingRange),
+              itemCount: max(1, widget.ratingRange),
               enableHalves: false
             ),
-            // SizedBox(height: 8.0),
-            // Row(
-            //   children: [
-                
-            //   ],
-            // )
+            SizedBox(height: 8.0),
+            Text("Defend Locations"),
+            SizedBox(height: 8.0),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Checkbox(
+                    value: defendLocation[0], 
+                    onChanged: (value) {
+                      setState(() {
+                        defendLocation[0] = value ?? false;
+                        widget.onDataChanged({"${widget.team}DefendLocations": defendLocation});
+                      });
+                    }
+                  ),
+                ),
+                SizedBox(width: 3.0),
+                Expanded(
+                  child: Checkbox(
+                    value: defendLocation[1], 
+                    onChanged: (value) {
+                      setState(() {
+                        defendLocation[1] = value ?? false;
+                        widget.onDataChanged({"${widget.team}DefendLocations": defendLocation});
+                      });
+                    }
+                  ),
+                ),
+                SizedBox(width: 3.0),
+                Expanded(
+                  child: Checkbox(
+                    value: defendLocation[2], 
+                    onChanged: (value) {
+                      setState(() {
+                        defendLocation[2] = value ?? false;
+                        widget.onDataChanged({"${widget.team}DefendLocations": defendLocation});
+                      });
+                    }
+                  ),
+                ),
+                SizedBox(width: 3.0),
+                Expanded(
+                  child: Checkbox(
+                    value: defendLocation[3], 
+                    onChanged: (value) {
+                      setState(() {
+                        defendLocation[3] = value ?? false;
+                        widget.onDataChanged({"${widget.team}DefendLocations": defendLocation});
+                      });
+                    }
+                  ),
+                ),
+                SizedBox(width: 3.0),
+                Expanded(
+                  child: Checkbox(
+                    value: defendLocation[4], 
+                    onChanged: (value) {
+                      setState(() {
+                        defendLocation[4] = value ?? false;
+                        widget.onDataChanged({"${widget.team}DefendLocations": defendLocation});
+                      });
+                    }
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),

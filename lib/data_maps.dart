@@ -11,6 +11,8 @@ Map<String, dynamic> getPitDataMap() {
     "length": null,
     "weight": null,
     "canShoot": false,
+    "minStorage": 0,
+    "maxStorage": 0,
     "climbLevelOne": false,
     "climbLevelTwo": false,
     "climbLevelThree": false,
@@ -38,7 +40,7 @@ Map<String, dynamic> getPitDataMap() {
     "autonL1Num": 0,
     "autonUpperAlgaeDescore": 0,
     "autonLowerAlgaeDescore": 0,
-    "autonProcessor": 0,
+    "autonTrench": 0,
     "autonNetScore": 0,
     "kitbotType": "not",
     "isModifiedKit": false,
@@ -105,6 +107,27 @@ Map<String, dynamic> getMatchDataMap() {
     "team1DefenderEfficiency": 0.0,
     "team2DefenderEfficiency": 0.0,
     "team3DefenderEfficiency": 0.0,
+    "team1DefendLocations": [false, false, false, false, false],
+    "team2DefendLocations": [false, false, false, false, false],
+    "team3DefendLocations": [false, false, false, false, false],
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
     "team1EndgameLevel": 0,
     "team2EndgameLevel": 0,
@@ -141,7 +164,7 @@ Map<String, dynamic> getKitbotData(KitBotTypes type) {
       "lTwo": false,
       "lThree": false,
       "lFour": false,
-      "processor": false,
+      "trench": false,
       "barge": false,
       "descore": false,
       "deepClimb": false,
@@ -156,8 +179,8 @@ Map<String, dynamic> getKitbotData(KitBotTypes type) {
       "lTwo": true,
       "lThree": true,
       "lFour": false,
-      "processor": true,
-      "descore": true,
+      "trench": true,
+      "bump": true,
       "barge": false,
       "deepClimb": false,
       "shallowClimb": false,
@@ -171,8 +194,8 @@ Map<String, dynamic> getKitbotData(KitBotTypes type) {
       "lTwo": false,
       "lThree": false,
       "lFour": false,
-      "processor": true,
-      "descore": false,
+      "trench": true,
+      "bump": false,
       "barge": false,
       "deepClimb": true,
       "shallowClimb": false,
@@ -186,8 +209,8 @@ Map<String, dynamic> getKitbotData(KitBotTypes type) {
       "lTwo": true,
       "lThree": true,
       "lFour": true,
-      "processor": true,
-      "descore": true,
+      "trench": true,
+      "bump": true,
       "barge": true,
       "deepClimb": false,
       "shallowClimb": true,
@@ -201,9 +224,8 @@ Map<String, dynamic> getKitbotData(KitBotTypes type) {
       "lTwo": false,
       "lThree": false,
       "lFour": false,
-      "processor": false,
-      "descore": false,
-      "barge": false,
+      "trench": false,
+      "bump": false,
       "deepClimb": false,
       "shallowClimb": false,
       "drivebase": "Swerve",

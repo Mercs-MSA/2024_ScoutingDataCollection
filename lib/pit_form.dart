@@ -54,6 +54,7 @@ class _PitFormState extends State<PitForm> {
                     ],
                   ),
                   const SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   Card(
                     color: Theme.of(context).colorScheme.tertiary,
                     child: Column(
@@ -288,7 +289,7 @@ class _PitFormState extends State<PitForm> {
                       });
                     },
                     choice: widget.formData["drivebase"],
-                    options: const ["Swerve", "Tank", "Other"],
+                    options: const ["Swerve", "Tank", "Mecanum", "Omni", "H-Drive"],
                   ),
                   const SizedBox(height: 8.0),
                   RatingInput(
@@ -339,35 +340,28 @@ class _PitFormState extends State<PitForm> {
                                 WidgetStateProperty.all(EdgeInsets.all(18.0))),
                         segments: <ButtonSegment<AlgaePositions>>[
                           ButtonSegment(
-                              value: AlgaePositions.processor,
-                              label: Text('Processor')),
+                              value: AlgaePositions.trench,
+                              label: Text('Trench')),
                           ButtonSegment(
-                              value: AlgaePositions.barge,
-                              label: Text('Barge')),
-                          ButtonSegment(
-                              value: AlgaePositions.descore,
-                              label: Text('Descore')),
+                              value: AlgaePositions.bump,
+                              label: Text('Bump')),
+                          // Descore removed
                         ],
                         selected: {
-                          if (widget.formData["processor"] != null &&
-                              widget.formData["processor"])
-                            AlgaePositions.processor,
-                          if (widget.formData["barge"] != null &&
-                              widget.formData["barge"])
-                            AlgaePositions.barge,
-                          if (widget.formData["descore"] != null &&
-                              widget.formData["descore"])
-                            AlgaePositions.descore,
+                          if (widget.formData["trench"] != null &&
+                              widget.formData["trench"])
+                            AlgaePositions.trench,
+                          if (widget.formData["bump"] != null &&
+                              widget.formData["bump"])
+                            AlgaePositions.bump,
+                          // descore removed
                         },
                         onSelectionChanged: (Set<AlgaePositions> newSelection) {
                           setState(() {
                             widget.onDataChanged({
-                              "processor": newSelection
-                                  .contains(AlgaePositions.processor),
-                              "barge":
-                                  newSelection.contains(AlgaePositions.barge),
-                              "descore":
-                                  newSelection.contains(AlgaePositions.descore)
+                              "trench": newSelection
+                                  .contains(AlgaePositions.trench),
+                              "bump": newSelection.contains(AlgaePositions.bump),
                             });
                           });
                         },
@@ -428,6 +422,75 @@ class _PitFormState extends State<PitForm> {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 8.0),
+                      Row(
+                        children: [
+                          Flexible(
+                            child: NumberInput(
+                              title: "Minimum",
+                              enableSpacer: true,
+                              value: widget.formData["minStorage"],
+                              onValueAdd: () {
+                                setState(() {
+                                  widget.onDataChanged({
+                                    "minStorage": widget.formData[
+                                            "minStorage"] +
+                                        5
+                                  });
+                                });
+                              },
+                              onValueSubtract: () {
+                                setState(() {
+                                  if (widget
+                                          .formData["minStorage"] >
+                                      0) {
+                                    widget.onDataChanged({
+                                      "minStorage": widget.formData[
+                                              "minStorage"] -
+                                          5
+                                    });
+                                  } else {
+                                    widget.onDataChanged(
+                                        {"minStorage": 0});
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                          Flexible(
+                            child: NumberInput(
+                              title: "Maximum",
+                              enableSpacer: true,
+                              value: widget.formData["maxStorage"],
+                              onValueAdd: () {
+                                setState(() {
+                                  widget.onDataChanged({
+                                    "maxStorage": widget.formData[
+                                            "maxStorage"] +
+                                        5
+                                  });
+                                });
+                              },
+                              onValueSubtract: () {
+                                setState(() {
+                                  if (widget
+                                          .formData["maxStorage"] >
+                                      0) {
+                                    widget.onDataChanged({
+                                      "maxStorage": widget.formData[
+                                              "maxStorage"] -
+                                          5
+                                    });
+                                  } else {
+                                    widget.onDataChanged(
+                                        {"maxStorage": 0});
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                   const SizedBox(height: 8.0),
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.center,
@@ -517,7 +580,7 @@ class _PitFormState extends State<PitForm> {
                           });
                         },
                         choice: widget.formData["humanPlayerLocation"],
-                        options: const ["Coral", "Processor", "Either"],
+                        options: const ["Coral", "Trench", "Either"],
                       ),
                     ),
                   ]),
@@ -742,7 +805,7 @@ class _PitFormState extends State<PitForm> {
                                         NumberInput(
                                           title: "L4",
                                           enableSpacer: true,
-                                          value: widget.formData["autonL4Num"],
+                                        value: widget.formData["autonL4Num"] ?? 0,
                                           onValueAdd: () {
                                             setState(() {
                                               widget.onDataChanged({
@@ -773,7 +836,7 @@ class _PitFormState extends State<PitForm> {
                                         NumberInput(
                                           title: "L3",
                                           enableSpacer: true,
-                                          value: widget.formData["autonL3Num"],
+                                          value: widget.formData["autonL3Num"] ?? 0,
                                           onValueAdd: () {
                                             setState(() {
                                               widget.onDataChanged({
@@ -804,7 +867,7 @@ class _PitFormState extends State<PitForm> {
                                         NumberInput(
                                           title: "L2",
                                           enableSpacer: true,
-                                          value: widget.formData["autonL2Num"],
+                                          value: widget.formData["autonL2Num"] ?? 0,
                                           onValueAdd: () {
                                             setState(() {
                                               widget.onDataChanged({
@@ -835,7 +898,7 @@ class _PitFormState extends State<PitForm> {
                                         NumberInput(
                                           title: "L1",
                                           enableSpacer: true,
-                                          value: widget.formData["autonL1Num"],
+                                          value: widget.formData["autonL1Num"] ?? 0,
                                           onValueAdd: () {
                                             setState(() {
                                               widget.onDataChanged({
@@ -874,8 +937,7 @@ class _PitFormState extends State<PitForm> {
                                       NumberInput(
                                         title: "Upper Descore",
                                         enableSpacer: true,
-                                        value: widget
-                                            .formData["autonUpperAlgaeDescore"],
+                                        value: widget.formData["autonUpperAlgaeDescore"] ?? 0,
                                         onValueAdd: () {
                                           setState(() {
                                             widget.onDataChanged({
@@ -912,8 +974,7 @@ class _PitFormState extends State<PitForm> {
                                       NumberInput(
                                         title: "Lower Descore",
                                         enableSpacer: true,
-                                        value: widget
-                                            .formData["autonLowerAlgaeDescore"],
+                                        value: widget.formData["autonLowerAlgaeDescore"] ?? 0,
                                         onValueAdd: () {
                                           setState(() {
                                             widget.onDataChanged({
@@ -948,15 +1009,14 @@ class _PitFormState extends State<PitForm> {
                                         currColor: widget.colorDebug,
                                       ),
                                       NumberInput(
-                                        title: "Processor",
+                                        title: "Trench",
                                         enableSpacer: true,
-                                        value:
-                                            widget.formData["autonProcessor"],
+                                        value: widget.formData["autonTrench"] ?? 0,
                                         onValueAdd: () {
                                           setState(() {
                                             widget.onDataChanged({
-                                              "autonProcessor": widget.formData[
-                                                      "autonProcessor"] +
+                                              "autonTrench": widget.formData[
+                                                      "autonTrench"] +
                                                   1
                                             });
                                           });
@@ -965,17 +1025,17 @@ class _PitFormState extends State<PitForm> {
                                           setState(
                                             () {
                                               if (widget.formData[
-                                                      "autonProcessor"] >
+                                                      "autonTrench"] >
                                                   0) {
                                                 widget.onDataChanged({
-                                                  "autonProcessor": widget
+                                                  "autonTrench": widget
                                                               .formData[
-                                                          "autonProcessor"] -
+                                                          "autonTrench"] -
                                                       1
                                                 });
                                               } else {
                                                 widget.onDataChanged(
-                                                    {"autonProcessor": 0});
+                                                    {"autonTrench": 0});
                                               }
                                             },
                                           );
@@ -986,7 +1046,7 @@ class _PitFormState extends State<PitForm> {
                                       NumberInput(
                                         title: "Direct Net",
                                         enableSpacer: true,
-                                        value: widget.formData["autonNetScore"],
+                                        value: widget.formData["autonNetScore"] ?? 0,
                                         onValueAdd: () {
                                           setState(() {
                                             widget.onDataChanged({
