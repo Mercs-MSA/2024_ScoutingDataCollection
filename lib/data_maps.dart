@@ -116,23 +116,6 @@ Map<String, dynamic> getMatchDataMap() {
     "team3DefendLocations": [false, false, false, false, false],
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
     "team1EndgameLevel": 0,
     "team2EndgameLevel": 0,
     "team3EndgameLevel": 0,
