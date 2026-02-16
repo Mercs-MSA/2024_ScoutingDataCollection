@@ -372,55 +372,141 @@ class _PitFormState extends State<PitForm> {
                   ),
                   const SizedBox(height: 8.0),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
                     children: [
-                      const Text("Climbing"),
-                      const SizedBox(width: 8.0),
-                      SegmentedButton<ClimbPositions>(
-                        style: ButtonStyle(
-                            backgroundColor:
-                                WidgetStateProperty.resolveWith<Color>(
-                              (Set<WidgetState> states) {
-                                if (states.contains(WidgetState.selected)) {
-                                  return ColorScheme.fromSeed(
-                                          seedColor: Colors.blue)
-                                      .primary;
-                                }
-                                return Colors.transparent;
-                              },
-                            ),
-                            padding:
-                                WidgetStateProperty.all(EdgeInsets.all(18.0))),
-                        segments: <ButtonSegment<ClimbPositions>>[
-                          ButtonSegment(
-                              value: ClimbPositions.one,
-                              label: Text('Shallow Climb')),
-                          ButtonSegment(
-                              value: ClimbPositions.two,
-                              label: Text('Deep Climb')),
-                        ],
-                        selected: {
-                          if (widget.formData["shallowClimb"] != null &&
-                              widget.formData["shallowClimb"])
-                            ClimbPositions.one,
-                          if (widget.formData["deepClimb"] != null &&
-                              widget.formData["deepClimb"])
-                            ClimbPositions.two,
-                        },
-                        onSelectionChanged: (Set<ClimbPositions> newSelection) {
-                          setState(() {
-                            widget.onDataChanged({
-                              "shallowClimb":
-                                  newSelection.contains(ClimbPositions.one),
-                              "deepClimb":
-                                  newSelection.contains(ClimbPositions.two),
-                            });
-                          });
-                        },
-                        multiSelectionEnabled: true,
-                        emptySelectionAllowed: true,
+                      Text("Climbing"),
+                      Expanded(
+                        child: Container(
+                          margin:
+                              const EdgeInsets.only(left: 15.0, right: 10.0),
+                          child: Divider(),
+                        ),
                       ),
                     ],
+                  ),
+                  const SizedBox(height: 12.0),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Theme.of(context).dividerColor,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    clipBehavior: Clip.hardEdge,
+                    child: Column(
+                      children: [
+                        // Header row (Level labels)
+                        Container(
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: Container(
+                                  padding: const EdgeInsets.all(12.0),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      right: BorderSide(
+                                        color: Theme.of(context).dividerColor,
+                                        width: 1,
+                                      ),
+                                    ),
+                                  ),
+                                  height: 50,
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.all(12.0),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      right: BorderSide(
+                                        color: Theme.of(context).dividerColor,
+                                        width: 1,
+                                      ),
+                                    ),
+                                  ),
+                                  height: 50,
+                                  child: const Text(
+                                    "Level 1",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.all(12.0),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      right: BorderSide(
+                                        color: Theme.of(context).dividerColor,
+                                        width: 1,
+                                      ),
+                                    ),
+                                  ),
+                                  height: 50,
+                                  child: const Text(
+                                    "Level 2",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.all(12.0),
+                                  alignment: Alignment.center,
+                                  height: 50,
+                                  child: const Text(
+                                    "Level 3",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // Front row
+                        _buildClimbRow(context, "Front", "Front"),
+                        // Back row
+                        _buildClimbRow(context, "Back", "Back"),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 12.0),
+                  TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Climb Time Increment',
+                      suffixText: "seconds",
+                    ),
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    onChanged: (value) {
+                      widget.onDataChanged({"climbTime": int.tryParse(value)});
+                    },
+                    controller: TextEditingController(
+                      text: widget.formData["climbTime"] == null
+                          ? ''
+                          : widget.formData["climbTime"].toString(),
+                    ),
                   ),
                   const SizedBox(height: 8.0),
                       Row(
@@ -1173,6 +1259,85 @@ class _PitFormState extends State<PitForm> {
         else
           const SizedBox(),
       ],
+    );
+  }
+
+  Row _buildClimbRow(BuildContext context, String rowLabel, String position) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 1,
+          child: Container(
+            padding: const EdgeInsets.all(12.0),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              border: Border(
+                right: BorderSide(
+                  color: Theme.of(context).dividerColor,
+                  width: 1,
+                ),
+              ),
+            ),
+            height: 70,
+            child: Text(
+              rowLabel,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          child: _buildClimbCell(context, "climb${position}L1"),
+        ),
+        Expanded(
+          child: _buildClimbCell(context, "climb${position}L2"),
+        ),
+        Expanded(
+          child: _buildClimbCell(context, "climb${position}L3"),
+        ),
+      ],
+    );
+  }
+
+  Container _buildClimbCell(BuildContext context, String dataKey) {
+    final isChecked = widget.formData[dataKey] ?? false;
+
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          right: BorderSide(
+            color: Theme.of(context).dividerColor,
+            width: 1,
+          ),
+        ),
+      ),
+      height: 70,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            setState(() {
+              widget.onDataChanged({dataKey: !isChecked});
+            });
+          },
+          child: Container(
+            color: isChecked
+                ? Theme.of(context).colorScheme.primary.withOpacity(0.2)
+                : Colors.transparent,
+            alignment: Alignment.center,
+            child: Checkbox(
+              value: isChecked,
+              onChanged: (bool? newValue) {
+                setState(() {
+                  widget.onDataChanged({dataKey: newValue ?? false});
+                });
+              },
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
