@@ -24,6 +24,7 @@ Map<String, dynamic> getPitDataMap() {
     "operatorYears": null,
     "coachYears": null,
     "isCoachAdult": false,
+    "numShooters": 1,
     "drivebase": "Swerve",
     "repairability": 3.0,
     "humanPlayerLocation": "Coral",

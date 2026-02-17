@@ -160,7 +160,7 @@ class _PitFormState extends State<PitForm> {
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text("Mechanical"),
+                      Text("General Robot Information"),
                       Expanded(
                         child: Container(
                           margin:
@@ -318,7 +318,7 @@ class _PitFormState extends State<PitForm> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Algae"),
+                      const Text("Movement"),
                       const SizedBox(width: 8.0),
                       SegmentedButton<AlgaePositions>(
                         style: ButtonStyle(
@@ -423,11 +423,26 @@ class _PitFormState extends State<PitForm> {
                     ],
                   ),
                   const SizedBox(height: 8.0),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text("Storage"),
+                      Expanded(
+                        child: Container(
+                          margin:
+                              const EdgeInsets.only(left: 15.0, right: 10.0),
+                          child: Divider(),
+                        ),
+                      ),
+                    ],
+                  ),
+                
+                  const SizedBox(height: 8.0),
                       Row(
                         children: [
                           Flexible(
                             child: NumberInput(
-                              title: "Minimum",
+                              title: "Minimum Storage",
                               enableSpacer: true,
                               value: widget.formData["minStorage"],
                               onValueAdd: () {
@@ -436,7 +451,15 @@ class _PitFormState extends State<PitForm> {
                                     "minStorage": widget.formData[
                                             "minStorage"] +
                                         5
+                                        
                                   });
+                                  if (widget.formData["minStorage"] >
+                                      widget.formData["maxStorage"]) {
+                                    widget.onDataChanged({
+                                      "maxStorage": widget.formData[
+                                              "minStorage"]
+                                    });
+                                  }
                                 });
                               },
                               onValueSubtract: () {
@@ -459,7 +482,7 @@ class _PitFormState extends State<PitForm> {
                           ),
                           Flexible(
                             child: NumberInput(
-                              title: "Maximum",
+                              title: "Maximum Storage",
                               enableSpacer: true,
                               value: widget.formData["maxStorage"],
                               onValueAdd: () {
@@ -495,22 +518,111 @@ class _PitFormState extends State<PitForm> {
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.center,
                   //   children: [
-                  CheckboxListTile(
-                    title: Text("Ground intake?"),
-                    value: widget.formData["groundIntake"],
-                    onChanged: (bool? newValue) {
-                      setState(() {
-                        widget.onDataChanged({"groundIntake": newValue});
-                      });
-                    },
-                  ),
+                  
                   // ],
                   // ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text("Intake"),
+                      Expanded(
+                        child: Container(
+                          margin:
+                              const EdgeInsets.only(left: 15.0, right: 10.0),
+                          child: Divider(),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          width: 1.0, color: Theme.of(context).dividerColor),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    
+                    child: Column(
+                      children: [
+                        
+                        const Text("Type of intake?"),
+                        const SizedBox(height: 8.0),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: RadioListTile(
+                                key: Key("pit-intake"),
+                                title: Text("Slapdown"),
+                                value: widget.formData["intakeType"] == "slapdown",
+                                groupValue: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    widget.onDataChanged({
+                                      "intakeType": "slapdown"
+                                    });
+                                  });
+                                },
+                              ),
+                            ),
+                            Expanded(
+                              child: RadioListTile(
+                                key: Key("pit-intake"),
+                                title: Text("Four-Bar"),
+                                value:
+                                    widget.formData["intakeType"] == "fourbar",
+                                groupValue: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    widget.onDataChanged({
+                                      "intakeType": "fourbar"
+                                    });
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: RadioListTile(
+                                key: Key("pit-intake"),
+                                title: Text("Open-Bumper"),
+                                value: widget.formData["intakeType"] == "openbumper",
+                                groupValue: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    widget.onDataChanged(
+                                        {"intakeType": "openbumper"});
+                                  });
+                                },
+                              ),
+                            ),
+                            Expanded(
+                              child: RadioListTile(
+                                key: Key("pit-intake"),
+                                title: Text("Bucket"),
+                                value: widget.formData["intakeType"] == "bucket",
+                                groupValue: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    widget.onDataChanged(
+                                        {"intakeType": "bucket"});
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                   const SizedBox(height: 8.0),
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text("TeleOp Strategy"),
+                      Text("Shooter"),
                       Expanded(
                         child: Container(
                           margin:
@@ -524,40 +636,48 @@ class _PitFormState extends State<PitForm> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Role (Cycle)"),
+                      const Text("Shooter"),
                       const SizedBox(width: 8.0),
-                      SegmentedButton<TeleopRole>(
+                      SegmentedButton<ShooterTypes>(
                         style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStateProperty.resolveWith<Color>(
+                              (Set<WidgetState> states) {
+                                if (states.contains(WidgetState.selected)) {
+                                  return ColorScheme.fromSeed(
+                                    seedColor: widget.colorDebug
+                                        ? Colors.green
+                                        : const Color.fromARGB(
+                                            255, 78, 180, 127),
+                                  ).primary;
+                                }
+                                return Colors.transparent;
+                              },
+                            ),
                             padding:
                                 WidgetStateProperty.all(EdgeInsets.all(18.0))),
-                        segments: <ButtonSegment<TeleopRole>>[
+                        segments: <ButtonSegment<ShooterTypes>>[
                           ButtonSegment(
-                              value: TeleopRole.shooter, label: Text('Coral')),
+                              value: ShooterTypes.turret,
+                              label: Text('Turret')),
                           ButtonSegment(
-                              value: TeleopRole.defense,
-                              label: Text('Defense')),
-                          ButtonSegment(
-                              value: TeleopRole.feed, label: Text('Feeding')),
+                              value: ShooterTypes.hood,
+                              label: Text('Hood')),
+
                         ],
                         selected: {
-                          if (widget.formData["coralCycle"] != null &&
-                              widget.formData["coralCycle"])
-                            TeleopRole.shooter,
-                          if (widget.formData["defense"] != null &&
-                              widget.formData["defense"])
-                            TeleopRole.defense,
-                          if (widget.formData["feed"] != null &&
-                              widget.formData["feed"])
-                            TeleopRole.feed,
+                          if (widget.formData["turret"] != null &&
+                              widget.formData["turret"])
+                            ShooterTypes.turret,
+                          if (widget.formData["hood"] != null &&
+                              widget.formData["hood"])
+                            ShooterTypes.hood,
                         },
-                        onSelectionChanged: (Set<TeleopRole> newSelection) {
+                        onSelectionChanged: (Set<ShooterTypes> newSelection) {
                           setState(() {
                             widget.onDataChanged({
-                              "shooter":
-                                  newSelection.contains(TeleopRole.shooter),
-                              "defense":
-                                  newSelection.contains(TeleopRole.defense),
-                              "feed": newSelection.contains(TeleopRole.feed),
+                              "turret": newSelection.contains(ShooterTypes.turret),
+                              "hood": newSelection.contains(ShooterTypes.hood),
                             });
                           });
                         },
@@ -566,6 +686,107 @@ class _PitFormState extends State<PitForm> {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 8.0),
+                      Row(
+                        children: [
+                          Flexible(
+                            child: NumberInput(
+                              title: "Number of Shooters",
+                              enableSpacer: true,
+                              value: widget.formData["numShooters"],
+                              onValueAdd: () {
+                                setState(() {
+                                  if (widget.formData["numShooters"] < 3)
+                                  {
+                                    widget.onDataChanged({
+                                    "numShooters": widget.formData[
+                                            "numShooters"] +
+                                        1
+                                  });
+                                  }
+                                });
+                              },
+                              onValueSubtract: () {
+                                setState(() {
+                                  if (widget
+                                          .formData["numShooters"] >
+                                      1) {
+                                    widget.onDataChanged({
+                                      "numShooters": widget.formData[
+                                              "numShooters"] -
+                                          1
+                                    });
+                                  } else {
+                                    widget.onDataChanged(
+                                        {"numShooters": 1});
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                        ]
+                      ),
+                  const SizedBox(height: 8.0),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text("Strategy"),
+                      Expanded(
+                        child: Container(
+                          margin:
+                              const EdgeInsets.only(left: 15.0, right: 10.0),
+                          child: Divider(),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Role"),
+                      const SizedBox(width: 8.0),
+                      SegmentedButton<TeleopRole>(
+                        style: ButtonStyle(
+                            padding:
+                                WidgetStateProperty.all(EdgeInsets.all(18.0))),
+                        segments: <ButtonSegment<TeleopRole>>[
+                          ButtonSegment(
+                              value: TeleopRole.score, label: Text('Score')),
+                          ButtonSegment(
+                              value: TeleopRole.shunt,
+                              label: Text('Shunt')),
+                          ButtonSegment(
+                              value: TeleopRole.defense, label: Text('Defense')),
+                        ],
+                        selected: {
+                          if (widget.formData["score"] != null &&
+                              widget.formData["score"])
+                            TeleopRole.score,
+                          if (widget.formData["shunt"] != null &&
+                              widget.formData["shunt"])
+                            TeleopRole.shunt,
+                          if (widget.formData["defense"] != null &&
+                              widget.formData["defense"])
+                            TeleopRole.defense,
+                        },
+                        onSelectionChanged: (Set<TeleopRole> newSelection) {
+                          setState(() {
+                            widget.onDataChanged({
+                              "score":
+                                  newSelection.contains(TeleopRole.score),
+                              "shunt":
+                                  newSelection.contains(TeleopRole.shunt),
+                              "defense": newSelection.contains(TeleopRole.defense),
+                            });
+                          });
+                        },
+                        multiSelectionEnabled: true,
+                        emptySelectionAllowed: true,
+                      ),
+                    ],
+                  ),
+                  
                   const SizedBox(height: 12.0),
                   Row(children: [
                     const Text("Human Player"),
@@ -599,7 +820,7 @@ class _PitFormState extends State<PitForm> {
                     ],
                   ),
                   const Text(
-                      "How long has each member of the drive team been in their role?"),
+                      "Grade levels of drive team members (coach if applicable, otherwise leave blank)"),
                   const SizedBox(height: 8.0),
                   Row(
                     children: [
@@ -608,7 +829,7 @@ class _PitFormState extends State<PitForm> {
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Driver",
-                            suffixText: "Years"),
+                            suffixText: "Grade"),
                         keyboardType: TextInputType.number,
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.digitsOnly,
@@ -616,12 +837,12 @@ class _PitFormState extends State<PitForm> {
                         ],
                         onChanged: (value) {
                           widget.onDataChanged(
-                              {"driverYears": int.tryParse(value)});
+                              {"driverGrade": int.tryParse(value)});
                         },
                         controller: TextEditingController(
-                          text: widget.formData["driverYears"] == null
+                          text: widget.formData["driverGrade"] == null
                               ? ''
-                              : widget.formData["driverYears"].toString(),
+                              : widget.formData["driverGrade"].toString(),
                         ),
                       )),
                       const SizedBox(width: 8),
@@ -630,7 +851,7 @@ class _PitFormState extends State<PitForm> {
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Operator",
-                            suffixText: "Years"),
+                            suffixText: "Grade"),
                         keyboardType: TextInputType.number,
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.digitsOnly,
@@ -638,12 +859,12 @@ class _PitFormState extends State<PitForm> {
                         ],
                         onChanged: (value) {
                           widget.onDataChanged(
-                              {"operatorYears": int.tryParse(value)});
+                              {"operatorGrade": int.tryParse(value)});
                         },
                         controller: TextEditingController(
-                          text: widget.formData["operatorYears"] == null
+                          text: widget.formData["operatorGrade"] == null
                               ? ''
-                              : widget.formData["operatorYears"].toString(),
+                              : widget.formData["operatorGrade"].toString(),
                         ),
                       )),
                       const SizedBox(width: 8),
@@ -652,7 +873,7 @@ class _PitFormState extends State<PitForm> {
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Coach",
-                            suffixText: "Years"),
+                            suffixText: "Grade"),
                         keyboardType: TextInputType.number,
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.digitsOnly,
@@ -660,12 +881,12 @@ class _PitFormState extends State<PitForm> {
                         ],
                         onChanged: (value) {
                           widget.onDataChanged(
-                              {"coachYears": int.tryParse(value)});
+                              {"coachGrade": int.tryParse(value)});
                         },
                         controller: TextEditingController(
-                          text: widget.formData["coachYears"] == null
+                          text: widget.formData["coachGrade"] == null
                               ? ''
-                              : widget.formData["coachYears"].toString(),
+                              : widget.formData["coachGrade"].toString(),
                         ),
                       )),
                       const SizedBox(width: 8),
