@@ -13,9 +13,13 @@ Map<String, dynamic> getPitDataMap() {
     "canShoot": false,
     "minStorage": 0,
     "maxStorage": 0,
-    "climbLevelOne": false,
-    "climbLevelTwo": false,
-    "climbLevelThree": false,
+    "climbFrontL1": false,
+    "climbFrontL2": false,
+    "climbFrontL3": false,
+    "climbBackL1": false,
+    "climbBackL2": false,
+    "climbBackL3": false,
+    "climbTime": 0,
     "groundIntake": false,
     "shooter": false,
     "defense": false,
@@ -113,22 +117,18 @@ Map<String, dynamic> getMatchDataMap() {
     "team3DefendLocations": [false, false, false, false, false],
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
+    "team1EndgameLevel": 0,
+    "team2EndgameLevel": 0,
+    "team3EndgameLevel": 0,
+    "team1ClimbedFromRack": false,
+    "team2ClimbedFromRack": false,
+    "team3ClimbedFromRack": false,
+    "team1ClimbSpeed": 0,
+    "team2ClimbSpeed": 0,
+    "team3ClimbSpeed": 0,
+    "team1FailedClimb": false,
+    "team2FailedClimb": false,
+    "team3FailedClimb": false,
 
     "endgamePos": "none",
     "climbTime": 0,
@@ -155,8 +155,12 @@ Map<String, dynamic> getKitbotData(KitBotTypes type) {
       "trench": false,
       "barge": false,
       "descore": false,
-      "deepClimb": false,
-      "shallowClimb": false,
+      "climbFrontL1": false,
+      "climbFrontL2": false,
+      "climbFrontL3": false,
+      "climbBackL1": false,
+      "climbBackL2": false,
+      "climbBackL3": false,
       "drivebase": "Tank",
     };
   }
@@ -170,8 +174,12 @@ Map<String, dynamic> getKitbotData(KitBotTypes type) {
       "trench": true,
       "bump": true,
       "barge": false,
-      "deepClimb": false,
-      "shallowClimb": false,
+      "climbFrontL1": false,
+      "climbFrontL2": false,
+      "climbFrontL3": false,
+      "climbBackL1": false,
+      "climbBackL2": false,
+      "climbBackL3": false,
       "drivebase": "Swerve",
     };
   }
@@ -185,8 +193,12 @@ Map<String, dynamic> getKitbotData(KitBotTypes type) {
       "trench": true,
       "bump": false,
       "barge": false,
-      "deepClimb": true,
-      "shallowClimb": false,
+      "climbFrontL1": true,
+      "climbFrontL2": false,
+      "climbFrontL3": false,
+      "climbBackL1": false,
+      "climbBackL2": false,
+      "climbBackL3": false,
       "drivebase": "Tank",
     };
   }
@@ -200,8 +212,12 @@ Map<String, dynamic> getKitbotData(KitBotTypes type) {
       "trench": true,
       "bump": true,
       "barge": true,
-      "deepClimb": false,
-      "shallowClimb": true,
+      "climbFrontL1": false,
+      "climbFrontL2": true,
+      "climbFrontL3": true,
+      "climbBackL1": true,
+      "climbBackL2": true,
+      "climbBackL3": true,
       "drivebase": "Swerve",
     };
   }
@@ -214,8 +230,12 @@ Map<String, dynamic> getKitbotData(KitBotTypes type) {
       "lFour": false,
       "trench": false,
       "bump": false,
-      "deepClimb": false,
-      "shallowClimb": false,
+      "climbFrontL1": false,
+      "climbFrontL2": false,
+      "climbFrontL3": false,
+      "climbBackL1": false,
+      "climbBackL2": false,
+      "climbBackL3": false,
       "drivebase": "Swerve",
     };
   }

@@ -1130,35 +1130,57 @@ class _FormAppPageState extends State<FormAppPage> {
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Flexible(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: LayoutBuilder(
-                                        builder: (BuildContext context,
-                                            BoxConstraints constraints) {
-                                          return WidgetsToImage(
-                                            controller: pitPngController,
-                                            child: QrImageView(
-                                              data: getPitKVFormattedData(
-                                                      transpose: true,
-                                                      header: false)[0]
-                                                  .join("||"),
-                                              backgroundColor: Colors.white,
-                                              size: min(constraints.maxHeight,
-                                                  constraints.maxWidth),
-                                            ),
-                                          );
-                                        },
+                                  if (cborTrue) ... [
+                                    Flexible(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: LayoutBuilder(
+                                          builder: (BuildContext context,
+                                              BoxConstraints constraints) {
+                                            return WidgetsToImage(
+                                              controller: pitPngController,
+                                              child: QrImageView(
+                                                data: getPitCBORdataQR(),
+                                                backgroundColor: Colors.white,
+                                                size: min(constraints.maxHeight,
+                                                    constraints.maxWidth),
+                                              ),
+                                            );
+                                          },
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  ElevatedButton.icon(
-                                    onPressed: saveDisabled == false
-                                        ? onPitScoutQrSave
-                                        : null,
-                                    label: const Text("Export QR Code PNG"),
-                                    icon: const Icon(Icons.save),
-                                  ),
+                                  ] else ... [
+                                    Flexible(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: LayoutBuilder(
+                                          builder: (BuildContext context,
+                                              BoxConstraints constraints) {
+                                            return WidgetsToImage(
+                                              controller: pitPngController,
+                                              child: QrImageView(
+                                                data: getPitKVFormattedData(
+                                                        transpose: true,
+                                                        header: false)[0]
+                                                    .join("||"),
+                                                backgroundColor: Colors.white,
+                                                size: min(constraints.maxHeight,
+                                                    constraints.maxWidth),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    ElevatedButton.icon(
+                                      onPressed: saveDisabled == false
+                                          ? onPitScoutQrSave
+                                          : null,
+                                      label: const Text("Export QR Code PNG"),
+                                      icon: const Icon(Icons.save),
+                                    ),
+                                  ],
                                   const SizedBox(
                                     width: 8.0,
                                   ),
@@ -1626,35 +1648,57 @@ class _FormAppPageState extends State<FormAppPage> {
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Flexible(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: LayoutBuilder(
-                                        builder: (BuildContext context,
-                                            BoxConstraints constraints) {
-                                          return WidgetsToImage(
-                                            controller: autonPngController,
-                                            child: QrImageView(
-                                              data: getAutonKVFormattedData(
-                                                      transpose: true,
-                                                      header: false)[0]
-                                                  .join("||"),
-                                              backgroundColor: Colors.white,
-                                              size: min(constraints.maxHeight,
-                                                  constraints.maxWidth),
-                                            ),
-                                          );
-                                        },
+                                  if (cborTrue) ... [
+                                    Flexible(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: LayoutBuilder(
+                                          builder: (BuildContext context,
+                                              BoxConstraints constraints) {
+                                            return WidgetsToImage(
+                                              controller: autonPngController,
+                                              child: QrImageView(
+                                                data: getAutonCBORdataQR(),
+                                                backgroundColor: Colors.white,
+                                                size: min(constraints.maxHeight,
+                                                    constraints.maxWidth),
+                                              ),
+                                            );
+                                          },
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  ElevatedButton.icon(
-                                    onPressed: saveDisabled == false
-                                        ? onAutonScoutQrSave
-                                        : null,
-                                    label: const Text("Export QR Code PNG"),
-                                    icon: const Icon(Icons.save),
-                                  ),
+                                  ] else ... [
+                                    Flexible(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: LayoutBuilder(
+                                          builder: (BuildContext context,
+                                              BoxConstraints constraints) {
+                                            return WidgetsToImage(
+                                              controller: autonPngController,
+                                              child: QrImageView(
+                                                data: getAutonKVFormattedData(
+                                                        transpose: true,
+                                                        header: false)[0]
+                                                    .join("||"),
+                                                backgroundColor: Colors.white,
+                                                size: min(constraints.maxHeight,
+                                                    constraints.maxWidth),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    ElevatedButton.icon(
+                                      onPressed: saveDisabled == false
+                                          ? onAutonScoutQrSave
+                                          : null,
+                                      label: const Text("Export QR Code PNG"),
+                                      icon: const Icon(Icons.save),
+                                    ),
+                                  ],
                                   const SizedBox(
                                     width: 8.0,
                                   ),
@@ -2150,35 +2194,57 @@ class _FormAppPageState extends State<FormAppPage> {
                                         ),
                                       ),
                                     ),
-                                  Flexible(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: LayoutBuilder(
-                                        builder: (BuildContext context,
-                                            BoxConstraints constraints) {
-                                          return WidgetsToImage(
-                                            controller: matchPngController,
-                                            child: QrImageView(
-                                              data: getMatchKVFormattedData(
-                                                      transpose: true,
-                                                      header: false)[0]
-                                                  .join("||"),
-                                              backgroundColor: Colors.white,
-                                              size: min(constraints.maxHeight,
-                                                  constraints.maxWidth),
-                                            ),
-                                          );
-                                        },
+                                  if (cborTrue) ... [
+                                    Flexible(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: LayoutBuilder(
+                                          builder: (BuildContext context,
+                                              BoxConstraints constraints) {
+                                            return WidgetsToImage(
+                                              controller: autonPngController,
+                                              child: QrImageView(
+                                                data: getMatchCBORdataQR(),
+                                                backgroundColor: Colors.white,
+                                                size: min(constraints.maxHeight,
+                                                    constraints.maxWidth),
+                                              ),
+                                            );
+                                          },
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  ElevatedButton.icon(
-                                    onPressed: saveDisabled == false
-                                        ? onMatchScoutQrSave
-                                        : null,
-                                    label: const Text("Export QR Code PNG"),
-                                    icon: const Icon(Icons.save),
-                                  ),
+                                  ] else ... [
+                                    Flexible(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: LayoutBuilder(
+                                          builder: (BuildContext context,
+                                              BoxConstraints constraints) {
+                                            return WidgetsToImage(
+                                              controller: matchPngController,
+                                              child: QrImageView(
+                                                data: getMatchKVFormattedData(
+                                                        transpose: true,
+                                                        header: false)[0]
+                                                    .join("||"),
+                                                backgroundColor: Colors.white,
+                                                size: min(constraints.maxHeight,
+                                                    constraints.maxWidth),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    ElevatedButton.icon(
+                                      onPressed: saveDisabled == false
+                                          ? onMatchScoutQrSave
+                                          : null,
+                                      label: const Text("Export QR Code PNG"),
+                                      icon: const Icon(Icons.save),
+                                    ),
+                                  ],
                                   const Row(
                                     children: [
                                       Expanded(child: Divider()),
@@ -3110,6 +3176,12 @@ class _FormAppPageState extends State<FormAppPage> {
     return data;
   }
 
+  String getPitCBORdataQR() {
+    final Uint8List intermediary = Uint8List.fromList(getPitCBORFormattedData());
+    String cbor = base64Encode(intermediary);
+    return cbor;
+  }
+
   List<List> getAutonKVFormattedData(
       {bool transpose = false, bool header = true}) {
     List<List<dynamic>> data = [];
@@ -3133,6 +3205,12 @@ class _FormAppPageState extends State<FormAppPage> {
     List<int> data = cbor.encode({autonScoutingData});
 
     return data;
+  }
+
+  String getAutonCBORdataQR() {
+    final Uint8List intermediary = Uint8List.fromList(getAutonCBORFormattedData());
+    String cbor = base64Encode(intermediary);
+    return cbor;
   }
 
   void onAutonScoutQrSave() async {
@@ -3411,6 +3489,12 @@ class _FormAppPageState extends State<FormAppPage> {
     List<int> data = cbor.encode({matchScoutingData});
 
     return data;
+  }
+
+  String getMatchCBORdataQR() {
+    final Uint8List intermediary = Uint8List.fromList(getMatchCBORFormattedData());
+    String cbor = base64Encode(intermediary);
+    return cbor;
   }
 
   void onMatchScoutSave() async {

@@ -322,312 +322,506 @@ class MatchEndgameSection extends StatefulWidget {
 class _MatchEndgameSectionState extends State<MatchEndgameSection> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: const HSVColor.fromAHSV(1, 110, 1, 0.2).toColor(),
-      child: ListView(
-        shrinkWrap: true,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.max,
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SectionHeader(
-                  title: "Endgame Position",
-                  color: Theme.of(context).dividerColor),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                child: Container(
-                  color: Theme.of(context).cardColor,
-                  padding: const EdgeInsets.all(2.0),
-                  child: SegmentedButton<EndgamePositions>(
-                    showSelectedIcon: false,
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0),
+              // Endgame Grid Title
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: Text("Endgame",
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        )),
+              ),
+              
+              // Failed climb section
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: Text("Failed climb?",
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        )),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildTeamCheckbox(context, "team1FailedClimb",
+                        "Team ${widget.form.formData["team1"]}"),
+                  ),
+                  const SizedBox(width: 12.0),
+                  Expanded(
+                    child: _buildTeamCheckbox(context, "team2FailedClimb",
+                        "Team ${widget.form.formData["team2"]}"),
+                  ),
+                  const SizedBox(width: 12.0),
+                  Expanded(
+                    child: _buildTeamCheckbox(context, "team3FailedClimb",
+                        "Team ${widget.form.formData["team3"]}"),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 32.0),
+              
+              // Climb Level Grid
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Theme.of(context).dividerColor,
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                clipBehavior: Clip.hardEdge,
+                child: Column(
+                  children: [
+                    // Headers row (Team numbers)
+                    Container(
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              padding: const EdgeInsets.all(12.0),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  right: BorderSide(
+                                    color: Theme.of(context).dividerColor,
+                                    width: 1,
+                                  ),
+                                ),
+                              ),
+                              height: 50,
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.all(12.0),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  right: BorderSide(
+                                    color: Theme.of(context).dividerColor,
+                                    width: 1,
+                                  ),
+                                ),
+                              ),
+                              height: 50,
+                              child: Text(
+                                "Team ${widget.form.formData["team1"]}",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.all(12.0),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  right: BorderSide(
+                                    color: Theme.of(context).dividerColor,
+                                    width: 1,
+                                  ),
+                                ),
+                              ),
+                              height: 50,
+                              child: Text(
+                                "Team ${widget.form.formData["team2"]}",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.all(12.0),
+                              alignment: Alignment.center,
+                              height: 50,
+                              child: Text(
+                                "Team ${widget.form.formData["team3"]}",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    emptySelectionAllowed: true,
-                    multiSelectionEnabled: false,
-                    segments: <ButtonSegment<EndgamePositions>>[
-                      ButtonSegment(
-                        value: EndgamePositions.shallow,
-                        label: Text("Shallow Climb",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 15)),
-                        icon: Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Image(
-                            image: widget.form.formData["alliance"] == "red"
-                                ? AssetImage('images/shallow_cage_r.png')
-                                : AssetImage('images/shallow_cage_b.png'),
-                            fit: BoxFit.scaleDown,
-                            height: 100,
-                            isAntiAlias: true,
-                          ),
-                        ),
-                      ),
-                      ButtonSegment(
-                        value: EndgamePositions.deep,
-                        label: Text("Deep Climb",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 15)),
-                        icon: Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Image(
-                            image: widget.form.formData["alliance"] == "red"
-                                ? AssetImage('images/deep_cage_r.png')
-                                : AssetImage('images/deep_cage_b.png'),
-                            fit: BoxFit.scaleDown,
-                            height: 100,
-                            isAntiAlias: true,
-                          ),
-                        ),
-                      ),
-                    ],
-                    selected: {
-                      if (widget.form.formData["endgamePos"] == "shallow")
-                        EndgamePositions.shallow,
-                      if (widget.form.formData["endgamePos"] == "deep")
-                        EndgamePositions.deep,
-                    },
-                    onSelectionChanged: (Set<EndgamePositions> newSelection) {
-                      setState(() {
-                        if (newSelection.contains(EndgamePositions.shallow)) {
-                          widget.form.formData["endgamePos"] = "shallow";
-                        }
-                        if (newSelection.contains(EndgamePositions.deep)) {
-                          widget.form.formData["endgamePos"] = "deep";
-                        }
-                      });
-                    },
-                  ),
+                    // Level rows
+                    _buildLevelRow(context, "Lvl 3", 3),
+                    _buildLevelRow(context, "Lvl 2", 2),
+                    _buildLevelRow(context, "Lvl 1", 1),
+                  ],
                 ),
               ),
-            ],
-          ),
-          const SizedBox(
-            height: 8.0,
-          ),
-          Row(
-            children: [
+              const SizedBox(height: 32.0),
+              
+              // Climbed from the back section
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12.0),
+                child: Text("Climbed from the back?",
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        )),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildTeamCheckbox(context, "team1ClimbedFromBack",
+                        "Team ${widget.form.formData["team1"]}"),
+                  ),
+                  const SizedBox(width: 12.0),
+                  Expanded(
+                    child: _buildTeamCheckbox(context, "team2ClimbedFromBack",
+                        "Team ${widget.form.formData["team2"]}"),
+                  ),
+                  const SizedBox(width: 12.0),
+                  Expanded(
+                    child: _buildTeamCheckbox(context, "team3ClimbedFromBack",
+                        "Team ${widget.form.formData["team3"]}"),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 32.0),
+              
+              // Speed of climb section
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12.0),
+                child: Text("Speed of climb?",
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        )),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildSpeedControl(context, "Team ${widget.form.formData["team1"]}", 1),
+                  ),
+                  const SizedBox(width: 12.0),
+                  Expanded(
+                    child: _buildSpeedControl(context, "Team ${widget.form.formData["team2"]}", 2),
+                  ),
+                  const SizedBox(width: 12.0),
+                  Expanded(
+                    child: _buildSpeedControl(context, "Team ${widget.form.formData["team3"]}", 3),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 32.0),
+              
+              // Cards section
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12.0),
+                child: Text("Cards",
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        )),
+              ),
+              const SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               Container(
                 color: Theme.of(context).cardColor,
-                padding: const EdgeInsets.all(2.0),
-                child: SegmentedButton(
-                  showSelectedIcon: false,
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: LabeledSwitch(
+                        label: Text(
+                          "Yellow Card?",
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: widget.form.formData["yellowCard"]
+                                  ? Colors.black
+                                  : Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 20.0),
+                        value: widget.form.formData["yellowCard"],
+                        selectedColor: const Color.fromARGB(255, 244, 226, 73),
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            widget.form.onDataChanged({"yellowCard": newValue!});
+                          });
+                        },
+                      ),
                     ),
-                  ),
-                  emptySelectionAllowed: true,
-                  direction: Axis.vertical,
-                  segments: <ButtonSegment<EndgamePositions>>[
-                    ButtonSegment(
-                        value: EndgamePositions.park,
-                        icon: Icon(Icons.local_parking_rounded),
-                        label: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text("Park",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 15)),
-                        )),
-                    ButtonSegment(
-                        value: EndgamePositions.none,
-                        icon: Icon(Icons.not_interested_rounded),
-                        label: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text("No Park/Climb",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 15)),
-                        )),
+                    const SizedBox(
+                      width: 12.0,
+                    ),
+                    Expanded(
+                      child: LabeledSwitch(
+                        label: Text(
+                          "Red Card?",
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 20.0),
+                        value: widget.form.formData["redCard"],
+                        selectedColor: const Color.fromARGB(255, 217, 84, 74),
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            widget.form.onDataChanged({"redCard": newValue!});
+                          });
+                        },
+                      ),
+                    )
                   ],
-                  selected: {
-                    if (widget.form.formData["endgamePos"] == "park")
-                      EndgamePositions.park,
-                    if (widget.form.formData["endgamePos"] == "none")
-                      EndgamePositions.none,
-                  },
-                  onSelectionChanged: (Set<EndgamePositions> newSelection) {
-                    setState(() {
-                      if (newSelection.contains(EndgamePositions.park)) {
-                        widget.form.formData["endgamePos"] = "park";
-                      } else if (newSelection.contains(EndgamePositions.none)) {
-                        widget.form.formData["endgamePos"] = "none";
-                      }
-                      widget.form.formData["climbTime"] = 0;
-                    });
-                  },
                 ),
               ),
-              Expanded(
-                child: NumberInput(
-                  isDisabled:
-                      !(widget.form.formData["endgamePos"] == "shallow" ||
-                          widget.form.formData["endgamePos"] == "deep"),
-                  disabledText: "N/A",
-                  inputType: InputType.def,
-                  title: "Approx. Climb Time",
-                  value: widget.form.formData["climbTime"],
-                  suffix: (widget.form.formData["endgamePos"] == "shallow" ||
-                          widget.form.formData["endgamePos"] == "deep")
-                      ? Text(
-                          "s",
-                          style:
-                              TextStyle(fontSize: 28, fontFamily: "RobotoMono"),
-                        )
-                      : null,
+              const SizedBox(height: 32.0),
+              
+              // Extras section
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12.0),
+                child: Text("Extras",
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        )),
+              ),
+              CheckboxListTile(
+                  dense: true,
+                  title: const Text("Mark for Review?"),
+                  value: widget.form.formData["isMarkedForReview"],
+                  onChanged: (bool? newValue) {
+                    setState(() {
+                      widget.form.onDataChanged({"isMarkedForReview": newValue});
+                    });
+                  }),
+
+              Row(
+                children: [
+                  Expanded(
+                      child: CheckboxListTile(
+                        dense: true,
+                        title: const Text("Didn't Show Up?"),
+                        value: widget.form.formData["noShow"],
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            widget.form.onDataChanged({"noShow": newValue});
+                          });
+                        },
+                      )),
+                  Expanded(
+                      child: CheckboxListTile(
+                        dense: true,
+                        title: const Text("Disabled?"),
+                        value: widget.form.formData["disabled"],
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            widget.form.onDataChanged({"disabled": newValue});
+                          });
+                        },
+                      )),
+                ],
+              ),
+              NumberInput(
+                  title: "Penalties",
+                  value: widget.form.formData["penalties"],
                   onValueAdd: () {
                     setState(() {
                       widget.form.onDataChanged(
-                          {"climbTime": widget.form.formData["climbTime"] + 1});
+                          {"penalties": widget.form.formData["penalties"] + 1});
                     });
                   },
                   onValueSubtract: () {
-                    if (widget.form.formData["climbTime"] > 0) {
-                      setState(() {
-                        widget.form.onDataChanged({
-                          "climbTime": widget.form.formData["climbTime"] - 1
-                        });
-                      });
-                    }
+                    setState(() {
+                      widget.form.onDataChanged(
+                          {"penalties": widget.form.formData["penalties"] - 1});
+                    });
                   },
-                  enableSpacer: true,
+                  enableSpacer: true),
+              const SizedBox(height: 24.0),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Row _buildLevelRow(BuildContext context, String levelName, int level) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 1,
+          child: Container(
+            padding: const EdgeInsets.all(12.0),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              border: Border(
+                right: BorderSide(
+                  color: Theme.of(context).dividerColor,
+                  width: 1,
                 ),
               ),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              SectionHeader(
-                  title: "Cards", color: Theme.of(context).dividerColor),
-            ],
-          ),
-          Container(
-            color: Theme.of(context).cardColor,
-            padding: const EdgeInsets.all(2.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: LabeledSwitch(
-                    label: Text(
-                      "Yellow Card?",
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: widget.form.formData["yellowCard"]
-                              ? Colors.black
-                              : Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    padding: EdgeInsets.only(top: 30, bottom: 30),
-                    value: widget.form.formData["yellowCard"],
-                    selectedColor: const Color.fromARGB(255, 244, 226, 73),
-                    onChanged: (bool? newValue) {
-                      setState(() {
-                        widget.form.onDataChanged({"yellowCard": newValue!});
-                      });
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  width: 8.0,
-                ),
-                Expanded(
-                  child: LabeledSwitch(
-                    label: Text(
-                      "Red Card?",
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    padding: EdgeInsets.only(top: 30, bottom: 30),
-                    value: widget.form.formData["redCard"],
-                    selectedColor: const Color.fromARGB(255, 217, 84, 74),
-                    onChanged: (bool? newValue) {
-                      setState(() {
-                        widget.form.onDataChanged({"redCard": newValue!});
-                      });
-                    },
-                  ),
-                )
-              ],
+            ),
+            height: 70,
+            child: Text(
+              levelName,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
           ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              SectionHeader(
-                  title: "Extras", color: Theme.of(context).dividerColor),
-            ],
+        ),
+        Expanded(
+          child: _buildGridCell(context, "team1EndgameLevel", level),
+        ),
+        Expanded(
+          child: _buildGridCell(context, "team2EndgameLevel", level),
+        ),
+        Expanded(
+          child: _buildGridCell(context, "team3EndgameLevel", level),
+        ),
+      ],
+    );
+  }
+
+  Container _buildGridCell(
+      BuildContext context, String dataKey, int level) {
+    final isSelected = widget.form.formData[dataKey] == level;
+    
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          right: BorderSide(
+            color: Theme.of(context).dividerColor,
+            width: 1,
           ),
-          CheckboxListTile(
-              title: Text("Mark for Review?"),
-              value: widget.form.formData["isMarkedForReview"],
-              onChanged: (bool? newValue) {
-                setState(() {
-                  widget.form.onDataChanged({"isMarkedForReview": newValue});
-                });
-              }),
-          CheckboxListTile(
-            title: Text("Did they do any defense?"),
-            value: widget.form.formData["performedDefense"],
-            onChanged: (bool? newValue) {
+        ),
+      ),
+      height: 70,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            setState(() {
+              if (isSelected) {
+                widget.form.onDataChanged({dataKey: 0});
+              } else {
+                widget.form.onDataChanged({dataKey: level});
+              }
+            });
+          },
+          child: Container(
+            color: isSelected
+                ? Theme.of(context).colorScheme.primary.withOpacity(0.2)
+                : Colors.transparent,
+            alignment: Alignment.center,
+            child: Icon(
+              isSelected ? Icons.circle : Icons.circle_outlined,
+              color: Theme.of(context).colorScheme.primary,
+              size: 32,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTeamCheckbox(
+      BuildContext context, String dataKey, String teamLabel) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Theme.of(context).dividerColor,
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+      child: Row(
+        children: [
+          Checkbox(
+            value: widget.form.formData[dataKey] ?? false,
+            onChanged: (bool? value) {
               setState(() {
-                widget.form.onDataChanged({"performedDefense": newValue});
+                widget.form.onDataChanged({dataKey: value ?? false});
               });
             },
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 15),
-            child: Row(
-              children: [
-                Expanded(
-                    flex: 2,
-                    child: CheckboxListTile(
-                      title: Text("Didn't Show Up?"),
-                      value: widget.form.formData["noShow"],
-                      onChanged: (bool? newValue) {
-                        setState(() {
-                          widget.form.onDataChanged({"noShow": newValue});
-                        });
-                      },
-                    )),
-                Expanded(
-                    flex: 2,
-                    child: CheckboxListTile(
-                      title: Text("Disabled?"),
-                      value: widget.form.formData["disabled"],
-                      onChanged: (bool? newValue) {
-                        setState(() {
-                          widget.form.onDataChanged({"disabled": newValue});
-                        });
-                      },
-                    )),
-              ],
+          Expanded(
+            child: Text(
+              teamLabel,
+              style: const TextStyle(fontSize: 13),
             ),
           ),
-          NumberInput(
-              title: "Penalties",
-              value: widget.form.formData["penalties"],
-              onValueAdd: () {
-                setState(() {
-                  widget.form.onDataChanged(
-                      {"penalties": widget.form.formData["penalties"] + 1});
-                });
-              },
-              onValueSubtract: () {
-                setState(() {
-                  widget.form.onDataChanged(
-                      {"penalties": widget.form.formData["penalties"] - 1});
-                });
-              },
-              enableSpacer: true)
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSpeedControl(BuildContext context, String teamLabel, int teamNumber) {
+    final speedKey = "team${teamNumber}ClimbSpeed";
+    var speed = widget.form.formData[speedKey] ?? 0;
+    
+    // Ensure speed is within valid range [3, 30]
+    if (speed < 3) {
+      speed = 3;
+      widget.form.formData[speedKey] = 3;
+    }
+
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Theme.of(context).dividerColor,
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
+        children: [
+          Text(
+            teamLabel,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+          ),
+          const SizedBox(height: 12.0),
+          Text(
+            "30",
+            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+          ),
+          Slider(
+            value: speed.toDouble(),
+            min: 3,
+            max: 30,
+            divisions: 27,
+            onChanged: (value) {
+              setState(() {
+                widget.form.onDataChanged({speedKey: value.toInt()});
+              });
+            },
+          ),
+          Text(
+            "3",
+            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8.0),
+          Text(
+            speed.toString(),
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       ),
     );
