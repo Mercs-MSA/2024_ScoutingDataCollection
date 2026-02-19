@@ -43,123 +43,6 @@ class _PitFormState extends State<PitForm> {
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text("Physical Size"),
-                      Expanded(
-                        child: Container(
-                          margin:
-                              const EdgeInsets.only(left: 15.0, right: 10.0),
-                          child: Divider(),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8.0),
-                  const SizedBox(height: 8.0),
-                  Card(
-                    color: Theme.of(context).colorScheme.tertiary,
-                    child: Column(
-                      children: [
-                        ListTile(
-                          leading: Icon(
-                            Icons.info,
-                            color: Theme.of(context).colorScheme.onTertiary,
-                          ),
-                          title: Text(
-                            "Weight must NOT include battery and bumper",
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.onTertiary,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 8.0),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Width',
-                            suffixText: "in",
-                          ),
-                          keyboardType: TextInputType.number,
-                          // inputFormatters: <TextInputFormatter>[
-                          //   FilteringTextInputFormatter.digitsOnly,
-                          //   LengthLimitingTextInputFormatter(2),
-                          // ],
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'^(\d+)?\.?\d{0,2}')),
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'^\d+\.?\d*'))
-                          ],
-                          onChanged: (value) {
-                            widget
-                                .onDataChanged({"width": int.tryParse(value)});
-                          },
-                          controller: TextEditingController(
-                            text: widget.formData["width"] == null
-                                ? ''
-                                : widget.formData["width"].toString(),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 8.0),
-                      Expanded(
-                        child: TextField(
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Length',
-                            suffixText: 'in',
-                          ),
-                          keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(2),
-                          ],
-                          onChanged: (value) {
-                            widget
-                                .onDataChanged({"length": int.tryParse(value)});
-                          },
-                          controller: TextEditingController(
-                            text: widget.formData["length"] == null
-                                ? ''
-                                : widget.formData["length"].toString(),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 8.0),
-                      Expanded(
-                        child: TextField(
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Weight',
-                            suffixText: 'lbs',
-                          ),
-                          keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(3),
-                          ],
-                          onChanged: (value) {
-                            widget
-                                .onDataChanged({"weight": int.tryParse(value)});
-                          },
-                          controller: TextEditingController(
-                            text: widget.formData["weight"] == null
-                                ? ''
-                                : widget.formData["weight"].toString(),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8.0),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
                       Text("General Robot Information"),
                       Expanded(
                         child: Container(
@@ -169,6 +52,30 @@ class _PitFormState extends State<PitForm> {
                         ),
                       ),
                     ],
+                  ),
+                  const SizedBox(height: 8.0),
+                  Expanded(
+                    child: TextField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Weight',
+                        suffixText: 'lbs',
+                      ),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(3),
+                      ],
+                      onChanged: (value) {
+                        widget
+                            .onDataChanged({"weight": int.tryParse(value)});
+                      },
+                      controller: TextEditingController(
+                        text: widget.formData["weight"] == null
+                            ? ''
+                            : widget.formData["weight"].toString(),
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 8.0),
                   Container(
@@ -796,7 +703,7 @@ class _PitFormState extends State<PitForm> {
                                 setState(() {
                                   if (widget
                                           .formData["numShooters"] >
-                                      1) {
+                                      0) {
                                     widget.onDataChanged({
                                       "numShooters": widget.formData[
                                               "numShooters"] -
@@ -872,26 +779,7 @@ class _PitFormState extends State<PitForm> {
                       ),
                     ],
                   ),
-                  
                   const SizedBox(height: 12.0),
-                  Row(children: [
-                    const Text("Human Player"),
-                    const SizedBox(width: 10.0),
-                    Flexible(
-                      child: ChoiceInput(
-                        title: "Preferred Location",
-                        onChoiceUpdate: (value) {
-                          setState(() {
-                            widget
-                                .onDataChanged({"humanPlayerLocation": value!});
-                          });
-                        },
-                        choice: widget.formData["humanPlayerLocation"],
-                        options: const ["Coral", "Trench", "Either"],
-                      ),
-                    ),
-                  ]),
-                  const SizedBox(height: 8.0),
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
