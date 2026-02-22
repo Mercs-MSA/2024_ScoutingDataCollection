@@ -36,14 +36,11 @@ Map<String, dynamic> getPitDataMap() {
     "canAutoLeft": false,
     "canAutoMid": false,
     "canAutoRight": false,
-    "autonL4Num": 0,
-    "autonL3Num": 0,
-    "autonL2Num": 0,
-    "autonL1Num": 0,
-    "autonUpperAlgaeDescore": 0,
-    "autonLowerAlgaeDescore": 0,
-    "autonTrench": 0,
-    "autonNetScore": 0,
+    "canDepot": false,
+    "canOutpost": false,
+    "canNeutral": false,
+    "canClimb": false,
+    "autonFuel": 0,
     "kitbotType": "not",
     "isModifiedKit": false,
   };
@@ -146,20 +143,17 @@ Map<String, dynamic> getKitbotData(KitBotTypes type) {
   if (type == KitBotTypes.kitbot) {
     return {
       "kitbotType": KitBotTypes.kitbot.name,
-      "lOne": true,
+      "lOne": false,
       "lTwo": false,
       "lThree": false,
       "lFour": false,
-      "trench": false,
-      "barge": false,
-      "descore": false,
       "climbFrontL1": false,
       "climbFrontL2": false,
       "climbFrontL3": false,
       "climbBackL1": false,
       "climbBackL2": false,
       "climbBackL3": false,
-      "drivebase": "Tank",
+      "drivebase": "Swerve",
     };
   }
   if (type == KitBotTypes.rev) {
@@ -169,9 +163,6 @@ Map<String, dynamic> getKitbotData(KitBotTypes type) {
       "lTwo": true,
       "lThree": true,
       "lFour": false,
-      "trench": true,
-      "bump": true,
-      "barge": false,
       "climbFrontL1": false,
       "climbFrontL2": false,
       "climbFrontL3": false,
@@ -188,9 +179,6 @@ Map<String, dynamic> getKitbotData(KitBotTypes type) {
       "lTwo": false,
       "lThree": false,
       "lFour": false,
-      "trench": true,
-      "bump": false,
-      "barge": false,
       "climbFrontL1": true,
       "climbFrontL2": false,
       "climbFrontL3": false,
@@ -200,6 +188,24 @@ Map<String, dynamic> getKitbotData(KitBotTypes type) {
       "drivebase": "Tank",
     };
   }
+  if (type == KitBotTypes.sigModifiedKitbot)
+  {
+    return 
+    {
+      "kitbotType": KitBotTypes.sigModifiedKitbot.name,
+      "lOne": false,
+      "lTwo": false,
+      "lThree": false,
+      "lFour": false,
+      "climbFrontL1": false,
+      "climbFrontL2": false,
+      "climbFrontL3": false,
+      "climbBackL1": false,
+      "climbBackL2": false,
+      "climbBackL3": false,
+      "drivebase": "Swerve",
+    };
+  }
   if (type == KitBotTypes.wcp) {
     return {
       "kitbotType": KitBotTypes.wcp.name,
@@ -207,9 +213,6 @@ Map<String, dynamic> getKitbotData(KitBotTypes type) {
       "lTwo": true,
       "lThree": true,
       "lFour": true,
-      "trench": true,
-      "bump": true,
-      "barge": true,
       "climbFrontL1": false,
       "climbFrontL2": true,
       "climbFrontL3": true,
@@ -226,8 +229,6 @@ Map<String, dynamic> getKitbotData(KitBotTypes type) {
       "lTwo": false,
       "lThree": false,
       "lFour": false,
-      "trench": false,
-      "bump": false,
       "climbFrontL1": false,
       "climbFrontL2": false,
       "climbFrontL3": false,

@@ -1,4 +1,4 @@
-enum KitBotTypes { not, kitbot, rev, wcp, everybot }
+enum KitBotTypes { not, kitbot, rev, wcp, everybot, sigModifiedKitbot }
 
 enum Alliance { red, blue }
 
@@ -10,10 +10,12 @@ enum ClimbPositions { one, two, three }
 
 enum IntakeTypes {slapdown, fourbar, openbumper, bucket}
 
-enum ShooterTypes {turret, hood}
+enum ShooterTypes { turret, hood, other }
 
 enum TeleopRole { score, shunt, defense }
 
 enum StartPosition { left, middle, right }
+
+enum AchievablePosition { depot, outpost, neutral, climb }
 
 enum EndgamePositions { shallow, deep, park, none }

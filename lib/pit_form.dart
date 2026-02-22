@@ -176,9 +176,28 @@ class _PitFormState extends State<PitForm> {
                                 },
                               ),
                             ),
+                            Expanded
+                            (
+                              child: RadioListTile(
+                                key: Key("pit-kitbot"),
+                                title: Text("Significantly Modified Kitbot"),
+                                value: 
+                                widget.formData["kitbotType"] == "sigModifiedKitbot",
+                                groupValue: true,
+                                onChanged: (value)
+                                {
+                                  setState(() {
+                                    widget.onDataChanged(
+                                      getKitbotData(KitBotTypes.sigModifiedKitbot));
+                                  }
+                                  );
+                                },
+                              ),
+                              ),
                           ],
                         ),
-                        if (widget.formData["kitbotType"] != "not")
+                        
+                        if (widget.formData["kitbotType"] != "not" && widget.formData["kitbotType"] != "sigModifiedKitbot")
                           CheckboxListTile(
                               title: const Text("Modified?"),
                               value: widget.formData["isModifiedKit"],
@@ -215,7 +234,7 @@ class _PitFormState extends State<PitForm> {
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text("Scoring"),
+                      Text("Movement"),
                       Expanded(
                         child: Container(
                           margin:
@@ -419,6 +438,7 @@ class _PitFormState extends State<PitForm> {
                           : widget.formData["climbTime"].toString(),
                     ),
                   ),
+                  
                   const SizedBox(height: 8.0),
                   Row(
                     mainAxisSize: MainAxisSize.max,
@@ -439,7 +459,7 @@ class _PitFormState extends State<PitForm> {
                         children: [
                           Flexible(
                             child: NumberInput(
-                              title: "Minimum Storage",
+                              title: "Average Storage",
                               enableSpacer: true,
                               value: widget.formData["minStorage"],
                               onValueAdd: () {
@@ -511,6 +531,85 @@ class _PitFormState extends State<PitForm> {
                           ),
                         ],
                       ),
+                      const SizedBox(height: 8.0),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  
+                  // ],
+                  // ),
+                      const Text(
+                      "Storage (Hopper) Dimensions"),
+                  const SizedBox(height: 8.0),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: TextField(
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Width",
+                            suffixText: "Inches"),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+                          LengthLimitingTextInputFormatter(5),
+                        ],
+                        onChanged: (value) {
+                          widget.onDataChanged(
+                              {"width": double.tryParse(value)});
+                        },
+                        controller: TextEditingController(
+                          text: widget.formData["width"] == null
+                              ? ''
+                              : widget.formData["width"].toString(),
+                        ),
+                      )),
+                      const SizedBox(width: 8),
+                      Expanded(
+                          child: TextField(
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Length",
+                            suffixText: "Inches"),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+                          LengthLimitingTextInputFormatter(5),
+                        ],
+                        onChanged: (value) {
+                          widget.onDataChanged(
+                              {"length": double.tryParse(value)});
+                        },
+                        controller: TextEditingController(
+                          text: widget.formData["length"] == null
+                              ? ''
+                              : widget.formData["length"].toString(),
+                        ),
+                      )),
+                      const SizedBox(width: 8),
+                      Expanded(
+                          child: TextField(
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Height",
+                            suffixText: "Inches"),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+                          LengthLimitingTextInputFormatter(5),
+                        ],
+                        onChanged: (value) {
+                          widget.onDataChanged(
+                              {"height": double.tryParse(value)});
+                        },
+                        controller: TextEditingController(
+                          text: widget.formData["height"] == null
+                              ? ''
+                              : widget.formData["height"].toString(),
+                        ),
+                      )),
+                    ],
+                  ),
                   const SizedBox(height: 8.0),
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.center,
@@ -660,6 +759,10 @@ class _PitFormState extends State<PitForm> {
                           ButtonSegment(
                               value: ShooterTypes.hood,
                               label: Text('Hood')),
+                              ButtonSegment(
+                                value: ShooterTypes.other,
+                                label: Text('Other')
+                              )
 
                         ],
                         selected: {
@@ -669,12 +772,15 @@ class _PitFormState extends State<PitForm> {
                           if (widget.formData["hood"] != null &&
                               widget.formData["hood"])
                             ShooterTypes.hood,
+                          if (widget.formData["other"] != null && widget.formData["other"])
+                            ShooterTypes.other,
                         },
                         onSelectionChanged: (Set<ShooterTypes> newSelection) {
                           setState(() {
                             widget.onDataChanged({
                               "turret": newSelection.contains(ShooterTypes.turret),
                               "hood": newSelection.contains(ShooterTypes.hood),
+                              "other": newSelection.contains(ShooterTypes.other),
                             });
                           });
                         },
@@ -713,9 +819,6 @@ class _PitFormState extends State<PitForm> {
                                               "numShooters"] -
                                           1
                                     });
-                                  } else {
-                                    widget.onDataChanged(
-                                        {"numShooters": 1});
                                   }
                                 });
                               },
@@ -883,11 +986,11 @@ class _PitFormState extends State<PitForm> {
                           )),
                     ],
                   ),
-                  const SizedBox(height: 8.0),
+                  const SizedBox(height: 12.0),
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text("Software"),
+                      Text("Autonomous"),
                       Expanded(
                         child: Container(
                           margin:
@@ -897,44 +1000,7 @@ class _PitFormState extends State<PitForm> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Theme.of(context).dividerColor,
-                      ),
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(4.0)),
-                    ),
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        SwitchListTile(
-                          title: const Text('Has Auton'),
-                          value: widget.formData["autonExists"],
-                          onChanged: (bool? newValue) {
-                            setState(() {
-                              widget.onDataChanged({"autonExists": newValue!});
-                            });
-                          },
-                        ),
-                        if (widget.formData["autonExists"])
-                          Column(
-                            children: [
-                              SwitchListTile(
-                                title: const Text("Exits?"),
-                                value: widget.formData["autonExit"],
-                                onChanged: (bool? newValue) {
-                                  setState(() {
-                                    widget.onDataChanged(
-                                        {"autonExit": newValue!});
-                                  });
-                                },
-                              ),
-                              const SizedBox(
-                                height: 8.0,
-                              ),
-                              const Text(
+                  const Text(
                                   "What positions are they capable of starting an auto?"),
                               const SizedBox(
                                 height: 8.0,
@@ -984,342 +1050,115 @@ class _PitFormState extends State<PitForm> {
                                   ),
                                 ],
                               ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  SectionHeader(
-                                      title: "Coral Scoring",
-                                      color: Theme.of(context).dividerColor),
-                                  SizedBox(width: 10.0),
-                                  SectionHeader(
-                                      title: "Algae Scoring",
-                                      color: Theme.of(context).dividerColor)
-                                ],
-                              ),
-                              Row(mainAxisSize: MainAxisSize.max, children: [
-                                Expanded(
-                                  child: Column(children: [
-                                    Column(
-                                      children: [
-                                        NumberInput(
-                                          title: "L4",
-                                          enableSpacer: true,
-                                        value: widget.formData["autonL4Num"] ?? 0,
-                                          onValueAdd: () {
-                                            setState(() {
-                                              widget.onDataChanged({
-                                                "autonL4Num": widget.formData[
-                                                        "autonL4Num"] +
-                                                    1
-                                              });
-                                            });
-                                          },
-                                          onValueSubtract: () {
-                                            setState(() {
-                                              if (widget
-                                                      .formData["autonL4Num"] >
-                                                  0) {
-                                                widget.onDataChanged({
-                                                  "autonL4Num": widget.formData[
-                                                          "autonL4Num"] -
-                                                      1
-                                                });
-                                              } else {
-                                                widget.onDataChanged(
-                                                    {"autonL4Num": 0});
-                                              }
-                                            });
-                                          },
-                                          inputType: InputType.coral,
-                                        ),
-                                        NumberInput(
-                                          title: "L3",
-                                          enableSpacer: true,
-                                          value: widget.formData["autonL3Num"] ?? 0,
-                                          onValueAdd: () {
-                                            setState(() {
-                                              widget.onDataChanged({
-                                                "autonL3Num": widget.formData[
-                                                        "autonL3Num"] +
-                                                    1
-                                              });
-                                            });
-                                          },
-                                          onValueSubtract: () {
-                                            setState(() {
-                                              if (widget
-                                                      .formData["autonL3Num"] >
-                                                  0) {
-                                                widget.onDataChanged({
-                                                  "autonL3Num": widget.formData[
-                                                          "autonL3Num"] -
-                                                      1
-                                                });
-                                              } else {
-                                                widget.onDataChanged(
-                                                    {"autonL3Num": 0});
-                                              }
-                                            });
-                                          },
-                                          inputType: InputType.coral,
-                                        ),
-                                        NumberInput(
-                                          title: "L2",
-                                          enableSpacer: true,
-                                          value: widget.formData["autonL2Num"] ?? 0,
-                                          onValueAdd: () {
-                                            setState(() {
-                                              widget.onDataChanged({
-                                                "autonL2Num": widget.formData[
-                                                        "autonL2Num"] +
-                                                    1
-                                              });
-                                            });
-                                          },
-                                          onValueSubtract: () {
-                                            setState(() {
-                                              if (widget
-                                                      .formData["autonL2Num"] >
-                                                  0) {
-                                                widget.onDataChanged({
-                                                  "autonL2Num": widget.formData[
-                                                          "autonL2Num"] -
-                                                      1
-                                                });
-                                              } else {
-                                                widget.onDataChanged(
-                                                    {"autonL2Num": 0});
-                                              }
-                                            });
-                                          },
-                                          inputType: InputType.coral,
-                                        ),
-                                        NumberInput(
-                                          title: "L1",
-                                          enableSpacer: true,
-                                          value: widget.formData["autonL1Num"] ?? 0,
-                                          onValueAdd: () {
-                                            setState(() {
-                                              widget.onDataChanged({
-                                                "autonL1Num": widget.formData[
-                                                        "autonL1Num"] +
-                                                    1
-                                              });
-                                            });
-                                          },
-                                          onValueSubtract: () {
-                                            setState(() {
-                                              if (widget
-                                                      .formData["autonL1Num"] >
-                                                  0) {
-                                                widget.onDataChanged({
-                                                  "autonL1Num": widget.formData[
-                                                          "autonL1Num"] -
-                                                      1
-                                                });
-                                              } else {
-                                                widget.onDataChanged(
-                                                    {"autonL1Num": 0});
-                                              }
-                                            });
-                                          },
-                                          inputType: InputType.coral,
-                                        ),
-                                      ],
-                                    ),
-                                  ]),
-                                ),
-                                SizedBox(width: 10.0),
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      NumberInput(
-                                        title: "Upper Descore",
-                                        enableSpacer: true,
-                                        value: widget.formData["autonUpperAlgaeDescore"] ?? 0,
-                                        onValueAdd: () {
-                                          setState(() {
-                                            widget.onDataChanged({
-                                              "autonUpperAlgaeDescore": widget
-                                                          .formData[
-                                                      "autonUpperAlgaeDescore"] +
-                                                  1
-                                            });
-                                          });
-                                        },
-                                        onValueSubtract: () {
-                                          setState(
-                                            () {
-                                              if (widget.formData[
-                                                      "autonUpperAlgaeDescore"] >
-                                                  0) {
-                                                widget.onDataChanged({
-                                                  "autonUpperAlgaeDescore": widget
-                                                              .formData[
-                                                          "autonUpperAlgaeDescore"] -
-                                                      1
-                                                });
-                                              } else {
-                                                widget.onDataChanged({
-                                                  "autonUpperAlgaeDescore": 0
-                                                });
-                                              }
-                                            },
-                                          );
-                                        },
-                                        inputType: InputType.algae,
-                                        currColor: widget.colorDebug,
-                                      ),
-                                      NumberInput(
-                                        title: "Lower Descore",
-                                        enableSpacer: true,
-                                        value: widget.formData["autonLowerAlgaeDescore"] ?? 0,
-                                        onValueAdd: () {
-                                          setState(() {
-                                            widget.onDataChanged({
-                                              "autonLowerAlgaeDescore": widget
-                                                          .formData[
-                                                      "autonLowerAlgaeDescore"] +
-                                                  1
-                                            });
-                                          });
-                                        },
-                                        onValueSubtract: () {
-                                          setState(
-                                            () {
-                                              if (widget.formData[
-                                                      "autonLowerAlgaeDescore"] >
-                                                  0) {
-                                                widget.onDataChanged({
-                                                  "autonLowerAlgaeDescore": widget
-                                                              .formData[
-                                                          "autonLowerAlgaeDescore"] -
-                                                      1
-                                                });
-                                              } else {
-                                                widget.onDataChanged({
-                                                  "autonLowerAlgaeDescore": 0
-                                                });
-                                              }
-                                            },
-                                          );
-                                        },
-                                        inputType: InputType.algae,
-                                        currColor: widget.colorDebug,
-                                      ),
-                                      NumberInput(
-                                        title: "Trench",
-                                        enableSpacer: true,
-                                        value: widget.formData["autonTrench"] ?? 0,
-                                        onValueAdd: () {
-                                          setState(() {
-                                            widget.onDataChanged({
-                                              "autonTrench": widget.formData[
-                                                      "autonTrench"] +
-                                                  1
-                                            });
-                                          });
-                                        },
-                                        onValueSubtract: () {
-                                          setState(
-                                            () {
-                                              if (widget.formData[
-                                                      "autonTrench"] >
-                                                  0) {
-                                                widget.onDataChanged({
-                                                  "autonTrench": widget
-                                                              .formData[
-                                                          "autonTrench"] -
-                                                      1
-                                                });
-                                              } else {
-                                                widget.onDataChanged(
-                                                    {"autonTrench": 0});
-                                              }
-                                            },
-                                          );
-                                        },
-                                        inputType: InputType.algae,
-                                        currColor: widget.colorDebug,
-                                      ),
-                                      NumberInput(
-                                        title: "Direct Net",
-                                        enableSpacer: true,
-                                        value: widget.formData["autonNetScore"] ?? 0,
-                                        onValueAdd: () {
-                                          setState(() {
-                                            widget.onDataChanged({
-                                              "autonNetScore": widget.formData[
-                                                      "autonNetScore"] +
-                                                  1
-                                            });
-                                          });
-                                        },
-                                        onValueSubtract: () {
-                                          setState(
-                                            () {
-                                              if (widget.formData[
-                                                      "autonNetScore"] >
-                                                  0) {
-                                                widget.onDataChanged({
-                                                  "autonNetScore":
-                                                      widget.formData[
-                                                              "autonNetScore"] -
-                                                          1
-                                                });
-                                              } else {
-                                                widget.onDataChanged(
-                                                    {"autonNetScore": 0});
-                                              }
-                                            },
-                                          );
-                                        },
-                                        inputType: InputType.algae,
-                                        currColor: widget.colorDebug,
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ]),
-                              Column()
-                            ],
-                          ),
-                        if (widget.formData["autonExists"])
-                          Column(
-                            children: [
+                              const SizedBox(height: 8.0),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  
+                  // ],
+                  // ),
+                              const Text(
+                                  "What positions can they travel/do during auton?"),
                               const SizedBox(
                                 height: 8.0,
                               ),
-                              TextField(
-                                decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    labelText: "Autonomous Strategy"),
-                                inputFormatters: <TextInputFormatter>[
-                                  LengthLimitingTextInputFormatter(300),
-                                  FilteringTextInputFormatter(RegExp(r'[^|*]+'),
-                                      allow: true)
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: SegmentedButton<AchievablePosition>(
+                                      emptySelectionAllowed: true,
+                                      multiSelectionEnabled: true,
+                                      style: ButtonStyle(
+                                          padding: WidgetStateProperty.all(
+                                              EdgeInsets.all(18.0))),
+                                      segments: <ButtonSegment<AchievablePosition>>[
+                                        ButtonSegment(
+                                            value: AchievablePosition.depot,
+                                            label: Text("Depot")),
+                                        ButtonSegment(
+                                            value: AchievablePosition.outpost,
+                                            label: Text("Outpost")),
+                                        ButtonSegment(
+                                            value: AchievablePosition.neutral,
+                                            label: Text("Neutral")),
+                                        ButtonSegment(
+                                            value: AchievablePosition.climb,
+                                            label: Text("Climb"))
+                                      ],
+                                      selected: {
+                                        if (widget.formData['canDepot'])
+                                          AchievablePosition.depot,
+                                        if (widget.formData['canOutpost'])
+                                          AchievablePosition.outpost,
+                                        if (widget.formData['canNeutral'])
+                                          AchievablePosition.neutral,
+                                          if (widget.formData['canClimb'])
+                                          AchievablePosition.climb
+                                      },
+                                      onSelectionChanged:
+                                          (Set<AchievablePosition> value) {
+                                        setState(() {
+                                          widget.onDataChanged({
+                                            "canDepot": value
+                                                .contains(AchievablePosition.depot),
+                                            "canOutpost": value
+                                                .contains(AchievablePosition.outpost),
+                                            "canNeutral": value
+                                                .contains(AchievablePosition.neutral),
+                                            "canClimb": value
+                                            .contains(AchievablePosition.climb)
+                                          });
+                                        });
+                                      },
+                                    ),
+                                  ),
                                 ],
-                                onChanged: (value) {
-                                  widget.onDataChanged({
-                                    "autonStrategy":
-                                        value.replaceAll("\n", "**")
-                                  });
-                                },
-                                minLines: 2,
-                                maxLines: 6,
-                                controller: TextEditingController(
-                                  text: widget.formData["autonStrategy"] == null
-                                      ? ''
-                                      : widget.formData["autonStrategy"]
-                                          .toString()
-                                          .replaceAll("**", "\n"),
-                                ),
                               ),
-                            ],
+                              const SizedBox(height: 8.0),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  
+                  // ],
+                  // ),
+                  const SizedBox(height: 8.0),
+                      Row(
+                        children: [
+                          Flexible(
+                            child: NumberInput(
+                              title: "Fuel Scored in Auton",
+                              enableSpacer: true,
+                              value: widget.formData["autonFuel"],
+                              onValueAdd: () {
+                                setState(() {
+                                    widget.onDataChanged({
+                                    "autonFuel": widget.formData[
+                                            "autonFuel"] +
+                                        4
+                                  });
+                                  
+                                });
+                              },
+                              onValueSubtract: () {
+                                setState(() {
+                                  if (widget
+                                          .formData["autonFuel"] >
+                                      0) {
+                                    widget.onDataChanged({
+                                      "autonFuel": widget.formData[
+                                              "autonFuel"] -
+                                          4
+                                    });
+                                  } else {
+                                    widget.onDataChanged(
+                                        {"autonFuel": 0});
+                                  }
+                                });
+                              },
+                            ),
                           ),
-                      ],
-                    ),
-                  ),
+                        ]
+                      ),            
                   const SizedBox(height: 8),
                   TextField(
                     decoration: const InputDecoration(
@@ -1345,7 +1184,7 @@ class _PitFormState extends State<PitForm> {
                               .replaceAll("**", "\n"),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 10),
                   Card(
                     color: Theme.of(context).colorScheme.primary,
                     child: Column(
@@ -1356,7 +1195,7 @@ class _PitFormState extends State<PitForm> {
                             color: Theme.of(context).colorScheme.onPrimary,
                           ),
                           title: Text(
-                            "Remember to take robot pictures",
+                            "Remember to bring board to trace auton path and take pictures",
                             style: TextStyle(
                                 color: Theme.of(context).colorScheme.onPrimary,
                                 fontWeight: FontWeight.bold),
