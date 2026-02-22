@@ -56,7 +56,8 @@ Map<String, dynamic> getAutonDataMap() {
     "scouter": "",
     "match": null,
     "alliance": "blue",
-    "startPos": "middle",
+    
+    "startPos": 250.0,
 
     "autoLeave": true,
     "depotDisrupted": false,

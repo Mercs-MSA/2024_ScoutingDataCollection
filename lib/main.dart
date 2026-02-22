@@ -1524,95 +1524,95 @@ class _FormAppPageState extends State<FormAppPage> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 8),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 2, right: 8),
-                                  child: Column(
-                                    children: [
-                                      Text("Auto Start"),
-                                      Text("Position")
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  child: SegmentedButton<MatchStartPos>(
-                                    style: ButtonStyle(
-                                      backgroundColor: WidgetStateProperty
-                                          .resolveWith<Color>(
-                                        (Set<WidgetState> states) {
-                                          if (states
-                                              .contains(WidgetState.selected)) {
-                                            return ColorScheme.fromSeed(
-                                                    seedColor: autonScoutingData["alliance"] ==
-                                                            "red"
-                                                        ? Colors.red
-                                                        : Colors.blue)
-                                                .primary;
-                                          }
-                                          return Colors.transparent;
-                                        },
-                                      ),
-                                      padding: WidgetStateProperty.all(
-                                        EdgeInsets.all(24.0),
-                                      ),
-                                      shape: WidgetStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(4)),
-                                        ),
-                                      ),
-                                    ),
-                                    emptySelectionAllowed: false,
-                                    multiSelectionEnabled: false,
-                                    segments: <ButtonSegment<MatchStartPos>>[
-                                      ButtonSegment(
-                                          value: MatchStartPos.left,
-                                          label: Text("Left")),
-                                      ButtonSegment(
-                                          value: MatchStartPos.middle,
-                                          label: Text("Middle")),
-                                      ButtonSegment(
-                                          value: MatchStartPos.right,
-                                          label: Text("Right"))
-                                    ],
-                                    selected: {
-                                      if (autonScoutingData["startPos"] ==
-                                          "left")
-                                        MatchStartPos.left,
-                                      if (autonScoutingData["startPos"] ==
-                                          "middle")
-                                        MatchStartPos.middle,
-                                      if (autonScoutingData["startPos"] ==
-                                          "right")
-                                        MatchStartPos.right,
-                                    },
-                                    onSelectionChanged: (selection) {
-                                      setState(() {
-                                        if (selection.first ==
-                                            MatchStartPos.left) {
-                                          autonScoutingData["startPos"] =
-                                              "left";
-                                        }
-                                        if (selection.first ==
-                                            MatchStartPos.right) {
-                                          autonScoutingData["startPos"] =
-                                              "right";
-                                        }
-                                        if (selection.first ==
-                                            MatchStartPos.middle) {
-                                          autonScoutingData["startPos"] =
-                                              "middle";
-                                        }
-                                      });
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
+                            // SizedBox(height: 8),
+                            // Row(
+                            //   children: [
+                            //     Padding(
+                            //       padding:
+                            //           const EdgeInsets.only(left: 2, right: 8),
+                            //       child: Column(
+                            //         children: [
+                            //           Text("Auto Start"),
+                            //           Text("Position")
+                            //         ],
+                            //       ),
+                            //     ),
+                            //     Expanded(
+                            //       child: SegmentedButton<MatchStartPos>(
+                            //         style: ButtonStyle(
+                            //           backgroundColor: WidgetStateProperty
+                            //               .resolveWith<Color>(
+                            //             (Set<WidgetState> states) {
+                            //               if (states
+                            //                   .contains(WidgetState.selected)) {
+                            //                 return ColorScheme.fromSeed(
+                            //                         seedColor: autonScoutingData["alliance"] ==
+                            //                                 "red"
+                            //                             ? Colors.red
+                            //                             : Colors.blue)
+                            //                     .primary;
+                            //               }
+                            //               return Colors.transparent;
+                            //             },
+                            //           ),
+                            //           padding: WidgetStateProperty.all(
+                            //             EdgeInsets.all(24.0),
+                            //           ),
+                            //           shape: WidgetStateProperty.all<
+                            //               RoundedRectangleBorder>(
+                            //             RoundedRectangleBorder(
+                            //               borderRadius: BorderRadius.all(
+                            //                   Radius.circular(4)),
+                            //             ),
+                            //           ),
+                            //         ),
+                            //         emptySelectionAllowed: false,
+                            //         multiSelectionEnabled: false,
+                            //         segments: <ButtonSegment<MatchStartPos>>[
+                            //           ButtonSegment(
+                            //               value: MatchStartPos.left,
+                            //               label: Text("Left")),
+                            //           ButtonSegment(
+                            //               value: MatchStartPos.middle,
+                            //               label: Text("Middle")),
+                            //           ButtonSegment(
+                            //               value: MatchStartPos.right,
+                            //               label: Text("Right"))
+                            //         ],
+                            //         selected: {
+                            //           if (autonScoutingData["startPos"] ==
+                            //               "left")
+                            //             MatchStartPos.left,
+                            //           if (autonScoutingData["startPos"] ==
+                            //               "middle")
+                            //             MatchStartPos.middle,
+                            //           if (autonScoutingData["startPos"] ==
+                            //               "right")
+                            //             MatchStartPos.right,
+                            //         },
+                            //         onSelectionChanged: (selection) {
+                            //           setState(() {
+                            //             if (selection.first ==
+                            //                 MatchStartPos.left) {
+                            //               autonScoutingData["startPos"] =
+                            //                   "left";
+                            //             }
+                            //             if (selection.first ==
+                            //                 MatchStartPos.right) {
+                            //               autonScoutingData["startPos"] =
+                            //                   "right";
+                            //             }
+                            //             if (selection.first ==
+                            //                 MatchStartPos.middle) {
+                            //               autonScoutingData["startPos"] =
+                            //                   "middle";
+                            //             }
+                            //           });
+                            //         },
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
                           ],
                         ),
                       )

@@ -68,6 +68,33 @@ class _AutonFormState extends State<AutonForm>{
                               ),
                             ),
                             Positioned(
+                              left: 265,
+                              top: 15,
+                              child: SizedBox(
+                                height: 465,
+                                child: RotatedBox(
+                                quarterTurns: 3,
+                                child: Slider(
+                                  activeColor: Color.fromARGB(0, 191, 185, 185),
+                                  inactiveColor: Color.fromARGB(0, 191, 185, 185),
+                                  thumbColor: Color.fromARGB(255, 170, 18, 34),
+                                  max: 465,
+                                  value: widget.formData["startPos"], 
+                                  onChanged: (value) {
+                                    setState(() {
+                                      widget.onDataChanged({"startPos": value});
+                                    });
+                                  }
+                                ),
+                              ),
+                              )
+                            ),
+                            Positioned(
+                              left: 295,
+                              bottom: widget.formData["startPos"] * 465 / 500,
+                              child: Text("Start")
+                            ),
+                            Positioned(
                               left: 385,
                               top: 325,
                               child: Checkbox(
@@ -204,6 +231,33 @@ class _AutonFormState extends State<AutonForm>{
                                   errorBuilder: (context, error, stackTrace) => SizedBox(width: 500, height: 300),
                                 ),
                               ),
+                              Positioned(
+                              right: 265,
+                              top: 15,
+                              child: SizedBox(
+                                height: 465,
+                                child: RotatedBox(
+                                quarterTurns: 1,
+                                child: Slider(
+                                  activeColor: Color.fromARGB(0, 191, 185, 185),
+                                  inactiveColor: Color.fromARGB(0, 191, 185, 185),
+                                  thumbColor: Color.fromARGB(255, 170, 18, 34),
+                                  max: 465,
+                                  value: widget.formData["startPos"], 
+                                  onChanged: (value) {
+                                    setState(() {
+                                      widget.onDataChanged({"startPos": value});
+                                    });
+                                  }
+                                ),
+                              ),
+                              )
+                            ),
+                            Positioned(
+                              right: 295,
+                              top: widget.formData["startPos"] * 465 / 500,
+                              child: Text("Start")
+                            ),
                               Positioned(
                               right: 385,
                               bottom: 325,
