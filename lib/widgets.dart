@@ -87,6 +87,7 @@ class RatingInput extends StatelessWidget {
     this.itemCount = 5,
     this.enableHalves = true,
     this.fontSize = 16,
+    this.titleOnTop = false
   });
 
   final String title;
@@ -95,24 +96,46 @@ class RatingInput extends StatelessWidget {
   final double initialRating;
   final int itemCount;
   final bool enableHalves;
+  final bool titleOnTop;
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(title, style: TextStyle(fontSize: fontSize)),
-      trailing: RatingBar.builder(
-        initialRating: initialRating,
-        minRating: 0,
-        itemBuilder: (context, _) => Icon(
-          Icons.star_rounded,
-          color: Theme.of(context).colorScheme.primary,
+    if (titleOnTop) {
+      return Column(
+        children: [
+          Text(title, style: TextStyle(fontSize: fontSize)),
+          SizedBox(height: 6),
+          RatingBar.builder(
+          initialRating: initialRating,
+          minRating: 0,
+          itemBuilder: (context, _) => Icon(
+            Icons.star_rounded,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+          onRatingUpdate: onRatingUpdate,
+          glow: true,
+          itemCount: itemCount,
+          allowHalfRating: enableHalves,
         ),
-        onRatingUpdate: onRatingUpdate,
-        glow: true,
-        itemCount: itemCount,
-        allowHalfRating: enableHalves,
-      ),
-    );
+        ],
+      );
+    } else {
+      return ListTile(
+        title: Text(title, style: TextStyle(fontSize: fontSize)),
+        trailing: RatingBar.builder(
+          initialRating: initialRating,
+          minRating: 0,
+          itemBuilder: (context, _) => Icon(
+            Icons.star_rounded,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+          onRatingUpdate: onRatingUpdate,
+          glow: true,
+          itemCount: itemCount,
+          allowHalfRating: enableHalves,
+        ),
+      );
+    }
   }
 }
 
@@ -399,6 +422,7 @@ class LabeledSwitch extends StatelessWidget {
 class ShooterEvaluation2026 extends StatelessWidget {
   final int ratingRange;
   final Function(double) onAccuracyChanged;
+  final Function(double) onPrecisionChanged;
   final Function(double) onSpeedChanged;
   final Function(double) onCycleAbilityChanged;
   final Function(double) onCounterdefenseChanged;
@@ -410,6 +434,7 @@ class ShooterEvaluation2026 extends StatelessWidget {
     super.key,
     required this.ratingRange,
     required this.onAccuracyChanged,
+    required this.onPrecisionChanged,
     required this.onSpeedChanged,
     required this.onCycleAbilityChanged,
     required this.onCounterdefenseChanged,
@@ -441,7 +466,18 @@ class ShooterEvaluation2026 extends StatelessWidget {
               onRatingUpdate: onAccuracyChanged,
               initialRating: 0,
               itemCount: max(1, ratingRange),
-              enableHalves: false
+              enableHalves: false,
+              titleOnTop: true,
+            ),
+            SizedBox(height: 8.0),
+            RatingInput(
+              title: "Precision", 
+              fontSize: 16,
+              onRatingUpdate: onPrecisionChanged,
+              initialRating: 0,
+              itemCount: max(1, ratingRange),
+              enableHalves: false,
+              titleOnTop: true,
             ),
             SizedBox(height: 8.0),
             RatingInput(
@@ -450,7 +486,8 @@ class ShooterEvaluation2026 extends StatelessWidget {
               onRatingUpdate: onSpeedChanged,
               initialRating: 0,
               itemCount: max(1, ratingRange),
-              enableHalves: false
+              enableHalves: false,
+              titleOnTop: true,
             ),
             SizedBox(height: 8.0),
             RatingInput(
@@ -459,7 +496,8 @@ class ShooterEvaluation2026 extends StatelessWidget {
               onRatingUpdate: onCycleAbilityChanged,
               initialRating: 0,
               itemCount: max(1, ratingRange),
-              enableHalves: false
+              enableHalves: false,
+              titleOnTop: true,
             ),
             SizedBox(height: 8.0),
             RatingInput(
@@ -468,7 +506,8 @@ class ShooterEvaluation2026 extends StatelessWidget {
               onRatingUpdate: onCounterdefenseChanged,
               initialRating: 0,
               itemCount: max(1, ratingRange),
-              enableHalves: false
+              enableHalves: false,
+              titleOnTop: true,
             ),
             SizedBox(height: 8.0),
             NumberInput(
@@ -476,7 +515,7 @@ class ShooterEvaluation2026 extends StatelessWidget {
               value: cyclesPerAllianceShift,
               onValueAdd: onCyclesPerAllianceShiftAdd,
               onValueSubtract: onCyclesPerAllianceShiftSubtract,
-              enableSpacer: false,
+              enableSpacer: true,
             ),
           ],
         ),
@@ -525,7 +564,8 @@ class FeederEvaluation2026 extends StatelessWidget {
               onRatingUpdate: onSpeedChanged,
               initialRating: 0,
               itemCount: max(1, ratingRange),
-              enableHalves: false
+              enableHalves: false,
+              titleOnTop: true,
             ),
             SizedBox(height: 8.0),
             RatingInput(
@@ -534,7 +574,8 @@ class FeederEvaluation2026 extends StatelessWidget {
               onRatingUpdate: onCollectionSpeedChanged,
               initialRating: 0,
               itemCount: max(1, ratingRange),
-              enableHalves: false
+              enableHalves: false,
+              titleOnTop: true,
             ),
             SizedBox(height: 8.0),
             CheckboxListTile(
@@ -605,7 +646,8 @@ class _DefenderEvaluation2026State extends State<DefenderEvaluation2026> {
               onRatingUpdate: widget.onEfficiencyChanged,
               initialRating: 0,
               itemCount: max(1, widget.ratingRange),
-              enableHalves: false
+              enableHalves: false,
+              titleOnTop: true,
             ),
             SizedBox(height: 8.0),
             Text("Defend Locations"),

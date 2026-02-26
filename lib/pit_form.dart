@@ -176,35 +176,35 @@ class _PitFormState extends State<PitForm> {
                                 },
                               ),
                             ),
-                            Expanded
-                            (
-                              child: RadioListTile(
-                                key: Key("pit-kitbot"),
-                                title: Text("Significantly Modified Kitbot"),
-                                value: 
-                                widget.formData["kitbotType"] == "sigModifiedKitbot",
-                                groupValue: true,
-                                onChanged: (value)
-                                {
-                                  setState(() {
-                                    widget.onDataChanged(
-                                      getKitbotData(KitBotTypes.sigModifiedKitbot));
-                                  }
-                                  );
-                                },
-                              ),
-                              ),
+                            // Expanded
+                            // (
+                            //   child: RadioListTile(
+                            //     key: Key("pit-kitbot"),
+                            //     title: Text("Significantly Modified Kitbot"),
+                            //     value: 
+                            //     widget.formData["kitbotType"] == "sigModifiedKitbot",
+                            //     groupValue: true,
+                            //     onChanged: (value)
+                            //     {
+                            //       setState(() {
+                            //         widget.onDataChanged(
+                            //           getKitbotData(KitBotTypes.sigModifiedKitbot));
+                            //       }
+                            //       );
+                            //     },
+                            //   ),
+                            //   ),
                           ],
                         ),
                         
                         if (widget.formData["kitbotType"] != "not" && widget.formData["kitbotType"] != "sigModifiedKitbot")
                           CheckboxListTile(
-                              title: const Text("Modified?"),
-                              value: widget.formData["isModifiedKit"],
+                              title: const Text("Significantly Modified?"),
+                              value: widget.formData["isSigModifiedKit"] ?? false,
                               onChanged: (value) {
                                 setState(() {
                                   widget
-                                      .onDataChanged({"isModifiedKit": value});
+                                      .onDataChanged({"isSigModifiedKit": value});
                                 });
                               }),
                       ],
@@ -222,15 +222,15 @@ class _PitFormState extends State<PitForm> {
                     options: const ["Swerve", "Tank", "Mecanum", "Omni", "H-Drive"],
                   ),
                   const SizedBox(height: 8.0),
-                  RatingInput(
-                    enableHalves: false,
-                    title: 'Repairability',
-                    onRatingUpdate: (newValue) {
-                      widget.onDataChanged({"repairability": newValue});
-                    },
-                    initialRating: widget.formData["repairability"],
-                  ),
-                  const SizedBox(height: 8.0),
+                  // RatingInput(
+                  //   enableHalves: false,
+                  //   title: 'Repairability',
+                  //   onRatingUpdate: (newValue) {
+                  //     widget.onDataChanged({"repairability": newValue});
+                  //   },
+                  //   initialRating: widget.formData["repairability"],
+                  // ),
+                  // const SizedBox(height: 8.0),
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
@@ -414,7 +414,7 @@ class _PitFormState extends State<PitForm> {
                         // Front row
                         _buildClimbRow(context, "Front", "Front"),
                         // Back row
-                        _buildClimbRow(context, "Back", "Back"),
+                        _buildClimbRow(context, "Side", "Side"),
                       ],
                     ),
                   ),

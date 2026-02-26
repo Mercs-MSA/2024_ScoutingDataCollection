@@ -115,6 +115,9 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             onAccuracyChanged: (newValue) {
                               widget.form.onDataChanged({"team1ShootingAccuracy": newValue});
                             },
+                            onPrecisionChanged: (newValue) {
+                              widget.form.onDataChanged({"team1ShootingPrecision": newValue});
+                            },
                             onSpeedChanged: (newValue) {
                               widget.form.onDataChanged({"team1ShootingRate": newValue});
                             },
@@ -132,7 +135,11 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             },
                             onCyclesPerAllianceShiftSubtract: () {
                               setState(() {
-                                widget.form.onDataChanged({"team1CyclesPerAllianceShift": (widget.form.formData["team1CyclesPerAllianceShift"] ?? 0) - 1});
+                                if (widget.form.formData["team1CyclesPerAllianceShift"] > 0) {
+                                  widget.form.onDataChanged({"team1CyclesPerAllianceShift": (widget.form.formData["team1CyclesPerAllianceShift"]) - 1});
+                                } else {
+                                  widget.form.onDataChanged({"team1CyclesPerAllianceShift": 0});
+                                }                              
                               });
                             },
                           )
@@ -211,6 +218,9 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             onAccuracyChanged: (newValue) {
                               widget.form.onDataChanged({"team2ShootingAccuracy": newValue});
                             },
+                            onPrecisionChanged: (newValue) {
+                              widget.form.onDataChanged({"team2ShootingPrecision": newValue});
+                            },
                             onSpeedChanged: (newValue) {
                               widget.form.onDataChanged({"team2ShootingRate": newValue});
                             },
@@ -228,7 +238,11 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             },
                             onCyclesPerAllianceShiftSubtract: () {
                               setState(() {
-                                widget.form.onDataChanged({"team2CyclesPerAllianceShift": (widget.form.formData["team2CyclesPerAllianceShift"] ?? 0) - 1});
+                                if (widget.form.formData["team2CyclesPerAllianceShift"] > 0) {
+                                  widget.form.onDataChanged({"team2CyclesPerAllianceShift": (widget.form.formData["team2CyclesPerAllianceShift"]) - 1});
+                                } else {
+                                  widget.form.onDataChanged({"team2CyclesPerAllianceShift": 0});
+                                }
                               });
                             },
                           )
@@ -307,6 +321,9 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             onAccuracyChanged: (newValue) {
                               widget.form.onDataChanged({"team3ShootingAccuracy": newValue});
                             },
+                            onPrecisionChanged: (newValue) {
+                              widget.form.onDataChanged({"team3ShootingPrecision": newValue});
+                            },
                             onSpeedChanged: (newValue) {
                               widget.form.onDataChanged({"team3ShootingRate": newValue});
                             },
@@ -324,7 +341,11 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             },
                             onCyclesPerAllianceShiftSubtract: () {
                               setState(() {
-                                widget.form.onDataChanged({"team3CyclesPerAllianceShift": (widget.form.formData["team3CyclesPerAllianceShift"] ?? 0) - 1});
+                                if (widget.form.formData["team3CyclesPerAllianceShift"] > 0) {
+                                  widget.form.onDataChanged({"team3CyclesPerAllianceShift": (widget.form.formData["team3CyclesPerAllianceShift"]) - 1});
+                                } else {
+                                  widget.form.onDataChanged({"team3CyclesPerAllianceShift": 0});
+                                }
                               });
                             },
                           )
