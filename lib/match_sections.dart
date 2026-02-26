@@ -111,12 +111,29 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                         if (widget.form.formData["team1Shooter"] == true) ... [
                           SizedBox(height: 16.0),
                           ShooterEvaluation2026(
-                            ratingRange: 3, 
+                            ratingRange: 5, 
                             onAccuracyChanged: (newValue) {
                               widget.form.onDataChanged({"team1ShootingAccuracy": newValue});
                             },
                             onSpeedChanged: (newValue) {
                               widget.form.onDataChanged({"team1ShootingRate": newValue});
+                            },
+                            onCycleAbilityChanged: (newValue) {
+                              widget.form.onDataChanged({"team1CycleAbility": newValue});
+                            },
+                            onCounterdefenseChanged: (newValue) {
+                              widget.form.onDataChanged({"team1Counterdefense": newValue});
+                            },
+                            cyclesPerAllianceShift: widget.form.formData["team1CyclesPerAllianceShift"] ?? 0,
+                            onCyclesPerAllianceShiftAdd: () {
+                              setState(() {
+                                widget.form.onDataChanged({"team1CyclesPerAllianceShift": (widget.form.formData["team1CyclesPerAllianceShift"] ?? 0) + 1});
+                              });
+                            },
+                            onCyclesPerAllianceShiftSubtract: () {
+                              setState(() {
+                                widget.form.onDataChanged({"team1CyclesPerAllianceShift": (widget.form.formData["team1CyclesPerAllianceShift"] ?? 0) - 1});
+                              });
                             },
                           )
                         ] else 
@@ -124,7 +141,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                         if (widget.form.formData["team1Defender"] == true) ... [
                           SizedBox(height: 16.0),
                           DefenderEvaluation2026(
-                            ratingRange: 3, 
+                            ratingRange: 5, 
                             onEfficiencyChanged: (newValue) {
                               widget.form.onDataChanged({"team1DefenderEfficiency": newValue});
                             },
@@ -137,12 +154,18 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                         if (widget.form.formData["team1Feeder"] == true) ... [
                           SizedBox(height: 16.0),
                           FeederEvaluation2026(
-                            ratingRange: 3, 
-                            onAccuracyChanged: (newValue) {
-                              widget.form.onDataChanged({"team1FeederAccuracy": newValue});
-                            },
+                            ratingRange: 5, 
                             onSpeedChanged: (newValue) {
                               widget.form.onDataChanged({"team1FeederRate": newValue});
+                            },
+                            onCollectionSpeedChanged: (newValue) {
+                              widget.form.onDataChanged({"team1FeederCollectionSpeed": newValue});
+                            },
+                            accurateFeeding: widget.form.formData["team1AccurateFeeding"] ?? false,
+                            onAccurateFeedingChanged: (newValue) {
+                              setState(() {
+                                widget.form.onDataChanged({"team1AccurateFeeding": newValue ?? false});
+                              });
                             },
                           )
                         ] else 
@@ -184,12 +207,29 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                         if (widget.form.formData["team2Shooter"] == true) ... [
                           SizedBox(height: 16.0),
                           ShooterEvaluation2026(
-                            ratingRange: 3, 
+                            ratingRange: 5, 
                             onAccuracyChanged: (newValue) {
                               widget.form.onDataChanged({"team2ShootingAccuracy": newValue});
                             },
                             onSpeedChanged: (newValue) {
                               widget.form.onDataChanged({"team2ShootingRate": newValue});
+                            },
+                            onCycleAbilityChanged: (newValue) {
+                              widget.form.onDataChanged({"team2CycleAbility": newValue});
+                            },
+                            onCounterdefenseChanged: (newValue) {
+                              widget.form.onDataChanged({"team2Counterdefense": newValue});
+                            },
+                            cyclesPerAllianceShift: widget.form.formData["team2CyclesPerAllianceShift"] ?? 0,
+                            onCyclesPerAllianceShiftAdd: () {
+                              setState(() {
+                                widget.form.onDataChanged({"team2CyclesPerAllianceShift": (widget.form.formData["team2CyclesPerAllianceShift"] ?? 0) + 1});
+                              });
+                            },
+                            onCyclesPerAllianceShiftSubtract: () {
+                              setState(() {
+                                widget.form.onDataChanged({"team2CyclesPerAllianceShift": (widget.form.formData["team2CyclesPerAllianceShift"] ?? 0) - 1});
+                              });
                             },
                           )
                         ] else 
@@ -197,7 +237,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                         if (widget.form.formData["team2Defender"] == true) ... [
                           SizedBox(height: 16.0),
                           DefenderEvaluation2026(
-                            ratingRange: 3, 
+                            ratingRange: 5, 
                             onEfficiencyChanged: (newValue) {
                               widget.form.onDataChanged({"team2DefenderEfficiency": newValue});
                             },
@@ -210,12 +250,18 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                         if (widget.form.formData["team2Feeder"] == true) ... [
                           SizedBox(height: 16.0),
                           FeederEvaluation2026(
-                            ratingRange: 3, 
-                            onAccuracyChanged: (newValue) {
-                              widget.form.onDataChanged({"team2FeederAccuracy": newValue});
-                            },
+                            ratingRange: 5, 
                             onSpeedChanged: (newValue) {
                               widget.form.onDataChanged({"team2FeederRate": newValue});
+                            },
+                            onCollectionSpeedChanged: (newValue) {
+                              widget.form.onDataChanged({"team2FeederCollectionSpeed": newValue});
+                            },
+                            accurateFeeding: widget.form.formData["team2AccurateFeeding"] ?? false,
+                            onAccurateFeedingChanged: (newValue) {
+                              setState(() {
+                                widget.form.onDataChanged({"team2AccurateFeeding": newValue ?? false});
+                              });
                             },
                           )
                         ] else 
@@ -257,12 +303,29 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                         if (widget.form.formData["team3Shooter"] == true) ... [
                           SizedBox(height: 16.0),
                           ShooterEvaluation2026(
-                            ratingRange: 3, 
+                            ratingRange: 5, 
                             onAccuracyChanged: (newValue) {
                               widget.form.onDataChanged({"team3ShootingAccuracy": newValue});
                             },
                             onSpeedChanged: (newValue) {
                               widget.form.onDataChanged({"team3ShootingRate": newValue});
+                            },
+                            onCycleAbilityChanged: (newValue) {
+                              widget.form.onDataChanged({"team3CycleAbility": newValue});
+                            },
+                            onCounterdefenseChanged: (newValue) {
+                              widget.form.onDataChanged({"team3Counterdefense": newValue});
+                            },
+                            cyclesPerAllianceShift: widget.form.formData["team3CyclesPerAllianceShift"] ?? 0,
+                            onCyclesPerAllianceShiftAdd: () {
+                              setState(() {
+                                widget.form.onDataChanged({"team3CyclesPerAllianceShift": (widget.form.formData["team3CyclesPerAllianceShift"] ?? 0) + 1});
+                              });
+                            },
+                            onCyclesPerAllianceShiftSubtract: () {
+                              setState(() {
+                                widget.form.onDataChanged({"team3CyclesPerAllianceShift": (widget.form.formData["team3CyclesPerAllianceShift"] ?? 0) - 1});
+                              });
                             },
                           )
                         ] else 
@@ -270,7 +333,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                         if (widget.form.formData["team3Defender"] == true) ... [
                           SizedBox(height: 16.0),
                           DefenderEvaluation2026(
-                            ratingRange: 3, 
+                            ratingRange: 5, 
                             onEfficiencyChanged: (newValue) {
                               widget.form.onDataChanged({"team3DefenderEfficiency": newValue});
                             },
@@ -284,12 +347,18 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                         if (widget.form.formData["team3Feeder"] == true) ... [
                           SizedBox(height: 16.0),
                           FeederEvaluation2026(
-                            ratingRange: 3, 
-                            onAccuracyChanged: (newValue) {
-                              widget.form.onDataChanged({"team3FeederAccuracy": newValue});
-                            },
+                            ratingRange: 5, 
                             onSpeedChanged: (newValue) {
                               widget.form.onDataChanged({"team3FeederRate": newValue});
+                            },
+                            onCollectionSpeedChanged: (newValue) {
+                              widget.form.onDataChanged({"team3FeederCollectionSpeed": newValue});
+                            },
+                            accurateFeeding: widget.form.formData["team3AccurateFeeding"] ?? false,
+                            onAccurateFeedingChanged: (newValue) {
+                              setState(() {
+                                widget.form.onDataChanged({"team3AccurateFeeding": newValue ?? false});
+                              });
                             },
                           )
                         ] else 
@@ -337,34 +406,6 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                           fontWeight: FontWeight.bold,
                         )),
               ),
-              
-              // Failed climb section
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Text("Failed climb?",
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        )),
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildTeamCheckbox(context, "team1FailedClimb",
-                        "Team ${widget.form.formData["team1"]}"),
-                  ),
-                  const SizedBox(width: 12.0),
-                  Expanded(
-                    child: _buildTeamCheckbox(context, "team2FailedClimb",
-                        "Team ${widget.form.formData["team2"]}"),
-                  ),
-                  const SizedBox(width: 12.0),
-                  Expanded(
-                    child: _buildTeamCheckbox(context, "team3FailedClimb",
-                        "Team ${widget.form.formData["team3"]}"),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 32.0),
               
               // Climb Level Grid
               Container(
@@ -469,6 +510,34 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                     _buildLevelRow(context, "Lvl 1", 1),
                   ],
                 ),
+              ),
+              const SizedBox(height: 32.0),
+              
+              // Climb Position section
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12.0),
+                child: Text("Climb Position",
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        )),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildClimbPositionDropdown(context, "team1ClimbPosition",
+                        "Team ${widget.form.formData["team1"]}"),
+                  ),
+                  const SizedBox(width: 12.0),
+                  Expanded(
+                    child: _buildClimbPositionDropdown(context, "team2ClimbPosition",
+                        "Team ${widget.form.formData["team2"]}"),
+                  ),
+                  const SizedBox(width: 12.0),
+                  Expanded(
+                    child: _buildClimbPositionDropdown(context, "team3ClimbPosition",
+                        "Team ${widget.form.formData["team3"]}"),
+                  ),
+                ],
               ),
               const SizedBox(height: 32.0),
               
@@ -606,49 +675,116 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                       widget.form.onDataChanged({"isMarkedForReview": newValue});
                     });
                   }),
+              CheckboxListTile(
+                  dense: true,
+                  title: const Text("Penalties?"),
+                  value: widget.form.formData["penalties"] ?? false,
+                  onChanged: (bool? newValue) {
+                    setState(() {
+                      widget.form.onDataChanged({"penalties": newValue ?? false});
+                    });
+                  }),
 
+              const SizedBox(height: 16.0),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Text("Didn't Show Up?",
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        )),
+              ),
               Row(
                 children: [
                   Expanded(
-                      child: CheckboxListTile(
-                        dense: true,
-                        title: const Text("Didn't Show Up?"),
-                        value: widget.form.formData["noShow"],
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            widget.form.onDataChanged({"noShow": newValue});
-                          });
-                        },
-                      )),
+                    child: CheckboxListTile(
+                      dense: true,
+                      tristate: true,
+                      title: Text("Team ${widget.form.formData["team1"]}"),
+                      value: widget.form.formData["team1NoShow"],
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          widget.form.onDataChanged({"team1NoShow": newValue});
+                        });
+                      },
+                    ),
+                  ),
                   Expanded(
-                      child: CheckboxListTile(
-                        dense: true,
-                        title: const Text("Disabled?"),
-                        value: widget.form.formData["disabled"],
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            widget.form.onDataChanged({"disabled": newValue});
-                          });
-                        },
-                      )),
+                    child: CheckboxListTile(
+                      dense: true,
+                      tristate: true,
+                      title: Text("Team ${widget.form.formData["team2"]}"),
+                      value: widget.form.formData["team2NoShow"],
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          widget.form.onDataChanged({"team2NoShow": newValue});
+                        });
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: CheckboxListTile(
+                      dense: true,
+                      tristate: true,
+                      title: Text("Team ${widget.form.formData["team3"]}"),
+                      value: widget.form.formData["team3NoShow"],
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          widget.form.onDataChanged({"team3NoShow": newValue});
+                        });
+                      },
+                    ),
+                  ),
                 ],
               ),
-              NumberInput(
-                  title: "Penalties",
-                  value: widget.form.formData["penalties"],
-                  onValueAdd: () {
-                    setState(() {
-                      widget.form.onDataChanged(
-                          {"penalties": widget.form.formData["penalties"] + 1});
-                    });
-                  },
-                  onValueSubtract: () {
-                    setState(() {
-                      widget.form.onDataChanged(
-                          {"penalties": widget.form.formData["penalties"] - 1});
-                    });
-                  },
-                  enableSpacer: true),
+
+              const SizedBox(height: 16.0),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Text("Disabled?",
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        )),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: CheckboxListTile(
+                      dense: true,
+                      title: Text("Team ${widget.form.formData["team1"]}"),
+                      value: widget.form.formData["team1Disabled"] ?? false,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          widget.form.onDataChanged({"team1Disabled": newValue ?? false});
+                        });
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: CheckboxListTile(
+                      dense: true,
+                      title: Text("Team ${widget.form.formData["team2"]}"),
+                      value: widget.form.formData["team2Disabled"] ?? false,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          widget.form.onDataChanged({"team2Disabled": newValue ?? false});
+                        });
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: CheckboxListTile(
+                      dense: true,
+                      title: Text("Team ${widget.form.formData["team3"]}"),
+                      value: widget.form.formData["team3Disabled"] ?? false,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          widget.form.onDataChanged({"team3Disabled": newValue ?? false});
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 24.0),
             ],
           ),
@@ -698,7 +834,9 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
 
   Container _buildGridCell(
       BuildContext context, String dataKey, int level) {
-    final isSelected = widget.form.formData[dataKey] == level;
+    final currentValue = widget.form.formData[dataKey] ?? 0;
+    final isSelected = currentValue == level;
+    final isFailed = currentValue == -level;
     
     return Container(
       decoration: BoxDecoration(
@@ -716,6 +854,8 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
           onTap: () {
             setState(() {
               if (isSelected) {
+                widget.form.onDataChanged({dataKey: -level});
+              } else if (isFailed) {
                 widget.form.onDataChanged({dataKey: 0});
               } else {
                 widget.form.onDataChanged({dataKey: level});
@@ -725,11 +865,21 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
           child: Container(
             color: isSelected
                 ? Theme.of(context).colorScheme.primary.withOpacity(0.2)
-                : Colors.transparent,
+                : isFailed
+                    ? Theme.of(context).colorScheme.error.withOpacity(0.2)
+                    : Colors.transparent,
             alignment: Alignment.center,
             child: Icon(
-              isSelected ? Icons.circle : Icons.circle_outlined,
-              color: Theme.of(context).colorScheme.primary,
+              isSelected
+                  ? Icons.check_circle
+                  : isFailed
+                      ? Icons.cancel
+                      : Icons.circle_outlined,
+              color: isSelected
+                  ? Theme.of(context).colorScheme.primary
+                  : isFailed
+                      ? Theme.of(context).colorScheme.error
+                      : Theme.of(context).colorScheme.primary,
               size: 32,
             ),
           ),
@@ -764,6 +914,44 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
               teamLabel,
               style: const TextStyle(fontSize: 13),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildClimbPositionDropdown(
+      BuildContext context, String dataKey, String teamLabel) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Theme.of(context).dividerColor,
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+      child: Column(
+        children: [
+          Text(
+            teamLabel,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+          ),
+          const SizedBox(height: 8.0),
+          DropdownButton<String>(
+            isExpanded: true,
+            value: widget.form.formData[dataKey] ?? "none",
+            items: const [
+              DropdownMenuItem(value: "none", child: Text("None")),
+              DropdownMenuItem(value: "left", child: Text("Left")),
+              DropdownMenuItem(value: "center", child: Text("Center")),
+              DropdownMenuItem(value: "right", child: Text("Right")),
+            ],
+            onChanged: (String? newValue) {
+              setState(() {
+                widget.form.onDataChanged({dataKey: newValue ?? "none"});
+              });
+            },
           ),
         ],
       ),

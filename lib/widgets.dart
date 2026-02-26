@@ -400,12 +400,22 @@ class ShooterEvaluation2026 extends StatelessWidget {
   final int ratingRange;
   final Function(double) onAccuracyChanged;
   final Function(double) onSpeedChanged;
+  final Function(double) onCycleAbilityChanged;
+  final Function(double) onCounterdefenseChanged;
+  final int cyclesPerAllianceShift;
+  final VoidCallback onCyclesPerAllianceShiftAdd;
+  final VoidCallback onCyclesPerAllianceShiftSubtract;
 
   const ShooterEvaluation2026({
     super.key,
     required this.ratingRange,
     required this.onAccuracyChanged,
-    required this.onSpeedChanged
+    required this.onSpeedChanged,
+    required this.onCycleAbilityChanged,
+    required this.onCounterdefenseChanged,
+    required this.cyclesPerAllianceShift,
+    required this.onCyclesPerAllianceShiftAdd,
+    required this.onCyclesPerAllianceShiftSubtract,
   });
 
   @override
@@ -441,7 +451,33 @@ class ShooterEvaluation2026 extends StatelessWidget {
               initialRating: 0,
               itemCount: max(1, ratingRange),
               enableHalves: false
-            )
+            ),
+            SizedBox(height: 8.0),
+            RatingInput(
+              title: "Cycle Ability", 
+              fontSize: 16,
+              onRatingUpdate: onCycleAbilityChanged,
+              initialRating: 0,
+              itemCount: max(1, ratingRange),
+              enableHalves: false
+            ),
+            SizedBox(height: 8.0),
+            RatingInput(
+              title: "Counterdefense", 
+              fontSize: 16,
+              onRatingUpdate: onCounterdefenseChanged,
+              initialRating: 0,
+              itemCount: max(1, ratingRange),
+              enableHalves: false
+            ),
+            SizedBox(height: 8.0),
+            NumberInput(
+              title: "Cycles/Alliance Shift",
+              value: cyclesPerAllianceShift,
+              onValueAdd: onCyclesPerAllianceShiftAdd,
+              onValueSubtract: onCyclesPerAllianceShiftSubtract,
+              enableSpacer: false,
+            ),
           ],
         ),
       ),
@@ -452,14 +488,18 @@ class ShooterEvaluation2026 extends StatelessWidget {
 
 class FeederEvaluation2026 extends StatelessWidget {
   final int ratingRange;
-  final Function(double) onAccuracyChanged;
   final Function(double) onSpeedChanged;
+  final Function(double) onCollectionSpeedChanged;
+  final bool accurateFeeding;
+  final Function(bool?) onAccurateFeedingChanged;
 
   const FeederEvaluation2026({
     super.key,
     required this.ratingRange,
-    required this.onAccuracyChanged,
-    required this.onSpeedChanged
+    required this.onSpeedChanged,
+    required this.onCollectionSpeedChanged,
+    required this.accurateFeeding,
+    required this.onAccurateFeedingChanged,
   });
 
   @override
@@ -480,22 +520,28 @@ class FeederEvaluation2026 extends StatelessWidget {
             ]),
             SizedBox(height: 8.0),
             RatingInput(
-              title: "Accuracy", 
+              title: "Delivery Efficiency", 
               fontSize: 16,
-              onRatingUpdate: onAccuracyChanged,
+              onRatingUpdate: onSpeedChanged,
               initialRating: 0,
               itemCount: max(1, ratingRange),
               enableHalves: false
             ),
             SizedBox(height: 8.0),
             RatingInput(
-              title: "Fire Rate", 
+              title: "Collection Speed", 
               fontSize: 16,
-              onRatingUpdate: onSpeedChanged,
+              onRatingUpdate: onCollectionSpeedChanged,
               initialRating: 0,
               itemCount: max(1, ratingRange),
               enableHalves: false
-            )
+            ),
+            SizedBox(height: 8.0),
+            CheckboxListTile(
+              title: Text("Accurate Feeding"),
+              value: accurateFeeding,
+              onChanged: onAccurateFeedingChanged,
+            ),
           ],
         ),
       ),
