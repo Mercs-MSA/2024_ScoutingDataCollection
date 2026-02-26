@@ -2,7 +2,7 @@ name: Gh-Pages
 
 on:
   push:
-    branches: [ season2025 ]
+    branches: [ season2026 ]
 
 jobs:
   build:
