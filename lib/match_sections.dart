@@ -999,40 +999,46 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
       ),
       padding: const EdgeInsets.all(12.0),
       child: Column(
-        children: [
-          Text(
-            teamLabel,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-          ),
-          const SizedBox(height: 12.0),
-          Text(
-            "30",
-            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
-          ),
-          Slider(
-            value: speed.toDouble(),
-            min: 3,
-            max: 30,
-            divisions: 27,
-            onChanged: (value) {
-              setState(() {
-                widget.form.onDataChanged({speedKey: value.toInt()});
-              });
-            },
-          ),
-          Text(
-            "3",
-            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 8.0),
-          Text(
-            speed.toString(),
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
+      children: [
+        Text(
+          teamLabel,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+        ),
+        const SizedBox(height: 8.0),
+        
+        Row(
+          children: [
+            const Text(
+              "3",
+              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
             ),
-          ),
-        ],
-      ),
-    );
+            Expanded(
+              child: Slider(
+                value: speed.toDouble(),
+                min: 3,
+                max: 30,
+                divisions: 27,
+                onChanged: (value) {
+                  setState(() {
+                    widget..form.onDataChanged({speedKey: value.toInt()});
+                  });
+                },
+              ),
+            ),
+            const Text(
+              "30",
+              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+        
+        Text(
+          speed.toString(),
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+      ],
+    ));
   }
 }
