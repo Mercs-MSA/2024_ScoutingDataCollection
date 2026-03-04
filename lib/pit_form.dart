@@ -754,24 +754,25 @@ class _PitFormState extends State<PitForm> {
                                 WidgetStateProperty.all(EdgeInsets.all(18.0))),
                         segments: <ButtonSegment<ShooterTypes>>[
                           ButtonSegment(
-                              value: ShooterTypes.turret,
-                              label: Text('Turret')),
+                            value: ShooterTypes.turret,
+                            label: Text('Turret')),
                           ButtonSegment(
-                              value: ShooterTypes.hood,
-                              label: Text('Hood')),
-                              ButtonSegment(
-                                value: ShooterTypes.other,
-                                label: Text('Other')
-                              )
-
+                            value: ShooterTypes.hood,
+                            label: Text('Hood')),
+                          ButtonSegment(
+                            value: ShooterTypes.big,
+                            label: Text('Big Shooter')),
+                          ButtonSegment(
+                            value: ShooterTypes.other,
+                            label: Text('Other')),
                         ],
                         selected: {
-                          if (widget.formData["turret"] != null &&
-                              widget.formData["turret"])
+                          if (widget.formData["turret"] != null && widget.formData["turret"])
                             ShooterTypes.turret,
-                          if (widget.formData["hood"] != null &&
-                              widget.formData["hood"])
+                          if (widget.formData["hood"] != null && widget.formData["hood"])
                             ShooterTypes.hood,
+                          if (widget.formData["bigShooter"] != null && widget.formData["bigShooter"])
+                            ShooterTypes.big,
                           if (widget.formData["other"] != null && widget.formData["other"])
                             ShooterTypes.other,
                         },
@@ -780,6 +781,7 @@ class _PitFormState extends State<PitForm> {
                             widget.onDataChanged({
                               "turret": newSelection.contains(ShooterTypes.turret),
                               "hood": newSelection.contains(ShooterTypes.hood),
+                              "bigShooter": newSelection.contains(ShooterTypes.big),
                               "other": newSelection.contains(ShooterTypes.other),
                             });
                           });

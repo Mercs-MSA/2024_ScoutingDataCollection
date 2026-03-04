@@ -10,7 +10,7 @@ enum ClimbPositions { one, two, three }
 
 enum IntakeTypes {slapdown, fourbar, openbumper, bucket}
 
-enum ShooterTypes { turret, hood, other }
+enum ShooterTypes { turret, hood, big, other }
 
 enum TeleopRole { score, shunt, defense }
 
