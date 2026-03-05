@@ -459,10 +459,15 @@ class _FormAppPageState extends State<FormAppPage> {
                                   setState(() {
                                     appMode = 2;
                                     setAppModePref(appMode);
-                                    // pit
+                                    // auton
                                     if (devMode) {
                                       autonTeamNumber = 9999;
+                                      autonScouter = "RonCollins";
+                                      autonMatchNumber = 1;
+
                                       autonScoutingData["team"] = 9999;
+                                      autonScoutingData["scouter"] = "RonCollins";
+                                      autonScoutingData["match"] = 1;
                                     }
                                   });
                                 },
@@ -755,16 +760,15 @@ class _FormAppPageState extends State<FormAppPage> {
                                         setState(() {
                                           appMode = 2;
                                           setAppModePref(appMode);
-                                          // pit
+                                          // auton
                                           if (devMode) {
-                                            pitTeamNumber = 9999;
-                                            pitScoutingData["team"] = 9999;
-                                            pitScouters = [
-                                              "RonCollins",
-                                              "RonCollins"
-                                            ];
-                                            pitScoutingData["scouters"] =
-                                                "RonCollins,RonCollins";
+                                            autonTeamNumber = 9999;
+                                            autonScouter = "RonCollins";
+                                            autonMatchNumber = 1;
+
+                                            autonScoutingData["team"] = 9999;
+                                            autonScoutingData["scouter"] = "RonCollins";
+                                            autonScoutingData["match"] = 1;
                                           }
                                         });
                                       },

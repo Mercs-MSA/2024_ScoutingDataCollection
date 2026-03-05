@@ -111,20 +111,20 @@ class _AutonFormState extends State<AutonForm>{
                                             EdgeInsets.all(18.0))),
                                     segments: <ButtonSegment<AutoStartLocation>>[
                                       ButtonSegment(
-                                          label: Text("1"),
-                                          value: AutoStartLocation.farOutpost),
+                                          label: Text("RR"),
+                                          value: AutoStartLocation.farRight),
                                       ButtonSegment(
-                                          label: Text("2"),
-                                          value: AutoStartLocation.closeOutpost),
+                                          label: Text("R"),
+                                          value: AutoStartLocation.right),
                                       ButtonSegment(
-                                          label: Text("3"),
+                                          label: Text("M"),
                                           value: AutoStartLocation.middle),
                                       ButtonSegment(
-                                          label: Text("4"),
-                                          value: AutoStartLocation.closeDepot),
+                                          label: Text("L"),
+                                          value: AutoStartLocation.left),
                                       ButtonSegment(
-                                          label: Text("5"),
-                                          value: AutoStartLocation.farDepot)
+                                          label: Text("LL"),
+                                          value: AutoStartLocation.farLeft)
                                     ],
                                     selected: <AutoStartLocation>{
                                       widget.formData['startPos'] ?? AutoStartLocation.middle
@@ -319,20 +319,20 @@ class _AutonFormState extends State<AutonForm>{
                                             EdgeInsets.all(18.0))),
                                     segments: <ButtonSegment<AutoStartLocation>>[
                                       ButtonSegment(
-                                          label: Text("1"),
-                                          value: AutoStartLocation.farOutpost),
+                                          label: Text("RR"),
+                                          value: AutoStartLocation.farRight),
                                       ButtonSegment(
-                                          label: Text("2"),
-                                          value: AutoStartLocation.closeOutpost),
+                                          label: Text("R"),
+                                          value: AutoStartLocation.right),
                                       ButtonSegment(
-                                          label: Text("3"),
+                                          label: Text("M"),
                                           value: AutoStartLocation.middle),
                                       ButtonSegment(
-                                          label: Text("4"),
-                                          value: AutoStartLocation.closeDepot),
+                                          label: Text("L"),
+                                          value: AutoStartLocation.left),
                                       ButtonSegment(
-                                          label: Text("5"),
-                                          value: AutoStartLocation.farDepot)
+                                          label: Text("LL"),
+                                          value: AutoStartLocation.farLeft)
                                     ],
                                     selected: <AutoStartLocation>{
                                       widget.formData['startPos'] ?? AutoStartLocation.middle

@@ -281,7 +281,6 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                           )
                         ] else 
                           SizedBox(),
-
                       ],
                     ),
                   ),

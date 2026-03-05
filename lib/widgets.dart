@@ -505,6 +505,7 @@ class ShooterEvaluation2026 extends StatelessWidget {
             SizedBox(height: 8.0),
             CheckboxListTile(
               title: Text("Counterdefense"), 
+              tristate: true,
               value: counterdefense,
               onChanged: onCounterdefenseChanged,
             ),

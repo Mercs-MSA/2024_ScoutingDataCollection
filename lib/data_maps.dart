@@ -100,9 +100,9 @@ Map<String, dynamic> getMatchDataMap() {
     "team1Defender": false,
     "team2Defender": false,
     "team3Defender": false,
-    "team1Feeder": false,
-    "team2Feeder": false,
-    "team3Feeder": false,
+    "team1Shunter": false,
+    "team2Shunter": false,
+    "team3Shunter": false,
     
     "team1CollectionRate": 0.0,
     "team2CollectionRate": 0.0,
@@ -127,9 +127,9 @@ Map<String, dynamic> getMatchDataMap() {
     "team2CyclesPerAllianceShift": 0,
     "team3CyclesPerAllianceShift": 0,
 
-    "team1FeederRate": 0.0,
-    "team2FeederRate": 0.0,
-    "team3FeederRate": 0.0,
+    "team1ShunterRate": 0.0,
+    "team2ShunterRate": 0.0,
+    "team3ShunterRate": 0.0,
 
     "team1DefenseIsEffective": false,
     "team2DefenseIsEffective": false,
