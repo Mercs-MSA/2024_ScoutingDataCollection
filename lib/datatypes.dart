@@ -16,6 +16,8 @@ enum TeleopRole { score, shunt, defense }
 
 enum StartPosition { left, middle, right }
 
+enum AutoStartLocation { farOutpost, closeOutpost, middle, closeDepot, farDepot }
+
 enum AchievablePosition { depot, outpost, neutral, climb }
 
 enum EndgamePositions { shallow, deep, park, none }

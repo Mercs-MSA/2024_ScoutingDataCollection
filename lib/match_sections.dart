@@ -72,8 +72,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
         ),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(8),
-          child: ListView(
-            shrinkWrap: true,
+          child: Column(
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,6 +107,17 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             });
                           }
                         ),
+                        RatingInput(
+                          title: "Collection Rate", 
+                          fontSize: 16,
+                          onRatingUpdate: (newValue) {
+                            widget.form.onDataChanged({"team1CollectionRate": newValue});
+                          },
+                          initialRating: 0,
+                          itemCount: 5,
+                          enableHalves: false,
+                          titleOnTop: true,
+                        ),
                         if (widget.form.formData["team1Shooter"] == true) ... [
                           SizedBox(height: 16.0),
                           ShooterEvaluation2026(
@@ -115,17 +125,20 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             onAccuracyChanged: (newValue) {
                               widget.form.onDataChanged({"team1ShootingAccuracy": newValue});
                             },
-                            onPrecisionChanged: (newValue) {
-                              widget.form.onDataChanged({"team1ShootingPrecision": newValue});
-                            },
+                            // onPrecisionChanged: (newValue) {
+                            //   widget.form.onDataChanged({"team1ShootingPrecision": newValue});
+                            // },
                             onSpeedChanged: (newValue) {
                               widget.form.onDataChanged({"team1ShootingRate": newValue});
                             },
-                            onCycleAbilityChanged: (newValue) {
-                              widget.form.onDataChanged({"team1CycleAbility": newValue});
-                            },
+                            // onCycleAbilityChanged: (newValue) {
+                            //   widget.form.onDataChanged({"team1CycleAbility": newValue});
+                            // },
+                            counterdefense: widget.form.formData["team1Counterdefense"],
                             onCounterdefenseChanged: (newValue) {
-                              widget.form.onDataChanged({"team1Counterdefense": newValue});
+                              setState(() {
+                                widget.form.onDataChanged({"team1Counterdefense": newValue});
+                              });
                             },
                             cyclesPerAllianceShift: widget.form.formData["team1CyclesPerAllianceShift"] ?? 0,
                             onCyclesPerAllianceShiftAdd: () {
@@ -148,10 +161,6 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                         if (widget.form.formData["team1Defender"] == true) ... [
                           SizedBox(height: 16.0),
                           DefenderEvaluation2026(
-                            ratingRange: 5, 
-                            onEfficiencyChanged: (newValue) {
-                              widget.form.onDataChanged({"team1DefenderEfficiency": newValue});
-                            },
                             form: widget.form.formData,
                             onDataChanged: widget.form.onDataChanged,
                             team: "team1"
@@ -162,17 +171,8 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                           SizedBox(height: 16.0),
                           FeederEvaluation2026(
                             ratingRange: 5, 
-                            onSpeedChanged: (newValue) {
-                              widget.form.onDataChanged({"team1FeederRate": newValue});
-                            },
-                            onCollectionSpeedChanged: (newValue) {
+                            onFeedingRateChanged: (newValue) {
                               widget.form.onDataChanged({"team1FeederCollectionSpeed": newValue});
-                            },
-                            accurateFeeding: widget.form.formData["team1AccurateFeeding"] ?? false,
-                            onAccurateFeedingChanged: (newValue) {
-                              setState(() {
-                                widget.form.onDataChanged({"team1AccurateFeeding": newValue ?? false});
-                              });
                             },
                           )
                         ] else 
@@ -211,6 +211,17 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             });
                           }
                         ),
+                        RatingInput(
+                          title: "Collection Rate", 
+                          fontSize: 16,
+                          onRatingUpdate: (newValue) {
+                            widget.form.onDataChanged({"team2CollectionRate": newValue});
+                          },
+                          initialRating: 0,
+                          itemCount: 5,
+                          enableHalves: false,
+                          titleOnTop: true,
+                        ),
                         if (widget.form.formData["team2Shooter"] == true) ... [
                           SizedBox(height: 16.0),
                           ShooterEvaluation2026(
@@ -218,17 +229,20 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             onAccuracyChanged: (newValue) {
                               widget.form.onDataChanged({"team2ShootingAccuracy": newValue});
                             },
-                            onPrecisionChanged: (newValue) {
-                              widget.form.onDataChanged({"team2ShootingPrecision": newValue});
-                            },
+                            // onPrecisionChanged: (newValue) {
+                            //   widget.form.onDataChanged({"team2ShootingPrecision": newValue});
+                            // },
                             onSpeedChanged: (newValue) {
                               widget.form.onDataChanged({"team2ShootingRate": newValue});
                             },
-                            onCycleAbilityChanged: (newValue) {
-                              widget.form.onDataChanged({"team2CycleAbility": newValue});
-                            },
+                            // onCycleAbilityChanged: (newValue) {
+                            //   widget.form.onDataChanged({"team2CycleAbility": newValue});
+                            // },
+                            counterdefense: widget.form.formData["team2Counterdefense"],
                             onCounterdefenseChanged: (newValue) {
-                              widget.form.onDataChanged({"team2Counterdefense": newValue});
+                              setState(() {
+                                widget.form.onDataChanged({"team2Counterdefense": newValue});
+                              });
                             },
                             cyclesPerAllianceShift: widget.form.formData["team2CyclesPerAllianceShift"] ?? 0,
                             onCyclesPerAllianceShiftAdd: () {
@@ -251,10 +265,6 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                         if (widget.form.formData["team2Defender"] == true) ... [
                           SizedBox(height: 16.0),
                           DefenderEvaluation2026(
-                            ratingRange: 5, 
-                            onEfficiencyChanged: (newValue) {
-                              widget.form.onDataChanged({"team2DefenderEfficiency": newValue});
-                            },
                             form: widget.form.formData,
                             onDataChanged: widget.form.onDataChanged,
                             team: "team2"
@@ -265,17 +275,8 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                           SizedBox(height: 16.0),
                           FeederEvaluation2026(
                             ratingRange: 5, 
-                            onSpeedChanged: (newValue) {
-                              widget.form.onDataChanged({"team2FeederRate": newValue});
-                            },
-                            onCollectionSpeedChanged: (newValue) {
+                            onFeedingRateChanged: (newValue) {
                               widget.form.onDataChanged({"team2FeederCollectionSpeed": newValue});
-                            },
-                            accurateFeeding: widget.form.formData["team2AccurateFeeding"] ?? false,
-                            onAccurateFeedingChanged: (newValue) {
-                              setState(() {
-                                widget.form.onDataChanged({"team2AccurateFeeding": newValue ?? false});
-                              });
                             },
                           )
                         ] else 
@@ -314,6 +315,17 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             });
                           }
                         ),
+                        RatingInput(
+                          title: "Collection Rate", 
+                          fontSize: 16,
+                          onRatingUpdate: (newValue) {
+                            widget.form.onDataChanged({"team3CollectionRate": newValue});
+                          },
+                          initialRating: 0,
+                          itemCount: 5,
+                          enableHalves: false,
+                          titleOnTop: true,
+                        ),
                         if (widget.form.formData["team3Shooter"] == true) ... [
                           SizedBox(height: 16.0),
                           ShooterEvaluation2026(
@@ -321,17 +333,20 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             onAccuracyChanged: (newValue) {
                               widget.form.onDataChanged({"team3ShootingAccuracy": newValue});
                             },
-                            onPrecisionChanged: (newValue) {
-                              widget.form.onDataChanged({"team3ShootingPrecision": newValue});
-                            },
+                            // onPrecisionChanged: (newValue) {
+                            //   widget.form.onDataChanged({"team3ShootingPrecision": newValue});
+                            // },
                             onSpeedChanged: (newValue) {
                               widget.form.onDataChanged({"team3ShootingRate": newValue});
                             },
-                            onCycleAbilityChanged: (newValue) {
-                              widget.form.onDataChanged({"team3CycleAbility": newValue});
-                            },
+                            // onCycleAbilityChanged: (newValue) {
+                            //   widget.form.onDataChanged({"team3CycleAbility": newValue});
+                            // },
+                            counterdefense: widget.form.formData["team3Counterdefense"],
                             onCounterdefenseChanged: (newValue) {
-                              widget.form.onDataChanged({"team3Counterdefense": newValue});
+                              setState(() {
+                                widget.form.onDataChanged({"team3Counterdefense": newValue});
+                              });
                             },
                             cyclesPerAllianceShift: widget.form.formData["team3CyclesPerAllianceShift"] ?? 0,
                             onCyclesPerAllianceShiftAdd: () {
@@ -354,10 +369,6 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                         if (widget.form.formData["team3Defender"] == true) ... [
                           SizedBox(height: 16.0),
                           DefenderEvaluation2026(
-                            ratingRange: 5, 
-                            onEfficiencyChanged: (newValue) {
-                              widget.form.onDataChanged({"team3DefenderEfficiency": newValue});
-                            },
                             form: widget.form.formData,
                             onDataChanged: widget.form.onDataChanged,
                             team: "team3"
@@ -369,17 +380,8 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                           SizedBox(height: 16.0),
                           FeederEvaluation2026(
                             ratingRange: 5, 
-                            onSpeedChanged: (newValue) {
-                              widget.form.onDataChanged({"team3FeederRate": newValue});
-                            },
-                            onCollectionSpeedChanged: (newValue) {
+                            onFeedingRateChanged: (newValue) {
                               widget.form.onDataChanged({"team3FeederCollectionSpeed": newValue});
-                            },
-                            accurateFeeding: widget.form.formData["team3AccurateFeeding"] ?? false,
-                            onAccurateFeedingChanged: (newValue) {
-                              setState(() {
-                                widget.form.onDataChanged({"team3AccurateFeeding": newValue ?? false});
-                              });
                             },
                           )
                         ] else 
@@ -719,12 +721,11 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                   Expanded(
                     child: CheckboxListTile(
                       dense: true,
-                      tristate: true,
                       title: Text("Team ${widget.form.formData["team1"]}"),
-                      value: widget.form.formData["team1NoShow"],
+                      value: widget.form.formData["team1NoShow"] ?? false,
                       onChanged: (bool? newValue) {
                         setState(() {
-                          widget.form.onDataChanged({"team1NoShow": newValue});
+                          widget.form.onDataChanged({"team1NoShow": newValue ?? false});
                         });
                       },
                     ),
@@ -732,12 +733,11 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                   Expanded(
                     child: CheckboxListTile(
                       dense: true,
-                      tristate: true,
                       title: Text("Team ${widget.form.formData["team2"]}"),
-                      value: widget.form.formData["team2NoShow"],
+                      value: widget.form.formData["team2NoShow"] ?? false,
                       onChanged: (bool? newValue) {
                         setState(() {
-                          widget.form.onDataChanged({"team2NoShow": newValue});
+                          widget.form.onDataChanged({"team2NoShow": newValue ?? false});
                         });
                       },
                     ),
@@ -745,12 +745,11 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                   Expanded(
                     child: CheckboxListTile(
                       dense: true,
-                      tristate: true,
                       title: Text("Team ${widget.form.formData["team3"]}"),
-                      value: widget.form.formData["team3NoShow"],
+                      value: widget.form.formData["team3NoShow"] ?? false,
                       onChanged: (bool? newValue) {
                         setState(() {
-                          widget.form.onDataChanged({"team3NoShow": newValue});
+                          widget.form.onDataChanged({"team3NoShow": newValue ?? false});
                         });
                       },
                     ),

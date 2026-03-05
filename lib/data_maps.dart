@@ -1,3 +1,5 @@
+import 'package:mercs_scout/datatypes.dart' as Datatypes;
+
 import 'datatypes.dart';
 
 bool colorDebug = false;
@@ -63,7 +65,7 @@ Map<String, dynamic> getAutonDataMap() {
     "match": null,
     "alliance": "blue",
     
-    "startPos": 250.0,
+    "startPos": Datatypes.AutoStartLocation.middle,
 
     "autoLeave": true,
     "depotDisrupted": false,
@@ -102,21 +104,25 @@ Map<String, dynamic> getMatchDataMap() {
     "team2Feeder": false,
     "team3Feeder": false,
     
+    "team1CollectionRate": 0.0,
+    "team2CollectionRate": 0.0,
+    "team3CollectionRate": 0.0,
+
     "team1ShootingAccuracy": 0.0,
     "team2ShootingAccuracy": 0.0,
     "team3ShootingAccuracy": 0.0,
-    "team1ShootingPrecision": 0.0,
-    "team2ShootingPrecision": 0.0,
-    "team3ShootingPrecision": 0.0,
+    // "team1ShootingPrecision": 0.0,
+    // "team2ShootingPrecision": 0.0,
+    // "team3ShootingPrecision": 0.0,
     "team1ShootingRate": 0.0,
     "team2ShootingRate": 0.0,
     "team3ShootingRate": 0.0,
-    "team1CycleAbility": 0.0,
-    "team2CycleAbility": 0.0,
-    "team3CycleAbility": 0.0,
-    "team1Counterdefense": 0.0,
-    "team2Counterdefense": 0.0,
-    "team3Counterdefense": 0.0,
+    // "team1CycleAbility": 0.0,
+    // "team2CycleAbility": 0.0,
+    // "team3CycleAbility": 0.0,
+    "team1Counterdefense": false,
+    "team2Counterdefense": false,
+    "team3Counterdefense": false,
     "team1CyclesPerAllianceShift": 0,
     "team2CyclesPerAllianceShift": 0,
     "team3CyclesPerAllianceShift": 0,
@@ -124,16 +130,10 @@ Map<String, dynamic> getMatchDataMap() {
     "team1FeederRate": 0.0,
     "team2FeederRate": 0.0,
     "team3FeederRate": 0.0,
-    "team1FeederCollectionSpeed": 0.0,
-    "team2FeederCollectionSpeed": 0.0,
-    "team3FeederCollectionSpeed": 0.0,
-    "team1AccurateFeeding": false,
-    "team2AccurateFeeding": false,
-    "team3AccurateFeeding": false,
 
-    "team1DefenderEfficiency": 0.0,
-    "team2DefenderEfficiency": 0.0,
-    "team3DefenderEfficiency": 0.0,
+    "team1DefenseIsEffective": false,
+    "team2DefenseIsEffective": false,
+    "team3DefenseIsEffective": false,
     "team1DefendLocations": [false, false, false, false, false],
     "team2DefendLocations": [false, false, false, false, false],
     "team3DefendLocations": [false, false, false, false, false],

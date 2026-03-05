@@ -263,6 +263,7 @@ class NumberInput extends StatelessWidget {
                 if (!isDisabled)
                   IconButton(
                     onPressed: onValueSubtract,
+                    onLongPress: onValueSubtract,
                     style: ButtonStyle(
                       fixedSize: WidgetStateProperty.all(
                           Size(miniStyle ? 40 : 48, miniStyle ? 42 : 56)),
@@ -422,10 +423,11 @@ class LabeledSwitch extends StatelessWidget {
 class ShooterEvaluation2026 extends StatelessWidget {
   final int ratingRange;
   final Function(double) onAccuracyChanged;
-  final Function(double) onPrecisionChanged;
+  // final Function(double) onPrecisionChanged;
   final Function(double) onSpeedChanged;
-  final Function(double) onCycleAbilityChanged;
-  final Function(double) onCounterdefenseChanged;
+  // final Function(double) onCycleAbilityChanged;
+  final bool counterdefense;
+  final Function(bool?)? onCounterdefenseChanged;
   final int cyclesPerAllianceShift;
   final VoidCallback onCyclesPerAllianceShiftAdd;
   final VoidCallback onCyclesPerAllianceShiftSubtract;
@@ -434,9 +436,10 @@ class ShooterEvaluation2026 extends StatelessWidget {
     super.key,
     required this.ratingRange,
     required this.onAccuracyChanged,
-    required this.onPrecisionChanged,
+    // required this.onPrecisionChanged,
     required this.onSpeedChanged,
-    required this.onCycleAbilityChanged,
+    // required this.onCycleAbilityChanged,
+    required this.counterdefense,
     required this.onCounterdefenseChanged,
     required this.cyclesPerAllianceShift,
     required this.onCyclesPerAllianceShiftAdd,
@@ -469,16 +472,16 @@ class ShooterEvaluation2026 extends StatelessWidget {
               enableHalves: false,
               titleOnTop: true,
             ),
-            SizedBox(height: 8.0),
-            RatingInput(
-              title: "Precision", 
-              fontSize: 16,
-              onRatingUpdate: onPrecisionChanged,
-              initialRating: 0,
-              itemCount: max(1, ratingRange),
-              enableHalves: false,
-              titleOnTop: true,
-            ),
+            // SizedBox(height: 8.0),
+            // RatingInput(
+            //   title: "Precision", 
+            //   fontSize: 16,
+            //   onRatingUpdate: onPrecisionChanged,
+            //   initialRating: 0,
+            //   itemCount: max(1, ratingRange),
+            //   enableHalves: false,
+            //   titleOnTop: true,
+            // ),
             SizedBox(height: 8.0),
             RatingInput(
               title: "Fire Rate", 
@@ -489,25 +492,21 @@ class ShooterEvaluation2026 extends StatelessWidget {
               enableHalves: false,
               titleOnTop: true,
             ),
+            // SizedBox(height: 8.0),
+            // RatingInput(
+            //   title: "Cycle Ability", 
+            //   fontSize: 16,
+            //   onRatingUpdate: onCycleAbilityChanged,
+            //   initialRating: 0,
+            //   itemCount: max(1, ratingRange),
+            //   enableHalves: false,
+            //   titleOnTop: true,
+            // ),
             SizedBox(height: 8.0),
-            RatingInput(
-              title: "Cycle Ability", 
-              fontSize: 16,
-              onRatingUpdate: onCycleAbilityChanged,
-              initialRating: 0,
-              itemCount: max(1, ratingRange),
-              enableHalves: false,
-              titleOnTop: true,
-            ),
-            SizedBox(height: 8.0),
-            RatingInput(
-              title: "Counterdefense", 
-              fontSize: 16,
-              onRatingUpdate: onCounterdefenseChanged,
-              initialRating: 0,
-              itemCount: max(1, ratingRange),
-              enableHalves: false,
-              titleOnTop: true,
+            CheckboxListTile(
+              title: Text("Counterdefense"), 
+              value: counterdefense,
+              onChanged: onCounterdefenseChanged,
             ),
             SizedBox(height: 8.0),
             NumberInput(
@@ -527,18 +526,12 @@ class ShooterEvaluation2026 extends StatelessWidget {
 
 class FeederEvaluation2026 extends StatelessWidget {
   final int ratingRange;
-  final Function(double) onSpeedChanged;
-  final Function(double) onCollectionSpeedChanged;
-  final bool accurateFeeding;
-  final Function(bool?) onAccurateFeedingChanged;
+  final Function(double) onFeedingRateChanged;
 
   const FeederEvaluation2026({
     super.key,
     required this.ratingRange,
-    required this.onSpeedChanged,
-    required this.onCollectionSpeedChanged,
-    required this.accurateFeeding,
-    required this.onAccurateFeedingChanged,
+    required this.onFeedingRateChanged,
   });
 
   @override
@@ -559,29 +552,13 @@ class FeederEvaluation2026 extends StatelessWidget {
             ]),
             SizedBox(height: 8.0),
             RatingInput(
-              title: "Delivery Efficiency", 
+              title: "Feeding Rate", 
               fontSize: 16,
-              onRatingUpdate: onSpeedChanged,
+              onRatingUpdate: onFeedingRateChanged,
               initialRating: 0,
               itemCount: max(1, ratingRange),
               enableHalves: false,
               titleOnTop: true,
-            ),
-            SizedBox(height: 8.0),
-            RatingInput(
-              title: "Collection Speed", 
-              fontSize: 16,
-              onRatingUpdate: onCollectionSpeedChanged,
-              initialRating: 0,
-              itemCount: max(1, ratingRange),
-              enableHalves: false,
-              titleOnTop: true,
-            ),
-            SizedBox(height: 8.0),
-            CheckboxListTile(
-              title: Text("Accurate Feeding"),
-              value: accurateFeeding,
-              onChanged: onAccurateFeedingChanged,
             ),
           ],
         ),
@@ -592,9 +569,6 @@ class FeederEvaluation2026 extends StatelessWidget {
 
 
 class DefenderEvaluation2026 extends StatefulWidget {
-  final int ratingRange;
-  final Function(double) onEfficiencyChanged;
-
   // final List<bool> defendLocations;
   final onDataChanged;
   final Map<dynamic, dynamic> form;
@@ -602,8 +576,6 @@ class DefenderEvaluation2026 extends StatefulWidget {
 
   const DefenderEvaluation2026({
     super.key,
-    required this.ratingRange,
-    required this.onEfficiencyChanged,
     required this.form,
     required this.onDataChanged,
     required this.team
@@ -640,81 +612,104 @@ class _DefenderEvaluation2026State extends State<DefenderEvaluation2026> {
               Expanded(child: Divider())
             ]),
             SizedBox(height: 8.0),
-            RatingInput(
-              title: "Efficiency", 
-              fontSize: 16,
-              onRatingUpdate: widget.onEfficiencyChanged,
-              initialRating: 0,
-              itemCount: max(1, widget.ratingRange),
-              enableHalves: false,
-              titleOnTop: true,
+            CheckboxListTile(
+              title: Text("Is Effective?"), 
+              value: widget.form["${widget.team}DefenseIsEffective"] ?? false,
+              onChanged: (value) {
+                setState(() {
+                  widget.onDataChanged({"${widget.team}DefenseIsEffective": value ?? false});
+                });
+              }
             ),
             SizedBox(height: 8.0),
             Text("Defend Locations"),
             SizedBox(height: 8.0),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Checkbox(
-                    value: defendLocation[0], 
-                    onChanged: (value) {
-                      setState(() {
-                        defendLocation[0] = value ?? false;
-                        widget.onDataChanged({"${widget.team}DefendLocations": defendLocation});
-                      });
-                    }
+            FittedBox(
+              alignment: Alignment.topLeft,
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: RotatedBox(
+                      quarterTurns: widget.form["alliance"] == "blue" ? 1 : 3,
+                      child: Image.asset(
+                        'images/${widget.form["alliance"]}_field_2026.png',
+                        fit: BoxFit.scaleDown,
+                        width: 300,
+                        isAntiAlias: true,
+                        errorBuilder: (context, error, stackTrace) => SizedBox(width: 300, height: 180),
+                      ),
+                    ) 
                   ),
-                ),
-                SizedBox(width: 3.0),
-                Expanded(
-                  child: Checkbox(
-                    value: defendLocation[1], 
-                    onChanged: (value) {
-                      setState(() {
-                        defendLocation[1] = value ?? false;
-                        widget.onDataChanged({"${widget.team}DefendLocations": defendLocation});
-                      });
-                    }
+                  Positioned(
+                    top: 150,
+                    right: 250,
+                    child: Checkbox(
+                      value: defendLocation[0], 
+                      onChanged: (value) {
+                        setState(() {
+                          defendLocation[0] = value ?? false;
+                          widget.onDataChanged({"${widget.team}DefendLocations": defendLocation});
+                        });
+                      }
+                    ),
                   ),
-                ),
-                SizedBox(width: 3.0),
-                Expanded(
-                  child: Checkbox(
-                    value: defendLocation[2], 
-                    onChanged: (value) {
-                      setState(() {
-                        defendLocation[2] = value ?? false;
-                        widget.onDataChanged({"${widget.team}DefendLocations": defendLocation});
-                      });
-                    }
+                  Positioned(
+                    top: 150,
+                    right: 190,
+                    child: Checkbox(
+                      value: defendLocation[1], 
+                      onChanged: (value) {
+                        setState(() {
+                          defendLocation[1] = value ?? false;
+                          widget.onDataChanged({"${widget.team}DefendLocations": defendLocation});
+                        });
+                      }
+                    ),
                   ),
-                ),
-                SizedBox(width: 3.0),
-                Expanded(
-                  child: Checkbox(
-                    value: defendLocation[3], 
-                    onChanged: (value) {
-                      setState(() {
-                        defendLocation[3] = value ?? false;
-                        widget.onDataChanged({"${widget.team}DefendLocations": defendLocation});
-                      });
-                    }
+                  Positioned(
+                    top: 150,
+                    right: 126,
+                    child: Checkbox(
+                      value: defendLocation[2], 
+                      onChanged: (value) {
+                        setState(() {
+                          defendLocation[2] = value ?? false;
+                          widget.onDataChanged({"${widget.team}DefendLocations": defendLocation});
+                        });
+                      }
+                    ),
                   ),
-                ),
-                SizedBox(width: 3.0),
-                Expanded(
-                  child: Checkbox(
-                    value: defendLocation[4], 
-                    onChanged: (value) {
-                      setState(() {
-                        defendLocation[4] = value ?? false;
-                        widget.onDataChanged({"${widget.team}DefendLocations": defendLocation});
-                      });
-                    }
+                  Positioned(
+                    top: 150,
+                    left: 190,
+                    child: Checkbox(
+                      value: defendLocation[3], 
+                      onChanged: (value) {
+                        setState(() {
+                          defendLocation[3] = value ?? false;
+                          widget.onDataChanged({"${widget.team}DefendLocations": defendLocation});
+                        });
+                      }
+                    ),
                   ),
-                ),
-              ],
+                  Positioned(
+                    top: 150,
+                    left: 250,
+                    child: Checkbox(
+                      value: defendLocation[4], 
+                      onChanged: (value) {
+                        setState(() {
+                          defendLocation[4] = value ?? false;
+                          widget.onDataChanged({"${widget.team}DefendLocations": defendLocation});
+                        });
+                      }
+                    ),
+                  ),
+                ],
+              ),
             )
+            
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mercs_scout/datatypes.dart';
 
 import 'match_sections.dart';
 import 'widgets.dart';
@@ -68,32 +69,76 @@ class _AutonFormState extends State<AutonForm>{
                                 errorBuilder: (context, error, stackTrace) => SizedBox(width: 500, height: 300),
                               ),
                             ),
+                            // Positioned(
+                            //   left: 265,
+                            //   top: 15,
+                            //   child: SizedBox(
+                            //     height: 465,
+                            //     child: RotatedBox(
+                            //     quarterTurns: 3,
+                            //     child: Slider(
+                            //       activeColor: Color.fromARGB(0, 191, 185, 185),
+                            //       inactiveColor: Color.fromARGB(0, 191, 185, 185),
+                            //       thumbColor: Color.fromARGB(255, 170, 18, 34),
+                            //       max: 465,
+                            //       value: widget.formData["startPos"], 
+                            //       onChanged: (value) {
+                            //         setState(() {
+                            //           widget.onDataChanged({"startPos": value});
+                            //         });
+                            //       }
+                            //     ),
+                            //   ),
+                            //   )
+                            // ),
+                            // Positioned(
+                            //   left: 295,
+                            //   bottom: widget.formData["startPos"] * 465 / 500,
+                            //   child: Text("Start")
+                            // ),
                             Positioned(
                               left: 265,
-                              top: 15,
+                              top: 35,
                               child: SizedBox(
-                                height: 465,
+                                height: 420,
                                 child: RotatedBox(
-                                quarterTurns: 3,
-                                child: Slider(
-                                  activeColor: Color.fromARGB(0, 191, 185, 185),
-                                  inactiveColor: Color.fromARGB(0, 191, 185, 185),
-                                  thumbColor: Color.fromARGB(255, 170, 18, 34),
-                                  max: 465,
-                                  value: widget.formData["startPos"], 
-                                  onChanged: (value) {
-                                    setState(() {
-                                      widget.onDataChanged({"startPos": value});
-                                    });
-                                  }
+                                  quarterTurns: 1,
+                                  child: SegmentedButton<AutoStartLocation>(
+                                    emptySelectionAllowed: false,
+                                    multiSelectionEnabled: false,
+                                    style: ButtonStyle(
+                                        padding: WidgetStateProperty.all(
+                                            EdgeInsets.all(18.0))),
+                                    segments: <ButtonSegment<AutoStartLocation>>[
+                                      ButtonSegment(
+                                          label: Text("1"),
+                                          value: AutoStartLocation.farOutpost),
+                                      ButtonSegment(
+                                          label: Text("2"),
+                                          value: AutoStartLocation.closeOutpost),
+                                      ButtonSegment(
+                                          label: Text("3"),
+                                          value: AutoStartLocation.middle),
+                                      ButtonSegment(
+                                          label: Text("4"),
+                                          value: AutoStartLocation.closeDepot),
+                                      ButtonSegment(
+                                          label: Text("5"),
+                                          value: AutoStartLocation.farDepot)
+                                    ],
+                                    selected: <AutoStartLocation>{
+                                      widget.formData['startPos'] ?? AutoStartLocation.middle
+                                    },
+                                    onSelectionChanged: (Set<AutoStartLocation> value) {
+                                      setState(() {
+                                        widget.onDataChanged({
+                                          "startPos": value.first
+                                        });
+                                      });
+                                    },
+                                  ),
                                 ),
-                              ),
                               )
-                            ),
-                            Positioned(
-                              left: 295,
-                              bottom: widget.formData["startPos"] * 465 / 500,
-                              child: Text("Start")
                             ),
                             Positioned(
                               left: 385,
@@ -232,34 +277,78 @@ class _AutonFormState extends State<AutonForm>{
                                   errorBuilder: (context, error, stackTrace) => SizedBox(width: 500, height: 300),
                                 ),
                               ),
-                              Positioned(
+                            //   Positioned(
+                            //   right: 265,
+                            //   top: 15,
+                            //   child: SizedBox(
+                            //     height: 465,
+                            //     child: RotatedBox(
+                            //     quarterTurns: 1,
+                            //     child: Slider(
+                            //       activeColor: Color.fromARGB(0, 191, 185, 185),
+                            //       inactiveColor: Color.fromARGB(0, 191, 185, 185),
+                            //       thumbColor: Color.fromARGB(255, 170, 18, 34),
+                            //       max: 465,
+                            //       value: widget.formData["startPos"], 
+                            //       onChanged: (value) {
+                            //         setState(() {
+                            //           widget.onDataChanged({"startPos": value});
+                            //         });
+                            //       }
+                            //     ),
+                            //   ),
+                            //   )
+                            // ),
+                            // Positioned(
+                            //   right: 295,
+                            //   top: widget.formData["startPos"] * 465 / 500,
+                            //   child: Text("Start")
+                            // ),
+                            Positioned(
                               right: 265,
-                              top: 15,
+                              top: 35,
                               child: SizedBox(
-                                height: 465,
+                                height: 420,
                                 child: RotatedBox(
-                                quarterTurns: 1,
-                                child: Slider(
-                                  activeColor: Color.fromARGB(0, 191, 185, 185),
-                                  inactiveColor: Color.fromARGB(0, 191, 185, 185),
-                                  thumbColor: Color.fromARGB(255, 170, 18, 34),
-                                  max: 465,
-                                  value: widget.formData["startPos"], 
-                                  onChanged: (value) {
-                                    setState(() {
-                                      widget.onDataChanged({"startPos": value});
-                                    });
-                                  }
+                                  quarterTurns: 3,
+                                  child: SegmentedButton<AutoStartLocation>(
+                                    emptySelectionAllowed: false,
+                                    multiSelectionEnabled: false,
+                                    style: ButtonStyle(
+                                        padding: WidgetStateProperty.all(
+                                            EdgeInsets.all(18.0))),
+                                    segments: <ButtonSegment<AutoStartLocation>>[
+                                      ButtonSegment(
+                                          label: Text("1"),
+                                          value: AutoStartLocation.farOutpost),
+                                      ButtonSegment(
+                                          label: Text("2"),
+                                          value: AutoStartLocation.closeOutpost),
+                                      ButtonSegment(
+                                          label: Text("3"),
+                                          value: AutoStartLocation.middle),
+                                      ButtonSegment(
+                                          label: Text("4"),
+                                          value: AutoStartLocation.closeDepot),
+                                      ButtonSegment(
+                                          label: Text("5"),
+                                          value: AutoStartLocation.farDepot)
+                                    ],
+                                    selected: <AutoStartLocation>{
+                                      widget.formData['startPos'] ?? AutoStartLocation.middle
+                                    },
+                                    onSelectionChanged: (Set<AutoStartLocation> value) {
+                                      setState(() {
+                                        widget.onDataChanged({
+                                          "startPos": value.first
+                                        });
+                                      });
+                                    },
+                                  ),
                                 ),
-                              ),
                               )
                             ),
                             Positioned(
-                              right: 295,
-                              top: widget.formData["startPos"] * 465 / 500,
-                              child: Text("Start")
-                            ),
-                              Positioned(
                               right: 385,
                               bottom: 325,
                               child: Checkbox(

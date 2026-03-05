@@ -1088,121 +1088,120 @@ class _PitFormState extends State<PitForm> {
                       ),
                     ],
                   ),
-                  const Text(
-                                  "What positions are they capable of starting an auto?"),
-                              const SizedBox(
-                                height: 8.0,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: SegmentedButton<StartPosition>(
-                                      emptySelectionAllowed: true,
-                                      multiSelectionEnabled: true,
-                                      style: ButtonStyle(
-                                          padding: WidgetStateProperty.all(
-                                              EdgeInsets.all(18.0))),
-                                      segments: <ButtonSegment<StartPosition>>[
-                                        ButtonSegment(
-                                            value: StartPosition.left,
-                                            label: Text("Left")),
-                                        ButtonSegment(
-                                            value: StartPosition.middle,
-                                            label: Text("Middle")),
-                                        ButtonSegment(
-                                            value: StartPosition.right,
-                                            label: Text("Right"))
-                                      ],
-                                      selected: {
-                                        if (widget.formData['canAutoLeft'])
-                                          StartPosition.left,
-                                        if (widget.formData['canAutoMid'])
-                                          StartPosition.middle,
-                                        if (widget.formData['canAutoRight'])
-                                          StartPosition.right
-                                      },
-                                      onSelectionChanged:
-                                          (Set<StartPosition> value) {
-                                        setState(() {
-                                          widget.onDataChanged({
-                                            "canAutoLeft": value
-                                                .contains(StartPosition.left),
-                                            "canAutoMid": value
-                                                .contains(StartPosition.middle),
-                                            "canAutoRight": value
-                                                .contains(StartPosition.right),
-                                          });
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 8.0),
+                  const Text("What positions are they capable of starting an auto?"),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SegmentedButton<StartPosition>(
+                          emptySelectionAllowed: true,
+                          multiSelectionEnabled: true,
+                          style: ButtonStyle(
+                              padding: WidgetStateProperty.all(
+                                  EdgeInsets.all(18.0))),
+                          segments: <ButtonSegment<StartPosition>>[
+                            ButtonSegment(
+                                value: StartPosition.left,
+                                label: Text("Left")),
+                            ButtonSegment(
+                                value: StartPosition.middle,
+                                label: Text("Middle")),
+                            ButtonSegment(
+                                value: StartPosition.right,
+                                label: Text("Right"))
+                          ],
+                          selected: {
+                            if (widget.formData['canAutoLeft'])
+                              StartPosition.left,
+                            if (widget.formData['canAutoMid'])
+                              StartPosition.middle,
+                            if (widget.formData['canAutoRight'])
+                              StartPosition.right
+                          },
+                          onSelectionChanged:
+                              (Set<StartPosition> value) {
+                            setState(() {
+                              widget.onDataChanged({
+                                "canAutoLeft": value
+                                    .contains(StartPosition.left),
+                                "canAutoMid": value
+                                    .contains(StartPosition.middle),
+                                "canAutoRight": value
+                                    .contains(StartPosition.right),
+                              });
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.center,
                   //   children: [
                   
                   // ],
                   // ),
-                              const Text(
-                                  "What positions can they travel/do during auton?"),
-                              const SizedBox(
-                                height: 8.0,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: SegmentedButton<AchievablePosition>(
-                                      emptySelectionAllowed: true,
-                                      multiSelectionEnabled: true,
-                                      style: ButtonStyle(
-                                          padding: WidgetStateProperty.all(
-                                              EdgeInsets.all(18.0))),
-                                      segments: <ButtonSegment<AchievablePosition>>[
-                                        ButtonSegment(
-                                            value: AchievablePosition.depot,
-                                            label: Text("Depot")),
-                                        ButtonSegment(
-                                            value: AchievablePosition.outpost,
-                                            label: Text("Outpost")),
-                                        ButtonSegment(
-                                            value: AchievablePosition.neutral,
-                                            label: Text("Neutral")),
-                                        ButtonSegment(
-                                            value: AchievablePosition.climb,
-                                            label: Text("Climb"))
-                                      ],
-                                      selected: {
-                                        if (widget.formData['canDepot'])
-                                          AchievablePosition.depot,
-                                        if (widget.formData['canOutpost'])
-                                          AchievablePosition.outpost,
-                                        if (widget.formData['canNeutral'])
-                                          AchievablePosition.neutral,
-                                          if (widget.formData['canClimb'])
-                                          AchievablePosition.climb
-                                      },
-                                      onSelectionChanged:
-                                          (Set<AchievablePosition> value) {
-                                        setState(() {
-                                          widget.onDataChanged({
-                                            "canDepot": value
-                                                .contains(AchievablePosition.depot),
-                                            "canOutpost": value
-                                                .contains(AchievablePosition.outpost),
-                                            "canNeutral": value
-                                                .contains(AchievablePosition.neutral),
-                                            "canClimb": value
-                                            .contains(AchievablePosition.climb)
-                                          });
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 8.0),
+                  const Text(
+                      "What positions can they travel/do during auton?"),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SegmentedButton<AchievablePosition>(
+                          emptySelectionAllowed: true,
+                          multiSelectionEnabled: true,
+                          style: ButtonStyle(
+                              padding: WidgetStateProperty.all(
+                                  EdgeInsets.all(18.0))),
+                          segments: <ButtonSegment<AchievablePosition>>[
+                            ButtonSegment(
+                                value: AchievablePosition.depot,
+                                label: Text("Depot")),
+                            ButtonSegment(
+                                value: AchievablePosition.outpost,
+                                label: Text("Outpost")),
+                            ButtonSegment(
+                                value: AchievablePosition.neutral,
+                                label: Text("Neutral")),
+                            ButtonSegment(
+                                value: AchievablePosition.climb,
+                                label: Text("Climb"))
+                          ],
+                          selected: {
+                            if (widget.formData['canDepot'])
+                              AchievablePosition.depot,
+                            if (widget.formData['canOutpost'])
+                              AchievablePosition.outpost,
+                            if (widget.formData['canNeutral'])
+                              AchievablePosition.neutral,
+                              if (widget.formData['canClimb'])
+                              AchievablePosition.climb
+                          },
+                          onSelectionChanged:
+                              (Set<AchievablePosition> value) {
+                            setState(() {
+                              widget.onDataChanged({
+                                "canDepot": value
+                                    .contains(AchievablePosition.depot),
+                                "canOutpost": value
+                                    .contains(AchievablePosition.outpost),
+                                "canNeutral": value
+                                    .contains(AchievablePosition.neutral),
+                                "canClimb": value
+                                .contains(AchievablePosition.climb)
+                              });
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.center,
                   //   children: [
