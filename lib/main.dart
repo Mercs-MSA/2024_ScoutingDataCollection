@@ -80,7 +80,7 @@ class FormAppPage extends StatefulWidget {
 }
 
 class _FormAppPageState extends State<FormAppPage> {
-  bool cborTrue = true;
+  bool cborTrue = false;
 
   int pitPageIndex = 0;
   int autonPageIndex = 0;
