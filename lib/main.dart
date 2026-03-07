@@ -101,8 +101,8 @@ class _FormAppPageState extends State<FormAppPage> {
   String autonAllianceColor = "blue";
 
   int? match1TeamNumber;
-  int? match2TeamNumber;
-  int? match3TeamNumber;
+  // int? match2TeamNumber;
+  // int? match3TeamNumber;
 
   int? teleopMatchNumber;
   int? autonMatchNumber;
@@ -524,13 +524,13 @@ class _FormAppPageState extends State<FormAppPage> {
                                     if (devMode) {
                                       teleopMatchNumber = 1;
                                       match1TeamNumber = 6767;
-                                      match2TeamNumber = 4141;
-                                      match3TeamNumber = 2121;
+                                      // match2TeamNumber = 4141;
+                                      // match3TeamNumber = 2121;
                                       
                                       matchScoutingData["match"] = 1;
                                       matchScoutingData["team1"] = 6767;
-                                      matchScoutingData["team2"] = 4141;
-                                      matchScoutingData["team3"] = 2121;
+                                      // matchScoutingData["team2"] = 4141;
+                                      // matchScoutingData["team3"] = 2121;
                                       matchScoutingData["scouter"] =
                                           "RonCollins";
                                     }
@@ -826,12 +826,12 @@ class _FormAppPageState extends State<FormAppPage> {
                                           if (devMode) {
                                             teleopMatchNumber = 1;
                                             match1TeamNumber = 6767;
-                                            match2TeamNumber = 4141;
-                                            match3TeamNumber = 2121;
+                                            // match2TeamNumber = 4141;
+                                            // match3TeamNumber = 2121;
                                             matchScoutingData["match"] = 1;
                                             matchScoutingData["team1"] = 6767;
-                                            matchScoutingData["team2"] = 4141;
-                                            matchScoutingData["team3"] = 2121;
+                                            // matchScoutingData["team2"] = 4141;
+                                            // matchScoutingData["team3"] = 2121;
                                             matchScoutingData["scouter"] =
                                                 "RonCollins";
                                           }
@@ -1528,95 +1528,6 @@ class _FormAppPageState extends State<FormAppPage> {
                                 ),
                               ],
                             ),
-                            // SizedBox(height: 8),
-                            // Row(
-                            //   children: [
-                            //     Padding(
-                            //       padding:
-                            //           const EdgeInsets.only(left: 2, right: 8),
-                            //       child: Column(
-                            //         children: [
-                            //           Text("Auto Start"),
-                            //           Text("Position")
-                            //         ],
-                            //       ),
-                            //     ),
-                            //     Expanded(
-                            //       child: SegmentedButton<MatchStartPos>(
-                            //         style: ButtonStyle(
-                            //           backgroundColor: WidgetStateProperty
-                            //               .resolveWith<Color>(
-                            //             (Set<WidgetState> states) {
-                            //               if (states
-                            //                   .contains(WidgetState.selected)) {
-                            //                 return ColorScheme.fromSeed(
-                            //                         seedColor: autonScoutingData["alliance"] ==
-                            //                                 "red"
-                            //                             ? Colors.red
-                            //                             : Colors.blue)
-                            //                     .primary;
-                            //               }
-                            //               return Colors.transparent;
-                            //             },
-                            //           ),
-                            //           padding: WidgetStateProperty.all(
-                            //             EdgeInsets.all(24.0),
-                            //           ),
-                            //           shape: WidgetStateProperty.all<
-                            //               RoundedRectangleBorder>(
-                            //             RoundedRectangleBorder(
-                            //               borderRadius: BorderRadius.all(
-                            //                   Radius.circular(4)),
-                            //             ),
-                            //           ),
-                            //         ),
-                            //         emptySelectionAllowed: false,
-                            //         multiSelectionEnabled: false,
-                            //         segments: <ButtonSegment<MatchStartPos>>[
-                            //           ButtonSegment(
-                            //               value: MatchStartPos.left,
-                            //               label: Text("Left")),
-                            //           ButtonSegment(
-                            //               value: MatchStartPos.middle,
-                            //               label: Text("Middle")),
-                            //           ButtonSegment(
-                            //               value: MatchStartPos.right,
-                            //               label: Text("Right"))
-                            //         ],
-                            //         selected: {
-                            //           if (autonScoutingData["startPos"] ==
-                            //               "left")
-                            //             MatchStartPos.left,
-                            //           if (autonScoutingData["startPos"] ==
-                            //               "middle")
-                            //             MatchStartPos.middle,
-                            //           if (autonScoutingData["startPos"] ==
-                            //               "right")
-                            //             MatchStartPos.right,
-                            //         },
-                            //         onSelectionChanged: (selection) {
-                            //           setState(() {
-                            //             if (selection.first ==
-                            //                 MatchStartPos.left) {
-                            //               autonScoutingData["startPos"] =
-                            //                   "left";
-                            //             }
-                            //             if (selection.first ==
-                            //                 MatchStartPos.right) {
-                            //               autonScoutingData["startPos"] =
-                            //                   "right";
-                            //             }
-                            //             if (selection.first ==
-                            //                 MatchStartPos.middle) {
-                            //               autonScoutingData["startPos"] =
-                            //                   "middle";
-                            //             }
-                            //           });
-                            //         },
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
                           ],
                         ),
                       )
@@ -1935,52 +1846,52 @@ class _FormAppPageState extends State<FormAppPage> {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(width: 4.0),
-                                Flexible(
-                                  child: TextField(
-                                    decoration: const InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: 'Team 2 Number',
-                                    ),
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly,
-                                      LengthLimitingTextInputFormatter(5),
-                                    ],
-                                    onChanged: (value) {
-                                      match2TeamNumber = int.tryParse(value);
-                                      matchScoutingData["team2"] = int.tryParse(value);
-                                    },
-                                    controller: TextEditingController(
-                                      text: match2TeamNumber == null
-                                          ? ''
-                                          : match2TeamNumber.toString(),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 4.0),
-                                Flexible(
-                                  child: TextField(
-                                    decoration: const InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: 'Team 3 Number',
-                                    ),
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly,
-                                      LengthLimitingTextInputFormatter(5),
-                                    ],
-                                    onChanged: (value) {
-                                      match3TeamNumber = int.tryParse(value);
-                                      matchScoutingData["team3"] = int.tryParse(value);
-                                    },
-                                    controller: TextEditingController(
-                                      text: match3TeamNumber == null
-                                          ? ''
-                                          : match3TeamNumber.toString(),
-                                    ),
-                                  ),
-                                )
+                                // const SizedBox(width: 4.0),
+                                // Flexible(
+                                //   child: TextField(
+                                //     decoration: const InputDecoration(
+                                //       border: OutlineInputBorder(),
+                                //       labelText: 'Team 2 Number',
+                                //     ),
+                                //     keyboardType: TextInputType.number,
+                                //     inputFormatters: <TextInputFormatter>[
+                                //       FilteringTextInputFormatter.digitsOnly,
+                                //       LengthLimitingTextInputFormatter(5),
+                                //     ],
+                                //     onChanged: (value) {
+                                //       match2TeamNumber = int.tryParse(value);
+                                //       matchScoutingData["team2"] = int.tryParse(value);
+                                //     },
+                                //     controller: TextEditingController(
+                                //       text: match2TeamNumber == null
+                                //           ? ''
+                                //           : match2TeamNumber.toString(),
+                                //     ),
+                                //   ),
+                                // ),
+                                // const SizedBox(width: 4.0),
+                                // Flexible(
+                                //   child: TextField(
+                                //     decoration: const InputDecoration(
+                                //       border: OutlineInputBorder(),
+                                //       labelText: 'Team 3 Number',
+                                //     ),
+                                //     keyboardType: TextInputType.number,
+                                //     inputFormatters: <TextInputFormatter>[
+                                //       FilteringTextInputFormatter.digitsOnly,
+                                //       LengthLimitingTextInputFormatter(5),
+                                //     ],
+                                //     onChanged: (value) {
+                                //       match3TeamNumber = int.tryParse(value);
+                                //       matchScoutingData["team3"] = int.tryParse(value);
+                                //     },
+                                //     controller: TextEditingController(
+                                //       text: match3TeamNumber == null
+                                //           ? ''
+                                //           : match3TeamNumber.toString(),
+                                //     ),
+                                //   ),
+                                // )
                               ],
                             ),
                             const SizedBox(height: 8.0),
@@ -2103,8 +2014,8 @@ class _FormAppPageState extends State<FormAppPage> {
                       MatchForm(
                         teamNumberPresent:
                             (match1TeamNumber == null ? false : true) &&
-                            (match2TeamNumber == null ? false : true) &&
-                            (match3TeamNumber == null ? false : true) &&
+                            // (match2TeamNumber == null ? false : true) &&
+                            // (match3TeamNumber == null ? false : true) &&
                                 !(matchScoutingData["scouter"] == ""),
                         matchNumber: teleopMatchNumber ?? 0,
                         formData: matchScoutingData,
@@ -2119,23 +2030,24 @@ class _FormAppPageState extends State<FormAppPage> {
                       const SizedBox(),
                     if (matchPageIndex == 2)
                       IndexedStack(
-                        index: (((match1TeamNumber == null ? true : false) &&
-                            (match2TeamNumber == null ? true : false) &&
-                            (match3TeamNumber == null ? true : false)) ||
-                                matchScoutingData["scouter"] == "")
+                        index: (((match1TeamNumber == null ? true : false)// &&
+                            // (match2TeamNumber == null ? true : false) &&
+                            // (match3TeamNumber == null ? true : false)) ||
+                        ) && matchScoutingData["scouter"] == "")
                             ? 0
                             : 1,
                         children: [
-                          if (((match1TeamNumber == null ? true : false) &&
-                            (match2TeamNumber == null ? true : false) &&
-                            (match3TeamNumber == null ? true : false)) ||
-                              matchScoutingData["scouter"] == "")
+                          if (((match1TeamNumber == null ? true : false) //&&
+                            // (match2TeamNumber == null ? true : false) &&
+                            // (match3TeamNumber == null ? true : false)) ||
+                          ) && matchScoutingData["scouter"] == "")
                             const Center(child: TeamNumberError())
                           else
                             const SizedBox(),
-                          if ((match1TeamNumber == null ? false : true) &&
-                            (match2TeamNumber == null ? false : true) &&
-                            (match3TeamNumber == null ? false : true))
+                          if ((match1TeamNumber == null ? false : true) //&&
+                            // (match2TeamNumber == null ? false : true) &&
+                            // (match3TeamNumber == null ? false : true))
+                          )
                             Center(
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
@@ -3234,10 +3146,12 @@ class _FormAppPageState extends State<FormAppPage> {
 
     if (kIsWeb) {
       saveFileWeb(pngBytes!,
-          "${eventId}_frc${matchScoutingData["alliance"]}_match/${eventId}_frc${match1TeamNumber}_${match2TeamNumber}_${match3TeamNumber}_match${teleopMatchNumber}.csv");
+          // "${eventId}_frc${matchScoutingData["alliance"]}_match/${eventId}_frc${match1TeamNumber}_${match2TeamNumber}_${match3TeamNumber}_match${teleopMatchNumber}.csv");
+          "${eventId}_frc${matchScoutingData["alliance"]}_match/${eventId}_frc${match1TeamNumber}_match${teleopMatchNumber}.csv");
     } else {
       saveFileNative(pngBytes!,
-          "${eventId}_frc${matchScoutingData["alliance"]}_match/${eventId}_frc${match1TeamNumber}_${match2TeamNumber}_${match3TeamNumber}_match${teleopMatchNumber}.csv");
+          "${eventId}_frc${matchScoutingData["alliance"]}_match/${eventId}_frc${match1TeamNumber}_match${teleopMatchNumber}.csv");
+          // "${eventId}_frc${matchScoutingData["alliance"]}_match/${eventId}_frc${match1TeamNumber}_${match2TeamNumber}_${match3TeamNumber}_match${teleopMatchNumber}.csv");
     }
   }
 
@@ -3502,7 +3416,7 @@ class _FormAppPageState extends State<FormAppPage> {
   }
 
   void onMatchScoutSave() async {
-    if (match1TeamNumber == null || match2TeamNumber == null || match3TeamNumber == null) {
+    if (match1TeamNumber == null) { // || match2TeamNumber == null || match3TeamNumber == null) {
       if (!mounted) return;
       showDialog(
         context: context,
@@ -3566,18 +3480,22 @@ class _FormAppPageState extends State<FormAppPage> {
     if (!cborTrue) {
       if (kIsWeb) {
         await saveFileWeb(Uint8List.fromList(fileData.codeUnits),
-            "${eventId}_frc${matchScoutingData["alliance"]}_match${eventId}_frc${match1TeamNumber}_${match2TeamNumber}_${match3TeamNumber}_match${teleopMatchNumber}.csv");
+            // "${eventId}_frc${matchScoutingData["alliance"]}_match${eventId}_frc${match1TeamNumber}_${match2TeamNumber}_${match3TeamNumber}_match${teleopMatchNumber}.csv");
+            "${eventId}_frc${matchScoutingData["alliance"]}_match${eventId}_frc${match1TeamNumber}_match${teleopMatchNumber}.csv");
       } else {
         await saveFileNative(Uint8List.fromList(fileData.codeUnits),
-            "${eventId}_frc${matchScoutingData["alliance"]}_match${eventId}_frc${match1TeamNumber}_${match2TeamNumber}_${match3TeamNumber}_match${teleopMatchNumber}.csv");
+            // "${eventId}_frc${matchScoutingData["alliance"]}_match${eventId}_frc${match1TeamNumber}_${match2TeamNumber}_${match3TeamNumber}_match${teleopMatchNumber}.csv");
+            "${eventId}_frc${matchScoutingData["alliance"]}_match${eventId}_frc${match1TeamNumber}_match${teleopMatchNumber}.csv");
       }
     } else {
       if (kIsWeb) {
         await saveFileWeb(Uint8List.fromList(getMatchCBORFormattedData()),
-            "${eventId}_frc${matchScoutingData["alliance"]}_match${eventId}_frc${match1TeamNumber}_${match2TeamNumber}_${match3TeamNumber}_match${teleopMatchNumber}.cbor");
+            // "${eventId}_frc${matchScoutingData["alliance"]}_match${eventId}_frc${match1TeamNumber}_${match2TeamNumber}_${match3TeamNumber}_match${teleopMatchNumber}.cbor");
+            "${eventId}_frc${matchScoutingData["alliance"]}_match${eventId}_frc${match1TeamNumber}_match${teleopMatchNumber}.cbor");
       } else {
         await saveFileNative(Uint8List.fromList(getMatchCBORFormattedData()),
-            "${eventId}_frc${matchScoutingData["alliance"]}_match${eventId}_frc${match1TeamNumber}_${match2TeamNumber}_${match3TeamNumber}_match${teleopMatchNumber}.cbor");
+            // "${eventId}_frc${matchScoutingData["alliance"]}_match${eventId}_frc${match1TeamNumber}_${match2TeamNumber}_${match3TeamNumber}_match${teleopMatchNumber}.cbor");
+            "${eventId}_frc${matchScoutingData["alliance"]}_match${eventId}_frc${match1TeamNumber}_match${teleopMatchNumber}.cbor");
       }
     }
 
@@ -3675,8 +3593,8 @@ class _FormAppPageState extends State<FormAppPage> {
 
   void resetMatch() {
     match1TeamNumber = null;
-    match2TeamNumber = null;
-    match3TeamNumber = null;
+    // match2TeamNumber = null;
+    // match3TeamNumber = null;
     teleopMatchNumber = null;
     matchScoutingData = Map.from(matchScoutingDefaultData);
     setState(() {

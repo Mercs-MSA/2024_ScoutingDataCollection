@@ -599,7 +599,7 @@ class DefenderEvaluation2026 extends StatefulWidget {
 }
 
 class _DefenderEvaluation2026State extends State<DefenderEvaluation2026> {
-  late dynamic defendLocation = [false, false, false, false, false];
+  late List<bool> defendLocation = [false, false, false, false, false];
 
   @override
   void initState() {
@@ -657,7 +657,7 @@ class _DefenderEvaluation2026State extends State<DefenderEvaluation2026> {
                     top: 150,
                     right: 250,
                     child: Checkbox(
-                      value: defendLocation[0], 
+                      value: defendLocation[0] = widget.form["${widget.team}DefendLocations"][0], 
                       onChanged: (value) {
                         setState(() {
                           defendLocation[0] = value ?? false;
@@ -670,7 +670,7 @@ class _DefenderEvaluation2026State extends State<DefenderEvaluation2026> {
                     top: 150,
                     right: 190,
                     child: Checkbox(
-                      value: defendLocation[1], 
+                      value: defendLocation[1] = widget.form["${widget.team}DefendLocations"][1], 
                       onChanged: (value) {
                         setState(() {
                           defendLocation[1] = value ?? false;
@@ -683,7 +683,7 @@ class _DefenderEvaluation2026State extends State<DefenderEvaluation2026> {
                     top: 150,
                     right: 126,
                     child: Checkbox(
-                      value: defendLocation[2], 
+                      value: defendLocation[2] = widget.form["${widget.team}DefendLocations"][2], 
                       onChanged: (value) {
                         setState(() {
                           defendLocation[2] = value ?? false;
@@ -696,7 +696,7 @@ class _DefenderEvaluation2026State extends State<DefenderEvaluation2026> {
                     top: 150,
                     left: 190,
                     child: Checkbox(
-                      value: defendLocation[3], 
+                      value: defendLocation[3] = widget.form["${widget.team}DefendLocations"][3], 
                       onChanged: (value) {
                         setState(() {
                           defendLocation[3] = value ?? false;
@@ -709,7 +709,7 @@ class _DefenderEvaluation2026State extends State<DefenderEvaluation2026> {
                     top: 150,
                     left: 250,
                     child: Checkbox(
-                      value: defendLocation[4], 
+                      value: defendLocation[4] = widget.form["${widget.team}DefendLocations"][4], 
                       onChanged: (value) {
                         setState(() {
                           defendLocation[4] = value ?? false;
