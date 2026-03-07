@@ -99,11 +99,11 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                           }
                         ),
                         CheckboxListTile(
-                          title: Text("Feeder?"),
-                          value: widget.form.formData["team1Feeder"] ?? false, 
+                          title: Text("Shunter?"),
+                          value: widget.form.formData["team1Shunter"] ?? false, 
                           onChanged: (value) {
                             setState(() {
-                              widget.form.onDataChanged({"team1Feeder": value});
+                              widget.form.onDataChanged({"team1Shunter": value});
                             });
                           }
                         ),
@@ -113,7 +113,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                           onRatingUpdate: (newValue) {
                             widget.form.onDataChanged({"team1CollectionRate": newValue});
                           },
-                          initialRating: 0,
+                          initialRating: (widget.form.formData["team1CollectionRate"] ?? 0).toDouble(),
                           itemCount: 5,
                           enableHalves: false,
                           titleOnTop: true,
@@ -121,13 +121,15 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                         if (widget.form.formData["team1Shooter"] == true) ... [
                           SizedBox(height: 16.0),
                           ShooterEvaluation2026(
-                            ratingRange: 5, 
+                            ratingRange: 5,
+                            shootingAccuracy: (widget.form.formData["team1ShootingAccuracy"] ?? 0).toDouble(),
                             onAccuracyChanged: (newValue) {
                               widget.form.onDataChanged({"team1ShootingAccuracy": newValue});
                             },
                             // onPrecisionChanged: (newValue) {
                             //   widget.form.onDataChanged({"team1ShootingPrecision": newValue});
                             // },
+                            shootingRate: (widget.form.formData["team1ShootingRate"] ?? 0).toDouble(),
                             onSpeedChanged: (newValue) {
                               widget.form.onDataChanged({"team1ShootingRate": newValue});
                             },
@@ -167,12 +169,13 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                           )
                         ] else 
                           SizedBox(),
-                        if (widget.form.formData["team1Feeder"] == true) ... [
+                        if (widget.form.formData["team1Shunter"] == true) ... [
                           SizedBox(height: 16.0),
                           FeederEvaluation2026(
-                            ratingRange: 5, 
+                            ratingRange: 5,
+                            feedingRate: (widget.form.formData["team1ShunterRate"] ?? 0).toDouble(),
                             onFeedingRateChanged: (newValue) {
-                              widget.form.onDataChanged({"team1FeederCollectionSpeed": newValue});
+                              widget.form.onDataChanged({"team1ShunterRate": newValue});
                             },
                           )
                         ] else 
@@ -203,11 +206,11 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                           }
                         ),
                         CheckboxListTile(
-                          title: Text("Feeder?"),
-                          value: widget.form.formData["team2Feeder"] ?? false, 
+                          title: Text("Shunter?"),
+                          value: widget.form.formData["team2Shunter"] ?? false, 
                           onChanged: (value) {
                             setState(() {
-                              widget.form.onDataChanged({"team2Feeder": value});
+                              widget.form.onDataChanged({"team2Shunter": value});
                             });
                           }
                         ),
@@ -217,7 +220,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                           onRatingUpdate: (newValue) {
                             widget.form.onDataChanged({"team2CollectionRate": newValue});
                           },
-                          initialRating: 0,
+                          initialRating: (widget.form.formData["team2CollectionRate"] ?? 0).toDouble(),
                           itemCount: 5,
                           enableHalves: false,
                           titleOnTop: true,
@@ -225,13 +228,15 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                         if (widget.form.formData["team2Shooter"] == true) ... [
                           SizedBox(height: 16.0),
                           ShooterEvaluation2026(
-                            ratingRange: 5, 
+                            ratingRange: 5,
+                            shootingAccuracy: (widget.form.formData["team2ShootingAccuracy"] ?? 0).toDouble(),
                             onAccuracyChanged: (newValue) {
                               widget.form.onDataChanged({"team2ShootingAccuracy": newValue});
                             },
                             // onPrecisionChanged: (newValue) {
                             //   widget.form.onDataChanged({"team2ShootingPrecision": newValue});
                             // },
+                            shootingRate: (widget.form.formData["team2ShootingRate"] ?? 0).toDouble(),
                             onSpeedChanged: (newValue) {
                               widget.form.onDataChanged({"team2ShootingRate": newValue});
                             },
@@ -271,12 +276,13 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                           )
                         ] else 
                           SizedBox(),
-                        if (widget.form.formData["team2Feeder"] == true) ... [
+                        if (widget.form.formData["team2Shunter"] == true) ... [
                           SizedBox(height: 16.0),
                           FeederEvaluation2026(
-                            ratingRange: 5, 
+                            ratingRange: 5,
+                            feedingRate: (widget.form.formData["team2ShunterRate"] ?? 0).toDouble(),
                             onFeedingRateChanged: (newValue) {
-                              widget.form.onDataChanged({"team2FeederCollectionSpeed": newValue});
+                              widget.form.onDataChanged({"team2ShunterRate": newValue});
                             },
                           )
                         ] else 
@@ -306,11 +312,11 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                           }
                         ),
                         CheckboxListTile(
-                          title: Text("Feeder?"),
-                          value: widget.form.formData["team3Feeder"] ?? false, 
+                          title: Text("Shunter?"),
+                          value: widget.form.formData["team3Shunter"] ?? false, 
                           onChanged: (value) {
                             setState(() {
-                              widget.form.onDataChanged({"team3Feeder": value});
+                              widget.form.onDataChanged({"team3Shunter": value});
                             });
                           }
                         ),
@@ -328,13 +334,15 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                         if (widget.form.formData["team3Shooter"] == true) ... [
                           SizedBox(height: 16.0),
                           ShooterEvaluation2026(
-                            ratingRange: 5, 
+                            ratingRange: 5,
+                            shootingAccuracy: (widget.form.formData["team3ShootingAccuracy"] ?? 0).toDouble(),
                             onAccuracyChanged: (newValue) {
                               widget.form.onDataChanged({"team3ShootingAccuracy": newValue});
                             },
                             // onPrecisionChanged: (newValue) {
                             //   widget.form.onDataChanged({"team3ShootingPrecision": newValue});
                             // },
+                            shootingRate: (widget.form.formData["team3ShootingRate"] ?? 0).toDouble(),
                             onSpeedChanged: (newValue) {
                               widget.form.onDataChanged({"team3ShootingRate": newValue});
                             },
@@ -375,12 +383,13 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                           )
                         ] else 
                           SizedBox(),
-                        if (widget.form.formData["team3Feeder"] == true) ... [
+                        if (widget.form.formData["team3Shunter"] == true) ... [
                           SizedBox(height: 16.0),
                           FeederEvaluation2026(
-                            ratingRange: 5, 
+                            ratingRange: 5,
+                            feedingRate: (widget.form.formData["team3ShunterRate"] ?? 0).toDouble(),
                             onFeedingRateChanged: (newValue) {
-                              widget.form.onDataChanged({"team3FeederCollectionSpeed": newValue});
+                              widget.form.onDataChanged({"team3ShunterRate": newValue});
                             },
                           )
                         ] else 

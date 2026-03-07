@@ -420,13 +420,15 @@ class LabeledSwitch extends StatelessWidget {
   }
 }
 
-class ShooterEvaluation2026 extends StatelessWidget {
+class ShooterEvaluation2026 extends StatefulWidget {
   final int ratingRange;
+  final double shootingAccuracy;
   final Function(double) onAccuracyChanged;
   // final Function(double) onPrecisionChanged;
+  final double shootingRate;
   final Function(double) onSpeedChanged;
   // final Function(double) onCycleAbilityChanged;
-  final bool counterdefense;
+  final bool? counterdefense;
   final Function(bool?)? onCounterdefenseChanged;
   final int cyclesPerAllianceShift;
   final VoidCallback onCyclesPerAllianceShiftAdd;
@@ -435,8 +437,10 @@ class ShooterEvaluation2026 extends StatelessWidget {
   const ShooterEvaluation2026({
     super.key,
     required this.ratingRange,
+    required this.shootingAccuracy,
     required this.onAccuracyChanged,
     // required this.onPrecisionChanged,
+    required this.shootingRate,
     required this.onSpeedChanged,
     // required this.onCycleAbilityChanged,
     required this.counterdefense,
@@ -446,6 +450,11 @@ class ShooterEvaluation2026 extends StatelessWidget {
     required this.onCyclesPerAllianceShiftSubtract,
   });
 
+  @override
+  State<ShooterEvaluation2026> createState() => _ShooterEvaluation2026State();
+}
+
+class _ShooterEvaluation2026State extends State<ShooterEvaluation2026> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -466,9 +475,9 @@ class ShooterEvaluation2026 extends StatelessWidget {
             RatingInput(
               title: "Accuracy", 
               fontSize: 16,
-              onRatingUpdate: onAccuracyChanged,
-              initialRating: 0,
-              itemCount: max(1, ratingRange),
+              onRatingUpdate: widget.onAccuracyChanged,
+              initialRating: widget.shootingAccuracy,
+              itemCount: max(1, widget.ratingRange),
               enableHalves: false,
               titleOnTop: true,
             ),
@@ -486,9 +495,9 @@ class ShooterEvaluation2026 extends StatelessWidget {
             RatingInput(
               title: "Fire Rate", 
               fontSize: 16,
-              onRatingUpdate: onSpeedChanged,
-              initialRating: 0,
-              itemCount: max(1, ratingRange),
+              onRatingUpdate: widget.onSpeedChanged,
+              initialRating: widget.shootingRate,
+              itemCount: max(1, widget.ratingRange),
               enableHalves: false,
               titleOnTop: true,
             ),
@@ -506,15 +515,15 @@ class ShooterEvaluation2026 extends StatelessWidget {
             CheckboxListTile(
               title: Text("Counterdefense"), 
               tristate: true,
-              value: counterdefense,
-              onChanged: onCounterdefenseChanged,
+              value: widget.counterdefense,
+              onChanged: widget.onCounterdefenseChanged,
             ),
             SizedBox(height: 8.0),
             NumberInput(
               title: "Cycles/Alliance Shift",
-              value: cyclesPerAllianceShift,
-              onValueAdd: onCyclesPerAllianceShiftAdd,
-              onValueSubtract: onCyclesPerAllianceShiftSubtract,
+              value: widget.cyclesPerAllianceShift,
+              onValueAdd: widget.onCyclesPerAllianceShiftAdd,
+              onValueSubtract: widget.onCyclesPerAllianceShiftSubtract,
               enableSpacer: true,
             ),
           ],
@@ -527,11 +536,13 @@ class ShooterEvaluation2026 extends StatelessWidget {
 
 class FeederEvaluation2026 extends StatelessWidget {
   final int ratingRange;
+  final double feedingRate;
   final Function(double) onFeedingRateChanged;
 
   const FeederEvaluation2026({
     super.key,
     required this.ratingRange,
+    required this.feedingRate,
     required this.onFeedingRateChanged,
   });
 
@@ -546,17 +557,17 @@ class FeederEvaluation2026 extends StatelessWidget {
               Expanded(child: Divider()),
               Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Text("Feeder Evaluation",
+                child: Text("Shunter Evaluation",
                     style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic)),
               ),
               Expanded(child: Divider())
             ]),
             SizedBox(height: 8.0),
             RatingInput(
-              title: "Feeding Rate", 
+              title: "Shunting Rate", 
               fontSize: 16,
               onRatingUpdate: onFeedingRateChanged,
-              initialRating: 0,
+              initialRating: feedingRate,
               itemCount: max(1, ratingRange),
               enableHalves: false,
               titleOnTop: true,
