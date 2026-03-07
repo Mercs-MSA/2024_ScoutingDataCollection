@@ -847,7 +847,7 @@ class _PitFormState extends State<PitForm> {
                             label: Text('Hood')),
                           ButtonSegment(
                             value: ShooterTypes.big,
-                            label: Text('Big Shooter')),
+                            label: Text('Drum')),
                           ButtonSegment(
                             value: ShooterTypes.other,
                             label: Text('Other')),
@@ -857,7 +857,7 @@ class _PitFormState extends State<PitForm> {
                             ShooterTypes.turret,
                           if (widget.formData["hood"] != null && widget.formData["hood"])
                             ShooterTypes.hood,
-                          if (widget.formData["bigShooter"] != null && widget.formData["bigShooter"])
+                          if (widget.formData["drum"] != null && widget.formData["drum"])
                             ShooterTypes.big,
                           if (widget.formData["other"] != null && widget.formData["other"])
                             ShooterTypes.other,
@@ -867,7 +867,7 @@ class _PitFormState extends State<PitForm> {
                             widget.onDataChanged({
                               "turret": newSelection.contains(ShooterTypes.turret),
                               "hood": newSelection.contains(ShooterTypes.hood),
-                              "bigShooter": newSelection.contains(ShooterTypes.big),
+                              "drum": newSelection.contains(ShooterTypes.big),
                               "other": newSelection.contains(ShooterTypes.other),
                             });
                           });
