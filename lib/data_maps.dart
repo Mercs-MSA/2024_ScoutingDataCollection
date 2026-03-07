@@ -157,7 +157,6 @@ Map<String, dynamic> getMatchDataMap() {
     "team1Disabled": false,
     "team2Disabled": false,
     "team3Disabled": false,
-    "performedDefense": false,
     "penalties": false,
     "isMarkedForReview": false,
     "comments": // ** DO NOT REMOVE ** //
