@@ -343,6 +343,9 @@ class _FormAppPageState extends State<FormAppPage> {
                                 onEventIdChanged: (value) {
                                   setState(() {
                                     eventId = value;
+                                    pitScoutingData["eventID"] = eventId;
+                                    autonScoutingData["eventID"] = eventId;
+                                    matchScoutingData["eventID"] = eventId;
                                     attemptSaveEventId();
                                   });
                                 },

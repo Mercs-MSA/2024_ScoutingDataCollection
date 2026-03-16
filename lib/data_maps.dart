@@ -6,6 +6,7 @@ bool colorDebug = false;
 
 Map<String, dynamic> getPitDataMap() {
   return {
+    "eventID": "",
     "form": "pit",
     "team": null,
     "scouters": ["null", "null"],
@@ -56,6 +57,7 @@ Map<String, dynamic> getPitDataMap() {
 
 Map<String, dynamic> getAutonDataMap() {
   return {
+    "eventID": "",
     "form": "auton",
     "team": null,
     "scouter": "",
@@ -83,6 +85,7 @@ Map<String, dynamic> getAutonDataMap() {
 
 Map<String, dynamic> getMatchDataMap() {
   return {
+    "eventID": "",
     "form": "match",
     "team1": null,
     // "team2": null,
