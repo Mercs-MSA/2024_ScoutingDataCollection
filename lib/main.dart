@@ -1011,6 +1011,7 @@ class _FormAppPageState extends State<FormAppPage> {
                     // }
                     setState(() {
                       pitPageIndex = index;
+                      pitScoutingData["eventID"] = eventId;
                     });
                   },
                 ),
@@ -1384,6 +1385,7 @@ class _FormAppPageState extends State<FormAppPage> {
                   onDestinationSelected: (int index) {
                     setState(() {
                       autonPageIndex = index;
+                      autonScoutingData["eventID"] = eventId;
                     });
                   },
                 ),
@@ -1813,6 +1815,7 @@ class _FormAppPageState extends State<FormAppPage> {
                   onDestinationSelected: (int index) {
                     setState(() {
                       matchPageIndex = index;
+                      matchScoutingData["eventID"] = eventId;
                     });
                   },
                 ),
@@ -3581,6 +3584,7 @@ class _FormAppPageState extends State<FormAppPage> {
   void resetPit() {
     pitTeamNumber = null;
     pitScoutingData = Map.from(pitScoutingDefaultData);
+    pitScoutingData["eventID"] = eventId;
     setState(() {
       pitPageIndex = 0;
     });
@@ -3589,6 +3593,7 @@ class _FormAppPageState extends State<FormAppPage> {
   void resetAuton() {
     autonTeamNumber = null;
     autonScoutingData = Map.from(autonScoutingDefaultData);
+    autonScoutingData["eventID"] = eventId;
     setState(() {
       autonPageIndex = 0;
     });
@@ -3600,6 +3605,7 @@ class _FormAppPageState extends State<FormAppPage> {
     // match3TeamNumber = null;
     teleopMatchNumber = null;
     matchScoutingData = Map.from(matchScoutingDefaultData);
+    matchScoutingData["eventID"] = eventId;
     setState(() {
       matchPageIndex = 0;
     });
