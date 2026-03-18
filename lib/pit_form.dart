@@ -612,90 +612,93 @@ class _PitFormState extends State<PitForm> {
                   const SizedBox(height: 8.0),
                   
                   Row(
-  children: [
-    Expanded(
-      child: TextField(
-        controller: _wController, 
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Hopper Width",
-          suffixText: "Inches",
-        ),
-        keyboardType: TextInputType.number,
-        inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
-          LengthLimitingTextInputFormatter(5),
-        ],
-        onChanged: (value) {
-          widget.onDataChanged({"hopperWidth": double.tryParse(value)});
-          _updateTotal();
-        },
-      ),
-    ),
-    const SizedBox(width: 8),
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _wController, 
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Hopper Width",
+                            suffixText: "Inches",
+                          ),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+                            LengthLimitingTextInputFormatter(5),
+                          ],
+                          onChanged: (value) {
+                            widget.onDataChanged({"hopperWidth": double.tryParse(value)});
+                            _updateTotal();
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 8),
 
-    Expanded(
-      child: TextField(
-        controller: _lController,
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Hopper Length",
-          suffixText: "Inches",
-        ),
-        keyboardType: TextInputType.number,
-        inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
-          LengthLimitingTextInputFormatter(5),
-        ],
-        onChanged: (value) {
-          widget.onDataChanged({"hopperLength": double.tryParse(value)});
-          _updateTotal();
-        },
-      ),
-    ),
-    const SizedBox(width: 8),
+                      Expanded(
+                        child: TextField(
+                          controller: _lController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Hopper Length",
+                            suffixText: "Inches",
+                          ),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+                            LengthLimitingTextInputFormatter(5),
+                          ],
+                          onChanged: (value) {
+                            widget.onDataChanged({"hopperLength": double.tryParse(value)});
+                            _updateTotal();
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 8),
 
-    Expanded(
-      child: TextField(
-        controller: _hController, 
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Hopper Height",
-          suffixText: "Inches",
-        ),
-        keyboardType: TextInputType.number,
-        inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
-          LengthLimitingTextInputFormatter(5),
-        ],
-        onChanged: (value) {
-          widget.onDataChanged({"hopperHeight": double.tryParse(value)});
-          _updateTotal();
-        },
-      ),
-    ),
-    const SizedBox(width: 8),
-
-    Expanded(
-      child: TextField(
-        controller: _sController, 
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Hopper Storage Estimate",
-          suffixText: "Amount of Fuel",
-        ),
-        keyboardType: TextInputType.number,
-        inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
-          LengthLimitingTextInputFormatter(5),
-        ],
-        onChanged: (value) {
-          widget.onDataChanged({"hopperStorageEstimate": double.tryParse(value)});
-        },
-      ),
-    ),
-  ],
-),
+                      Expanded(
+                        child: TextField(
+                          controller: _hController, 
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Hopper Height",
+                            suffixText: "Inches",
+                          ),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+                            LengthLimitingTextInputFormatter(5),
+                          ],
+                          onChanged: (value) {
+                            widget.onDataChanged({"hopperHeight": double.tryParse(value)});
+                            _updateTotal();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _sController, 
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Hopper Storage Estimate",
+                            suffixText: "Amount of Fuel",
+                          ),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+                            LengthLimitingTextInputFormatter(5),
+                          ],
+                          onChanged: (value) {
+                            widget.onDataChanged({"hopperStorageEstimate": double.tryParse(value)});
+                          },
+                        ),
+                      ),
+                    ]
+                  ),
                   const SizedBox(height: 8.0),
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.center,
