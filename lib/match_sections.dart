@@ -408,6 +408,33 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                     child: Column(
                       children: [
                         CheckboxListTile(
+                          title: Text("Broken?"),
+                          value: widget.form.formData["team1Broken"] ?? false, 
+                          onChanged: (value) {
+                            setState(() {
+                              widget.form.onDataChanged({"team1Broken": value});
+                            });
+                          }
+                        ),
+                        CheckboxListTile(
+                          title: Text("Disabled?"),
+                          value: widget.form.formData["team1Disabled"] ?? false, 
+                          onChanged: (value) {
+                            setState(() {
+                              widget.form.onDataChanged({"team1Disabled": value});
+                            });
+                          }
+                        ),
+                        CheckboxListTile(
+                          title: Text("Didn't show up?"),
+                          value: widget.form.formData["team1NoShow"] ?? false, 
+                          onChanged: (value) {
+                            setState(() {
+                              widget.form.onDataChanged({"team1NoShow": value});
+                            });
+                          }
+                        ),
+                        CheckboxListTile(
                           title: Text("Shooter?"),
                           value: widget.form.formData["team1Shooter"] ?? false, 
                           onChanged: (value) {
@@ -434,6 +461,42 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             });
                           }
                         ),
+                        CheckboxListTile(
+                          title: Text("Top tier?"),
+                          value: widget.form.formData["team1TopTier"] ?? false, 
+                          onChanged: (value) {
+                            setState(() {
+                              widget.form.onDataChanged({"team1TopTier": value});
+                            });
+                          }
+                        ),
+                        CheckboxListTile(
+                          title: Text("Mid tier?"),
+                          value: widget.form.formData["team1MidTier"] ?? false, 
+                          onChanged: (value) {
+                            setState(() {
+                              widget.form.onDataChanged({"team1MidTier": value});
+                            });
+                          }
+                        ),
+                        CheckboxListTile(
+                          title: Text("Low tier (overall)?"),
+                          value: widget.form.formData["team1LowTier"] ?? false, 
+                          onChanged: (value) {
+                            setState(() {
+                              widget.form.onDataChanged({"team1LowTier": value});
+                            });
+                          }
+                        ),
+                        CheckboxListTile(
+                          title: Text("Beached?"),
+                          value: widget.form.formData["team1Beached"] ?? false, 
+                          onChanged: (value) {
+                            setState(() {
+                              widget.form.onDataChanged({"team1Beached": value});
+                            });
+                          }
+                        ),
                         RatingInput(
                           title: "Collection Rate", 
                           fontSize: 16,
@@ -445,68 +508,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                           enableHalves: false,
                           titleOnTop: true,
                         ),
-                        if (widget.form.formData["team1Shooter"] == true) ... [
-                          SizedBox(height: 16.0),
-                          ShooterEvaluation2026(
-                            ratingRange: 5,
-                            shootingAccuracy: (widget.form.formData["team1ShootingAccuracy"] ?? 0).toDouble(),
-                            onAccuracyChanged: (newValue) {
-                              widget.form.onDataChanged({"team1ShootingAccuracy": newValue});
-                            },
-                            // onPrecisionChanged: (newValue) {
-                            //   widget.form.onDataChanged({"team1ShootingPrecision": newValue});
-                            // },
-                            shootingRate: (widget.form.formData["team1ShootingRate"] ?? 0).toDouble(),
-                            onSpeedChanged: (newValue) {
-                              widget.form.onDataChanged({"team1ShootingRate": newValue});
-                            },
-                            // onCycleAbilityChanged: (newValue) {
-                            //   widget.form.onDataChanged({"team1CycleAbility": newValue});
-                            // },
-                            counterdefense: widget.form.formData["team1Counterdefense"],
-                            onCounterdefenseChanged: (newValue) {
-                              setState(() {
-                                widget.form.onDataChanged({"team1Counterdefense": newValue});
-                              });
-                            },
-                            cyclesPerAllianceShift: widget.form.formData["team1CyclesPerAllianceShift"] ?? 0,
-                            onCyclesPerAllianceShiftAdd: () {
-                              setState(() {
-                                widget.form.onDataChanged({"team1CyclesPerAllianceShift": (widget.form.formData["team1CyclesPerAllianceShift"] ?? 0) + 1});
-                              });
-                            },
-                            onCyclesPerAllianceShiftSubtract: () {
-                              setState(() {
-                                if (widget.form.formData["team1CyclesPerAllianceShift"] > 0) {
-                                  widget.form.onDataChanged({"team1CyclesPerAllianceShift": (widget.form.formData["team1CyclesPerAllianceShift"]) - 1});
-                                } else {
-                                  widget.form.onDataChanged({"team1CyclesPerAllianceShift": 0});
-                                }                              
-                              });
-                            },
-                          )
-                        ] else 
-                          SizedBox(),
-                        if (widget.form.formData["team1Defender"] == true) ... [
-                          SizedBox(height: 16.0),
-                          DefenderEvaluation2026(
-                            form: widget.form.formData,
-                            onDataChanged: widget.form.onDataChanged,
-                            team: "team1"
-                          )
-                        ] else 
-                          SizedBox(),
-                        if (widget.form.formData["team1Shunter"] == true) ... [
-                          SizedBox(height: 16.0),
-                          FeederEvaluation2026(
-                            ratingRange: 5,
-                            feedingRate: (widget.form.formData["team1ShunterRate"] ?? 0).toDouble(),
-                            onFeedingRateChanged: (newValue) {
-                              widget.form.onDataChanged({"team1ShunterRate": newValue});
-                            },
-                          )
-                        ] else 
-                          SizedBox(),
+
 
                       ],
                     ),
@@ -514,6 +516,33 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   // Expanded(
                   //   child: Column(
                   //     children: [
+                  //       CheckboxListTile(
+                  //         title: Text("Broken?"),
+                  //         value: widget.form.formData["team2Broken"] ?? false, 
+                  //         onChanged: (value) {
+                  //           setState(() {
+                  //             widget.form.onDataChanged({"team2Broken": value});
+                  //           });
+                  //         }
+                  //       ),
+                  //       CheckboxListTile(
+                  //         title: Text("Disabled?"),
+                  //         value: widget.form.formData["team2Disabled"] ?? false, 
+                  //         onChanged: (value) {
+                  //           setState(() {
+                  //             widget.form.onDataChanged({"team2Disabled": value});
+                  //           });
+                  //         }
+                  //       ),
+                  //       CheckboxListTile(
+                  //         title: Text("Didn't show up?"),
+                  //         value: widget.form.formData["team2NoShow"] ?? false, 
+                  //         onChanged: (value) {
+                  //           setState(() {
+                  //             widget.form.onDataChanged({"team2NoShow": value});
+                  //           });
+                  //         }
+                  //       ),
                   //       CheckboxListTile(
                   //         title: Text("Shooter?"),
                   //         value: widget.form.formData["team2Shooter"] ?? false, 
@@ -541,6 +570,42 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   //           });
                   //         }
                   //       ),
+                  //       CheckboxListTile(
+                  //         title: Text("Top tier?"),
+                  //         value: widget.form.formData["team2TopTier"] ?? false, 
+                  //         onChanged: (value) {
+                  //           setState(() {
+                  //             widget.form.onDataChanged({"team2TopTier": value});
+                  //           });
+                  //         }
+                  //       ),
+                  //       CheckboxListTile(
+                  //         title: Text("Mid tier?"),
+                  //         value: widget.form.formData["team2MidTier"] ?? false, 
+                  //         onChanged: (value) {
+                  //           setState(() {
+                  //             widget.form.onDataChanged({"team2MidTier": value});
+                  //           });
+                  //         }
+                  //       ),
+                  //       CheckboxListTile(
+                  //         title: Text("Low tier (overall)?"),
+                  //         value: widget.form.formData["team2LowTier"] ?? false, 
+                  //         onChanged: (value) {
+                  //           setState(() {
+                  //             widget.form.onDataChanged({"team2LowTier": value});
+                  //           });
+                  //         }
+                  //       ),
+                  //       CheckboxListTile(
+                  //         title: Text("Beached?"),
+                  //         value: widget.form.formData["team2Beached"] ?? false, 
+                  //         onChanged: (value) {
+                  //           setState(() {
+                  //             widget.form.onDataChanged({"team2Beached": value});
+                  //           });
+                  //         }
+                  //       ),
                   //       RatingInput(
                   //         title: "Collection Rate", 
                   //         fontSize: 16,
@@ -552,74 +617,40 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   //         enableHalves: false,
                   //         titleOnTop: true,
                   //       ),
-                  //       if (widget.form.formData["team2Shooter"] == true) ... [
-                  //         SizedBox(height: 16.0),
-                  //         ShooterEvaluation2026(
-                  //           ratingRange: 5,
-                  //           shootingAccuracy: (widget.form.formData["team2ShootingAccuracy"] ?? 0).toDouble(),
-                  //           onAccuracyChanged: (newValue) {
-                  //             widget.form.onDataChanged({"team2ShootingAccuracy": newValue});
-                  //           },
-                  //           // onPrecisionChanged: (newValue) {
-                  //           //   widget.form.onDataChanged({"team2ShootingPrecision": newValue});
-                  //           // },
-                  //           shootingRate: (widget.form.formData["team2ShootingRate"] ?? 0).toDouble(),
-                  //           onSpeedChanged: (newValue) {
-                  //             widget.form.onDataChanged({"team2ShootingRate": newValue});
-                  //           },
-                  //           // onCycleAbilityChanged: (newValue) {
-                  //           //   widget.form.onDataChanged({"team2CycleAbility": newValue});
-                  //           // },
-                  //           counterdefense: widget.form.formData["team2Counterdefense"],
-                  //           onCounterdefenseChanged: (newValue) {
-                  //             setState(() {
-                  //               widget.form.onDataChanged({"team2Counterdefense": newValue});
-                  //             });
-                  //           },
-                  //           cyclesPerAllianceShift: widget.form.formData["team2CyclesPerAllianceShift"] ?? 0,
-                  //           onCyclesPerAllianceShiftAdd: () {
-                  //             setState(() {
-                  //               widget.form.onDataChanged({"team2CyclesPerAllianceShift": (widget.form.formData["team2CyclesPerAllianceShift"] ?? 0) + 1});
-                  //             });
-                  //           },
-                  //           onCyclesPerAllianceShiftSubtract: () {
-                  //             setState(() {
-                  //               if (widget.form.formData["team2CyclesPerAllianceShift"] > 0) {
-                  //                 widget.form.onDataChanged({"team2CyclesPerAllianceShift": (widget.form.formData["team2CyclesPerAllianceShift"]) - 1});
-                  //               } else {
-                  //                 widget.form.onDataChanged({"team2CyclesPerAllianceShift": 0});
-                  //               }
-                  //             });
-                  //           },
-                  //         )
-                  //       ] else 
-                  //         SizedBox(),
-                  //       if (widget.form.formData["team2Defender"] == true) ... [
-                  //         SizedBox(height: 16.0),
-                  //         DefenderEvaluation2026(
-                  //           form: widget.form.formData,
-                  //           onDataChanged: widget.form.onDataChanged,
-                  //           team: "team2"
-                  //         )
-                  //       ] else 
-                  //         SizedBox(),
-                  //       if (widget.form.formData["team2Shunter"] == true) ... [
-                  //         SizedBox(height: 16.0),
-                  //         FeederEvaluation2026(
-                  //           ratingRange: 5,
-                  //           feedingRate: (widget.form.formData["team2ShunterRate"] ?? 0).toDouble(),
-                  //           onFeedingRateChanged: (newValue) {
-                  //             widget.form.onDataChanged({"team2ShunterRate": newValue});
-                  //           },
-                  //         )
-                  //       ] else 
-                  //         SizedBox(),
+
                   //     ],
                   //   ),
                   // ),
                   // Expanded(
                   //   child: Column(
                   //     children: [
+                  //       CheckboxListTile(
+                  //         title: Text("Broken?"),
+                  //         value: widget.form.formData["team3Broken"] ?? false, 
+                  //         onChanged: (value) {
+                  //           setState(() {
+                  //             widget.form.onDataChanged({"team3Broken": value});
+                  //           });
+                  //         }
+                  //       ),
+                  //       CheckboxListTile(
+                  //         title: Text("Disabled?"),
+                  //         value: widget.form.formData["team3Disabled"] ?? false, 
+                  //         onChanged: (value) {
+                  //           setState(() {
+                  //             widget.form.onDataChanged({"team3Disabled": value});
+                  //           });
+                  //         }
+                  //       ),
+                  //       CheckboxListTile(
+                  //         title: Text("Didn't show up?"),
+                  //         value: widget.form.formData["team3NoShow"] ?? false, 
+                  //         onChanged: (value) {
+                  //           setState(() {
+                  //             widget.form.onDataChanged({"team3NoShow": value});
+                  //           });
+                  //         }
+                  //       ),
                   //       CheckboxListTile(
                   //         title: Text("Shooter?"),
                   //         value: widget.form.formData["team3Shooter"] ?? false, 
@@ -647,6 +678,42 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   //           });
                   //         }
                   //       ),
+                  //       CheckboxListTile(
+                  //         title: Text("Top tier?"),
+                  //         value: widget.form.formData["team3TopTier"] ?? false, 
+                  //         onChanged: (value) {
+                  //           setState(() {
+                  //             widget.form.onDataChanged({"team3TopTier": value});
+                  //           });
+                  //         }
+                  //       ),
+                  //       CheckboxListTile(
+                  //         title: Text("Mid tier?"),
+                  //         value: widget.form.formData["team3MidTier"] ?? false, 
+                  //         onChanged: (value) {
+                  //           setState(() {
+                  //             widget.form.onDataChanged({"team3MidTier": value});
+                  //           });
+                  //         }
+                  //       ),
+                  //       CheckboxListTile(
+                  //         title: Text("Low tier (overall)?"),
+                  //         value: widget.form.formData["team3LowTier"] ?? false, 
+                  //         onChanged: (value) {
+                  //           setState(() {
+                  //             widget.form.onDataChanged({"team3LowTier": value});
+                  //           });
+                  //         }
+                  //       ),
+                  //       CheckboxListTile(
+                  //         title: Text("Beached?"),
+                  //         value: widget.form.formData["team3Beached"] ?? false, 
+                  //         onChanged: (value) {
+                  //           setState(() {
+                  //             widget.form.onDataChanged({"team3Beached": value});
+                  //           });
+                  //         }
+                  //       ),
                   //       RatingInput(
                   //         title: "Collection Rate", 
                   //         fontSize: 16,
@@ -658,69 +725,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   //         enableHalves: false,
                   //         titleOnTop: true,
                   //       ),
-                  //       if (widget.form.formData["team3Shooter"] == true) ... [
-                  //         SizedBox(height: 16.0),
-                  //         ShooterEvaluation2026(
-                  //           ratingRange: 5,
-                  //           shootingAccuracy: (widget.form.formData["team3ShootingAccuracy"] ?? 0).toDouble(),
-                  //           onAccuracyChanged: (newValue) {
-                  //             widget.form.onDataChanged({"team3ShootingAccuracy": newValue});
-                  //           },
-                  //           // onPrecisionChanged: (newValue) {
-                  //           //   widget.form.onDataChanged({"team3ShootingPrecision": newValue});
-                  //           // },
-                  //           shootingRate: (widget.form.formData["team3ShootingRate"] ?? 0).toDouble(),
-                  //           onSpeedChanged: (newValue) {
-                  //             widget.form.onDataChanged({"team3ShootingRate": newValue});
-                  //           },
-                  //           // onCycleAbilityChanged: (newValue) {
-                  //           //   widget.form.onDataChanged({"team3CycleAbility": newValue});
-                  //           // },
-                  //           counterdefense: widget.form.formData["team3Counterdefense"],
-                  //           onCounterdefenseChanged: (newValue) {
-                  //             setState(() {
-                  //               widget.form.onDataChanged({"team3Counterdefense": newValue});
-                  //             });
-                  //           },
-                  //           cyclesPerAllianceShift: widget.form.formData["team3CyclesPerAllianceShift"] ?? 0,
-                  //           onCyclesPerAllianceShiftAdd: () {
-                  //             setState(() {
-                  //               widget.form.onDataChanged({"team3CyclesPerAllianceShift": (widget.form.formData["team3CyclesPerAllianceShift"] ?? 0) + 1});
-                  //             });
-                  //           },
-                  //           onCyclesPerAllianceShiftSubtract: () {
-                  //             setState(() {
-                  //               if (widget.form.formData["team3CyclesPerAllianceShift"] > 0) {
-                  //                 widget.form.onDataChanged({"team3CyclesPerAllianceShift": (widget.form.formData["team3CyclesPerAllianceShift"]) - 1});
-                  //               } else {
-                  //                 widget.form.onDataChanged({"team3CyclesPerAllianceShift": 0});
-                  //               }
-                  //             });
-                  //           },
-                  //         )
-                  //       ] else 
-                  //         SizedBox(),
-                  //       if (widget.form.formData["team3Defender"] == true) ... [
-                  //         SizedBox(height: 16.0),
-                  //         DefenderEvaluation2026(
-                  //           form: widget.form.formData,
-                  //           onDataChanged: widget.form.onDataChanged,
-                  //           team: "team3"
-                  //           // defendLocations: widget.form.formData["team3DefendLocations"],
-                  //         )
-                  //       ] else 
-                  //         SizedBox(),
-                  //       if (widget.form.formData["team3Shunter"] == true) ... [
-                  //         SizedBox(height: 16.0),
-                  //         FeederEvaluation2026(
-                  //           ratingRange: 5,
-                  //           feedingRate: (widget.form.formData["team3ShunterRate"] ?? 0).toDouble(),
-                  //           onFeedingRateChanged: (newValue) {
-                  //             widget.form.onDataChanged({"team3ShunterRate": newValue});
-                  //           },
-                  //         )
-                  //       ] else 
-                  //         SizedBox(),
+
                   //     ],
                   //   ),
                   // ),
