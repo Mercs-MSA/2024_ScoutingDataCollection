@@ -943,20 +943,20 @@ class _PitFormState extends State<PitForm> {
                                 WidgetStateProperty.all(EdgeInsets.all(18.0))),
                         segments: <ButtonSegment<TeleopRole>>[
                           ButtonSegment(
-                              value: TeleopRole.score, label: Text('Score')),
+                              value: TeleopRole.shooter, label: Text('Shooter')),
                           ButtonSegment(
-                              value: TeleopRole.shunt,
-                              label: Text('Shunt')),
+                              value: TeleopRole.feeder,
+                              label: Text('Feeder')),
                           ButtonSegment(
                               value: TeleopRole.defense, label: Text('Defense')),
                         ],
                         selected: {
-                          if (widget.formData["score"] != null &&
-                              widget.formData["score"])
-                            TeleopRole.score,
-                          if (widget.formData["shunt"] != null &&
-                              widget.formData["shunt"])
-                            TeleopRole.shunt,
+                          if (widget.formData["shooter"] != null &&
+                              widget.formData["shooter"])
+                            TeleopRole.shooter,
+                          if (widget.formData["feeder"] != null &&
+                              widget.formData["feeder"])
+                            TeleopRole.feeder,
                           if (widget.formData["defense"] != null &&
                               widget.formData["defense"])
                             TeleopRole.defense,
@@ -964,10 +964,10 @@ class _PitFormState extends State<PitForm> {
                         onSelectionChanged: (Set<TeleopRole> newSelection) {
                           setState(() {
                             widget.onDataChanged({
-                              "score":
-                                  newSelection.contains(TeleopRole.score),
-                              "shunt":
-                                  newSelection.contains(TeleopRole.shunt),
+                              "shooter":
+                                  newSelection.contains(TeleopRole.shooter),
+                              "feeder":
+                                  newSelection.contains(TeleopRole.feeder),
                               "defense": newSelection.contains(TeleopRole.defense),
                             });
                           });

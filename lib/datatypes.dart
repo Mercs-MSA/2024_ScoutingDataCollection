@@ -12,7 +12,7 @@ enum IntakeTypes {slapdown, fourbar, openbumper, bucket}
 
 enum ShooterTypes { turret, hood, big, other }
 
-enum TeleopRole { score, shunt, defense }
+enum TeleopRole { shooter, feeder, defense }
 
 enum StartPosition { left, middle, right }
 
