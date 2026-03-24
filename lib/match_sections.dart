@@ -4,6 +4,333 @@ import 'package:mercs_scout/datatypes.dart';
 import 'match_form.dart';
 import 'widgets.dart';
 
+class MatchAutonSection extends StatefulWidget {
+  final MatchForm form;
+  
+  const MatchAutonSection(
+      {super.key, required this.form, required this.colorDebug, required this.allianceColor});
+
+  final bool colorDebug;
+
+  final String allianceColor;
+
+  @override
+  State<MatchAutonSection> createState() => _MatchAutonSectionState();
+}
+
+class _MatchAutonSectionState extends State<MatchAutonSection> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(12.0), 
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SwitchListTile (
+                title: const Text('Has Auto?'),
+                value: widget.form.formData['autoLeave'] ?? false, 
+                onChanged: (value) {
+                  setState(() {
+                    widget.form
+                        .onDataChanged({"autoLeave": value});
+                  });
+                }
+              ),
+              const SizedBox(height: 12.0),
+              if (widget.form.formData['autoLeave'] == true) ... [
+                if (widget.allianceColor == "blue")
+                  FittedBox(
+                    alignment: Alignment.topLeft,
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: Image.asset(
+                            'images/blue_field_2026.png',
+                            fit: BoxFit.scaleDown,
+                            width: 500,
+                            isAntiAlias: true,
+                            errorBuilder: (context, error, stackTrace) => SizedBox(width: 500, height: 300),
+                          ),
+                        ),
+                        Positioned(
+                          left: 265,
+                          top: 35,
+                          child: SizedBox(
+                            height: 420,
+                            child: RotatedBox(
+                              quarterTurns: 1,
+                              child: SegmentedButton<AutoStartLocation>(
+                                emptySelectionAllowed: false,
+                                multiSelectionEnabled: false,
+                                style: ButtonStyle(
+                                    padding: WidgetStateProperty.all(
+                                        EdgeInsets.all(18.0))),
+                                segments: <ButtonSegment<AutoStartLocation>>[
+                                  ButtonSegment(
+                                      label: Text("RR"),
+                                      value: AutoStartLocation.farRight),
+                                  ButtonSegment(
+                                      label: Text("R"),
+                                      value: AutoStartLocation.right),
+                                  ButtonSegment(
+                                      label: Text("M"),
+                                      value: AutoStartLocation.middle),
+                                  ButtonSegment(
+                                      label: Text("L"),
+                                      value: AutoStartLocation.left),
+                                  ButtonSegment(
+                                      label: Text("LL"),
+                                      value: AutoStartLocation.farLeft)
+                                ],
+                                selected: <AutoStartLocation>{
+                                  widget.form.formData['startPos'] ?? AutoStartLocation.middle
+                                },
+                                onSelectionChanged: (Set<AutoStartLocation> value) {
+                                  setState(() {
+                                    widget.form.onDataChanged({
+                                      "startPos": value.first
+                                    });
+                                  });
+                                },
+                              ),
+                            ),
+                          )
+                        ),
+                        Positioned(
+                          left: 370,
+                          top: 208,
+                          child: Checkbox(
+                            value: widget.form.formData['climb'], 
+                            tristate: true,
+                            onChanged: (value) {
+                                setState(() {
+                                  widget.form
+                                      .onDataChanged({"climb": value});
+                                });
+                              }
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  else
+                    FittedBox(
+                      alignment: Alignment.topLeft,
+                      child: Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Image.asset(
+                              'images/red_field_2026.png',
+                              width: 500,
+                              fit: BoxFit.scaleDown,
+                              isAntiAlias: true,
+                              errorBuilder: (context, error, stackTrace) => SizedBox(width: 500, height: 300),
+                            ),
+                          ),
+                        Positioned(
+                          right: 265,
+                          top: 35,
+                          child: SizedBox(
+                            height: 420,
+                            child: RotatedBox(
+                              quarterTurns: 3,
+                              child: SegmentedButton<AutoStartLocation>(
+                                emptySelectionAllowed: false,
+                                multiSelectionEnabled: false,
+                                style: ButtonStyle(
+                                    padding: WidgetStateProperty.all(
+                                        EdgeInsets.all(18.0))),
+                                segments: <ButtonSegment<AutoStartLocation>>[
+                                  ButtonSegment(
+                                      label: Text("RR"),
+                                      value: AutoStartLocation.farRight),
+                                  ButtonSegment(
+                                      label: Text("R"),
+                                      value: AutoStartLocation.right),
+                                  ButtonSegment(
+                                      label: Text("M"),
+                                      value: AutoStartLocation.middle),
+                                  ButtonSegment(
+                                      label: Text("L"),
+                                      value: AutoStartLocation.left),
+                                  ButtonSegment(
+                                      label: Text("LL"),
+                                      value: AutoStartLocation.farLeft)
+                                ],
+                                selected: <AutoStartLocation>{
+                                  widget.form.formData['startPos'] ?? AutoStartLocation.middle
+                                },
+                                onSelectionChanged: (Set<AutoStartLocation> value) {
+                                  setState(() {
+                                    widget.form.onDataChanged({
+                                      "startPos": value.first
+                                    });
+                                  });
+                                },
+                              ),
+                            ),
+                          )
+                        ),
+                        Positioned(
+                          right: 370,
+                          bottom: 208,
+                          child: Checkbox(
+                            value: widget.form.formData['climb'], 
+                            tristate: true,
+                            onChanged: (value) {
+                                setState(() {
+                                  widget.form
+                                      .onDataChanged({"climb": value});
+                                });
+                              }
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  const SizedBox(height: 8.0),Row(
+                    children: [
+                      Expanded(
+                        child: SegmentedButton<RebuiltFieldLocations>(
+                          emptySelectionAllowed: true,
+                          multiSelectionEnabled: true,
+                          style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStateProperty.resolveWith<Color>(
+                              (Set<WidgetState> states) {
+                                if (states.contains(WidgetState.selected)) {
+                                  return ColorScheme.fromSeed(
+                                    seedColor: widget.colorDebug
+                                        ? Colors.green
+                                        : const Color.fromARGB(
+                                            255, 78, 180, 127),
+                                  ).primary;
+                                }
+                                return Colors.transparent;
+                              },
+                            ),
+                            padding: WidgetStateProperty.all(
+                                EdgeInsets.all(18.0))),
+                          segments: <ButtonSegment<RebuiltFieldLocations>>[
+                            ButtonSegment(
+                                value: RebuiltFieldLocations.depot,
+                                label: Text("Depot")),
+                            ButtonSegment(
+                                value: RebuiltFieldLocations.outpost,
+                                label: Text("Outpost"))
+                          ],
+                          selected: {
+                            if (widget.form.formData['depotDisrupted'])
+                              RebuiltFieldLocations.depot,
+                            if (widget.form.formData['outpostDisrupted'])
+                              RebuiltFieldLocations.outpost,
+                          },
+                          onSelectionChanged:
+                              (Set<RebuiltFieldLocations> value) {
+                            setState(() {
+                              widget.form.onDataChanged({
+                                "depotDisrupted": value
+                                    .contains(RebuiltFieldLocations.depot),
+                                "outpostDisrupted": value
+                                    .contains(RebuiltFieldLocations.outpost),
+                              });
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
+                  Row(
+                    children: [
+                      Flexible(
+                        child: NumberInput(
+                          title: "Swipes",
+                          enableSpacer: true,
+                          value: widget.form.formData["autoSwipes"],
+                          onValueAdd: () {
+                            setState(() {
+                              widget.form.onDataChanged({
+                                "autoSwipes": widget.form.formData[
+                                        "autoSwipes"] +
+                                    1
+                              });
+                            });
+                          },
+                          onValueSubtract: () {
+                            setState(() {
+                              if (widget.form
+                                      .formData["autoSwipes"] >
+                                  0) {
+                                widget.form.onDataChanged({
+                                  "autoSwipes": widget.form.formData[
+                                          "autoSwipes"] -
+                                      1
+                                });
+                              } else {
+                                widget.form.onDataChanged(
+                                    {"autoSwipes": 0});
+                              }
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
+                  Row (
+                    children: [
+                      Flexible(
+                        child: CheckboxListTile(
+                          title: const Text('Went Over Bump?'),
+                          value: widget.form.formData['overBumb'], 
+                          onChanged: (value) {
+                            setState(() {
+                              widget.form
+                                  .onDataChanged({"overBumb": value});
+                            });
+                          }
+                        ),
+                      ),
+                      Flexible(
+                        child: CheckboxListTile(
+                          title: const Text('Went Under Trench?'),
+                          value: widget.form.formData['underTrench'], 
+                          onChanged: (value) {
+                            setState(() {
+                              widget.form
+                                  .onDataChanged({"underTrench": value});
+                            });
+                          }
+                        ),
+                      ),
+                    ]
+                  ),
+                  const SizedBox(height: 8.0),
+                  CheckboxListTile(
+                    title: const Text('Crossed Center Line?'),
+                    value: widget.form.formData['centerLineCrossed'], 
+                    onChanged: (value) {
+                      setState(() {
+                        widget.form
+                            .onDataChanged({"centerLineCrossed": value});
+                      });
+                    }
+                  ),
+              ] else 
+                const SizedBox(height: 1),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class MatchTeleopSection extends StatefulWidget {
   final MatchForm form;
 
@@ -601,6 +928,7 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
               const SizedBox(height: 32.0),
               
               // Speed of climb section
+              if (widget.form.formData["team1EndgameLevel"] != 0) ... [
               Padding(
                 padding: const EdgeInsets.only(bottom: 12.0),
                 child: Text("Speed of climb?",
@@ -624,6 +952,7 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                 ],
               ),
               const SizedBox(height: 32.0),
+              ],
               
               // Cards section
               Padding(
@@ -716,103 +1045,6 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
                     });
                   }),
 
-              const SizedBox(height: 16.0),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Text("Didn't Show Up?",
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        )),
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: CheckboxListTile(
-                      dense: true,
-                      title: Text("Team ${widget.form.formData["team1"]}"),
-                      value: widget.form.formData["team1NoShow"] ?? false,
-                      onChanged: (bool? newValue) {
-                        setState(() {
-                          widget.form.onDataChanged({"team1NoShow": newValue ?? false});
-                        });
-                      },
-                    ),
-                  ),
-                  // Expanded(
-                  //   child: CheckboxListTile(
-                  //     dense: true,
-                  //     title: Text("Team ${widget.form.formData["team2"]}"),
-                  //     value: widget.form.formData["team2NoShow"] ?? false,
-                  //     onChanged: (bool? newValue) {
-                  //       setState(() {
-                  //         widget.form.onDataChanged({"team2NoShow": newValue ?? false});
-                  //       });
-                  //     },
-                  //   ),
-                  // ),
-                  // Expanded(
-                  //   child: CheckboxListTile(
-                  //     dense: true,
-                  //     title: Text("Team ${widget.form.formData["team3"]}"),
-                  //     value: widget.form.formData["team3NoShow"] ?? false,
-                  //     onChanged: (bool? newValue) {
-                  //       setState(() {
-                  //         widget.form.onDataChanged({"team3NoShow": newValue ?? false});
-                  //       });
-                  //     },
-                  //   ),
-                  // ),
-                ],
-              ),
-
-              const SizedBox(height: 16.0),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Text("Disabled?",
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        )),
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: CheckboxListTile(
-                      dense: true,
-                      title: Text("Team ${widget.form.formData["team1"]}"),
-                      value: widget.form.formData["team1Disabled"] ?? false,
-                      onChanged: (bool? newValue) {
-                        setState(() {
-                          widget.form.onDataChanged({"team1Disabled": newValue ?? false});
-                        });
-                      },
-                    ),
-                  ),
-                  // Expanded(
-                  //   child: CheckboxListTile(
-                  //     dense: true,
-                  //     title: Text("Team ${widget.form.formData["team2"]}"),
-                  //     value: widget.form.formData["team2Disabled"] ?? false,
-                  //     onChanged: (bool? newValue) {
-                  //       setState(() {
-                  //         widget.form.onDataChanged({"team2Disabled": newValue ?? false});
-                  //       });
-                  //     },
-                  //   ),
-                  // ),
-                  // Expanded(
-                  //   child: CheckboxListTile(
-                  //     dense: true,
-                  //     title: Text("Team ${widget.form.formData["team3"]}"),
-                  //     value: widget.form.formData["team3Disabled"] ?? false,
-                  //     onChanged: (bool? newValue) {
-                  //       setState(() {
-                  //         widget.form.onDataChanged({"team3Disabled": newValue ?? false});
-                  //       });
-                  //     },
-                  //   ),
-                  // ),
-                ],
-              ),
               const SizedBox(height: 24.0),
             ],
           ),
@@ -859,12 +1091,12 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
         Expanded(
           child: _buildGridCell(context, "left", level),
         ),
-        Expanded(
-          child: _buildGridCell(context, "middle", level),
-        ),
-        Expanded(
-          child: _buildGridCell(context, "right", level),
-        ),
+        // Expanded(
+        //   child: _buildGridCell(context, "middle", level),
+        // ),
+        // Expanded(
+        //   child: _buildGridCell(context, "right", level),
+        // ),
       ],
     );
   }
@@ -925,9 +1157,9 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
     // );
 
     final currentLevel = widget.form.formData["team1EndgameLevel"] ?? 0;
-    final currentPosition = widget.form.formData["team1ClimbPosition"];
-    final isSelected = (currentLevel == level) && (currentPosition == dataKey);
-    final isFailed = (currentLevel == -level) && (currentPosition == dataKey);
+    // final currentPosition = widget.form.formData["team1ClimbPosition"];
+    final isSelected = (currentLevel == level); // && (currentPosition == dataKey);
+    final isFailed = (currentLevel == -level); // && (currentPosition == dataKey);
     
     return Container(
       decoration: BoxDecoration(
@@ -946,13 +1178,13 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
             setState(() {
               if (isSelected) {
                 widget.form.onDataChanged({"team1EndgameLevel": -level});
-                widget.form.onDataChanged({"team1ClimbPosition": dataKey});
+                // widget.form.onDataChanged({"team1ClimbPosition": dataKey});
               } else if (isFailed) {
                 widget.form.onDataChanged({"team1EndgameLevel": 0});
-                widget.form.onDataChanged({"team1ClimbPosition": "none"});
+                // widget.form.onDataChanged({"team1ClimbPosition": "none"});
               } else {
                 widget.form.onDataChanged({"team1EndgameLevel": level});
-                widget.form.onDataChanged({"team1ClimbPosition": dataKey});
+                // widget.form.onDataChanged({"team1ClimbPosition": dataKey});
               }
             });
           },

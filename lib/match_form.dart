@@ -7,6 +7,7 @@ class MatchForm extends StatefulWidget {
   const MatchForm({
     super.key,
     required this.teamNumberPresent,
+    required this.allianceColor,
     required this.matchNumber,
     required this.onDataChanged,
     required this.formData,
@@ -19,7 +20,7 @@ class MatchForm extends StatefulWidget {
   final Function(Map<String, dynamic>) onDataChanged;
   final Map formData;
   final bool colorDebug;
-  
+  final String allianceColor;
 
   @override
   State<MatchForm> createState() => _MatchFormState();
@@ -33,7 +34,7 @@ class _MatchFormState extends State<MatchForm>
   void initState() {
     super.initState();
 
-    _tabController = TabController(vsync: this, length: 2);
+    _tabController = TabController(vsync: this, length: 3);
   }
 
   @override
@@ -52,6 +53,10 @@ class _MatchFormState extends State<MatchForm>
               controller: _tabController,
               tabs: <Widget>[
                 Tab(
+                  icon: Icon(Icons.smart_toy_outlined, color: Colors.red),
+                  text: "Auton",
+                ),
+                Tab(
                   icon: Icon(Icons.videogame_asset_rounded, color: Colors.orange),
                   text: "Teleop",
                 ),
@@ -64,6 +69,7 @@ class _MatchFormState extends State<MatchForm>
             body: TabBarView(
               controller: _tabController,
               children: [
+                MatchAutonSection(form: widget, colorDebug: widget.colorDebug, allianceColor: widget.allianceColor),
                 MatchTeleopSection(form: widget, colorDebug: widget.colorDebug),
                 MatchEndgameSection(form: widget, colorDebug: widget.colorDebug),
               ],

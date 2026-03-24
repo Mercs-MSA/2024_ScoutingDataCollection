@@ -21,3 +21,5 @@ enum AutoStartLocation { farRight, right, middle, left, farLeft }
 enum AchievablePosition { depot, outpost, neutral, climb }
 
 enum EndgamePositions { shallow, deep, park, none }
+
+enum RebuiltFieldLocations { depot, trench, outpost }

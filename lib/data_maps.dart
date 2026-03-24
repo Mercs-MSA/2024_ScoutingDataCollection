@@ -55,33 +55,33 @@ Map<String, dynamic> getPitDataMap() {
   };
 }
 
-Map<String, dynamic> getAutonDataMap() {
-  return {
-    "eventID": "",
-    "form": "auton",
-    "team": null,
-    "scouter": "",
-    "match": null,
-    "alliance": "blue",
+// Map<String, dynamic> getAutonDataMap() {
+//   return {
+//     "eventID": "",
+//     "form": "auton",
+//     "team": null,
+//     "scouter": "",
+//     "match": null,
+//     "alliance": "blue",
     
-    "startPos": Datatypes.AutoStartLocation.middle,
+//     "startPos": Datatypes.AutoStartLocation.middle,
 
-    "autoLeave": true,
-    "depotDisrupted": false,
-    "outpostDisrupted": false,
-    "topDisrupted": false,
-    "middleDisrupted": false,
-    "bottomDisrupted": false,
-    "autoCycles": 0,
-    "estimatedFuel": 0,
-    "rightClimb": false,
-    "middleClimb": false,
-    "leftClimb": false,
-    "centerLineCrossed": false,
-    "overBumb": false,
-    "underTrench": false,
-  };
-}
+//     "autoLeave": true,
+//     "depotDisrupted": false,
+//     "outpostDisrupted": false,
+//     "topDisrupted": false,
+//     "middleDisrupted": false,
+//     "bottomDisrupted": false,
+//     "autoCycles": 0,
+//     "estimatedFuel": 0,
+//     "rightClimb": false,
+//     "middleClimb": false,
+//     "leftClimb": false,
+//     "centerLineCrossed": false,
+//     "overBumb": false,
+//     "underTrench": false,
+//   };
+// }
 
 Map<String, dynamic> getMatchDataMap() {
   return {
@@ -93,6 +93,17 @@ Map<String, dynamic> getMatchDataMap() {
     "scouter": "",
     "alliance": "blue",
     "match": null,
+
+    "startPos": Datatypes.AutoStartLocation.middle,
+
+    "autoLeave": true,
+    "depotDisrupted": false,
+    "outpostDisrupted": false,
+    "autoSwipes": 0,
+    "climb": false,
+    "centerLineCrossed": false,
+    "overBumb": false,
+    "underTrench": false,
 
     "team1Shooter": false,
     // "team2Shooter": false,
@@ -142,10 +153,10 @@ Map<String, dynamic> getMatchDataMap() {
     "team1EndgameLevel": 0,
     // "team2EndgameLevel": 0,
     // "team3EndgameLevel": 0,
-    "team1ClimbPosition": "none",
+    // "team1ClimbPosition": "none",
     // "team2ClimbPosition": "none",
     // "team3ClimbPosition": "none",
-    "team1ClimbedFromRack": false,
+    // "team1ClimbedFromRack": false,
     // "team2ClimbedFromRack": false,
     // "team3ClimbedFromRack": false,
     "team1ClimbSpeed": 0,
