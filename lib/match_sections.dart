@@ -407,6 +407,12 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                   Expanded(
                     child: Column(
                       children: [
+                        Row(
+                          children: [
+                            SectionHeader(title: "Robot/Team Status", color: Colors.green)
+                          ],
+                        ),
+                        SizedBox(height: 12),
                         CheckboxListTile(
                           title: Text("Broken?"),
                           value: widget.form.formData["team1Broken"] ?? false, 
@@ -435,6 +441,22 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                           }
                         ),
                         CheckboxListTile(
+                          title: Text("Beached?"),
+                          value: widget.form.formData["team1Beached"] ?? false, 
+                          onChanged: (value) {
+                            setState(() {
+                              widget.form.onDataChanged({"team1Beached": value});
+                            });
+                          }
+                        ),
+                        SizedBox(height: 12),
+                        Row(
+                          children: [
+                            SectionHeader(title: "Team Role", color: Colors.blue)
+                          ],
+                        ),
+                        SizedBox(height: 12),
+                        CheckboxListTile(
                           title: Text("Shooter?"),
                           value: widget.form.formData["team1Shooter"] ?? false, 
                           onChanged: (value) {
@@ -461,6 +483,13 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             });
                           }
                         ),
+                        SizedBox(height: 12),
+                        Row(
+                          children: [
+                            SectionHeader(title: "Team Performance", color: Colors.purple)
+                          ],
+                        ),
+                        SizedBox(height: 12),
                         CheckboxListTile(
                           title: Text("Top tier?"),
                           value: widget.form.formData["team1TopTier"] ?? false, 
@@ -480,7 +509,7 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                           }
                         ),
                         CheckboxListTile(
-                          title: Text("Low tier (overall)?"),
+                          title: Text("Low tier?"),
                           value: widget.form.formData["team1LowTier"] ?? false, 
                           onChanged: (value) {
                             setState(() {
@@ -488,28 +517,6 @@ class _MatchTeleopSectionState extends State<MatchTeleopSection> {
                             });
                           }
                         ),
-                        CheckboxListTile(
-                          title: Text("Beached?"),
-                          value: widget.form.formData["team1Beached"] ?? false, 
-                          onChanged: (value) {
-                            setState(() {
-                              widget.form.onDataChanged({"team1Beached": value});
-                            });
-                          }
-                        ),
-                        RatingInput(
-                          title: "Collection Rate", 
-                          fontSize: 16,
-                          onRatingUpdate: (newValue) {
-                            widget.form.onDataChanged({"team1CollectionRate": newValue});
-                          },
-                          initialRating: (widget.form.formData["team1CollectionRate"] ?? 0).toDouble(),
-                          itemCount: 5,
-                          enableHalves: false,
-                          titleOnTop: true,
-                        ),
-
-
                       ],
                     ),
                   ),

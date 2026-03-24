@@ -114,8 +114,11 @@ Map<String, dynamic> getMatchDataMap() {
     "team1Shunter": false,
     // "team2Shunter": false,
     // "team3Shunter": false,
+    "team1TopTier": false,
+    "team1MidTier": false,
+    "team1LowTier": false,
+    "team1Beached": false,
     
-    "team1CollectionRate": 0.0,
     // "team2CollectionRate": 0.0,
     // "team3CollectionRate": 0.0,
 
@@ -144,10 +147,6 @@ Map<String, dynamic> getMatchDataMap() {
     "team1Disabled": false,
     // "team2Disabled": false,
     // "team3Disabled": false,
-    "team1TopTier": false,
-    "team1MidTier": false,
-    "team1LowTier": false,
-    "team1Beached": false,
     "penalties": false,
     "isMarkedForReview": false,
     "comments": // ** DO NOT REMOVE ** //
