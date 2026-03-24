@@ -899,33 +899,6 @@ class _MatchEndgameSectionState extends State<MatchEndgameSection> {
               // ),
               // const SizedBox(height: 32.0),
               
-              // Climbed from the back section
-              Padding(
-                padding: const EdgeInsets.only(bottom: 12.0),
-                child: Text("Climbed from the back?",
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        )),
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildTeamCheckbox(context, "team1ClimbedFromBack",
-                        "Team ${widget.form.formData["team1"]}"),
-                  ),
-                  // const SizedBox(width: 12.0),
-                  // Expanded(
-                  //   child: _buildTeamCheckbox(context, "team2ClimbedFromBack",
-                  //       "Team ${widget.form.formData["team2"]}"),
-                  // ),
-                  // const SizedBox(width: 12.0),
-                  // Expanded(
-                  //   child: _buildTeamCheckbox(context, "team3ClimbedFromBack",
-                  //       "Team ${widget.form.formData["team3"]}"),
-                  // ),
-                ],
-              ),
-              const SizedBox(height: 32.0),
               
               // Speed of climb section
               if (widget.form.formData["team1EndgameLevel"] != 0) ... [
