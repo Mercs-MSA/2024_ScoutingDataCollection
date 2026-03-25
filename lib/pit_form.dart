@@ -29,36 +29,33 @@ class PitForm extends StatefulWidget {
 }
 
 class _PitFormState extends State<PitForm> {
-  late TextEditingController _wController;
-  late TextEditingController _lController;
-  late TextEditingController _hController;
-  late TextEditingController _sController;
   @override
   void initState() {
     super.initState();
-    _wController = TextEditingController(text: widget.formData["hopperWidth"]?.toString() ?? "");
-    _lController = TextEditingController(text: widget.formData["hopperLength"]?.toString() ?? "");
-    _hController = TextEditingController(text: widget.formData["hopperHeight"]?.toString() ?? "");
-    _sController = TextEditingController(text: widget.formData["hopperStorageEstimate"]?.toString() ?? "");
-  }
-  void _updateTotal() {
-  double w = (widget.formData["hopperWidth"] as num? ?? 0) - 2.955.toDouble();
-  double l = (widget.formData["hopperLength"] as num? ?? 0) - 2.955.toDouble();
-  double h = (widget.formData["hopperHeight"] as num? ?? 0) - 2.955.toDouble();
-  
+    bool isAnythingSelected = [
+    widget.formData["turret"],
+    widget.formData["hood"],
+    widget.formData["drum"],
+    widget.formData["static"],
+    widget.formData["other"],
+  ].any((val) => val == true);
 
-  if (w > 0 && l > 0 && h > 0) {
-    double result = (w * l * h * 0.60) / 108.08;
-    if (result < 0) {
-      result = 0;
-    }
-
-    setState(() {
-      _sController.text = result.toStringAsFixed(1);
-      widget.onDataChanged({"hopperStorageEstimate": result});
+  // If nothing is selected, force the default state immediately
+  if (!isAnythingSelected) {
+    // We use addPostFrameCallback to avoid calling setState during build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.onDataChanged({
+        ...widget.formData, // Keep existing data
+        "turret": false,
+        "hood": false,
+        "drum": false,
+        "static": true, // The Default
+        "other": false,
+      });
     });
   }
-}
+  }
+
 
   Widget build(BuildContext context) {
     return IndexedStack(
@@ -309,7 +306,7 @@ class _PitFormState extends State<PitForm> {
                     children: [
                       const Text("Movement"),
                       const SizedBox(width: 8.0),
-                      SegmentedButton<AlgaePositions>(
+                      SegmentedButton<MovementPositions>(
                         style: ButtonStyle(
                             backgroundColor:
                                 WidgetStateProperty.resolveWith<Color>(
@@ -327,30 +324,30 @@ class _PitFormState extends State<PitForm> {
                             ),
                             padding:
                                 WidgetStateProperty.all(EdgeInsets.all(18.0))),
-                        segments: <ButtonSegment<AlgaePositions>>[
+                        segments: <ButtonSegment<MovementPositions>>[
                           ButtonSegment(
-                              value: AlgaePositions.trench,
+                              value: MovementPositions.trench,
                               label: Text('Trench')),
                           ButtonSegment(
-                              value: AlgaePositions.bump,
+                              value: MovementPositions.bump,
                               label: Text('Bump')),
                           // Descore removed
                         ],
                         selected: {
                           if (widget.formData["trench"] != null &&
                               widget.formData["trench"])
-                            AlgaePositions.trench,
+                            MovementPositions.trench,
                           if (widget.formData["bump"] != null &&
                               widget.formData["bump"])
-                            AlgaePositions.bump,
+                            MovementPositions.bump,
                           // descore removed
                         },
-                        onSelectionChanged: (Set<AlgaePositions> newSelection) {
+                        onSelectionChanged: (Set<MovementPositions> newSelection) {
                           setState(() {
                             widget.onDataChanged({
                               "trench": newSelection
-                                  .contains(AlgaePositions.trench),
-                              "bump": newSelection.contains(AlgaePositions.bump),
+                                  .contains(MovementPositions.trench),
+                              "bump": newSelection.contains(MovementPositions.bump),
                             });
                           });
                         },
@@ -501,9 +498,7 @@ class _PitFormState extends State<PitForm> {
                           ? ''
                           : widget.formData["climbTime"].toString(),
                     ),
-                  ),*/
-                  const SizedBox(height: 8.0),  
-                  _buildSpeedControl(context, "Climb Speed (Seconds)"),     
+                  ),*/   
                   
                   /*
                   const SizedBox(height: 8.0),
@@ -608,80 +603,13 @@ class _PitFormState extends State<PitForm> {
                   // ),
                   
                       const Text(
-                      "Storage (Hopper) Dimensions"),
+                      "Fuel Storage Approximate (in Hopper)"),
                   const SizedBox(height: 8.0),
-                  
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: _wController, 
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Hopper Width",
-                            suffixText: "Inches",
-                          ),
-                          keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
-                            LengthLimitingTextInputFormatter(5),
-                          ],
-                          onChanged: (value) {
-                            widget.onDataChanged({"hopperWidth": double.tryParse(value)});
-                            _updateTotal();
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-
-                      Expanded(
-                        child: TextField(
-                          controller: _lController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Hopper Length",
-                            suffixText: "Inches",
-                          ),
-                          keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
-                            LengthLimitingTextInputFormatter(5),
-                          ],
-                          onChanged: (value) {
-                            widget.onDataChanged({"hopperLength": double.tryParse(value)});
-                            _updateTotal();
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-
-                      Expanded(
-                        child: TextField(
-                          controller: _hController, 
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Hopper Height",
-                            suffixText: "Inches",
-                          ),
-                          keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
-                            LengthLimitingTextInputFormatter(5),
-                          ],
-                          onChanged: (value) {
-                            widget.onDataChanged({"hopperHeight": double.tryParse(value)});
-                            _updateTotal();
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
                   const SizedBox(height: 8.0),
                   Row(
                     children: [
                       Expanded(
                         child: TextField(
-                          controller: _sController, 
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Hopper Storage Estimate",
@@ -689,11 +617,12 @@ class _PitFormState extends State<PitForm> {
                           ),
                           keyboardType: TextInputType.number,
                           inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
-                            LengthLimitingTextInputFormatter(5),
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(3),
                           ],
                           onChanged: (value) {
-                            widget.onDataChanged({"hopperStorageEstimate": double.tryParse(value)});
+                            widget
+                                .onDataChanged({"hopperStorageEstimate": int.tryParse(value)});
                           },
                         ),
                       ),
@@ -821,7 +750,7 @@ class _PitFormState extends State<PitForm> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Shooter"),
+                      const Text("Shooter Type"),
                       const SizedBox(width: 8.0),
                       SegmentedButton<ShooterTypes>(
                         style: ButtonStyle(
@@ -852,6 +781,9 @@ class _PitFormState extends State<PitForm> {
                             value: ShooterTypes.big,
                             label: Text('Drum')),
                           ButtonSegment(
+                            value: ShooterTypes.static,
+                            label: Text('Static')),
+                          ButtonSegment(
                             value: ShooterTypes.other,
                             label: Text('Other')),
                         ],
@@ -862,6 +794,8 @@ class _PitFormState extends State<PitForm> {
                             ShooterTypes.hood,
                           if (widget.formData["drum"] != null && widget.formData["drum"])
                             ShooterTypes.big,
+                            if (widget.formData["static"] != null && widget.formData["static"])
+                          ShooterTypes.static,
                           if (widget.formData["other"] != null && widget.formData["other"])
                             ShooterTypes.other,
                         },
@@ -871,6 +805,7 @@ class _PitFormState extends State<PitForm> {
                               "turret": newSelection.contains(ShooterTypes.turret),
                               "hood": newSelection.contains(ShooterTypes.hood),
                               "drum": newSelection.contains(ShooterTypes.big),
+                              "static": newSelection.contains(ShooterTypes.static),
                               "other": newSelection.contains(ShooterTypes.other),
                             });
                           });
@@ -1376,69 +1311,6 @@ class _PitFormState extends State<PitForm> {
     );
   }
 
-  Widget _buildSpeedControl(BuildContext context, String climbSpeedLabel) {
-  final speedKey = "climbSpeedLabel";
-  var speed = widget.formData[speedKey] ?? 3;
-
-  if (speed < 3) {
-    speed = 3;
-    widget.onDataChanged({speedKey: 3});
-  }
-
-  return Container(
-    decoration: BoxDecoration(
-      border: Border.all(
-        color: Theme.of(context).dividerColor,
-        width: 1,
-      ),
-      borderRadius: BorderRadius.circular(10.0),
-    ),
-    padding: const EdgeInsets.all(12.0),
-    child: Column(
-      children: [
-        Text(
-          climbSpeedLabel,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-        ),
-        const SizedBox(height: 8.0),
-        
-        Row(
-          children: [
-            const Text(
-              "3",
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
-            ),
-            Expanded(
-              child: Slider(
-                value: speed.toDouble(),
-                min: 3,
-                max: 30,
-                divisions: 27,
-                onChanged: (value) {
-                  setState(() {
-                    widget.onDataChanged({speedKey: value.toInt()});
-                  });
-                },
-              ),
-            ),
-            const Text(
-              "30",
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-        
-        Text(
-          speed.toString(),
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-        ),
-      ],
-    ),
-  );
-}
-
   Container _buildClimbCell(BuildContext context, String dataKey) {
     final isChecked = widget.formData[dataKey] ?? false;
 
@@ -1478,13 +1350,4 @@ class _PitFormState extends State<PitForm> {
       ),
     );
   }
-@override
-  void dispose() {
-    _wController.dispose();
-    _lController.dispose();
-    _hController.dispose();
-    _sController.dispose();
-    super.dispose();
-  }
-  
 }

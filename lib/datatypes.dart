@@ -4,13 +4,13 @@ enum Alliance { red, blue }
 
 enum MatchStartPos { left, middle, right }
 
-enum AlgaePositions { trench, bump }
+enum MovementPositions { trench, bump }
 
 enum ClimbPositions { one, two, three }
 
 enum IntakeTypes {slapdown, fourbar, openbumper, bucket}
 
-enum ShooterTypes { turret, hood, big, other }
+enum ShooterTypes { turret, hood, big, static, other }
 
 enum TeleopRole { shooter, feeder, defense }
 
