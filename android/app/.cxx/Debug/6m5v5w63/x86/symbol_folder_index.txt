@@ -1,1 +1,0 @@
-/home/kevin/Code/FRC/2024_ScoutingDataCollection/build/app/intermediates/cxx/Debug/6m5v5w63/obj/x86

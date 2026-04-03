@@ -1,1 +1,0 @@
-/home/kevin/Code/FRC/2024_ScoutingDataCollection/build/app/intermediates/cxx/Debug/1c5q6d45/obj/arm64-v8a

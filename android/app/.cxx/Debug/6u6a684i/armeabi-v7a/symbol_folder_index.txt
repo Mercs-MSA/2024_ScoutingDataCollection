@@ -1,1 +1,0 @@
-/home/kevin/Code/FRC/2024_ScoutingDataCollection/build/app/intermediates/cxx/Debug/6u6a684i/obj/armeabi-v7a

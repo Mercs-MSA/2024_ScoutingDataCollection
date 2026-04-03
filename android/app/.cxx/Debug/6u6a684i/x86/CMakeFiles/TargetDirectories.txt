@@ -1,2 +1,0 @@
-/home/kevin/Code/FRC/2024_ScoutingDataCollection/android/app/.cxx/Debug/6u6a684i/x86/CMakeFiles/edit_cache.dir
-/home/kevin/Code/FRC/2024_ScoutingDataCollection/android/app/.cxx/Debug/6u6a684i/x86/CMakeFiles/rebuild_cache.dir
