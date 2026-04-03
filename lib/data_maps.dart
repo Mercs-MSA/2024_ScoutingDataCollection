@@ -21,7 +21,7 @@ Map<String, dynamic> getPitDataMap() {
     "climbSideL1": false,
     "climbSideL2": false,
     "climbSideL3": false,
-    "groundIntake": false,
+    "intakeType": "",
     "turret": false,
     "hood": false,
     "drum": false,
